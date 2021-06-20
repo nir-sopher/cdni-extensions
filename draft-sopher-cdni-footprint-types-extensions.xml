@@ -9,7 +9,7 @@
 <?rfc comments="yes"?>
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
-<rfc category="std" docName="draft-sopher-cdni-footprint-types-extensions-01" updates='8006,8008' ipr="trust200902">
+<rfc category="std" docName="draft-sopher-cdni-footprint-types-extensions-02" updates='8006,8008' ipr="trust200902">
     <front>
         <title abbrev="CDNI Footprint Types Extensions">
             CDNI Request Routing Extensions
@@ -187,7 +187,6 @@
     {
       "capability-type": <CDNI capability object type>,
       "capability-value": <CDNI capability object>,
-      },
       "footprints": [
           {
               "footprint-type": "ipv4cidr",
@@ -256,7 +255,6 @@
     {
       "capability-type": <CDNI capability object type>,
       "capability-value": <CDNI capability object>,
-      },
       "footprints": [
           {
               "footprint-type": "ipv4v6cidr",
@@ -338,7 +336,6 @@
     {
       "capability-type": <CDNI capability object type>,
       "capability-value": <CDNI capability object>,
-      },
       "footprints": [
           {
               "footprint-type": "iso3166code",
