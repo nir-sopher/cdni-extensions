@@ -314,18 +314,19 @@
       "capability-type": <CDNI capability object type>,
       "capability-value": <CDNI capability object>,
       "footprints": [
-          {
-              "footprint-type": "footprintobject",
-              "footprint-value": [
-                {
-                   "footprint-type": "ipv4cidr",
-                   "footprint-value": ["192.0.2.0/24"]
-                },
-                {
-                   "footprint-type": "ipv6cidr",
-                   "footprint-value": ["2001:db8::/32"]
-                }
-          }
+        {
+          "footprint-type": "footprintobject",
+          "footprint-value": [
+            {
+              "footprint-type": "ipv4cidr",
+              "footprint-value": ["192.0.2.0/24"]
+            },
+            {
+              "footprint-type": "ipv6cidr",
+              "footprint-value": ["2001:db8::/32"]
+            }
+          ]
+        }
       ]
     }
   ]
@@ -347,22 +348,23 @@
       "capability-type": <CDNI capability object type>,
       "capability-value": <CDNI capability object>,
       "footprints": [
-         {
-              "footprint-type": "asn",
-              "footprint-value": ["as64496"]
-          },
-          {
-              "footprint-type": "footprintobject",
-              "footprint-value": [
-                {
-                   "footprint-type": "countrycode",
-                   "footprint-value": ["us"]
-                },
-                {
-                   "footprint-type": "iso3166code",
-                   "footprint-value": ["ca-ns"]
-                }
-          }
+        {
+          "footprint-type": "asn",
+          "footprint-value": ["as64496"]
+        },
+        {
+          "footprint-type": "footprintobject",
+          "footprint-value": [
+            {
+              "footprint-type": "countrycode",
+              "footprint-value": ["us"]
+            },
+            {
+              "footprint-type": "iso3166code",
+              "footprint-value": ["ca-ns"]
+            }
+          ]
+        }
       ]
     }
   ]
