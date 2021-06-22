@@ -9,7 +9,7 @@
 <?rfc comments="yes"?>
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
-<rfc category="std" docName="draft-sopher-cdni-footprint-types-extensions-01" updates='8006,8008' ipr="trust200902">
+<rfc category="std" docName="draft-sopher-cdni-footprint-types-extensions-03" updates='8006,8008' ipr="trust200902">
     <front>
         <title abbrev="CDNI Footprint Types Extensions">
             CDNI Request Routing Extensions
@@ -99,12 +99,12 @@
                 <xref target="RFC8006" />) for the defined objects:
                 <list style="symbols">
                     <t>
-                        IPv4v6CIDR Footprint Type (for dCDN advertising a footprint that consists of both
-                        IPv4 and IPv6 client addresses)
+                        ISO3166-2Code Footprint Type (e.g. for dCDN advertising a footprint that is specific to
+                        a State in the USA)
                     </t>
                     <t>
-                        ISO3166Code Footprint Type (e.g. for dCDN advertising a footprint that is specific to
-                        a State in the USA)
+                        Collection Footprint Type (for dCDN advertising a footprint that consists of a group built 
+                        from multiple Footprints Types. E.g. both IPv4 and IPv6 client addresses)
                     </t>
                 </list>
             </t>
@@ -156,7 +156,86 @@
                 For consistency, this document follows the CDNI notation of uCDN for
                 (the commercial CDN) and dCDN (the ISP caching layer).
             </t>
-            <section anchor="cdni-metadata-ipv4v6cidr-footprint-type" title="CDNI Metadata IPv4v6CIDR Footprint Type">
+            <section anchor="cdni-metadata-iso3166-2code-footprint-type" title="CDNI Metadata ISO3166-2Code Footprint Type">
+                <t>
+                    Section 4.3.8 of <xref target="RFC8006" />
+                    specifies the "Country Code" footprint type
+                    for listing <xref target="ISO3166-1"/> alpha-2 codes. Using Footprint Objects of this type, one can define an
+                    FCI Capability Advertisement Object footprint constraints that match a specific country.
+                    Here we define the iso3166-2code simple data type, as well as a footprint type
+                    allowing the dCDN to define constraints matching geographic areas
+                    with better granularity, specifically using the <xref target="ISO3166-2"/> Country Subdivision codes.
+                </t>
+                <section anchor="cdni-metadata-iso3166-2code-data-type" title="CDNI Metadata ISO3166-2Code Data Type">
+                    <t>
+                        The "ISO3166-2Code" data type specified in
+                        <xref target="cdni-metadata-iso3166-2code-data-type-description" />,
+                        describes a country specific subdivision using an <xref target="ISO3166-2"/> code. 
+                        The data type is added to the list of data types  described in section 4.3 of
+                        <xref target="RFC8006" /> that are used as properties of CDNI Metadata objects.
+                    </t>
+                    <section anchor="cdni-metadata-iso3166-2code-data-type-description" title="CDNI Metadata ISO3166-2Code Data Type Description">
+                        <t>
+                        A <xref target="ISO3166-2"/> code in lower case. Each code consists of two parts, separated by a hyphen. 
+                        The first part is the <xref target="ISO3166-1"/> code of the country. The second part is a string of up to three alphanumeric characters.
+                        </t>
+                        <t>
+                            <list style="empty">
+                                <t>
+                                    Type: String
+                                </t>
+                                <t>
+                                    Example ISO3166-2Codes:
+                                </t>
+                                <t>
+                                    "ca-ns"
+                                </t>
+                                <t>
+                                    "us-ny"
+                                </t>
+                            </list>
+                        </t>
+                    </section>
+                </section>
+                <section anchor="cdni-metadata-iso3166-2code-footprint-type-description" title="CDNI Metadata ISO3166-2Code Footprint Type Description">
+                    <t>
+                        The "ISO3166-2Code" simple data type specified in
+                        <xref target="cdni-metadata-iso3166-2code-data-type" />
+                        , is added
+                        to the data types listed as footprint types in section 4.2.2.2 of
+                        <xref target="RFC8006" />
+                        .
+                    </t>
+                    <t>
+                        Below is an adjustment for the example in
+                        <xref target="cdni-metadata-iso3166-2code-data-type" />,
+                        now embedding a footprint object of type "ISO3166-2Code". The Footprint Object in this example creates
+                        a constraints matching clients both in Nova-Scotia province of Canada (ISO <xref target="ISO3166-2"/> code "CA-NS"), as well as in the state of
+                        New-York In the US (ISO <xref target="ISO3166-2"/> code "US-NY").
+                    </t>
+                    <figure>
+                        <artwork>
+<![CDATA[
+{
+  "capabilities": [
+    {
+      "capability-type": <CDNI capability object type>,
+      "capability-value": <CDNI capability object>,
+      "footprints": [
+          {
+              "footprint-type": "iso3166-2code",
+              "footprint-value": ["ca-ns", "us-ny"]
+          }
+      ]
+    }
+  ]
+}
+]]>
+                        </artwork>
+                    </figure>
+                </section>
+            </section>
+            <section anchor="cdni-metadata-footprint-object-footprint-type" title="CDNI Metadata FootprintObject Footprint Type">
                 <t>
                     As described in section 5 of <xref target="RFC8008" />, 
                     the FCI Capability Advertisement Object includes an array of CDNI Footprint Objects. 
@@ -187,7 +266,6 @@
     {
       "capability-type": <CDNI capability object type>,
       "capability-value": <CDNI capability object>,
-      },
       "footprints": [
           {
               "footprint-type": "ipv4cidr",
@@ -205,48 +283,27 @@
                     </artwork>
                 </figure>
                 <t>
-                    To overcome the described limitation and allow a list of footprint constraints that
-                    matches both IPv4 and IPv6 client addresses, we introduce below the "IPv4v6CIDR" simple data type as well as
-                    a derived footprint type.
+                    To overcome the described limitation, and allow a list of footprint constraints that
+                    matches both IPv4 and IPv6 client addresses, we introduce below the "FootprintObject" footprint type. 
+                    This footprint type allows the collection of multiple footprint-objects into a unified object. 
+                    It is useful for resolving the above limitaion, as well as for unifying footprints of additional types such as 
+                    countrycode and iso3166-2code.
                 </t>
-                <section anchor="cdni-metadata-ipv4v6cidr-data-type" title="CDNI Metadata IPv4v6CIDR Data Type">
+                <section anchor="cdni-metadata-footprint-object-data-type" title="CDNI Metadata FootprintObject Data Type">
                     <t>
-                        The "IPv4v6CIDR" data type specified in <xref target="cdni-metadata-ipv4v6cidr-data-type-description" />,
-                        can be either IPv4 or IPv6 address blocks. The data type is added to the list of data types
-                        described in section 4.3 of <xref target="RFC8006" />
-                        that are used as properties of CDNI Metadata objects.
+                        The "FootprintObject" data type is based on the Footprint Object already defined in 
+                        section 4.2.2.2 of <xref target="RFC8006" />. It includes a footprint-type property and a footprint-value
+                        array values.
                     </t>
-                    <section anchor="cdni-metadata-ipv4v6cidr-data-type-description" title="CDNI Metadata IPv4v6CIDR Data Type Description">
-                        <t>
-                            Either an IPv4CIDR property or IPv6CIDR property, as described in sections 4.3.5 and 4.3.6 of
-                            <xref target="RFC8006" /> respectively.
-                        </t>
-                        <t>
-                            <list style="empty">
-                                <t>
-                                    Type: String
-                                </t>
-                                <t>
-                                    Example IPv4v6CIDRs:
-                                </t>
-                                <t>
-                                    "192.0.2.0/24"
-                                </t>
-                                <t>
-                                    "2001:db8::/32"
-                                </t>
-                            </list>
-                        </t>
-                    </section>
                 </section>
-                <section anchor="cdni-metadata-ipv4v6cidr-footprint-type-description" title="CDNI Metadata IPv4v6CIDR Footprint Type Description">
+                <section anchor="cdni-metadata-footprint-object-footprint-type-description" title="CDNI Metadata FootprintObject Footprint Type Description">
                     <t>
-                        The "IPv4v6CIDR" simple data type specified in <xref target="cdni-metadata-ipv4v6cidr-data-type" />, 
+                        The "footprintobject" data type specified in <xref target="cdni-metadata-footprint-object-data-type" />, 
                         is added to the data types listed as footprint types in section 4.2.2.2 of <xref target="RFC8006" />.
                     </t>
                     <t>
-                        Below is an adjustment for the example in <xref target="cdni-metadata-ipv4v6cidr-data-type" />,
-                        now embedding a footprint object of type "IPv4v6CIDR".
+                        Below is an adjustment for the example in <xref target="cdni-metadata-footprint-object-data-type" />,
+                        now embedding a footprint object of type "footprintobject".
                     </t>
                     <figure>
                         <artwork>
@@ -256,12 +313,20 @@
     {
       "capability-type": <CDNI capability object type>,
       "capability-value": <CDNI capability object>,
-      },
       "footprints": [
-          {
-              "footprint-type": "ipv4v6cidr",
-              "footprint-value": ["192.0.2.0/24", "2001:db8::/32"]
-          }
+        {
+          "footprint-type": "footprintobject",
+          "footprint-value": [
+            {
+              "footprint-type": "ipv4cidr",
+              "footprint-value": ["192.0.2.0/24"]
+            },
+            {
+              "footprint-type": "ipv6cidr",
+              "footprint-value": ["2001:db8::/32"]
+            }
+          ]
+        }
       ]
     }
   ]
@@ -269,66 +334,10 @@
 ]]>
                         </artwork>
                     </figure>
-                </section>
-            </section>
-            <section anchor="cdni-metadata-iso3166code-footprint-type" title="CDNI Metadata ISO3166Code Footprint Type">
-                <t>
-                    Section 4.3.8 of <xref target="RFC8006" />
-                    specifies the "Country Code" footprint type
-                    for listing <xref target="ISO3166-1"/> alpha-2 codes. Using Footprint Objects of this type, one can define an
-                    FCI Capability Advertisement Object footprint constraints that match a specific country.
-                    Here we define the iso3166code simple data type, as well as a footprint type
-                    allowing the dCDN to define constraints matching geographic areas
-                    with better granularity, specifically using the <xref target="ISO3166-2"/> Country Subdivision codes.
-                </t>
-                <section anchor="cdni-metadata-iso3166code-data-type" title="CDNI Metadata ISO3166Code Data Type">
                     <t>
-                        The "ISO3166Code" data type specified in
-                        <xref target="cdni-metadata-iso3166code-data-type-description" />,
-                        can either describe a country based on an <xref target="ISO3166-1"/> alpha-2 code, 
-                        or describe a more specific subdivision using an <xref target="ISO3166-2"/> code. 
-                        The data type is added to the list of data types  described in section 4.3 of
-                        <xref target="RFC8006" /> that are used as properties of CDNI Metadata objects.
-                    </t>
-                    <section anchor="cdni-metadata-iso3166code-data-type-description" title="CDNI Metadata ISO3166Code Data Type Description">
-                        <t>
-                            Either an <xref target="ISO3166-1"/> alpha-2 code in lowercase, or such a code followed by a dash as well as a
-                            more specific subdivision <xref target="ISO3166-2"/> alphanumeric code in lowercase.
-                        </t>
-                        <t>
-                            <list style="empty">
-                                <t>
-                                    Type: String
-                                </t>
-                                <t>
-                                    Example ISO3166Codes:
-                                </t>
-                                <t>
-                                    "ca"
-                                </t>
-                                <t>
-                                    "us-ny"
-                                </t>
-                            </list>
-                        </t>
-                    </section>
-                </section>
-                <section anchor="cdni-metadata-iso3166code-footprint-type-description" title="CDNI Metadata ISO3166Code Footprint Type Description">
-                    <t>
-                        The "ISO3166Code" simple data type specified in
-                        <xref target="cdni-metadata-iso3166code-data-type" />
-                        , is added
-                        to the data types listed as footprint types in section 4.2.2.2 of
-                        <xref target="RFC8006" />
-                        .
-                    </t>
-                    <t>
-                        Below is an adjustment for the example in
-                        <xref target="cdni-metadata-iso3166code-data-type" />
-                        ,
-                        now embedding a footprint object of type "ISO3166Code". The Footprint Object in this example creates
-                        a constraints matching clients both in Canada (ISO <xref target="ISO3166-1"/> alpha-2 code "CA") as well as in the state of
-                        New-York (ISO <xref target="ISO3166-2"/> Subdivision code "NY") in the (ISO <xref target="ISO3166-1"/> alpha-2 code "US").
+                    An additional example is the collection of countrycode and iso3166-2code based footprint objects. In the example below 
+                    we create a constraint covering autonomous system 64496 within the US (ISO <xref target="ISO3166-1"/> alpha-2 code "US"),
+                    as well as Nova-Scotia province of Canada (ISO <xref target="ISO3166-2"/> code "CA-NS").
                     </t>
                     <figure>
                         <artwork>
@@ -338,12 +347,24 @@
     {
       "capability-type": <CDNI capability object type>,
       "capability-value": <CDNI capability object>,
-      },
       "footprints": [
-          {
-              "footprint-type": "iso3166code",
-              "footprint-value": ["ca", "us-ny"]
-          }
+        {
+          "footprint-type": "asn",
+          "footprint-value": ["as64496"]
+        },
+        {
+          "footprint-type": "footprintobject",
+          "footprint-value": [
+            {
+              "footprint-type": "countrycode",
+              "footprint-value": ["us"]
+            },
+            {
+              "footprint-type": "iso3166-2code",
+              "footprint-value": ["ca-ns"]
+            }
+          ]
+        }
       ]
     }
   ]
@@ -369,9 +390,9 @@
                 <t>
                     This document requests the registration of the two additional footprint type
                     as defined in
-                    <xref target="cdni-metadata-ipv4v6cidr-footprint-type" />
+                    <xref target="cdni-metadata-footprint-object-footprint-type" />
                     and
-                    <xref target="cdni-metadata-iso3166code-footprint-type" />
+                    <xref target="cdni-metadata-iso3166-2code-footprint-type" />
                     :
                 </t>
                 <texttable>
@@ -385,22 +406,22 @@
                         Specification
                     </ttcol>
                     <c>
-                        ipv4v6cidr
+                        iso3166-2code
                     </c>
                     <c>
-                        IPv4/IPv6 address block
-                    </c>
-                    <c>
-                        RFCthis
-                    </c>
-                    <c>
-                        iso3166code
-                    </c>
-                    <c>
-                        ISO 3166-1/2 Country or Subdivision Code
+                        ISO 3166-2 Country or Subdivision Code
                     </c>
                     <c>
                         RFCthis
+                    </c>
+                    <c>
+                        footprintobject
+                    </c>
+                    <c>
+                        Footprint Object as specified in <xref target="RFC8006" />
+                    </c>
+                    <c>
+                        <xref target="RFC8006" />
                     </c>
                 </texttable>
                 <t>
