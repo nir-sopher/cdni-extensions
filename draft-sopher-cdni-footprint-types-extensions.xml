@@ -406,7 +406,7 @@
                         Specification
                     </ttcol>
                     <c>
-                        iso3166-2code
+                        FCI.iso3166-2code
                     </c>
                     <c>
                         ISO 3166-2 Country or Subdivision Code
@@ -415,7 +415,7 @@
                         RFCthis
                     </c>
                     <c>
-                        footprintobject
+                        FCI.footprintobject
                     </c>
                     <c>
                         Footprint Object as specified in <xref target="RFC8006" />
