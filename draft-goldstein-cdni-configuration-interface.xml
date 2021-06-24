@@ -9,10 +9,10 @@
 <?rfc comments="yes"?>
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
-<rfc category="std" docName="draft-goldstein-cdni-configuration-interface-extension-00" updates='8006,8008' ipr="trust200902">
+<rfc category="std" docName="draft-goldstein-cdni-configuration-interface-metadata-extension-00" updates='8006,8008' ipr="trust200902">
     <front>
-        <title abbrev="CDNI Configuration Interface">
-            CDNI Configuration Interface
+        <title abbrev="CDNI Configuration Interface Metadata Extension">
+            CDNI Configuration Interface Metadata Extension
         </title>
         <author fullname="Glenn Goldstein" initials="G." surname="Goldstein">
             <organization>
@@ -21,16 +21,16 @@
             <address>
                 <postal>
                     <street>
-                    123, TBD
+                    TBD: 5177 Brandin Ct.
                     </street>
                     <city>
-                        TBD
+                    Fremont
                     </city>
                     <region>
-                    TBD(state)
+                    CA
                     </region>
                     <code>
-                        1234567
+                        94538
                     </code>
                     <country>
                         US
@@ -68,7 +68,7 @@
                 open caching, require coordination of content delivery configurations. In order to achives that, the 
                 <xref target="OC-CI"> TBD: Open Caching Configuration Interface Specification </xref> defines 
                 an interface contemplating a set of use cases. 
-                This document defines and registers CDNI Metadata objects(as defined at section 5 of <xref target="RFC8006" />). 
+                This document defines and registers CDNI Metadata objects (as defined at section 4 of <xref target="RFC8006" />). 
             </t>
             <t>
                 For consistency with other CDNI documents this document follows the
@@ -76,19 +76,11 @@
                 layer respectively.
             </t>
             <t>
-            TBD - NirS did not do any adjustments beyond this point
-                This document registers two CDNI Metadata Payload Types (section 7.1 of
-                <xref target="RFC8006" />) for the defined capability objects:
+                This document registers the following CDNI Payload Types (section 7.1 of
+                <xref target="RFC8006" />). Some also being used a capability objects (extending section 5 in <xref target="RFC8008" />)
                 <list style="symbols">
                     <t>
-                        Telemetry Payload Type: A payload type for the capability object which defines the supported telemetry sources, 
-                        the metrics made available by that source, and corresponding configuration appropriate 
-                        to the type of the source (host, port, protocol, etc..)
-                    </t>
-                    <t>
-                        CapacityLimits Payload Type: a payload type for the capability object which defines Capacity Limits based on a set 
-                        of defined limit types and a mapping from those limits to corresponding telemetry sources 
-                        for supporting real-time metrics.
+                        TBD
                     </t>
                 </list>
             </t>
@@ -130,11 +122,10 @@
                 </t>
             </section>
         </section>
-        <section anchor="cdni-additional-capability-objects" title="CDNI Additonal Capability Objects">
+        <section anchor="cdni-additional-metadata-payload-types" title="CDNI Additonal Metadata Payload Types">
             <t>
-                Section 5 of <xref target="RFC8008" /> describes the FCI Capability Advertisement Object, which
-                includes a CDNI Capability Object as well as the capability object type (a CDNI Paylod Type). 
-                The section also define several Capability Objects. Below we define two additional Capability Objects. 
+                Section 4 of <xref target="RFC8006" /> defines various Metadata Payload Types. 
+                Below we define additional Metadata Payload Types Objects. 
             </t>
             <t>
                 Note: In the following sections, the term "mandatory-to-specify" is
@@ -144,9 +135,9 @@
                 containing that property is included in an FCI message, then the
                 mandatory-to-specify property MUST also be included.
             </t>
-            <section anchor="telemetry-capability-object" title="Telemetry Capability Object">
+            <section anchor="telemetry-payload-type" title="Telemetry Payload type">
                 <t>
-                    The Telemetry Capability Object is used to define a list of telemetry sources made available by the dCDN 
+                    The Telemetry Payload type is used to define a list of telemetry sources made available by the dCDN 
                     to the uCDN.
                 </t>
                 <t><list style="empty">
@@ -233,9 +224,9 @@
                         </list></t>
                     </section>
                 </section>
-                <section anchor="telemetry-capability-object-serialization" title="Telemetry Capability Object Serialization">
+                <section anchor="telemetry-payload-type-serialization" title="Telemetry Payload type Serialization">
                     <t>
-                        The following shows an example of Telemetry Capability including 2 sources.
+                        TBD
                     </t>
                     <figure>
                         <artwork>
@@ -272,7 +263,21 @@
                     </figure>
                 </section>
             </section>
-
+        </section>
+        <section anchor="cdni-additional-capability-objects" title="CDNI Additonal Capability Objects">
+            <t>
+                Section 5 of <xref target="RFC8008" /> describes the FCI Capability Advertisement Object, which
+                includes a CDNI Capability Object as well as the capability object type (a CDNI Payload Type). 
+                The section also defines the Capability Objects per such type. Below we define additional Capability Objects. 
+            </t>
+            <t>
+                Note: In the following sections, the term "mandatory-to-specify" is
+                used to convey which properties MUST be included when serializing a
+                given capability object.  When mandatory-to-specify is defined as
+                "Yes" for an individual property, it means that if the object
+                containing that property is included in an FCI message, then the
+                mandatory-to-specify property MUST also be included.
+            </t>
             <section anchor="capacity-limits-capability-object" title="CapacityLimits Capability Object">
                 <t>
                     The Capacity Limits Capability Object represents the limits to be advertised based on a particular Telemetry element..
@@ -453,19 +458,19 @@
                     <ttcol align="left">
                         Specification
                     </ttcol>
-                    <c>FCI.Telemetry</c><c>RFCthis</c>
+                    <c>MI.Telemetry</c><c>RFCthis</c>
                     <c>FCI.CapacityLimits</c><c>RFCthis</c>
                 </texttable>
                 <t>
                     [RFC Editor: Please replace RFCthis with the published RFC
                     number for this document.]
                 </t>
-                <section anchor="IANA.cdni.fci.telemetry.payload.type" title="CDNI FCI Telemetry Payload Type">
+                <section anchor="IANA.cdni.mi.telemetry.payload.type" title="CDNI MI Telemetry Payload Type">
                     <t><list style="empty">
                         <t>Purpose: The purpose of this Payload Type is TBD 
                         (maybe: to list the supported telemetry sources and the metrics made available by each source).</t>
                         <t>Interface: FCI.</t>
-                        <t>Encoding: See section <xref target="telemetry-capability-object"/>.</t>
+                        <t>Encoding: See section <xref target="telemetry-payload-type"/>.</t>
                     </list></t>
                 </section>
                 <section anchor="IANA.cdni.fci.capacity.limits.payload.type" title="CDNI FCI Capacity Limits Payload Type">

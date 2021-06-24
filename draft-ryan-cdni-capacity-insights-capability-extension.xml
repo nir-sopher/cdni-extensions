@@ -21,23 +21,23 @@
             <address>
                 <postal>
                     <street>
-                    123, TBD
+                    5177 Brandin Ct.
                     </street>
                     <city>
-                        TBD
+                    Fremont
                     </city>
                     <region>
-                    TBD(state)
+                    CA
                     </region>
                     <code>
-                        1234567
+                        94538
                     </code>
                     <country>
                         US
                     </country>
                 </postal>
                 <email>
-                    TBD
+                    andrew@andrewnryan.com
                 </email>
             </address>
         </author>
@@ -68,7 +68,7 @@
                 The traffic level information provided by that interface will be consumed by entities, 
                 such as the Open Caching Request router, to help inform that entity's traffic delegation decisions.
                 This document defines and registers CDNI Payload Types (as defined at section 7.1 of <xref target="RFC8006" />). These Payload
-                types are used for Capability Objects added to those defined at section 5 of <xref target="RFC8008" />, which are required for
+                types are used for Capability Objects added to those defined at section 4 of <xref target="RFC8008" />, which are required for
                 the Open Caching Capacity Insights Interface. 
             </t>
             <t>
@@ -77,7 +77,7 @@
                 layer respectively.
             </t>
             <t>
-                This document registers two CDNI Metadata Payload Types (section 7.1 of
+                This document registers two CDNI Payload Types (section 7.1 of
                 <xref target="RFC8006" />) for the defined capability objects:
                 <list style="symbols">
                     <t>
@@ -133,8 +133,8 @@
         <section anchor="cdni-additional-capability-objects" title="CDNI Additonal Capability Objects">
             <t>
                 Section 5 of <xref target="RFC8008" /> describes the FCI Capability Advertisement Object, which
-                includes a CDNI Capability Object as well as the capability object type (a CDNI Paylod Type). 
-                The section also define several Capability Objects. Below we define two additional Capability Objects. 
+                contains a CDNI Capability Object as well as the capability object type (a CDNI Paylod Type). 
+                The section also defines the Capability Objects per such type. Below we define two additional Capability Objects. 
             </t>
             <t>
                 Note: In the following sections, the term "mandatory-to-specify" is
