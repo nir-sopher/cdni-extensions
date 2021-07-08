@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+<?rfc toc="yes"?>
+<?rfc tocompact="yes"?>
+<?rfc tocdepth="4"?>
+<?rfc tocindent="yes"?>
+<?rfc symrefs="yes"?>
+<?rfc sortrefs="yes"?>
+<?rfc comments="yes"?>
+<?rfc inline="yes"?>
+<?rfc compact="yes"?>
+<rfc category="std" docName="draft-ryan-cdni-capacity-insights-capability-advertisment-extension-00" updates='8006,8008' ipr="trust200902">
+    <front>
+        <title abbrev="CDNI Capacity Insights Capability Advertisment Extensions">
+            CDNI Capacity Insights Capability Advertisment Extensions
+        </title>
+        <author fullname="Andrew Ryan" initials="A." surname="Ryan">
+            <organization>
+                Limelight Networks
+            </organization>
+            <address>
+                <postal>
+                    <street>
+                    5177 Brandin Ct.
+                    </street>
+                    <city>
+                    Fremont
+                    </city>
+                    <region>
+                    CA
+                    </region>
+                    <code>
+                        94538
+                    </code>
+                    <country>
+                        US
+                    </country>
+                </postal>
+                <email>
+                    andrew@andrewnryan.com
+                </email>
+            </address>
+        </author>
+        <date />
+        <abstract>
+            <t>
+                Open Caching architecture is a use case of Content Delivery Networks Interconnection (CDNI) in which the
+                commercial Content Delivery Network (CDN) is the upstream CDN (uCDN) and the ISP caching layer serves as the
+                downstream CDN (dCDN). This document supplements to the CDNI Capability Objects defined in RFC 8008.
+                The defined Capability Objects structure and interface for advertisments and managment of a downstream CDN capacity.
+            </t>
+        </abstract>
+    </front>
+    <middle>
+        <section title="Introduction">
+            <t>
+                The Streaming Video Alliance <xref target="SVA" format="default" /> is a global association
+                that works to solve streaming video challenges in an effort to improve end-user experience
+                and adoption. The Open Caching Working Group <xref target="OCWG" format="default" /> of the
+                Streaming Video Alliance <xref target="SVA" format="default" /> is focused on the delegation
+                of video delivery requests from commerical CDNs to a caching layer at the ISP's network.
+                Open Caching architecture is a specific use case of CDNI where the commercial CDN is the
+                upstream CDN (uCDN) and the ISP caching layer is the downstream CDN (dCDN).
+                While delegating traffic from one CDN to the other, it is important to make sure that an 
+                appropriate amount of traffic is delegated. In order to achives that, the 
+                <xref target="OC-CII"> TBD: Open Caching Capacity Insight Specification </xref>
+                defines a feedback mechanism to inform the delegator how much traffic is appropriate to delegate. 
+                The traffic level information provided by that interface will be consumed by entities, 
+                such as the Open Caching Request router, to help inform that entity's traffic delegation decisions.
+                This document defines and registers CDNI Payload Types (as defined at section 7.1 of <xref target="RFC8006" />). These Payload
+                types are used for Capability Objects added to those defined at section 4 of <xref target="RFC8008" />, which are required for
+                the Open Caching Capacity Insights Interface. 
+            </t>
+            <t>
+                For consistency with other CDNI documents this document follows the
+                CDNI convention of uCDN (upstream CDN) and dCDN (downstream CDN) to represent the commercial CDN and ISP caching
+                layer respectively.
+            </t>
+            <t>
+                This document registers two CDNI Payload Types (section 7.1 of
+                <xref target="RFC8006" />) for the defined capability objects:
+                <list style="symbols">
+                    <t>
+                        Telemetry Payload Type: A payload type for the capability object which defines the supported telemetry sources, 
+                        the metrics made available by that source, and corresponding configuration appropriate 
+                        to the type of the source (host, port, protocol, etc..)
+                    </t>
+                    <t>
+                        CapacityLimits Payload Type: a payload type for the capability object which defines Capacity Limits based on a set 
+                        of defined limit types and a mapping from those limits to corresponding telemetry sources 
+                        for supporting real-time metrics.
+                    </t>
+                </list>
+            </t>
+            <section anchor="terminology" title="Terminology">
+                <t>
+                    The following terms are used throughout this document:
+                    <list style="symbols">
+                        <t>
+                            CDN - Content Delivery Network
+                        </t>
+                    </list>
+                </t>
+                <t>
+                    Additionally, this document reuses the terminology defined in
+                    <xref target="RFC6707" />,
+                    <xref target="RFC7336" />,
+                    <xref target="RFC8006" />,
+                    <xref target="RFC8007" />,
+                    <xref target="RFC8008" />, and
+                    <xref target="RFC8804" />.
+                    Specifically, we use the following CDNI acronyms:
+                    <list style="symbols">
+                        <t>
+                            uCDN, dCDN - Upstream CDN and Downstream CDN respectively (see
+                            <xref target="RFC7336" />
+                            )
+                        </t>
+                    </list>
+                </t>
+            </section>
+            <section title="Requirements Language">
+                <t>
+                    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
+                    "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this
+                    document are to be interpreted as described in BCP 14
+                    <xref target="RFC2119" />
+                    <xref target="RFC8174" />
+                    when, and only when, they appear in all capitals, as shown here.
+                </t>
+            </section>
+        </section>
+        <section anchor="cdni-additional-capability-objects" title="CDNI Additonal Capability Objects">
+            <t>
+                Section 5 of <xref target="RFC8008" /> describes the FCI Capability Advertisement Object, which
+                contains a CDNI Capability Object as well as the capability object type (a CDNI Paylod Type). 
+                The section also defines the Capability Objects per such type. Below we define two additional Capability Objects. 
+            </t>
+            <t>
+                Note: In the following sections, the term "mandatory-to-specify" is
+                used to convey which properties MUST be included when serializing a
+                given capability object.  When mandatory-to-specify is defined as
+                "Yes" for an individual property, it means that if the object
+                containing that property is included in an FCI message, then the
+                mandatory-to-specify property MUST also be included.
+            </t>
+            <section anchor="telemetry-capability-object" title="Telemetry Capability Object">
+                <t>
+                    The Telemetry Capability Object is used to define a list of telemetry sources made available by the dCDN 
+                    to the uCDN.
+                </t>
+                <t><list style="empty">
+                    <t>Property: sources<list style="empty">
+                        <t>Description: Telemetry sources made available to the uCDN.</t>
+                        <t>Type: A JSON array of Telemetry Source objects (see <xref target="telemetry-source-object"/>).</t>
+                        <t>Mandatory-to-Specify: Yes.</t>
+                    </list></t>
+                </list></t>
+
+                <section anchor="telemetry-source-object" title="Telemetry Source Object">
+                    <t>
+                        The Telemetry Source Object is build of an associated type, a list of exposed metrics, and type-specific configuration data.
+                    </t>
+
+                    <t><list style="empty">
+                        <t>Property: id<list style="empty">
+                            <t>Description: A unique identifier.</t>
+                            <t>Type: String.</t>
+                            <t>Mandatory-to-Specify: Yes.</t>
+                        </list></t>
+
+                        <t>Property: type<list style="empty">
+                            <t>Description: A valid telemetry source type. See <xref target="telemetry-source-type"/>.</t>
+                            <t>Type: String.</t>
+                            <t>Mandatory-to-Specify: Yes.</t>
+                        </list></t>
+
+                        <t>Property: metrics<list style="empty">
+                            <t>Description: The metrics exposed by this source.</t>
+                            <t>Type: A JSON array of Telemetry Source Metric objects (see <xref target="telemetry-source-metric-object"/>).</t>
+                            <t>Mandatory-to-Specify: Yes.</t>
+                        </list></t>
+
+                        <t>Property: configuration<list style="empty">
+                            <t>Description: Type specific configuration data.</t>
+                            <t>Type: TBD.</t>
+                            <t>Mandatory-to-Specify: No.</t>
+                        </list></t> 
+                    </list></t>
+                    <section anchor="telemetry-source-type" title="Telemetry Source Types">
+                        <t>
+                            Below are listed the valid telemetry source types.
+                            TBD: How do we extend this list? Do we need a registry? 
+                        </t>
+                        <texttable>
+                            <ttcol align="left">
+                                Source Type
+                            </ttcol>
+                            <ttcol align="left">
+                                Description
+                            </ttcol>                            
+                            <c>generic</c><c>TBD</c>
+                        </texttable>
+                    </section>
+                    <section anchor="telemetry-source-metric-object" title="Telemetry Source Metric Object">
+                        <t>
+                            The Telemetry Source Metric Object describe the metric to be exposed.
+                        </t>
+                        <t><list style="empty">
+                            <t>Property: name<list style="empty">
+                                <t>Description: An identifier unique within this telemetry source.</t>
+                                <t>Type: String.</t>
+                                <t>Mandatory-to-Specify: Yes.</t>
+                            </list></t>
+
+                            <t>Property: time-granularity<list style="empty">
+                                <t>Description:  Represents the time frame that the data represents in seconds.  I.e. is this a data set over 5 minutes, one hour, etc..</t>
+                                <t>Type: Float (or Integer - TBD).</t>
+                                <t>Mandatory-to-Specify: No.</t>
+                            </list></t>
+
+                            <t>Property: data-percentile<list style="empty">
+                                <t>Description: The percentile calculation the data represents, i.e. 50 percentile would equate to the average over the time-granularity.</t>
+                                <t>Type: Float (or Integer - TBD).</t>
+                                <t>Mandatory-to-Specify: No.</t>
+                            </list></t>
+
+                            <t>Property: latency<list style="empty">
+                                <t>Description: Time in second that the data is behind of real time.</t>
+                                <t>Type: Float (or Integer - TBD).</t>
+                                <t>Mandatory-to-Specify: No.</t>
+                            </list></t> 
+                        </list></t>
+                    </section>
+                </section>
+                <section anchor="telemetry-capability-object-serialization" title="Telemetry Capability Object Serialization">
+                    <t>
+                        The following shows an example of Telemetry Capability including 2 sources.
+                    </t>
+                    <figure>
+                        <artwork>
+<![CDATA[
+"capabilities": [
+  {
+    "capability-type": "FCI.Telemetry",
+    "capability-value": {
+      "sources": [
+        {
+          "id": "capacity_metrics_region1",
+          "type": "generic",
+          "metrics": [
+            {
+              "name": "egress_5m",
+              "time-granularity": 300,
+              "data-percentile": 50,
+              "latency": 1500
+            },
+            {
+              "name": "requests_5m",
+            }
+          ]
+        }
+      ]
+    },
+    "footprints": [
+      <footprint objects>
+    ]
+  }
+]
+]]>
+                        </artwork>
+                    </figure>
+                </section>
+            </section>
+
+            <section anchor="capacity-limits-capability-object" title="CapacityLimits Capability Object">
+                <t>
+                    The Capacity Limits Capability Object represents the limits to be advertised based on a particular Telemetry element..
+                </t>
+                <t><list style="empty">
+                    <t>Property: total-limits-host<list style="empty">
+                        <t>Description:The "Distinguished CDN-Domain" used for adjustment of the total limits.</t>
+                        <t>Type: String.</t>
+                        <t>Mandatory-to-Specify: No. Required only if MI.RequestedCapacityLimits is supported.</t>
+                    </list></t>
+
+                    <t>Property: total-limits<list style="empty">
+                        <t>Description: The top level limits for the footprint.</t>
+                        <t>Type: A JSON array of Capacity Limit objects (see <xref target="capacity-limit-object"/>).</t>
+                        <t>Mandatory-to-Specify: Yes.</t>
+                    </list></t>
+
+                    <t>Property: host-limits<list style="empty">
+                        <t>Description: Limits for particular CDN Domains.</t>
+                        <t>Type: A JSON array of Capcity Limit objects (see <xref target="capacity-limit-object"/>).</t>
+                        <t>Mandatory-to-Specify: No.</t>
+                    </list></t>
+                </list></t>
+
+                <section anchor="capacity-limit-object" title="Capacity Limit Object">
+                    <t>
+                        The Capacity Limit Object is built of TBD.
+                    </t>
+                    <t><list style="empty">
+                        <t>Property: limit-type<list style="empty">
+                            <t>Description: The units of maximum-hard and maximum-soft.</t>
+                            <t>Type: String. One of the values listed in <xref target="capacity-limit-type"/>.</t>
+                            <t>Mandatory-to-Specify: Yes.</t>
+                        </list></t>
+
+                        <t>Property: maximum-hard<list style="empty">
+                            <t>Description: The maximum unit of capacity that is available for use.</t>
+                            <t>Type: Float (or Integer - TBD).</t>
+                            <t>Mandatory-to-Specify: Yes.</t>
+                        </list></t>
+
+                        <t>Property: maximum-soft<list style="empty">
+                            <t>Description: A soft limit at which an upstream should consider deducing traffic to prevent hitting the hard limit.</t>
+                            <t>Type: Float (or Integer - TBD).</t>
+                            <t>Mandatory-to-Specify: No.</t>
+                        </list></t>
+
+                        <t>Property: telemetry-source<list style="empty">
+                            <t>Description: Mapping of each a particular limit to a specific metric with relevant real-time data provided by a telemetry source.</t>
+                            <t>Type: Capcity Limit Telemetry Source object (see <xref target="capacity-limit-telemetry-source-object"/>).</t>
+                            <t>Mandatory-to-Specify: No.</t>
+                        </list></t> 
+
+                        <t>Property: host<list style="empty">
+                            <t>Description: The CDN Domain to which the limit applies.</t>
+                            <t>Type: String.</t>
+                            <t>Mandatory-to-Specify: Only when is part of the host-limits list.</t>
+                        </list></t>
+                    </list></t>
+                    <section anchor="capacity-limit-type" title="Capacity Limit Types">
+                        <t>
+                            Below are listed the valid capacity limit types.
+                            TBD: How do we extend this list? Do we need a registry? Maybe omit this list and make it subject ot bootstrapping?
+                        </t>
+                        <texttable>
+                            <ttcol align="left">
+                                Limit Type
+                            </ttcol>
+                            <ttcol align="left">
+                                Units
+                            </ttcol>                            
+                            <c>egress</c><c>Bits per second</c>
+                            <c>requests</c><c>Requests per second</c>
+                            <c>storage-size</c><c>Total bytes</c>
+                            <c>storage-objects</c><c>Count</c>
+                            <c>sessions</c><c>Count</c>
+                            <c>cache-size</c><c>Total bytes</c>
+                        </texttable>
+                    </section>
+                    <section anchor="capacity-limit-telemetry-source-object" title="Capacity Limit Telemetry Source  Object">
+                        <t>
+                            The Capacity Limit Telemetry Source Object refers to a specific metric within a Telementry Source.
+                        </t>
+                        <t><list style="empty">
+                            <t>Property: id<list style="empty">
+                                <t>Description: Reference to the "id" of a telemetry source defined by a Telemetry Capability object.</t>
+                                <t>Type: String.</t>
+                                <t>Mandatory-to-Specify: Yes.</t>
+                            </list></t>
+
+                            <t>Property: metric<list style="empty">
+                                <t>Description:  Reference to the "name" property of a metric as defined for the referenced telemetry source.</t>
+                                <t>Type: String.</t>
+                                <t>Mandatory-to-Specify: Yes.</t>
+                            </list></t>
+                        </list></t>
+                    </section>
+                </section>
+                <section anchor="capacity-limit-object-serialization" title="Capacity Limit Object Serialization">
+                    <t>
+                        The following shows an example of ... TBD.
+                    </t>
+                    <figure>
+                        <artwork>
+<![CDATA[
+"capabilities": [
+  {
+    "capability-type": "FCI.CapacityLimits"
+    "capability-value": {
+      "total-limits-host": "op-b.op-a.com",
+      "total-limits": [
+        {
+          "limit-type": "egress",
+          "maximum-hard": 50000000000,
+          "maximum-soft": 25000000000,
+          "telemetry-source": {
+            "id": "capacity_metrics_region1",
+            "metric": "egress_5m"
+          }
+        }
+      ],
+      "host-limits": [
+        {
+          "host": "serviceA.cdn.example.com",
+          "limits": [
+            "limit-type": "egress",
+            "maximum-hard": 20000000000,
+            "maximum-soft": 10000000000,
+            "telemetry-source": {
+              "id": "capacity_metrics_region1",
+              "metric": "egress_service2_5m"
+            }
+          ]
+        },
+        {
+          "host": "serviceB.cdn.example.com",
+          "limits": [
+            "limit-type": "egress",
+            "maximum-hard": 30000000000,
+            "maximum-soft": 15000000000,
+            "telemetry-source": {
+              "id": "capacity_metrics_region1",
+              "metric": "egress_service2_5m"
+            }
+          ]
+        }
+      ]
+    },
+    "footprints": [
+      <footprint objects>
+    ]
+  }
+]
+]]>
+                        </artwork>
+                    </figure>
+                </section>
+            </section>
+        </section>
+        <section anchor="IANA" title="IANA Considerations">
+            <section anchor="IANA.cdni.payload.types" title="CDNI Payload Types">
+                <t>
+                    As described in section 7.1 of
+                    <xref target="RFC8006" />
+                    , the "CDNI Payload Types" subregistry
+                    was created within the "Content Delivery Network Interconnection (CDNI) Parameters" registry (TBD verify name or omit extra info). The created
+                    namespace defines the valid Payload Types, and is already populated with the types
+                    described in Section 7.1 of <xref target="RFC8006" /> as well as the types described in section 6.1
+                    of <xref target="RFC8008" />.
+                </t>
+                <t>
+                    This document requests the registration of the two additional payload types:
+                </t>
+                <texttable>
+                    <ttcol align="left">
+                        Payload Type
+                    </ttcol>
+                    <ttcol align="left">
+                        Specification
+                    </ttcol>
+                    <c>FCI.Telemetry</c><c>RFCthis</c>
+                    <c>FCI.CapacityLimits</c><c>RFCthis</c>
+                </texttable>
+                <t>
+                    [RFC Editor: Please replace RFCthis with the published RFC
+                    number for this document.]
+                </t>
+                <section anchor="IANA.cdni.fci.telemetry.payload.type" title="CDNI FCI Telemetry Payload Type">
+                    <t><list style="empty">
+                        <t>Purpose: The purpose of this Payload Type is TBD 
+                        (maybe: to list the supported telemetry sources and the metrics made available by each source).</t>
+                        <t>Interface: FCI.</t>
+                        <t>Encoding: See section <xref target="telemetry-capability-object"/>.</t>
+                    </list></t>
+                </section>
+                <section anchor="IANA.cdni.fci.capacity.limits.payload.type" title="CDNI FCI Capacity Limits Payload Type">
+                    <t><list style="empty">
+                        <t>Purpose: The purpose of this Payload Type is TBD 
+                        (maybe: defines Capacity Limits based on a set of defined limit types and a mapping from 
+                        those limits to corresponding telemetry sources for supporting real-time metrics).</t>
+                        <t>Interface: FCI.</t>
+                        <t>Encoding: See section <xref target="capacity-limits-capability-object"/>.</t>
+                    </list></t>
+                </section>
+            </section>
+        </section>
+        <section anchor="Security" title="Security Considerations">
+            <t>
+                This specification is in accordance with the CDNI Request Routing:
+                Footprint and Capabilities Semantics. As such, it is subject to the security and privacy considerations as
+                defined in Section 8 of
+                <xref target="RFC8006" />
+                and in Section 7 of
+                <xref target="RFC8008" />
+                respectively.
+            </t>
+            <t> MORE - TBD </t>
+        </section>
+        <section anchor="Acknowledgements" title="Acknowledgements">
+            <t>
+                The authors would like to express their gratitude to TBD for TBD (their guidance / contribution / reviews ...)
+            </t>
+        </section>
+    </middle>
+    <back>
+        <references title="Normative References">
+            <?rfc include="reference.RFC.2119"?>
+            <?rfc include="reference.RFC.8006"?>
+            <?rfc include="reference.RFC.8007"?>
+            <?rfc include="reference.RFC.8008"?>
+            <?rfc include="reference.RFC.8174"?>
+            <?rfc include="reference.RFC.8804"?>
+        </references>
+
+        <references title="Informative References">
+            <?rfc include="reference.RFC.6707"?>
+            <?rfc include="reference.RFC.7336"?>
+            <reference anchor="SVA" target="https://www.streamingvideoalliance.org">
+                <front>
+                    <title>
+                        Streaming Video Alliance Home Page
+                    </title>
+                    <author />
+                    <date />
+                </front>
+            </reference>
+            <reference anchor="OCWG" target="https://www.streamingvideoalliance.org/technical-groups/open-caching/">
+                <front>
+                    <title>
+                        Open Caching Home Page
+                    </title>
+                    <author />
+                    <date />
+                </front>
+            </reference>
+            <reference anchor="OC-CII" target="https://www.streamingvideoalliance.org/books/open-cache-request-routing-functional-specification/">
+                <front>
+                    <title>
+                        Open Caching - Capacity Insights Interface Functional Specification (TBD: write it and fix the reference)
+                    </title>
+                    <author initials="O." surname="Finkelman" fullname="Ori Finkelman" role="editor">
+                        <organization>
+                            Qwilt
+                        </organization>
+                    </author>
+                    <author initials="J." surname="Hofmann" fullname="Jason Hofmann">
+                        <organization>
+                            Limelight Networks
+                        </organization>
+                    </author>
+                    <author initials="E." surname="Klein" fullname="Eric Klein">
+                        <organization>
+                            Disney Streaming Services
+                        </organization>
+                    </author>
+                    <author initials="S." surname="Mishra" fullname="Sanjay Mishra">
+                        <organization>
+                            Verizon
+                        </organization>
+                    </author>
+                    <author initials="K." surname="Ma" fullname="Kevin J. Ma">
+                        <organization>
+                            Disney Streaming Services
+                        </organization>
+                    </author>
+                    <author initials="D." surname="Sahar" fullname="Dan Sahar">
+                        <organization>
+                            Qwilt
+                        </organization>
+                    </author>
+                    <author initials="B." surname="Zurat" fullname="Bill Zurat">
+                        <organization>
+                            Disney Streaming Services
+                        </organization>
+                    </author>
+                    <date day="4" month="October" year="2019" />
+                </front>
+                <seriesInfo name="Version" value="1.1" />
+            </reference>
+        </references>
+    </back>
+</rfc>

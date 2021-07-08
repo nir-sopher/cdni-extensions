@@ -1,0 +1,756 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+<?rfc toc="yes"?>
+<?rfc tocompact="yes"?>
+<?rfc tocdepth="4"?>
+<?rfc tocindent="yes"?>
+<?rfc symrefs="yes"?>
+<?rfc sortrefs="yes"?>
+<?rfc comments="yes"?>
+<?rfc inline="yes"?>
+<?rfc compact="yes"?>
+<rfc category="std" docName="draft-ietf-cdni-triggers-extensions-09" updates='8007' ipr="trust200902">
+  <front>
+    <title abbrev="CDNI Control Interface / Triggers Extensions">CDNI Control Triggers Interface Extensions</title>
+
+    <author fullname="Ori Finkelman" initials="O." surname="Finkelman">
+      <organization>Qwilt</organization>
+
+
+      <address>
+        <postal>
+          <street>6, Ha'harash</street>
+
+          <city>Hod HaSharon</city>
+
+          <region></region>
+
+          <code>4524079</code>
+
+          <country>Israel</country>
+        </postal>
+
+        <phone></phone>
+
+        <email>ori.finkelman.ietf@gmail.com</email>
+      </address>
+    </author>
+
+    <author fullname="Sanjay Mishra" initials="S." surname="Mishra">
+      <organization>Verizon</organization>
+
+      <address>
+        <postal>
+          <street>13100 Columbia Pike</street>
+
+          <city>Silver Spring</city>
+
+          <region>MD</region>
+
+          <code>20904</code>
+
+          <country>USA</country>
+        </postal>
+
+        <phone></phone>
+
+        <email>sanjay.mishra@verizon.com</email>
+      </address>
+    </author>
+
+    <author fullname="Nir B. Sopher" initials="N.B." surname="Sopher">
+      <organization>Qwilt</organization>
+
+      <address>
+        <postal>
+          <street>6, Ha'harash</street>
+
+          <city>Hod HaSharon</city>
+
+          <region></region>
+
+          <code>4524079</code>
+
+          <country>Israel</country>
+        </postal>
+
+        <phone></phone>
+
+        <email>nir@apache.org</email>
+      </address>
+    </author>
+
+    <date/>
+
+    <abstract>
+      <t>
+         Open Caching architecture is a use case of Content Delivery Network 
+         Interconnection (CDNI) in which the commercial Content Delivery Network (CDN) is  
+         the upstream CDN (uCDN) and the ISP caching layer serves as the downstream
+         CDN (dCDN). This document defines extensions to the Content Delivery Network 
+         Interconnection (CDNI) Control Interface/Triggers defined in RFC 8007.
+         These extensions are derived
+         from requirements raised by Open Caching architecture but are also applicable 
+         to CDNI use cases in general.</t>
+    </abstract>
+
+    <note title="Requirements Language">
+      <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+         "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+         document are to be interpreted as described in <xref
+         target="RFC2119">RFC 2119</xref>.</t>
+    </note>
+  </front>
+
+  <middle>
+    <section title="Introduction">
+      <t>The Streaming Video Alliance <xref target="SVA" format="default"/> is a global association
+         that works to solve streaming video challenges in an effort to improve end-user experience 
+         and adoption. The Open Caching Working Group <xref target="OCWG" format="default"/> of the 
+         Streaming Video Alliance <xref target="SVA" format="default"/> is focused on the delegation
+         of video delivery requests from commerical CDNs to a caching layer at the ISP's network. 
+         Open Caching architecture is a specific use case of CDNI where the commercial CDN is the 
+         upstream CDN (uCDN) and the ISP caching layer is the downstream CDN (dCDN). The Open
+         Caching Content Management Operations Specification <xref target="OC-CM" format="default"/>
+         defines objects and extensions required by Open Caching architecture for granular content
+         management operations. This document adds those 
+         extensions to the  CDNI Control Interface / Triggers <xref target="RFC8007"/> as required for 
+         Open Caching content management options. This document also specifies a generic extension 
+         mechanism to enable adding future functions for controlling the trigger execution>.
+      </t>
+
+      <t>The CDNI Metadata Interface is described in <xref target="RFC8006"/>.</t>
+      <t>The CDNI Footprint and Capability Interface is described in <xref target="RFC8008"/>.</t>
+      <t>The CDNI Control Interface / Triggers is described in <xref target="RFC8007"/>.</t>
+
+       <t>For consistency with other CDNI documents, this document follows the CDNI convention 
+        of uCDN (upstream CDN) and dCDN (downstream CDN) as described in <xref target="RFC6707"/> to represent the commercial CDN and 
+        ISP caching layer, respectively.</t>    
+           
+      <section anchor="terminology" title="Terminology">
+        <t>This document reuses the terminology defined in <xref target="RFC6707"/>, <xref target="RFC7736"/>
+           <xref target="RFC8006"/>, <xref target="RFC8007"/>, and <xref target="RFC8008"/>.</t>
+
+        <t>Additionally, the following terms are used throughout this document
+          and are defined as follows:</t>
+
+        <t><list style="symbols">
+            <t>HLS - HTTP Live Streaming</t>
+            <t>DASH - Dynamic Adaptive Streaming Over HTTP</t>
+            <t>MSS - Microsoft Smooth Streaming</t>
+	    </list></t>
+      </section>
+
+      <section anchor="structure" title="Structure of this document">
+        <t>
+          The remainder of this document is organized as follows:
+        </t>
+        <t><list style="symbols">
+            <t><xref target="overview"/> gives an overview of the extensions specified in this document.</t>
+            <t><xref target="cit-version-v2"/> specifies version 2 of the CDNI Control Interface / Triggers. </t>
+            <t><xref target="trigger-extension-objects"/> specifies an initial set of trigger extension objects.</t>
+            <t><xref target="footprint-and-capabilities"/> specifies Footprint and Capability objects for CI/T version
+                and extensions.</t>
+            <t><xref target="IANA"/> list the IANA considerations of this document.</t>
+            <t><xref target="Security"/> describes the security considerations for the specified properties and extensions.</t>
+        </list></t>
+
+      </section>
+
+    </section>
+
+    <section anchor="overview" title="Interfaces Extensions Overview">
+      <t>
+         This document defines extensions for the CDNI Control Interface / Triggers (CI/T) <xref target="RFC8007"/>
+         and defines FCI objects as per the CDNI Footprint and Capabilities Interface <xref target="RFC8008"/>.
+      </t>
+
+      <section title="CDNI Control Interface / Triggers Extensions">
+        <section title="CI/T Objects">
+          <t>
+             This document specifies version 2 of the CI/T commands and objects.
+             In this context the CI/T commands and objects as were specified in
+             <xref target="RFC8007"/> are considered to be version 1.
+           </t>
+        </section>
+
+        <section anchor="trigger-spec" title="Trigger Specification">
+          <t>
+             This document specifies version 2 of the Trigger Specification which is an enhancement of
+             the Trigger Specification that includes all properties as defined in Section 5.2.1 of
+             <xref target="RFC8007"/> as well as the additional properties required by the use cases
+             listed below in <xref target="content-selection"/> and <xref target="trigger-extensibility"/>.
+           </t>
+        </section>
+
+        <section anchor="content-selection" title="Content Selection">
+          <t>
+             The trigger specification as defined in Section 5.2.1 of <xref target="RFC8007"/> provides means to
+             select content objects by matching a full content URL or patterns with wildcards.
+             This document specifies two additional selection options:
+          </t>
+          <t><list style="symbols">
+             <t>
+               Regular Expression - Using regex, a uCDN can create more complex rules to select the
+               content objects for the cases of "invalidation" and "purge". For example, purging specific
+               content within a specific directory path.
+             </t>
+             <t>
+               Content Playlist - Using video playlist files, a uCDN can trigger an operation that will
+               be applied to a collection of distinct media files in a format that is natural for a
+               streaming video content provider. A playlist may have several formats, specifically
+               HTTP Live Streaming (HLS) *.m3u8 manifest <xref target="RFC8216"/>, Microsoft Smooth Streaming (MSS)
+               *.ismc client manifest <xref target="MSS"/>, and Dynamic Adaptive Streaming over HTTP (DASH)
+               *.mpd file <xref target="MPEG-DASH">[ISO/IEC 23009-1:2014]</xref>.
+             </t>
+          </list></t>
+        </section>
+
+        <section anchor="trigger-extensibility" title="Trigger Extensibility">
+          <t>
+             NBS: moved as is
+          </t>
+        </section>
+
+        <section anchor="error-handling" title="Error Handling">
+          <t>
+             This document extends the CI/T Error Handling (see Section 4.7 of <xref target="RFC8007"/>) to support
+             the following:
+          </t>
+          <t><list style="symbols">
+            <t>
+               Playlists and Regexs - report errors that happened due to specific playlists and/or regexs.
+            </t>
+            <t>
+               Extension errors - report an error that happened due to an extension object.
+            </t>
+            <t>
+               Error propagation - enable the uCDN to traceback an error to the dCDN in which it occurred.
+            </t>
+          </list></t>
+        </section>
+      </section>
+
+      <section title="CDNI Footprint and Capabilities Interface Extensions">
+        <t>
+          Extending the trigger mechanism with optional properties requires the ability for the
+          dCDN to advertise which optional properties it supports.
+        </t>
+        <t>
+           The CDNI Footprint and Capabilities Interface <xref target="RFC8008"/> enables the dCDN to advertise the
+           capabilities it supports across different footprints. This document introduces FCI objects to support the
+           advertisement of these optional properties.
+        </t>
+
+        <t>Example use cases<list style="symbols">
+
+          <t>Trigger types: Advertise which trigger types are supported by the dCDN.
+             CDNI defines three trigger types (purge, invalidate, pre-position),
+             but it does not necessarily mean that all dCDNs support all of them.
+             The uCDN may prefer to work only with dCDN that support what the uCDN needs.</t>
+
+          <t>Content selection rule types: Advertise which selection types are supported.
+             For example, if adding content regex as a means to match on content URLs,
+             not all dCDN would support it. For playlist mapping, advertise which types and versions
+             of protocols are supported, e.g. HLS.vX/DASH.vY/MSS.vX, DASH templates.
+             Note that the version string or schema are protocol specific.</t>
+
+          <t>Trigger extensions: Advertise which trigger extensions object types are supported
+             by the dCDN.</t>
+
+        </list></t>
+      </section>
+    </section>
+
+    <section  anchor="cit-version-v2" title="CI/T Version 2">
+      <t>
+         <xref target="RFC8007"/> does not define a version number and versioning scheme.
+         We, therefore, designate the interface and objects as defined in Section 5 of
+         <xref target="RFC8007"/> as version 1. The following sections define version 2 of
+         the CI/T objects and their properties as extensions of version 1.
+      </t>
+      <section anchor="cit-objects-v2" title="CI/T Objects V2">
+        <t>
+           Version 2 of the CI/T interface requires the support of the following objects:
+        </t>
+        <t><list style="symbols">
+           <t>
+              CI/T Commands v2: A trigger command request using the payload type ci-trigger-command.v2.
+              Version 2 MUST only use "trigger.v2" objects as defined in <xref target="trigger-spec-v2"/>,
+              instead of "trigger" objects. All other properties of the trigger command v2 are as defined
+              in Section 5.1.1 of <xref target="RFC8007"/>.
+           </t>
+
+           <t>
+              Trigger Status Resource v2: A trigger status resource response using the payload type
+              ci-trigger-status.v2. Version 2 MUST only use "trigger.v2" objects as defined in
+              <xref target="trigger-spec-v2"/>, instead of a "trigger" object, as well as "errors.v2"
+              array as defined in <xref target="error-description-v2"/>, instead of a "errors" array.
+              All other properties of the trigger status v2 are as defined in Section 5.1.2 of
+              <xref target="RFC8007"/>. The errors array "errors.v2" is a list of all errors that
+              occurred in any of the downstream CDNs along the execution path. When a downstream CDN,
+              dCDN-A, propagates a trigger to another downstream CDN, dCDN-B, it MUST also propagate
+              back all errors reported by dCDN-B in the trigger status resource and add them to its
+              own trigger status resource.
+           </t>
+
+           <t>
+              Trigger Collections: The payload type ci-trigger-collection is used with no changes
+              and as defined in 5.1.3 of <xref target="RFC8007"/>.
+           </t>
+        </list></t>
+        <t>Usage example of version 2 of trigger command</t>
+
+        <figure>
+          <artwork><![CDATA[
+REQUEST:
+
+  POST /triggers HTTP/1.1
+  User-Agent: example-user-agent/0.1
+  Host: triggers.dcdn.example.com
+  Accept: */*
+  Content-Type: application/cdni; ptype=ci-trigger-command.v2
+  {
+    "trigger.v2": { <properties of a trigger.v2 object> },
+    "cdn-path": [ "AS64496:0" ]
+  }
+
+RESPONSE:
+
+  HTTP/1.1 201 Created
+  Date: Wed, 04 May 2016 08:48:10 GMT
+  Content-Length: 467
+  Content-Type: application/cdni; ptype=ci-trigger-status.v2
+  Location: https://triggers.dcdn.example.com/triggers/0
+  Server: example-server/0.1
+
+  {
+     "errors.v2": [ { <properties of 1st error.v2 object> },
+                      ...,
+                    { <properties of Nth error.v2 object> }
+     ],
+     "ctime": 1462351690,
+     "etime": 1462351698,
+     "mtime": 1462351690,
+     "status": "pending",
+     "trigger.v2": { <properties of a trigger.v2 object> }
+  }
+       ]]></artwork>
+        </figure>
+
+        <t>Usage example of version 2 of trigger status for the trigger created in the
+           above trigger command example:</t>
+
+        <figure>
+          <artwork><![CDATA[
+REQUEST:
+
+  GET /triggers/0 HTTP/1.1
+  User-Agent: example-user-agent/0.1
+  Host: triggers.dcdn.example.com
+  Accept: */*
+
+RESPONSE:
+
+  HTTP/1.1 200 OK
+  Content-Length: 467
+  Expires: Wed, 04 May 2016 08:49:10 GMT
+  Server: example-server/0.1
+  ETag: "6990548174277557683"
+  Cache-Control: max-age=60
+  Date: Wed, 04 May 2016 08:48:10 GMT
+  Content-Type: application/cdni; ptype=ci-trigger-status.v2
+
+  {
+     "errors.v2": [ { <properties of 1st error.v2 object> },
+                      ...,
+                    { <properties of Nth error.v2 object> }
+     ],
+     "ctime": 1462351690,
+     "etime": 1462351698,
+     "mtime": 1462351690,
+     "status": "pending",
+     "trigger.v2": { <properties of a trigger.v2 object> }
+  }
+
+       ]]></artwork>
+        </figure>
+      </section>
+
+      <section anchor="error-handling-v2" title="Error Handling V2">
+        <t>
+           The CDNI CI/T interface defines a mechanism for error reporting (see Section 4.7 of <xref target="RFC8007"/>)
+           and an Error Description object for reporting errors (see Section 5.2.6 of <xref target="RFC8007"/>).
+           This document specifies version 2 of CI/T error handling in order to support the following:
+        </t>
+        <section anchor="extension-errors" title="Extension Errors">
+          <t>
+             Report an error that occures due to an extension object.
+             As extension objects are expected to be added to the interface whenever new requirement
+             comes along, it is expected that in some cases a dCDN may receive a trigger that it
+             cannot process or it does not understand. It is therefore essential for the trigger caller to be
+             able to know when such errors occur so they can take actions to fix them.
+             This document adds a mechanism to report extension errors.
+          </t>
+        </section>
+        <section anchor="error-propagation" title="Error propagation">
+          <t>
+             NBS: moved
+          </t>
+        </section>
+      </section>
+
+      <section anchor="cit-objects-properties-v2" title="Properties of CI/T Version 2 objects">
+        <t>
+          This section defines the values that can appear in the top-level
+          objects described in <xref target="cit-objects-v2"/>, and their encodings.
+        </t>
+        <section anchor="trigger-spec-v2" title="Trigger Specification Version 2 ">
+          <t>
+             Version 2 of the Trigger Specification adds the following properties on top
+             of the existing properties of the trigger specification defined in Section
+             5.2.1 of <xref target="RFC8007"/>.
+          </t>
+
+          <t>NBS: copied to anchor="sect-5.2.1"</t>
+          <t>Example of a JSON serialized invalidation trigger.v2 object with a list of regex objects, 
+          a list of playlist objects, and extensions:</t>
+
+          <figure>
+            <artwork><![CDATA[
+{
+  "trigger.v2": {
+    "type": "invalidate",
+    "content.regexs": [ <list of RegexMatch objects> ],
+    "content.playlists": [ <list of Playlist objects> ],
+    "extensions": [ <list of GenericTriggerExtension objects ]
+  },
+  "cdn-path": [ "AS64496:0" ]
+}
+
+         ]]></artwork>
+          </figure>
+        </section>
+
+        <section anchor="regex-match" title="RegexMatch">
+          <t>
+            NBS moved to 5.2
+          </t>
+        </section>
+
+        <section anchor="playlist" title="Playlist">
+          <t>NBS moved to 5.2 ...</t>
+        </section>
+
+        <section anchor="media-protocol" title="MediaProtocol">
+          <t>NBS moved to 5.2</t>
+        </section>
+
+
+        <section anchor="trigger-extensions" title="CI/T Trigger Extensions">
+          <t>
+           NBS moved to 5.2
+          </t>
+        </section>
+
+        <section anchor="error-description-v2" title="Error Description Version 2">
+          <t>
+             Version 2 of the Error Description adds the "content.playlists", "content.regexs", "extensions" and "cdn" 
+             properties on top of the existing properties of version 1 of the trigger Error Description as defined in 
+             Section 5.2.6 of <xref target="RFC8007"/>. 
+
+             NBS merged with anchor sect-5.2.6
+          </t>
+        </section>
+
+        <section anchor="error-code" title="Error codes">
+          <t>
+            NBS: moved to the table in anchor="sect-5.2.7". 
+
+             Left:
+             A CDN that fails to execute a trigger due a generic extension object which is "mandatory-to-enforce" 
+             MUST report it using the "errors.v2" 
+             array within the trigger status resource, while setting the error code to "eextension" and providing 
+             an appropriate description. The "eextension" error code is a registered type of 
+             "CDNI CI/T Trigger Error Codes" (see <xref target="IANA.CDNI.CIT.ErrorCodes"/>). 
+          </t>
+        </section>
+
+      </section>
+      <section anchor="interface-examples" title="Examples">
+        <t>
+          The following subsections provides usage examples of the specified interface extensions being used
+          by the trigger command and status resource.
+        </t>
+        <section anchor="invalidate-with-regex" title="Invalidation with Regex">
+          <t>
+                      NBS:  moved to sect-6.1
+          </t>
+        </section>
+
+        <section anchor="preposition-with-playlists" title="Preposition with Playlists">
+          <t>
+                      NBS:  moved to sect-6.1
+          </t>
+        </section>
+
+        <section anchor="trigger-with-extensions" title="Extensions with Error Propagation">
+          <t>
+                      NBS: replacd moved to sect-6.2.6
+          </t>
+        </section>
+      </section>
+    </section>
+
+    <section anchor="trigger-extension-objects" title="Trigger Extension Objects">
+      <t>NBS moved as is</t>
+    </section>  
+
+
+    <section anchor="footprint-and-capabilities" title="Footprint and Capabilities">
+      <t>
+        This section covers the FCI objects required for advertisement of the extensions and properties
+        introduced in this document.
+      </t>
+      <section title="CI/T Versions Capability Object">
+        <t>
+           The CI/T versions capability object is used to indicate support for one or more CI/T objects versions.
+           Note that the default version as originally defined in <xref target="RFC8007"/> MUST be implicitly
+           supported regardless of the versions listed in this capability object.
+        </t>
+
+        <t><list style="empty">
+           <t>Property: versions<list style="empty">
+
+                 <t>Description: A list of version numbers.</t>
+
+                 <t>Type: An array of JSON strings</t>
+
+                 <t>Mandatory: No. The default is version 1. A missing or an empty versions list
+                    means that  only version 1 of the interface and objects is supported.</t>
+           </list></t>
+        </list></t>
+        <section anchor="versions-capability-object" title="CI/T Versions Capability Object Serialization">
+          <t>
+             The following shows an example of a JSON serialized CI/T Versions Capability object serialization for a dCDN that supports
+             versions 2 and 2.1 of the CI/T interface.
+          </t>
+
+          <figure>
+           <artwork><![CDATA[
+
+{
+ "capabilities": [
+   {
+     "capability-type": "FCI.TriggerVersion",
+     "capability-value": {
+       "versions": [ "1", "2", "2.1" ]
+     },
+     "footprints": [
+       <Footprint objects>
+     ]
+   }
+ ]
+}
+        ]]></artwork>
+          </figure>
+        </section>
+      </section>
+
+      <section title="CI/T Playlist Protocol Capability Object">
+        <t>
+           NBS: moved
+        </t>
+      </section>
+
+      <section title="CI/T Trigger Extension Capability Object">
+        <t>
+           NBS: Moved
+        </t>
+      </section>
+    </section>
+
+    <section anchor="IANA" title="IANA Considerations">
+
+      <section anchor="IANA.CDNI.payload" title="CDNI Payload Types">
+        <t>NBS: moved to 7.1. Left to be discussed if needed</t>
+                <section anchor="IANA.CDNI.payload.FCI.TriggersVersions" title="CDNI FCI CI/T Versions Payload Type">
+          <t>Purpose: The purpose of this payload type is to distinguish FCI advertisement objects for
+             CI/T Triggers Versions objects</t>
+          <t>Interface: FCI</t>
+          <t>Encoding: see <xref target="versions-capability-object"/></t>
+        </section>
+
+      </section>
+
+      <section anchor="IANA.CDNI.CIT.ErrorCodes" title="CDNI CI/T Trigger Error Codes types">
+        <t>NBS: no need to cpy. the RFC poinst to another internal section</t>
+      </section>
+
+      <section anchor="IANA.CDNI.MediaProtocolReg" title="CDNI Media protocol types">
+        <t>NBS: copied</t>
+      </section>
+    </section>
+
+    <section anchor="Security" title="Security Considerations">
+      <t>
+         All security considerations listed in Section 8 of <xref target="RFC8007"/> and Section 7 of
+         <xref target="RFC8008"/> apply to this document as well.
+      </t>
+
+      <t>This document defines the capability to use regular expression within the trigger specification for
+         more granular content selection. The usage of regex introduced the risk of regex complexity attacks,
+         a.k.a ReDos attacks. An attacker may be able to craft a regular expression that can exhaust server
+         resources and may take exponential time in the worst case. An implementation MUST protect itself at
+         a minimum by accepting triggers only from an authenticated party over a secured connection. An implementation
+         SHOULD also protect itself by using secure programing techniques and decline trigger commands that use
+         potentially risky regex, such techniques are readily available in secure programming literature and are
+         beyond the scope of this document.</t>
+    </section>
+
+    <section anchor="Acknowledgments" title="Acknowledgments">
+      <t>The authors thank Kevin J. Ma for his guidance as well as careful and
+         methodical reviews and feedback.</t>
+    </section>
+
+  </middle>
+
+  <back>
+    <references title="Normative References">
+
+
+      <?rfc include="reference.RFC.2119" ?>
+
+      <?rfc include="reference.RFC.3339" ?>
+
+      <?rfc include="reference.RFC.3986" ?>
+
+      <?rfc include="reference.RFC.8006" ?>
+
+      <?rfc include="reference.RFC.8007" ?>
+
+      <?rfc include="reference.RFC.8008" ?>
+
+      <?rfc include="reference.RFC.8126" ?>
+
+      <?rfc include="reference.RFC.8259" ?>
+
+      <?rfc include="reference.RFC.6707" ?> 
+	    
+      <?rfc include="reference.RFC.7736" ?>
+
+      <reference anchor="ABNF" target="https://www.rfc-editor.org/info/rfc5234">
+        <front>
+          <title>Augmented BNF for Syntax Specifications: ABNF</title>
+          <author initials="D." surname="Crocker" fullname="D. Crocker" role="editor">
+            <organization/>
+          </author>
+          <author initials="P." surname="Overell" fullname="P. Overell">
+            <organization/>
+          </author>
+          <date year="2008" month="January"/>
+          <abstract>
+            <t>Internet technical specifications often need to define a formal syntax.  Over the years, a modified version of Backus-Naur Form (BNF), called Augmented BNF (ABNF), has been popular among many Internet specifications.  The current specification documents ABNF. It balances compactness and simplicity with reasonable representational power.  The differences between standard BNF and ABNF involve naming rules, repetition, alternatives, order-independence, and value ranges.  This specification also supplies additional rule definitions and encoding for a core lexical analyzer of the type common to several Internet specifications.  [STANDARDS-TRACK]</t>
+          </abstract>
+        </front>
+        <seriesInfo name="STD" value="68"/>
+        <seriesInfo name="RFC" value="5234"/>
+        <seriesInfo name="DOI" value="10.17487/RFC5234"/>
+      </reference>
+
+    </references>
+
+    <references title="Informative References">
+      
+     <?rfc include="reference.RFC.8216" ?>
+
+      <reference anchor="PCRE841" target="http://www.pcre.org/">
+        <front>
+          <title>Perl Compatible Regular Expressions</title>
+          <author surname="Hazel" initials="P"/>
+          <date day="5" month="July" year="2017"/>
+        </front>
+        <seriesInfo name="Version" value="8.41"/>
+      </reference>
+
+      <reference anchor="MPEG-DASH" target="https://www.iso.org/standard/65274.html">
+        <front>
+          <title>
+              Information technology -- Dynamic adaptive streaming over HTTP (DASH) --
+              Part 1: Media presentation description and segment format
+          </title>
+          <author>
+             <organization>ISO</organization>
+          </author>
+          <date month="05" year="2014"/>
+        </front>
+        <seriesInfo name="ISO/IEC" value="23009-1:2014"/>
+        <seriesInfo name="Edition" value="2"/>
+      </reference>
+
+      <reference anchor="MSS" target="https://msdn.microsoft.com/en-us/library/ff469518.aspx">
+        <front>
+          <title>
+              [MS-SSTR]: Smooth Streaming Protocol
+          </title>
+          <author>
+             <organization>Microsoft</organization>
+          </author>
+          <date month="September" year="2017"/>
+        </front>
+        <seriesInfo name="Protocol Revision" value="8.0"/>
+      </reference>
+
+      <reference anchor="ISO8601" target="https://www.iso.org/standard/40874.html">
+        <front>
+          <title>
+              Data elements and interchange formats -- Information interchange --
+              Representation of dates and times
+          </title>
+          <author>
+             <organization>ISO</organization>
+          </author>
+          <date month="12" year="2004"/>
+        </front>
+        <seriesInfo name="ISO" value="8601:2004"/>
+        <seriesInfo name="Edition" value="3"/>
+      </reference>
+
+      <reference anchor="SVA" target="https://www.streamingvideoalliance.org">
+          <front>
+            <title>Streaming Video Alliance</title>
+            <author/>
+            <date/>
+          </front>
+        </reference>
+
+        <reference anchor="OCWG" target="https://www.streamingvideoalliance.org/technical-groups/open-caching/">
+          <front>
+            <title>Open Caching</title>
+            <author><organization>Streaming Video Alliance</organization>
+            </author>
+            <date/>
+          </front>
+        </reference>
+
+      <reference anchor="OC-CM" target="https://www.streamingvideoalliance.org/document/open-caching-content-management-operations-specification/">
+          <front>
+            <title>
+              Open Caching Content Management Operations Specification
+            </title>
+            <author initials="O." surname="Finkelman" fullname="Ori Finkelman" role="editor">
+              <organization>Qwilt</organization>
+            </author>
+            <author initials="J." surname="Devabhaktuni" fullname="Jaya Devabhaktuni">
+              <organization>Concurrent</organization>
+            </author>
+            <author initials="M." surname="Stock" fullname="Matt Sanjay Stock">
+              <organization>Limelight Networks</organization>
+            </author>
+            <date month="November" year="2017"/>
+          </front>
+        </reference>
+            
+    </references>
+  </back>
+</rfc>
