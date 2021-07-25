@@ -852,7 +852,7 @@
              to a downstream CDN C (dCDN-C). Triggers sent from uCDN-A to dCDN-B may be redistributed 
              from dCDN-B to dCDN-C and errors can occur anywhere along the path. Therefore, it might be essential for 
              uCDN-A that sets the trigger, to be able to trace back an error to the downstream CDN where it occurred. 
-             This document adds a mechanism to propagate the CDN Provider ID (PID) of the dCDN where the fault occured, back to the 
+             This document adds a mechanism to propagate the CDN Provider ID (PID) of the dCDN where the fault occurred, back to the 
              uCDN by adding the PID
              to the error description. When dCDN-B propagates a trigger to the further downstream dCDN-C, 
              it MUST also propagate back the errors received in the trigger status resource from dCDN-C by adding
@@ -1752,7 +1752,7 @@ https://video.example.com/k/movie1/4/013.ts
                <c>True</c>
                <c>True</c>
                <c>False</c>
-               <c>MUST NOT execute but can redistribute..</c>
+               <c>MUST NOT execute but can redistribute.</c>
 
                <c>True</c>
                <c>False</c>
@@ -2035,7 +2035,7 @@ https://video.example.com/k/movie1/4/013.ts
 	<vspace blankLines="1"/>
 	Description: The CDN PID of the CDN where the error occurred. The "cdn" property is used
                 by the originating uCDN or by propagating dCDN in order to distinguish in which CDN the 
-                error occured.
+                error occurred.
 	<vspace blankLines="1"/>
 	Value:  A non-empty JSON string, where the string is a CDN PID as defined in Section 
                  <xref target="sect-4.6"/>
@@ -2188,7 +2188,7 @@ https://video.example.com/k/movie1/4/013.ts
 
             <t>Purge: In certain cases, content may have been located on servers in regions
                where the content must not reside. In such cases, a purge operation to
-               remove content specifically from that region, is required.</t>
+               remove content specifically from that region is required.</t>
 
         </list></t>
 
@@ -3516,7 +3516,7 @@ RESPONSE:
           <t>Encoding: see <xref target="sect-5.1.2"/></t>
         </section>
 
-         <section anchor="IANA.CDNI.payload.ci-trigger-collection" title="CDNI ci-trigger-command.v2 Payload Type">
+         <section anchor="IANA.CDNI.payload.ci-trigger-collection" title="CDNI ci-trigger-collection.v2 Payload Type">
           <t>Purpose: TBD (came from 8007)</t>
           <t>Interface: CI/T</t>
           <t>Encoding: see <xref target="sect-5.1.3"/></t>
