@@ -524,9 +524,9 @@
    containing an appropriate Error Description.</t>
 
 	<t>
-   When a CI/T Trigger Command is accepted, the uCDN MUST create a new
+   When a CI/T Trigger Command is accepted, the dCDN MUST create a new
    Trigger Status Resource that will convey a specification of the CI/T
-   Command and its current status.  The HTTP response to the dCDN MUST
+   Command and its current status.  The HTTP response to the uCDN MUST
    have status code 201 and MUST convey the URI of the Trigger Status
    Resource in the Location header field <xref target="RFC7231"/>.  The HTTP response
    SHOULD include the content of the newly created Trigger Status
@@ -1446,13 +1446,13 @@ uCDN-A                         dCDN-B                         dCDN-C
 	<c>cases where completion cannot be confirmed).</c>
 	<c>failed</c>
 	<c>The CI/T Trigger Command could not be completed.</c>
-	<c>canceling</c>
+	<c>cancelling</c>
 	<c>Processing of the CI/T Trigger Command is still in</c>
 	<c></c>
 	<c>progress, but the CI/T Trigger Command has been</c>
 	<c></c>
 	<c>canceled by the uCDN.</c>
-	<c>canceled</c>
+	<c>cancelled</c>
 	<c>The CI/T Trigger Command was canceled by the uCDN.</c>
 	</texttable>
 	</section>
@@ -2136,7 +2136,7 @@ https://video.example.com/k/movie1/4/013.ts
 	<c>Request Routing requests from the uCDN).</c>
 	<c>ecdn</c>
 	<c>An internal error in the dCDN or one of its dCDNs.</c>
-	<c>ecanceled</c>
+	<c>ecancelled</c>
 	<c>The uCDN canceled the request.</c>
 	<c>eunsupported</c>
 	<c>The Trigger Specification contained a "type" that</c>
@@ -3971,7 +3971,7 @@ Error-Description = { ; see Section 5.2.6
 }
 
 Error-Code = "emeta" / "econtent" / "eperm" / "ereject"
-   / "ecdn" / "ecanceled"  ; see Section 5.2.7
+   / "ecdn" / "ecancelled"  ; see Section 5.2.7
 
 Ccid = tstr ; see RFC 8006
 
