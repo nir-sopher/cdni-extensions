@@ -19,7 +19,7 @@
 <!ENTITY RFC7736 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7736.xml">
 <!ENTITY RFC7975 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7975.xml">
 ]>
-<rfc category="std" docName="draft-sopher-cdni-ci-triggers-rfc8007bis-01" obsoletes='8007' ipr="trust200902">
+<rfc category="std" docName="draft-sopher-cdni-ci-triggers-rfc8007bis-02" obsoletes='8007' ipr="trust200902">
 	<?rfc strict="yes"?>
 	<?rfc compact="yes"?>
 	<?rfc subcompact="no"?>
@@ -3774,8 +3774,6 @@ RESPONSE:
 
       <?rfc include="reference.RFC.3339" ?>
 
-      <?rfc include="reference.RFC.8008" ?>
-
       <reference anchor="ABNF" target="https://www.rfc-editor.org/info/rfc5234">
         <front>
           <title>Augmented BNF for Syntax Specifications: ABNF</title>
@@ -3861,40 +3859,6 @@ RESPONSE:
         <seriesInfo name="Edition" value="3"/>
       </reference>
 
-      <reference anchor="SVA" target="https://www.streamingvideoalliance.org">
-          <front>
-            <title>Streaming Video Alliance</title>
-            <author/>
-            <date/>
-          </front>
-        </reference>
-
-        <reference anchor="OCWG" target="https://www.streamingvideoalliance.org/technical-groups/open-caching/">
-          <front>
-            <title>Open Caching</title>
-            <author><organization>Streaming Video Alliance</organization>
-            </author>
-            <date/>
-          </front>
-        </reference>
-
-      <reference anchor="OC-CM" target="https://www.streamingvideoalliance.org/document/open-caching-content-management-operations-specification/">
-          <front>
-            <title>
-              Open Caching Content Management Operations Specification
-            </title>
-            <author initials="O." surname="Finkelman" fullname="Ori Finkelman" role="editor">
-              <organization>Qwilt</organization>
-            </author>
-            <author initials="J." surname="Devabhaktuni" fullname="Jaya Devabhaktuni">
-              <organization>Concurrent</organization>
-            </author>
-            <author initials="M." surname="Stock" fullname="Matt Sanjay Stock">
-              <organization>Limelight Networks</organization>
-            </author>
-            <date month="November" year="2017"/>
-          </front>
-        </reference>
 
 
 	</references>
