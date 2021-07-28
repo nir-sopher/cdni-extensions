@@ -2673,14 +2673,9 @@ Month Number  Month/Year           Maximum value of date-mday
    Note that "metadata.patterns" and "content.patterns" are not allowed
    in a pre-position Trigger Specification.</t>
 
-	<t><list style="hanging" hangIndent="-1"><t hangText="REQUEST:">
-	<vspace blankLines="0"/>
-	</t>
-
-	</list>
-	</t>
-
 	<figure><artwork><![CDATA[
+REQUEST:
+
   POST /triggers HTTP/1.1
   User-Agent: example-user-agent/0.1
   Host: dcdn.example.com
@@ -2742,14 +2737,9 @@ RESPONSE:
    case-insensitive matching, and "https://www.example.com/a/b/" using
    case-sensitive matching, respectively.</t>
 
-	<t><list style="hanging" hangIndent="-1"><t hangText="REQUEST:">
-	<vspace blankLines="0"/>
-	</t>
-
-	</list>
-	</t>
-
 	<figure><artwork><![CDATA[
+REQUEST:
+
   POST /triggers HTTP/1.1
   User-Agent: example-user-agent/0.1
   Host: dcdn.example.com
@@ -2957,14 +2947,10 @@ RESPONSE:
    After creation of the "preposition" and "invalidate" triggers shown
    above, this collection might look as follows:</t>
 
-	<t><list style="hanging" hangIndent="-1"><t hangText="REQUEST:">
-	<vspace blankLines="0"/>
-	</t>
-
-	</list>
-	</t>
 
 	<figure><artwork><![CDATA[
+REQUEST:
+
   GET /triggers HTTP/1.1
   User-Agent: example-user-agent/0.1
   Host: dcdn.example.com
@@ -3002,14 +2988,9 @@ RESPONSE:
    dCDN starts processing the two CI/T Trigger Commands shown above,
    both will appear in the collection of pending triggers.  For example:</t>
 
-	<t><list style="hanging" hangIndent="-1"><t hangText="REQUEST:">
-	<vspace blankLines="0"/>
-	</t>
-
-	</list>
-	</t>
-
 	<figure><artwork><![CDATA[
+REQUEST:
+
   GET /triggers/pending HTTP/1.1
   User-Agent: example-user-agent/0.1
   Host: dcdn.example.com
@@ -3039,14 +3020,9 @@ RESPONSE:
    At this point, if no other Trigger Status Resources had been created,
    the other filtered views would be empty.  For example:</t>
 
-	<t><list style="hanging" hangIndent="-1"><t hangText="REQUEST:">
-	<vspace blankLines="0"/>
-	</t>
-
-	</list>
-	</t>
-
 	<figure><artwork><![CDATA[
+REQUEST:
+
   GET /triggers/complete HTTP/1.1
   User-Agent: example-user-agent/0.1
   Host: dcdn.example.com
@@ -3076,14 +3052,10 @@ RESPONSE:
    individual CI/T Trigger Commands.  For example, for the CI/T
    "preposition" and "invalidate" commands from previous examples:</t>
 
-	<t><list style="hanging" hangIndent="-1"><t hangText="REQUEST:">
-	<vspace blankLines="0"/>
-	</t>
-
-	</list>
-	</t>
 
 	<figure><artwork><![CDATA[
+REQUEST:
+
   GET /triggers/0 HTTP/1.1
   User-Agent: example-user-agent/0.1
   Host: dcdn.example.com
@@ -3168,14 +3140,9 @@ RESPONSE:
    Resources when polling for changes in status, as shown in the
    following examples:</t>
 
-	<t><list style="hanging" hangIndent="-1"><t hangText="REQUEST:">
-	<vspace blankLines="0"/>
-	</t>
-
-	</list>
-	</t>
-
 	<figure><artwork><![CDATA[
+REQUEST:
+
   GET /triggers/pending HTTP/1.1
   User-Agent: example-user-agent/0.1
   Host: dcdn.example.com
@@ -3183,30 +3150,17 @@ RESPONSE:
   If-None-Match: "4331492443626270781"
 
 RESPONSE:
-]]></artwork>
-	</figure>
-	<t><list style="hanging" hangIndent="-1"><?rfc subcompact="yes"?>
-	<t>     HTTP/1.1 304 Not Modified
-     Content-Length: 0
-     Expires: Wed, 04 May 2016 08:49:11 GMT
-     Server: example-server/0.1
-     ETag: "4331492443626270781"
-     Cache-Control: max-age=60
-     Date: Wed, 04 May 2016 08:48:11 GMT
-     Content-Type: application/cdni; ptype=ci-trigger-collection<list style="hanging" hangIndent="-1"><?rfc subcompact="no"?>
-	<t hangText="REQUEST:">
-	<vspace blankLines="0"/>
-	</t>
+   HTTP/1.1 304 Not Modified
+   Content-Length: 0
+   Expires: Wed, 04 May 2016 08:49:11 GMT
+   Server: example-server/0.1
+   ETag: "4331492443626270781"
+   Cache-Control: max-age=60
+   Date: Wed, 04 May 2016 08:48:11 GMT
+   Content-Type: application/cdni; ptype=ci-trigger-collection
 
-	<?rfc subcompact="yes"?>
-	</list>
-	</t>
+REQUEST:
 
-	<?rfc subcompact="no"?>
-	</list>
-	</t>
-
-	<figure><artwork><![CDATA[
   GET /triggers/0 HTTP/1.1
   User-Agent: example-user-agent/0.1
   Host: dcdn.example.com
@@ -3232,14 +3186,9 @@ RESPONSE:
    collections of pending and complete Trigger Status Resources might
    look like:</t>
 
-	<t><list style="hanging" hangIndent="-1"><t hangText="REQUEST:">
-	<vspace blankLines="0"/>
-	</t>
-
-	</list>
-	</t>
-
 	<figure><artwork><![CDATA[
+REQUEST:
+
   GET /triggers/pending HTTP/1.1
   User-Agent: example-user-agent/0.1
   Host: dcdn.example.com
@@ -3295,14 +3244,9 @@ RESPONSE:
    reduce the size of the collections, as described in <xref target="sect-4.4"/>.  For
    example, to delete the "preposition" request from earlier examples:</t>
 
-	<t><list style="hanging" hangIndent="-1"><t hangText="REQUEST:">
-	<vspace blankLines="0"/>
-	</t>
-
-	</list>
-	</t>
-
 	<figure><artwork><![CDATA[
+REQUEST:
+
   DELETE /triggers/0 HTTP/1.1
   User-Agent: example-user-agent/0.1
   Host: dcdn.example.com
@@ -3321,14 +3265,9 @@ RESPONSE:
    This would, for example, cause the collection of completed Trigger
    Status Resources shown in the example above to be updated to:</t>
 
-	<t><list style="hanging" hangIndent="-1"><t hangText="REQUEST:">
-	<vspace blankLines="0"/>
-	</t>
-
-	</list>
-	</t>
-
 	<figure><artwork><![CDATA[
+REQUEST:
+
   GET /triggers/complete HTTP/1.1
   User-Agent: example-user-agent/0.1
   Host: dcdn.example.com
