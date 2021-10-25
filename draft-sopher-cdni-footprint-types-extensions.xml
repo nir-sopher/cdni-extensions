@@ -99,7 +99,7 @@
                 <xref target="RFC8006" />) for the defined objects:
                 <list style="symbols">
                     <t>
-                        ISO3166-2Code Footprint Type (e.g. for dCDN advertising a footprint that is specific to
+                        SubdivisionCode Footprint Type (e.g. for dCDN advertising a footprint that is specific to
                         a State in the USA)
                     </t>
                     <t>
@@ -156,25 +156,25 @@
                 For consistency, this document follows the CDNI notation of uCDN for
                 (the commercial CDN) and dCDN (the ISP caching layer).
             </t>
-            <section anchor="cdni-metadata-iso3166-2code-footprint-type" title="CDNI Metadata ISO3166-2Code Footprint Type">
+            <section anchor="cdni-metadata-subdivisioncode-footprint-type" title="CDNI Metadata SubdivisionCode Footprint Type">
                 <t>
                     Section 4.3.8 of <xref target="RFC8006" />
                     specifies the "Country Code" footprint type
                     for listing <xref target="ISO3166-1"/> alpha-2 codes. Using Footprint Objects of this type, one can define an
                     FCI Capability Advertisement Object footprint constraints that match a specific country.
-                    Here we define the iso3166-2code simple data type, as well as a footprint type
+                    Here we define the subdivisioncode simple data type, as well as a footprint type
                     allowing the dCDN to define constraints matching geographic areas
                     with better granularity, specifically using the <xref target="ISO3166-2"/> Country Subdivision codes.
                 </t>
-                <section anchor="cdni-metadata-iso3166-2code-data-type" title="CDNI Metadata ISO3166-2Code Data Type">
+                <section anchor="cdni-metadata-subdivisioncode-data-type" title="CDNI Metadata SubdivisionCode Data Type">
                     <t>
-                        The "ISO3166-2Code" data type specified in
-                        <xref target="cdni-metadata-iso3166-2code-data-type-description" />,
+                        The "SubdivisionCode" data type specified in
+                        <xref target="cdni-metadata-subdivisioncode-data-type-description" />,
                         describes a country specific subdivision using an <xref target="ISO3166-2"/> code. 
                         The data type is added to the list of data types  described in section 4.3 of
                         <xref target="RFC8006" /> that are used as properties of CDNI Metadata objects.
                     </t>
-                    <section anchor="cdni-metadata-iso3166-2code-data-type-description" title="CDNI Metadata ISO3166-2Code Data Type Description">
+                    <section anchor="cdni-metadata-subdivisioncode-data-type-description" title="CDNI Metadata SubdivisionCode Data Type Description">
                         <t>
                         A <xref target="ISO3166-2"/> code in lower case. Each code consists of two parts, separated by a hyphen. 
                         The first part is the <xref target="ISO3166-1"/> code of the country. The second part is a string of up to three alphanumeric characters.
@@ -185,7 +185,7 @@
                                     Type: String
                                 </t>
                                 <t>
-                                    Example ISO3166-2Codes:
+                                    Example SubdivisionCodes:
                                 </t>
                                 <t>
                                     "ca-ns"
@@ -197,10 +197,10 @@
                         </t>
                     </section>
                 </section>
-                <section anchor="cdni-metadata-iso3166-2code-footprint-type-description" title="CDNI Metadata ISO3166-2Code Footprint Type Description">
+                <section anchor="cdni-metadata-subdivisioncode-footprint-type-description" title="CDNI Metadata SubdivisionCode Footprint Type Description">
                     <t>
-                        The "ISO3166-2Code" simple data type specified in
-                        <xref target="cdni-metadata-iso3166-2code-data-type" />
+                        The "SubdivisionCode" simple data type specified in
+                        <xref target="cdni-metadata-subdivisioncode-data-type" />
                         , is added
                         to the data types listed as footprint types in section 4.2.2.2 of
                         <xref target="RFC8006" />
@@ -208,8 +208,8 @@
                     </t>
                     <t>
                         Below is an adjustment for the example in
-                        <xref target="cdni-metadata-iso3166-2code-data-type" />,
-                        now embedding a footprint object of type "ISO3166-2Code". The Footprint Object in this example creates
+                        <xref target="cdni-metadata-subdivisioncode-data-type" />,
+                        now embedding a footprint object of type "SubdivisionCode". The Footprint Object in this example creates
                         a constraints matching clients both in Nova-Scotia province of Canada (ISO <xref target="ISO3166-2"/> code "CA-NS"), as well as in the state of
                         New-York In the US (ISO <xref target="ISO3166-2"/> code "US-NY").
                     </t>
@@ -223,7 +223,7 @@
       "capability-value": <CDNI capability object>,
       "footprints": [
           {
-              "footprint-type": "iso3166-2code",
+              "footprint-type": "subdivisioncode",
               "footprint-value": ["ca-ns", "us-ny"]
           }
       ]
@@ -287,7 +287,7 @@
                     matches both IPv4 and IPv6 client addresses, we introduce below the "FootprintUnion" footprint type. 
                     This footprint type allows the collection of multiple footprint-objects into a unified object. 
                     It is useful for resolving the above limitaion, as well as for unifying footprints of additional types such as 
-                    countrycode and iso3166-2code.
+                    countrycode and subdivisioncode.
                 </t>
                 <section anchor="cdni-metadata-footprint-union-data-type" title="CDNI Metadata FootprintUnion Data Type">
                     <t>
@@ -335,7 +335,7 @@
                         </artwork>
                     </figure>
                     <t>
-                    An additional example is the collection of countrycode and iso3166-2code based footprint objects. In the example below 
+                    An additional example is the collection of countrycode and subdivisioncode based footprint objects. In the example below 
                     we create a constraint covering autonomous system 64496 within the US (ISO <xref target="ISO3166-1"/> alpha-2 code "US"),
                     as well as Nova-Scotia province of Canada (ISO <xref target="ISO3166-2"/> code "CA-NS").
                     </t>
@@ -360,7 +360,7 @@
               "footprint-value": ["us"]
             },
             {
-              "footprint-type": "iso3166-2code",
+              "footprint-type": "subdivisioncode",
               "footprint-value": ["ca-ns"]
             }
           ]
@@ -392,7 +392,7 @@
                     as defined in
                     <xref target="cdni-metadata-footprint-union-footprint-type" />
                     and
-                    <xref target="cdni-metadata-iso3166-2code-footprint-type" />
+                    <xref target="cdni-metadata-subdivisioncode-footprint-type" />
                     :
                 </t>
                 <texttable>
@@ -406,7 +406,7 @@
                         Specification
                     </ttcol>
                     <c>
-                        FCI.iso3166-2code
+                        FCI.subdivisioncode
                     </c>
                     <c>
                         ISO 3166-2 Country or Subdivision Code
