@@ -1259,7 +1259,7 @@ uCDN-A                         dCDN-B                         dCDN-C
    objects described in <xref target="sect-5.1"/>, and their encodings.</t>
 
 	<section title="Trigger Specification" anchor="sect-5.2.1"><t>
-   A Trigger Collection is encoded as a JSON object containing the
+   A Trigger.v2 Specification is encoded as a JSON object containing the
    following name/value pairs.</t>
 
 	<t>
@@ -1268,13 +1268,24 @@ uCDN-A                         dCDN-B                         dCDN-C
    Specification of any Trigger Status Resource it creates.</t>
 
 	<t><list style="empty" hangIndent="3">
-	<t><list style="hanging" hangIndent="3"><t hangText="Name: type">
+	<t><list style="hanging" hangIndent="3">
+   
+   <t hangText="Name: type">
 	<vspace blankLines="1"/>
 	Description: Defines the type of the CI/T Trigger Command.
 	<vspace blankLines="1"/>
 	Value: Trigger Type, as defined in <xref target="sect-5.2.2"/>.
 	<vspace blankLines="1"/>
 	Mandatory: Yes.
+	</t>
+
+	<t hangText="Name: scopes">
+	<vspace blankLines="1"/>
+	Description: Array of trigger scope data.
+	<vspace blankLines="1"/>
+	Value: Array of GenericTriggerScope objects (see <xref target="generic-scope-object"/>).
+	<vspace blankLines="1"/>
+	Mandatory: Yes. TODO(nirs): Can the list be empty???
 	</t>
 
 	<t hangText="Name: metadata.urls">
@@ -1456,6 +1467,89 @@ uCDN-A                         dCDN-B                         dCDN-C
 	<c>The CI/T Trigger Command was canceled by the uCDN.</c>
 	</texttable>
 	</section>
+
+   <section anchor="trigger-scope" title="CI/T Trigger Scopes">
+   <t>
+   A "trigger.v2" object, as defined in <xref target="sect-5.2.1"/> includes an
+   array of trigger scope objects. A trigger scope contains properties
+   that are used as trigger subject selection directives for dCDN when executing 
+   the trigger command -- for example content urls or metadata patterns. Each such CDNI Trigger 
+   Scope is a specialization
+   of a CDNI GenericTriggerScope object. The GenericTriggerScope object abstracts the basic
+   information required for trigger distribution from the specifics of any given property
+   (i.e., property semantics, enforcement options, etc.). The semantics of the Trigger Scopes list 
+   is addative, i.e. the trigger applies to any object matching one of the listed scopes.
+   </t>
+
+
+
+
+
+
+
+          <section anchor="generic-scope-object" title="GenericScopeObject">
+            <t>A GenericScopeObject object is a wrapper for managing individual CDNI
+               Trigger scope in an opaque manner.</t>
+
+            <t><list style="empty">
+              <t>Property: generic-trigger-scope-subject-type<list style="empty">
+
+                 <t>Description: Case-insensitive CDNI Trigger scope subject type.</t>
+
+                 <t>Type: String containing the type of the subject matching the 
+                    generic-trigger-scope-value property, such as "content" or "metadata" 
+                    as define in registery (TODO).</t>
+
+                 <t>Mandatory: Yes.</t>
+              </list></t>
+
+              <t>Property: generic-trigger-scope-type<list style="empty">
+
+                 <t>Description: Case-insensitive CDNI Trigger scope type.</t>
+
+                 <t>Type: String containing the scope type of the object contained
+                    in the generic-trigger-scope-value property (see table in <xref target="sect-7.1"/>).</t>
+
+                 <t>Mandatory: Yes.</t>
+              </list></t>
+
+              <t>Property: generic-trigger-scope-values<list style="empty">
+
+                 <t>Description: An array of CDNI Trigger scope object.</t>
+
+                 <t>Type: Format/Type is defined by the value of the
+                    generic-trigger-scope-type property above.</t>
+
+                 <t>Mandatory: Yes.</t>
+              </list></t>
+
+            </list></t>
+            <t>Example of a JSON serialized GenericTriggerExtension object containing a specific trigger extension object:</t>
+
+        <figure>
+          <artwork><![CDATA[
+
+{
+  "generic-trigger-extension-type":
+     <Type of this trigger extension object>,
+  "generic-trigger-extension-value":
+      {
+        <properties of this trigger extension object>
+      },
+  "mandatory-to-enforce": true,
+  "safe-to-redistribute": true,
+  "incomprehensible": false
+}
+
+       ]]></artwork>
+        </figure>
+          </section>
+
+
+
+
+
+
 
 	<section title="PatternMatch" anchor="sect-5.2.4"><t>
    A PatternMatch consists of a string pattern to match against a URI,
@@ -1649,7 +1743,7 @@ https://video.example.com/k/movie1/4/013.ts
           <t>"dash"</t>
         </section>
 
-
+        </section>
         <section anchor="trigger-extensions" title="CI/T Trigger Extensions">
           <t>
             A "trigger.v2" object, as defined in <xref target="sect-5.2.1"/> includes an
