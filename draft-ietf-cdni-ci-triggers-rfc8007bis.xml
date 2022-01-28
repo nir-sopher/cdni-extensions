@@ -1487,11 +1487,21 @@ uCDN-A                         dCDN-B                         dCDN-C
 
 
 
-          <section anchor="generic-scope-object" title="GenericScopeObject">
+          <section anchor="generic-scope-object" title="Generic Scope Object">
             <t>A GenericScopeObject object is a wrapper for managing individual CDNI
                Trigger scope in an opaque manner.</t>
 
             <t><list style="empty">
+              <t>Property: generic-trigger-scope-type<list style="empty">
+
+                 <t>Description: Case-insensitive CDNI Trigger scope type.</t>
+
+                 <t>Type: String containing the scope type of the object contained
+                    in the generic-trigger-scope-value property (see table in <xref target="sect-7.1"/>).</t>
+
+                 <t>Mandatory: Yes.</t>
+              </list></t>
+
               <t>Property: generic-trigger-scope-subject-type<list style="empty">
 
                  <t>Description: Case-insensitive CDNI Trigger scope subject type.</t>
@@ -1499,16 +1509,6 @@ uCDN-A                         dCDN-B                         dCDN-C
                  <t>Type: String containing the type of the subject matching the 
                     generic-trigger-scope-value property, such as "content" or "metadata" 
                     as define in registery (TODO).</t>
-
-                 <t>Mandatory: Yes.</t>
-              </list></t>
-
-              <t>Property: generic-trigger-scope-type<list style="empty">
-
-                 <t>Description: Case-insensitive CDNI Trigger scope type.</t>
-
-                 <t>Type: String containing the scope type of the object contained
-                    in the generic-trigger-scope-value property (see table in <xref target="sect-7.1"/>).</t>
 
                  <t>Mandatory: Yes.</t>
               </list></t>
@@ -1530,15 +1530,14 @@ uCDN-A                         dCDN-B                         dCDN-C
           <artwork><![CDATA[
 
 {
-  "generic-trigger-extension-type":
-     <Type of this trigger extension object>,
-  "generic-trigger-extension-value":
+  "generic-trigger-scope-type":
+     <Type of this trigger scope subject>,
+  "generic-trigger-scope-subject-type":
+     <Type of this trigger scope subject>,
+  "generic-trigger-scope-value":
       {
-        <properties of this trigger extension object>
-      },
-  "mandatory-to-enforce": true,
-  "safe-to-redistribute": true,
-  "incomprehensible": false
+        <properties of this trigger scope object>
+      }
 }
 
        ]]></artwork>
