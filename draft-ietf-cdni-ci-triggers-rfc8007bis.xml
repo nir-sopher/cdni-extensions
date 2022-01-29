@@ -1288,89 +1288,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 	Mandatory: Yes. TODO(nirs): Can the list be empty???
 	</t>
 
-	<t hangText="Name: metadata.urls">
-	<vspace blankLines="1"/>
-	Description: The uCDN URLs of the metadata the CI/T Trigger
-         Command applies to.
-	<vspace blankLines="1"/>
-	Value: A JSON array of URLs represented as JSON strings.
-	<vspace blankLines="1"/>
-	Mandatory: No, but at least one of "metadata.*" or "content.*"
-         MUST be present and non-empty.
-	</t>
-
-	<t hangText="Name: content.urls">
-	<vspace blankLines="1"/>
-	Description: URLs of content the CI/T Trigger Command applies
-         to.  See <xref target="sect-4.8"/>.
-	<vspace blankLines="1"/>
-	Value: A JSON array of URLs represented as JSON strings.
-	<vspace blankLines="1"/>
-	Mandatory: No, but at least one of "metadata.*" or "content.*"
-         MUST be present and non-empty.
-	</t>
-
-	<t hangText="Name: content.ccid">
-	<vspace blankLines="1"/>
-	Description: The Content Collection IDentifier of content the
-         trigger applies to.  The "ccid" is a grouping of content, as
-         defined by <xref target="RFC8006"/>.
-	<vspace blankLines="1"/>
-	Value: A JSON array of strings, where each string is a Content
-         Collection IDentifier.
-	<vspace blankLines="1"/>
-	Mandatory: No, but at least one of "metadata.*" or "content.*"
-         MUST be present and non-empty.
-	</t>
-
-	<t hangText="Name: metadata.patterns">
-	<vspace blankLines="1"/>
-	Description: The metadata the trigger applies to.
-	<vspace blankLines="1"/>
-	Value: A JSON array of PatternMatch objects, as defined in
-         <xref target="sect-5.2.4"/>.
-	<vspace blankLines="1"/>
-	Mandatory: No, but at least one of "metadata.*" or "content.*"
-         MUST be present and non-empty, and metadata.patterns MUST NOT
-         be present if the Trigger Type is "preposition".
-	</t>
-
-	<t hangText="Name: content.patterns">
-	<vspace blankLines="1"/>
-	Description: The content data the trigger applies to.
-	<vspace blankLines="1"/>
-	Value: A JSON array of PatternMatch objects, as defined in
-         <xref target="sect-5.2.4"/>.
-	<vspace blankLines="1"/>
-	Mandatory: No, but at least one of "metadata.*" or "content.*"
-         MUST be present and non-empty, and content.patterns MUST NOT be
-         present if the Trigger Type is "preposition".
-	</t>
-
-	<t hangText="Name: content.regexs">
-	<vspace blankLines="1"/>
-	Description: Regexs of content URLs to which the CI/T trigger command applies.
-	<vspace blankLines="1"/>
-	Value: A JSON array of RegexMatch objects (see <xref target="regex-match"/>).
-	<vspace blankLines="1"/>
-	Mandatory: No, but at least one of "metadata.*" or "content.*"
-         MUST be present and non-empty, and content.patterns MUST NOT be
-         present if the Trigger Type is "preposition".
-	</t>
-
-
-	<t hangText="Name: content.playlists">
-	<vspace blankLines="1"/>
-	Description: Playlists of content the CI/T trigger command applies to.
-	<vspace blankLines="1"/>
-	Value: A JSON array of Playlist objects (see <xref target="playlist"/>).
-	<vspace blankLines="1"/>
-	Mandatory: No, but at least one of "metadata.*" or "content.*"
-         MUST be present and non-empty, and content.patterns MUST NOT be
-         present if the Trigger Type is "preposition".
-	</t>
-
-
+	
 	<t hangText="Name: extensions">
 	<vspace blankLines="1"/>
 	Description: Array of trigger extension data.
@@ -1549,198 +1467,6 @@ uCDN-A                         dCDN-B                         dCDN-C
 
 
 
-
-	<section title="PatternMatch" anchor="sect-5.2.4"><t>
-   A PatternMatch consists of a string pattern to match against a URI,
-   and flags describing the type of match.</t>
-
-	<t><list style="hanging" hangIndent="3"><t hangText="It is encoded as a JSON object with the following name/value pairs:">
-	<vspace blankLines="1"/>
-	Name: pattern
-	<vspace blankLines="1"/>
-	Description: A pattern for URI matching.
-	<vspace blankLines="1"/>
-	Value: A JSON string representing the pattern.  The pattern can
-         contain the wildcards * and ?, where * matches any sequence of
-         <xref target="RFC3986"/> pchar or "/" characters (including the empty string)
-         and ? matches exactly one <xref target="RFC3986"/> pchar character.  The three
-         literals $, * and ? MUST be escaped as $$, $* and $? (where $
-         is the designated escape character).  All other characters are
-         treated as literals.
-	<vspace blankLines="1"/>
-	Mandatory: Yes.
-	<list style="hanging" hangIndent="3"><t hangText="Name: case-sensitive">
-	<vspace blankLines="1"/>
-	Description: Flag indicating whether or not case-sensitive
-         matching should be used.
-	<vspace blankLines="1"/>
-	Value: One of the JSON values "true" (the matching is case
-         sensitive) or "false" (the matching is case insensitive).
-	<vspace blankLines="1"/>
-	Mandatory: No; default is case-insensitive match.
-	</t>
-
-	<t hangText="Name: match-query-string">
-	<vspace blankLines="1"/>
-	Description: Flag indicating whether to include the query part
-         of the URI when comparing against the pattern.
-	<vspace blankLines="1"/>
-	Value: One of the JSON values "true" (the full URI, including
-         the query part, should be compared against the given pattern)
-         or "false" (the query part of the URI should be dropped before
-         comparison with the given pattern).
-	<vspace blankLines="1"/>
-	Mandatory: No; default is "false".  The query part of the URI
-         should be dropped before comparison with the given pattern.
-	</t>
-
-	</list>
-	</t>
-
-	</list>
-	</t>
-
-	<t>
-   Example of case-sensitive prefix match against
-   "https://www.example.com/trailers/":</t>
-
-	<figure><artwork><![CDATA[
-{
-    "pattern": "https://www.example.com/trailers/*",
-    "case-sensitive": true
-}
-]]></artwork>
-	</figure>
-	</section>
-
-
-
-
-        <section anchor="regex-match" title="RegexMatch">
-          <t>
-             A RegexMatch consists of a regular expression string a URI is matched against,
-             and flags describing the type of match. It is encoded as a JSON object with
-             following properties:
-          </t>
-
-          <t><list style="empty">
-            <t>Property: regex<list style="empty">
-
-              <t>Description: A regular expression for URI matching. </t>
-
-              <t>Type: A regular expression to match against the URI, i.e against the path-absolute
-                 and the query string parameters <xref target="RFC3986"/>. The regular expression
-                 string MUST be compatible with <xref target="PCRE841">PCRE</xref>.</t>
-
-              <t>Note: Because '\' has a special meaning in JSON <xref target="RFC8259"/> as the escape
-                 character within JSON strings, the regular expression character '\' MUST be escaped as '\\'.</t>
-
-              <t>Mandatory: Yes.</t>
-            </list></t>
-            <t>Property: case-sensitive<list style="empty">
-
-              <t>Description: Flag indicating whether or not case-sensitive matching should be used. </t>
-
-              <t>Type: JSON boolean. Either "true" (the matching is case sensitive) or "false"
-                 (the matching is case insensitive).</t>
-
-              <t>Mandatory: No; default is case-insensitive match (i.e., a value of "false").</t>
-            </list></t>
-            <t>Property: match-query-string<list style="empty">
-
-              <t>Description: Flag indicating whether to include the query part of the URI when
-                 comparing against the regex.</t>
-
-              <t>Type: JSON boolean. Either "true" (the full URI, including the query part,
-                 should be compared against the regex) or "false" (the query part of the URI
-                 should be dropped before comparison with the given regex).</t>
-
-              <t>Mandatory: No; default is "false".  The query part of the URI MUST be dropped
-                 before comparison with the given regex. This makes the regular expression simpler
-                 and safer for cases in which the query parameters are not relevant for the match.</t>
-            </list></t>
-          </list></t>
-
-          <t>Example of a case sensitive, no query parameters, regex match against:</t>
-          <figure>
-            <artwork><![CDATA[
-"^(https:\/\/video\.example\.com)\/([a-z])\/
- movie1\/([1-7])\/*(index.m3u8|\d{3}.ts)$"
-         ]]></artwork>
-          </figure>
-
-          <figure>
-            <artwork><![CDATA[
-{
-  "regex": "^(https:\\/\\/video\\.example\\.com)\\/([a-z])\\/movie1\
-           \/([1-7])\\/*(index.m3u8|\\d{3}.ts)$",
-  "case-sensitive": true,
-  "match-query-string": false
-}
-
-         ]]></artwork>
-          </figure>
-
-          <t>This regex matches URLs of domain video.example.com where the path structure is
-             /(single lower case letter)/(name-of-title)/(single digit between 1 to 7)/(index.m3u8 or a 3 digit number with ts extension).
-             For example:</t>
-          <figure>
-            <artwork><![CDATA[
-https://video.example.com/d/movie1/5/index.m3u8
-or
-https://video.example.com/k/movie1/4/013.ts
-         ]]></artwork>
-          </figure>
-        </section>
-
-        <section anchor="playlist" title="Playlist">
-          <t>A Playlist consists of a full URL and a media protocol identifier.
-             An implementation that supports a specific playlist media protocol MUST be able to parse playlist
-             files of that protocol type and extract, possibly recursively, the URLs to all media objects
-             and/or sub playlist files, and apply the trigger to each one of them separately.</t>
-
-          <t>Playlist is encoded as a JSON object with following properties:</t>
-
-          <t><list style="empty">
-             <t>Property: playlist<list style="empty">
-
-               <t>Description: A URL to the playlist file.</t>
-
-               <t>Type: A URL represented as a JSON string.</t>
-
-               <t>Mandatory: Yes.</t>
-             </list></t>
-             <t>Property: media-protocol<list style="empty">
-
-                <t>Description: Media protocol to be when parsing and interpreting this playlist. </t>
-
-                <t>Type: MediaProtocol (see <xref target="media-protocol"/>).</t>
-
-                <t>Mandatory: Yes.</t>
-             </list></t>
-          </list></t>
-          <t>Example of a JSON serialized HLS playlist object:</t>
-
-           <figure>
-            <artwork><![CDATA[
-{
-  "playlist": "https://www.example.com/hls/title/index.m3u8",
-  "media-protocol": "hls"
-}
-
-         ]]></artwork>
-           </figure>
-
-        </section>
-
-        <section anchor="media-protocol" title="MediaProtocol">
-          <t>Media Protocol objects are used to specify registered type of media protocol
-             (see <xref target="IANA.CDNI.MediaProtocolReg"/>) used for protocol related
-             operations like pre-position according to playlist.</t>
-          <t>Type: JSON string</t>
-          <t>Example:</t>
-          <t>"dash"</t>
-        </section>
 
         </section>
         <section anchor="trigger-extensions" title="CI/T Trigger Extensions">
@@ -2253,6 +1979,349 @@ https://video.example.com/k/movie1/4/013.ts
 	</section>
 
 	</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <section anchor="trigger-scope-objects" title="Trigger Scope Objects">
+      <t>The objects defined below are intended to be used in the GenericTriggerScope
+         object's generic-trigger-scope-value field as defined in Section
+         <xref target="generic-scope-object"/>, and their generic-trigger-scope-type
+         property MUST be set to the appropriate CDNI Payload Type as defined in <xref target="sect-7.1"/> .
+         TODO Registration of generic-trigger-scope-subject-type.
+      </t>
+
+
+
+
+
+
+
+
+<t hangText="Name: metadata.urls">
+	<vspace blankLines="1"/>
+	Description: The uCDN URLs of the metadata the CI/T Trigger
+         Command applies to.
+	<vspace blankLines="1"/>
+	Value: A JSON array of URLs represented as JSON strings.
+	<vspace blankLines="1"/>
+	Mandatory: No, but at least one of "metadata.*" or "content.*"
+         MUST be present and non-empty.
+	</t>
+
+	<t hangText="Name: content.urls">
+	<vspace blankLines="1"/>
+	Description: URLs of content the CI/T Trigger Command applies
+         to.  See <xref target="sect-4.8"/>.
+	<vspace blankLines="1"/>
+	Value: A JSON array of URLs represented as JSON strings.
+	<vspace blankLines="1"/>
+	Mandatory: No, but at least one of "metadata.*" or "content.*"
+         MUST be present and non-empty.
+	</t>
+
+	<t hangText="Name: content.ccid">
+	<vspace blankLines="1"/>
+	Description: The Content Collection IDentifier of content the
+         trigger applies to.  The "ccid" is a grouping of content, as
+         defined by <xref target="RFC8006"/>.
+	<vspace blankLines="1"/>
+	Value: A JSON array of strings, where each string is a Content
+         Collection IDentifier.
+	<vspace blankLines="1"/>
+	Mandatory: No, but at least one of "metadata.*" or "content.*"
+         MUST be present and non-empty.
+	</t>
+
+	<t hangText="Name: metadata.patterns">
+	<vspace blankLines="1"/>
+	Description: The metadata the trigger applies to.
+	<vspace blankLines="1"/>
+	Value: A JSON array of PatternMatch objects, as defined in
+         <xref target="sect-5.2.4"/>.
+	<vspace blankLines="1"/>
+	Mandatory: No, but at least one of "metadata.*" or "content.*"
+         MUST be present and non-empty, and metadata.patterns MUST NOT
+         be present if the Trigger Type is "preposition".
+	</t>
+
+	<t hangText="Name: content.patterns">
+	<vspace blankLines="1"/>
+	Description: The content data the trigger applies to.
+	<vspace blankLines="1"/>
+	Value: A JSON array of PatternMatch objects, as defined in
+         <xref target="sect-5.2.4"/>.
+	<vspace blankLines="1"/>
+	Mandatory: No, but at least one of "metadata.*" or "content.*"
+         MUST be present and non-empty, and content.patterns MUST NOT be
+         present if the Trigger Type is "preposition".
+	</t>
+
+	<t hangText="Name: content.regexs">
+	<vspace blankLines="1"/>
+	Description: Regexs of content URLs to which the CI/T trigger command applies.
+	<vspace blankLines="1"/>
+	Value: A JSON array of RegexMatch objects (see <xref target="regex-match"/>).
+	<vspace blankLines="1"/>
+	Mandatory: No, but at least one of "metadata.*" or "content.*"
+         MUST be present and non-empty, and content.patterns MUST NOT be
+         present if the Trigger Type is "preposition".
+	</t>
+
+
+	<t hangText="Name: content.playlists">
+	<vspace blankLines="1"/>
+	Description: Playlists of content the CI/T trigger command applies to.
+	<vspace blankLines="1"/>
+	Value: A JSON array of Playlist objects (see <xref target="playlist"/>).
+	<vspace blankLines="1"/>
+	Mandatory: No, but at least one of "metadata.*" or "content.*"
+         MUST be present and non-empty, and content.patterns MUST NOT be
+         present if the Trigger Type is "preposition".
+	</t>
+
+
+
+
+
+
+	<section title="PatternMatch" anchor="sect-5.2.4"><t>
+   A PatternMatch consists of a string pattern to match against a URI,
+   and flags describing the type of match.</t>
+
+	<t><list style="hanging" hangIndent="3"><t hangText="It is encoded as a JSON object with the following name/value pairs:">
+	<vspace blankLines="1"/>
+	Name: pattern
+	<vspace blankLines="1"/>
+	Description: A pattern for URI matching.
+	<vspace blankLines="1"/>
+	Value: A JSON string representing the pattern.  The pattern can
+         contain the wildcards * and ?, where * matches any sequence of
+         <xref target="RFC3986"/> pchar or "/" characters (including the empty string)
+         and ? matches exactly one <xref target="RFC3986"/> pchar character.  The three
+         literals $, * and ? MUST be escaped as $$, $* and $? (where $
+         is the designated escape character).  All other characters are
+         treated as literals.
+	<vspace blankLines="1"/>
+	Mandatory: Yes.
+	<list style="hanging" hangIndent="3"><t hangText="Name: case-sensitive">
+	<vspace blankLines="1"/>
+	Description: Flag indicating whether or not case-sensitive
+         matching should be used.
+	<vspace blankLines="1"/>
+	Value: One of the JSON values "true" (the matching is case
+         sensitive) or "false" (the matching is case insensitive).
+	<vspace blankLines="1"/>
+	Mandatory: No; default is case-insensitive match.
+	</t>
+
+	<t hangText="Name: match-query-string">
+	<vspace blankLines="1"/>
+	Description: Flag indicating whether to include the query part
+         of the URI when comparing against the pattern.
+	<vspace blankLines="1"/>
+	Value: One of the JSON values "true" (the full URI, including
+         the query part, should be compared against the given pattern)
+         or "false" (the query part of the URI should be dropped before
+         comparison with the given pattern).
+	<vspace blankLines="1"/>
+	Mandatory: No; default is "false".  The query part of the URI
+         should be dropped before comparison with the given pattern.
+	</t>
+
+	</list>
+	</t>
+
+	</list>
+	</t>
+
+	<t>
+   Example of case-sensitive prefix match against
+   "https://www.example.com/trailers/":</t>
+
+	<figure><artwork><![CDATA[
+{
+    "pattern": "https://www.example.com/trailers/*",
+    "case-sensitive": true
+}
+]]></artwork>
+	</figure>
+	</section>
+
+
+
+
+        <section anchor="regex-match" title="RegexMatch">
+          <t>
+             A RegexMatch consists of a regular expression string a URI is matched against,
+             and flags describing the type of match. It is encoded as a JSON object with
+             following properties:
+          </t>
+
+          <t><list style="empty">
+            <t>Property: regex<list style="empty">
+
+              <t>Description: A regular expression for URI matching. </t>
+
+              <t>Type: A regular expression to match against the URI, i.e against the path-absolute
+                 and the query string parameters <xref target="RFC3986"/>. The regular expression
+                 string MUST be compatible with <xref target="PCRE841">PCRE</xref>.</t>
+
+              <t>Note: Because '\' has a special meaning in JSON <xref target="RFC8259"/> as the escape
+                 character within JSON strings, the regular expression character '\' MUST be escaped as '\\'.</t>
+
+              <t>Mandatory: Yes.</t>
+            </list></t>
+            <t>Property: case-sensitive<list style="empty">
+
+              <t>Description: Flag indicating whether or not case-sensitive matching should be used. </t>
+
+              <t>Type: JSON boolean. Either "true" (the matching is case sensitive) or "false"
+                 (the matching is case insensitive).</t>
+
+              <t>Mandatory: No; default is case-insensitive match (i.e., a value of "false").</t>
+            </list></t>
+            <t>Property: match-query-string<list style="empty">
+
+              <t>Description: Flag indicating whether to include the query part of the URI when
+                 comparing against the regex.</t>
+
+              <t>Type: JSON boolean. Either "true" (the full URI, including the query part,
+                 should be compared against the regex) or "false" (the query part of the URI
+                 should be dropped before comparison with the given regex).</t>
+
+              <t>Mandatory: No; default is "false".  The query part of the URI MUST be dropped
+                 before comparison with the given regex. This makes the regular expression simpler
+                 and safer for cases in which the query parameters are not relevant for the match.</t>
+            </list></t>
+          </list></t>
+
+          <t>Example of a case sensitive, no query parameters, regex match against:</t>
+          <figure>
+            <artwork><![CDATA[
+"^(https:\/\/video\.example\.com)\/([a-z])\/
+ movie1\/([1-7])\/*(index.m3u8|\d{3}.ts)$"
+         ]]></artwork>
+          </figure>
+
+          <figure>
+            <artwork><![CDATA[
+{
+  "regex": "^(https:\\/\\/video\\.example\\.com)\\/([a-z])\\/movie1\
+           \/([1-7])\\/*(index.m3u8|\\d{3}.ts)$",
+  "case-sensitive": true,
+  "match-query-string": false
+}
+
+         ]]></artwork>
+          </figure>
+
+          <t>This regex matches URLs of domain video.example.com where the path structure is
+             /(single lower case letter)/(name-of-title)/(single digit between 1 to 7)/(index.m3u8 or a 3 digit number with ts extension).
+             For example:</t>
+          <figure>
+            <artwork><![CDATA[
+https://video.example.com/d/movie1/5/index.m3u8
+or
+https://video.example.com/k/movie1/4/013.ts
+         ]]></artwork>
+          </figure>
+        </section>
+
+        <section anchor="playlist" title="Playlist">
+          <t>A Playlist consists of a full URL and a media protocol identifier.
+             An implementation that supports a specific playlist media protocol MUST be able to parse playlist
+             files of that protocol type and extract, possibly recursively, the URLs to all media objects
+             and/or sub playlist files, and apply the trigger to each one of them separately.</t>
+
+          <t>Playlist is encoded as a JSON object with following properties:</t>
+
+          <t><list style="empty">
+             <t>Property: playlist<list style="empty">
+
+               <t>Description: A URL to the playlist file.</t>
+
+               <t>Type: A URL represented as a JSON string.</t>
+
+               <t>Mandatory: Yes.</t>
+             </list></t>
+             <t>Property: media-protocol<list style="empty">
+
+                <t>Description: Media protocol to be when parsing and interpreting this playlist. </t>
+
+                <t>Type: MediaProtocol (see <xref target="media-protocol"/>).</t>
+
+                <t>Mandatory: Yes.</t>
+             </list></t>
+          </list></t>
+          <t>Example of a JSON serialized HLS playlist object:</t>
+
+           <figure>
+            <artwork><![CDATA[
+{
+  "playlist": "https://www.example.com/hls/title/index.m3u8",
+  "media-protocol": "hls"
+}
+
+         ]]></artwork>
+           </figure>
+
+        </section>
+
+        <section anchor="media-protocol" title="MediaProtocol">
+          <t>Media Protocol objects are used to specify registered type of media protocol
+             (see <xref target="IANA.CDNI.MediaProtocolReg"/>) used for protocol related
+             operations like pre-position according to playlist.</t>
+          <t>Type: JSON string</t>
+          <t>Example:</t>
+          <t>"dash"</t>
+        </section>
+
+        </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     <section anchor="trigger-extension-objects" title="Trigger Extension Objects">
