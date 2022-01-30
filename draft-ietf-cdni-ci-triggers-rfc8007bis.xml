@@ -1924,31 +1924,6 @@ uCDN-A                         dCDN-B                         dCDN-C
 	</section>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <section anchor="trigger-scope-objects" title="Trigger Scope Objects">
       <t>The objects defined below are intended to be used in the GenericTriggerScope
          object's generic-trigger-scope-value field as defined in Section
@@ -1957,23 +1932,37 @@ uCDN-A                         dCDN-B                         dCDN-C
       </t>
 
 
-
-
-
-
-
-      <section anchor="url-scope" title="URL Scope Type">
-        <t>The URL scope type allows the uCDN to manage content and Metadata
-           based on their URLs.
+      <section anchor="metadata-urls-scope" title="Metadata URLs Scope">
+        <t>The metadata-urls scope type allows the uCDN to manage uCDN metadata objects
+           held by the dCDN based on the metadata's URLs.
         </t>
 
-         <t>Object specification<list style="empty">
+         <t>Scope object specification<list style="empty">
 
               <t>Property: urls<list style="empty">
 
                  <t>Description: An array of URLs to on which the trigger MUST be executed.</t>
 
-                 <t>Type:A JSON array of URLs represented as JSON strings.</t>
+                 <t>Value: A JSON array of URLs represented as JSON strings.</t>
+
+                 <t>Mandatory: Yes.</t>
+              </list></t>
+          </list></t>
+      </section>
+
+
+      <section anchor="content-urls-scope" title="Content URLs Scope">
+        <t>The content-urls scope type allows the uCDN to manage content held by the dCDN
+           based on the content's URLs.
+        </t>
+
+         <t>Scope object specification<list style="empty">
+
+              <t>Property: urls<list style="empty">
+
+                 <t>Description: An array of URLs to on which the trigger MUST be executed.</t>
+
+                 <t>Value: A JSON array of URLs represented as JSON strings.</t>
 
                  <t>Mandatory: Yes.</t>
               </list></t>
@@ -1983,10 +1972,10 @@ uCDN-A                         dCDN-B                         dCDN-C
         www.example.com/path/to/content.
         </t>
 
-        <figure>
+        <figure> 
           <artwork><![CDATA[
 {
-   "generic-trigger-scope-type": "CIT.UrlScope",
+   "generic-trigger-scope-type": "CIT.content-url",
    "generic-trigger-scope-value":
     {
       "urls": [
@@ -1996,80 +1985,111 @@ uCDN-A                         dCDN-B                         dCDN-C
 }
        ]]></artwork>
        </figure>
-
-
       </section>
+
+
+
+
+
+      <section anchor="content-ccids-scope" title="Content CCIDs Scope">
+        <t> The content-ccids scope type allows to specify the
+        Content Collection IDentifier of content the trigger applies to.
+        The "ccid" is a grouping of content, as defined by <xref target="RFC8006"/>.
+        </t>
+
+         <t>Scope object specification<list style="empty">
+
+              <t>Property: ccids<list style="empty">
+
+                 <t>Description: An array of Content Collection IDentifier to on which the trigger MUST be executed.</t>
+
+                 <t>Value: A JSON array of strings, where each string is a Content Collection IDentifier.</t>
+
+                 <t>Mandatory: Yes.</t>
+              </list></t>
+          </list></t>
+      </section>
+
+     <section anchor="metadata-uri-patterns-scope" title="Metadata URI Patterns Scope">
+        <t>The metadata-uri-patterns scope type allows the uCDN to manage uCDN metadata objects
+           held by the dCDN based on the metadata's URI patterns.
+        </t>
+
+         <t>Scope object specification<list style="empty">
+
+              <t>Property: patterns<list style="empty">
+
+                 <t>Description: The metadata URI patterns the trigger applies to.</t>
+
+                 <t>Value: A JSON array of UriPatternMatch objects, as defined in <xref target="sect-5.2.4"/>.</t>
+
+                 <t>Mandatory: Yes.</t>
+              </list></t>
+          </list></t>
+      </section>
+
+
+     <section anchor="content-uri-patterns-scope" title="Content URI Patterns Scope">
+        <t>The content-uri-patterns scope type allows the uCDN to manage content held by the dCDN
+           based on the content's URI patterns.
+        </t>
+
+         <t>Scope object specification<list style="empty">
+
+              <t>Property: patterns<list style="empty">
+
+                 <t>Description: The content URI patterns the trigger applies to.</t>
+
+                 <t>Value: A JSON array of UriPatternMatch objects, as defined in <xref target="sect-5.2.4"/>.</t>
+
+                 <t>Mandatory: Yes.</t>
+              </list></t>
+          </list></t>
+      </section>
+
+
+     <section anchor="content-url-regexes-scope" title="Content URL Regexes Scope">
+        <t>The content-url-regexes scope type allows the uCDN to manage content held by the dCDN
+           based on the content's URL regexes.
+        </t>
+
+         <t>Scope object specification<list style="empty">
+
+              <t>Property: regexes<list style="empty">
+
+                 <t>Description: The content URL regexes the trigger applies to.</t>
+
+                 <t>Value: A JSON array of RegexMatch objects (see <xref target="regex-match"/>).</t>
+
+                 <t>Mandatory: Yes.</t>
+              </list></t>
+          </list></t>
+      </section>
+
+     <section anchor="content-playlists-scope" title="Content Playlists Scope">
+        <t>The content-playlists scope type allows the uCDN to manage content held by the dCDN
+           based on the content's playlists. TODO
+        </t>
+
+         <t>Scope object specification<list style="empty">
+
+              <t>Property: playlists<list style="empty">
+
+                 <t>Description: The content playlists the trigger applies to.</t>
+
+                 <t>Value: A JSON array of Playlist objects (see <xref target="playlist"/>).</t>
+
+                 <t>Mandatory: Yes.</t>
+              </list></t>
+          </list></t>
+      </section>
+
  </section>
 
 <section anchor="trigger-scope-objects2" title="Trigger Scope Objects2">
-    
-	<t hangText="Name: content.ccid">
-	<vspace blankLines="1"/>
-	Description: The Content Collection IDentifier of content the
-         trigger applies to.  The "ccid" is a grouping of content, as
-         defined by <xref target="RFC8006"/>.
-	<vspace blankLines="1"/>
-	Value: A JSON array of strings, where each string is a Content
-         Collection IDentifier.
-	<vspace blankLines="1"/>
-	Mandatory: No, but at least one of "metadata.*" or "content.*"
-         MUST be present and non-empty.
-	</t>
 
-	<t hangText="Name: metadata.patterns">
-	<vspace blankLines="1"/>
-	Description: The metadata the trigger applies to.
-	<vspace blankLines="1"/>
-	Value: A JSON array of PatternMatch objects, as defined in
-         <xref target="sect-5.2.4"/>.
-	<vspace blankLines="1"/>
-	Mandatory: No, but at least one of "metadata.*" or "content.*"
-         MUST be present and non-empty, and metadata.patterns MUST NOT
-         be present if the Trigger Type is "preposition".
-	</t>
-
-	<t hangText="Name: content.patterns">
-	<vspace blankLines="1"/>
-	Description: The content data the trigger applies to.
-	<vspace blankLines="1"/>
-	Value: A JSON array of PatternMatch objects, as defined in
-         <xref target="sect-5.2.4"/>.
-	<vspace blankLines="1"/>
-	Mandatory: No, but at least one of "metadata.*" or "content.*"
-         MUST be present and non-empty, and content.patterns MUST NOT be
-         present if the Trigger Type is "preposition".
-	</t>
-
-	<t hangText="Name: content.regexs">
-	<vspace blankLines="1"/>
-	Description: Regexs of content URLs to which the CI/T trigger command applies.
-	<vspace blankLines="1"/>
-	Value: A JSON array of RegexMatch objects (see <xref target="regex-match"/>).
-	<vspace blankLines="1"/>
-	Mandatory: No, but at least one of "metadata.*" or "content.*"
-         MUST be present and non-empty, and content.patterns MUST NOT be
-         present if the Trigger Type is "preposition".
-	</t>
-
-
-	<t hangText="Name: content.playlists">
-	<vspace blankLines="1"/>
-	Description: Playlists of content the CI/T trigger command applies to.
-	<vspace blankLines="1"/>
-	Value: A JSON array of Playlist objects (see <xref target="playlist"/>).
-	<vspace blankLines="1"/>
-	Mandatory: No, but at least one of "metadata.*" or "content.*"
-         MUST be present and non-empty, and content.patterns MUST NOT be
-         present if the Trigger Type is "preposition".
-	</t>
-
-
-
-
-
-
-	<section title="PatternMatch" anchor="sect-5.2.4"><t>
-   A PatternMatch consists of a string pattern to match against a URI,
+	<section title="UriPatternMatch" anchor="sect-5.2.4"><t>
+   A UriPatternMatch consists of a string pattern to match against a URI,
    and flags describing the type of match.</t>
 
 	<t><list style="hanging" hangIndent="3"><t hangText="It is encoded as a JSON object with the following name/value pairs:">
