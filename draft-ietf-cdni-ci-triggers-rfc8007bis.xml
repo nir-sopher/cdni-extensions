@@ -780,15 +780,22 @@
           </t>
 
           <t>This document also registers CDNI Payload Types <xref target="RFC7736"/> under the namespace CIT
-             for the initial set of trigger extension types:
+             for the initial set of trigger scope types:
             <list style="symbols">
-              <t>CIT.MetadataUrls (for TODO)</t>
-              <t>CIT.ContentUrls (for TODO)</t>
-              <t>CIT.ContentCcids (for TODO)</t>
-              <t>CIT.MetadataUriPatterns (for TODO)</t>
-              <t>CIT.ContentUriPatterns (for TODO)</t>
-              <t>CIT.ContentUrlRegexes (for TODO)</t>
-              <t>CIT.ContentUrlPlaylists (for TODO)</t>
+              <t>CIT.UrlsScope (for TODO)</t>
+              <t>CIT.CcidsScope (for TODO)</t>
+              <t>CIT.UriPatternsScope (for TODO)</t>
+              <t>CIT.UrlRegexesScope (for TODO)</t>
+              <t>CIT.ContentPlaylistsScope (for TODO)</t>
+            </list>
+          </t>
+
+          <t>Furthermore, as the scope may apply for wither uCDN metadata as ell as content, the document 
+             registers additional CDNI Payload Types <xref target="RFC7736"/> under the namespace CIT
+             for the initial set of trigger scope subject types:
+            <list style="symbols">
+              <t>CIT.MetadataSubject (for TODO)</t>
+              <t>CIT.ContentSubject (for TODO)</t>
             </list>
           </t>
         </section>
@@ -1438,6 +1445,17 @@ uCDN-A                         dCDN-B                         dCDN-C
                <t>Mandatory: Yes.</t>
             </list></t>
 
+            <t>Property: generic-trigger-scope-subject-type<list style="empty">
+
+               <t>Description: Case-insensitive CDNI Trigger scope subject type.</t>
+
+               <t>Type: String containing the type of the subject matching the 
+                  generic-trigger-scope-value property, such as "content" or "metadata" 
+                  as define in registery (TODO).</t>
+
+               <t>Mandatory: Yes.</t>
+            </list></t>
+
             <t>Property: generic-trigger-scope-values<list style="empty">
 
                <t>Description: An array of CDNI Trigger scope object.</t>
@@ -1456,6 +1474,8 @@ uCDN-A                         dCDN-B                         dCDN-C
 
 {
   "generic-trigger-scope-type":
+     <Type of this trigger scope subject>,
+  "generic-trigger-scope-subject-type":
      <Type of this trigger scope subject>,
   "generic-trigger-scope-value":
       {
@@ -1951,29 +1971,12 @@ uCDN-A                         dCDN-B                         dCDN-C
          object's generic-trigger-scope-value field as defined in Section
          <xref target="generic-scope-object"/>, and their generic-trigger-scope-type
          property MUST be set to the appropriate CDNI Payload Type as defined in <xref target="sect-7.1"/> .
+         TODO Registration of generic-trigger-scope-subject-type.
       </t>
 
-      <section anchor="metadata-urls-scope" title="Metadata URLs Scope">
-        <t>The metadata-urls scope type allows the uCDN to manage uCDN metadata objects
-           held by the dCDN based on the metadata's URLs.
-        </t>
-
-         <t>Scope object specification<list style="empty">
-
-              <t>Property: urls<list style="empty">
-
-                 <t>Description: An array of URLs to on which the trigger MUST be executed.</t>
-
-                 <t>Value: A JSON array of URLs represented as JSON strings.</t>
-
-                 <t>Mandatory: Yes.</t>
-              </list></t>
-          </list></t>
-      </section>
-
-      <section anchor="content-urls-scope" title="Content URLs Scope">
-        <t>The content-urls scope type allows the uCDN to manage content held by the dCDN
-           based on the content's URLs.
+      <section anchor="urls-scope" title="URLs Scope">
+        <t>The urls scope type allows the uCDN to manage uCDN content or metadata objects
+           held by the dCDN based on the objects' URLs.
         </t>
 
          <t>Scope object specification<list style="empty">
@@ -1995,7 +1998,8 @@ uCDN-A                         dCDN-B                         dCDN-C
         <figure> 
           <artwork><![CDATA[
 {
-   "generic-trigger-scope-type": "CIT.content-url",
+   "generic-trigger-scope-type": "CIT.UrlsScope",
+   "generic-trigger-scope-subject-type": "CIT.Content",
    "generic-trigger-scope-value":
     {
       "urls": [
@@ -2009,10 +2013,12 @@ uCDN-A                         dCDN-B                         dCDN-C
 
 
 
-      <section anchor="content-ccids-scope" title="Content CCIDs Scope">
+      <section anchor="ccids-scope" title="CCIDs Scope">
         <t> The content-ccids scope type allows to specify the
         Content Collection IDentifier of content the trigger applies to.
         The "ccid" is a grouping of content, as defined by <xref target="RFC8006"/>.
+       The ccid scope type is valid only for CIT.Content scope subject type.
+
         </t>
 
          <t>Scope object specification<list style="empty">
@@ -2028,46 +2034,22 @@ uCDN-A                         dCDN-B                         dCDN-C
           </list></t>
       </section>
 
-     <section anchor="uri-patterns-based-scopes" title="URI Patterns Based Scopes">
-
-     <section anchor="metadata-uri-patterns-scope" title="Metadata URI Patterns Scope">
-        <t>The metadata-uri-patterns scope type allows the uCDN to manage uCDN metadata objects
-           held by the dCDN based on the metadata's URI patterns.
+     <section anchor="uri-patterns-scope" title="URI Patterns Scope">
+        <t>The uri-patterns scope type allows the uCDN to manage uCDN content or metadata objects
+           held by the dCDN based on the objects' URI patterns.
         </t>
 
          <t>Scope object specification<list style="empty">
 
               <t>Property: patterns<list style="empty">
 
-                 <t>Description: The metadata URI patterns the trigger applies to.</t>
+                 <t>Description: The objects' URI patterns the trigger applies to.</t>
 
                  <t>Value: A JSON array of UriPatternMatch objects, as defined in <xref target="sect-5.2.4"/>.</t>
 
                  <t>Mandatory: Yes.</t>
               </list></t>
           </list></t>
-      </section>
-
-
-     <section anchor="content-uri-patterns-scope" title="Content URI Patterns Scope">
-        <t>The content-uri-patterns scope type allows the uCDN to manage content held by the dCDN
-           based on the content's URI patterns.
-        </t>
-
-         <t>Scope object specification<list style="empty">
-
-              <t>Property: patterns<list style="empty">
-
-                 <t>Description: The content URI patterns the trigger applies to.</t>
-
-                 <t>Value: A JSON array of UriPatternMatch objects, as defined in <xref target="sect-5.2.4"/>.</t>
-
-                 <t>Mandatory: Yes.</t>
-              </list></t>
-          </list></t>
-      </section>
-
-
 
 	<section title="UriPatternMatch" anchor="sect-5.2.4"><t>
    A UriPatternMatch consists of a string pattern to match against a URI,
@@ -2135,10 +2117,9 @@ uCDN-A                         dCDN-B                         dCDN-C
 
 
 
-     <section anchor="url-regexes-scope" title="URL Regexes Based Scopes">
-     <section anchor="content-url-regexes-scope" title="Content URL Regexes Scope">
-        <t>The content-url-regexes scope type allows the uCDN to manage content held by the dCDN
-           based on the content's URL regexes.
+     <section anchor="url-regexes-scope" title="URL Regexes Scope">
+        <t>The content-url-regexes scope type allows the uCDN to manage content or metadata objects
+           held by the dCDN based on the objects' URL regexes.
         </t>
 
          <t>Scope object specification<list style="empty">
@@ -2152,8 +2133,6 @@ uCDN-A                         dCDN-B                         dCDN-C
                  <t>Mandatory: Yes.</t>
               </list></t>
           </list></t>
-      </section>
-
 
 
         <section anchor="regex-match" title="RegexMatch">
@@ -2235,11 +2214,10 @@ https://video.example.com/k/movie1/4/013.ts
    </section>
 
 
-     <section anchor="playlists-based-scopes" title="Playlists Based Scopes">
-
      <section anchor="content-playlists-scope" title="Content Playlists Scope">
         <t>The content-playlists scope type allows the uCDN to manage content held by the dCDN
-           based on the content's playlists. TODO
+           based on the content's playlists. 
+           The content-playlists scope type is valid only for CIT.Content scope subject type.
         </t>
 
          <t>Scope object specification<list style="empty">
@@ -2252,9 +2230,7 @@ https://video.example.com/k/movie1/4/013.ts
 
                  <t>Mandatory: Yes.</t>
               </list></t>
-          </list></t>
-      </section>
-   
+          </list></t>   
 
         <section anchor="playlist" title="Playlist">
           <t>A Playlist consists of a full URL and a media protocol identifier.
@@ -3573,25 +3549,25 @@ RESPONSE:
    <c>ci-trigger-status.v2</c>
    <c>RFCthis</c>
 
-   <c>CIT.MetadataUrls</c>
+   <c>CIT.UrlsScope</c>
    <c>RFCthis</c>
    
-   <c>CIT.ContentUrls</c>
+    <c>CIT.CcidsScope</c>
    <c>RFCthis</c>
    
-   <c>CIT.ContentCcids</c>
+   <c>CIT.UriPatternsScope</c>
    <c>RFCthis</c>
    
-   <c>CIT.MetadataUriPatterns</c>
+   <c>CIT.UrlsRegexesScope</c>
    <c>RFCthis</c>
    
-   <c>CIT.ContentUriPatterns</c>
+   <c>CIT.ContentPlaylistsScope</c>
    <c>RFCthis</c>
-   
-   <c>CIT.ContentUrlRegexes</c>
+
+   <c>CIT.MetadataSubject</c>
    <c>RFCthis</c>
-   
-   <c>CIT.ContentUrlPlaylists</c>
+
+   <c>CIT.ContentSubject</c>
    <c>RFCthis</c>
 
    <c>CIT.LocationPolicy</c>
@@ -3632,46 +3608,46 @@ RESPONSE:
           <t>Encoding: see <xref target="sect-5.1.3"/></t>
         </section>
 
-        <section anchor="IANA.CDNI.payload.CIT.MetadataUrls" title="CDNI CI/T MetadataUrls Trigger Scope Type">
-          <t>Purpose: The purpose of this Trigger Scope type is to distinguish MetadataUrls CIT Trigger Scope objects.</t>
+        <section anchor="IANA.CDNI.payload.CIT.UrlsScope" title="CDNI CI/T Urls Trigger Scope Type">
+          <t>Purpose: The purpose of this Trigger Scope type is to distinguish Urls CIT Trigger Scope objects.</t>
           <t>Interface: CI/T</t>
-          <t>Encoding: see <xref target="metadata-urls-scope"/></t>
+          <t>Encoding: see <xref target="urls-scope"/></t>
         </section>
 
-        <section anchor="IANA.CDNI.payload.CIT.ContentUrls" title="CDNI CI/T ContentUrls Trigger Scope Type">
-          <t>Purpose: The purpose of this Trigger Scope type is to distinguish ContentUrls CIT Trigger Scope objects.</t>
+        <section anchor="IANA.CDNI.payload.CIT.CcidsScope" title="CDNI CI/T Ccids Trigger Scope Type">
+          <t>Purpose: The purpose of this Trigger Scope type is to distinguish Ccids CIT Trigger Scope objects.</t>
           <t>Interface: CI/T</t>
-          <t>Encoding: see <xref target="content-urls-scope"/></t>
+          <t>Encoding: see <xref target="ccids-scope"/></t>
         </section>
 
-        <section anchor="IANA.CDNI.payload.CIT.ContentCcids" title="CDNI CI/T ContentCcids Trigger Scope Type">
-          <t>Purpose: The purpose of this Trigger Scope type is to distinguish ContentCcids CIT Trigger Scope objects.</t>
+        <section anchor="IANA.CDNI.payload.CIT.UriPatternsScope" title="CDNI CI/T UriPatterns Trigger Scope Type">
+          <t>Purpose: The purpose of this Trigger Scope type is to distinguish UriPatterns CIT Trigger Scope objects.</t>
           <t>Interface: CI/T</t>
-          <t>Encoding: see <xref target="content-ccids-scope"/></t>
+          <t>Encoding: see <xref target="uri-patterns-scope"/></t>
         </section>
 
-        <section anchor="IANA.CDNI.payload.CIT.MetadataUriPatterns" title="CDNI CI/T MetadataUriPatterns Trigger Scope Type">
-          <t>Purpose: The purpose of this Trigger Scope type is to distinguish MetadataUriPatterns CIT Trigger Scope objects.</t>
+        <section anchor="IANA.CDNI.payload.CIT.UrlRegexesScope" title="CDNI CI/T UrlRegexes Trigger Scope Type">
+          <t>Purpose: The purpose of this Trigger Scope type is to distinguish UrlRegexes CIT Trigger Scope objects.</t>
           <t>Interface: CI/T</t>
-          <t>Encoding: see <xref target="metadata-uri-patterns-scope"/></t>
+          <t>Encoding: see <xref target="url-regexes-scope"/></t>
         </section>
 
-        <section anchor="IANA.CDNI.payload.CIT.ContentUriPatterns" title="CDNI CI/T ContentUriPatterns Trigger Scope Type">
-          <t>Purpose: The purpose of this Trigger Scope type is to distinguish ContentUriPatterns CIT Trigger Scope objects.</t>
-          <t>Interface: CI/T</t>
-          <t>Encoding: see <xref target="content-uri-patterns-scope"/></t>
-        </section>
-
-        <section anchor="IANA.CDNI.payload.CIT.ContentUrlRegexes" title="CDNI CI/T ContentUrlRegexes Trigger Scope Type">
-          <t>Purpose: The purpose of this Trigger Scope type is to distinguish ContentUrlRegexes CIT Trigger Scope objects.</t>
-          <t>Interface: CI/T</t>
-          <t>Encoding: see <xref target="content-url-regexes-scope"/></t>
-        </section>
-
-        <section anchor="IANA.CDNI.payload.CIT.ContentPlaylists" title="CDNI CI/T ContentUrlPlaylists Trigger Scope Type">
+        <section anchor="IANA.CDNI.payload.CIT.ContentPlaylistsScope" title="CDNI CI/T ContentPlaylists Trigger Scope Type">
           <t>Purpose: The purpose of this Trigger Scope type is to distinguish ContentUrlPlaylists CIT Trigger Scope objects.</t>
           <t>Interface: CI/T</t>
           <t>Encoding: see <xref target="content-playlists-scope"/></t>
+        </section>
+
+        <section anchor="IANA.CDNI.payload.CIT.MetadataSubject" title="CDNI CI/T Metadata Trigger Scope Subject Type">
+          <t>Purpose: The purpose of this Trigger Scope subejct type is to distinguish Metadata CIT Trigger Scope objects.</t>
+          <t>Interface: CI/T</t>
+          <t>Encoding: see TODO - string "metatdata" - should we register it????</t>
+        </section>
+
+        <section anchor="IANA.CDNI.payload.CIT.ContentSubject" title="CDNI CI/T Content Trigger Scope Subject Type">
+          <t>Purpose: The purpose of this Trigger Scope subejct type is to distinguish Content CIT Trigger Scope objects.</t>
+          <t>Interface: CI/T</t>
+          <t>Encoding: see TODO - string "metatdata" - should we register it????</t>
         </section>
 
         <section anchor="IANA.CDNI.payload.CIT.LocationPolicy" title="CDNI CI/T LocationPolicy Trigger Extension Type">
