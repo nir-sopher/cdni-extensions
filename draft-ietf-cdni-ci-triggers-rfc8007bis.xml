@@ -1416,17 +1416,6 @@ uCDN-A                         dCDN-B                         dCDN-C
                <t>Mandatory: Yes.</t>
             </list></t>
 
-            <t>Property: generic-trigger-scope-subject-type<list style="empty">
-
-               <t>Description: Case-insensitive CDNI Trigger scope subject type.</t>
-
-               <t>Type: String containing the type of the subject matching the 
-                  generic-trigger-scope-value property, such as "content" or "metadata" 
-                  as define in registery (TODO).</t>
-
-               <t>Mandatory: Yes.</t>
-            </list></t>
-
             <t>Property: generic-trigger-scope-values<list style="empty">
 
                <t>Description: An array of CDNI Trigger scope object.</t>
@@ -1445,8 +1434,6 @@ uCDN-A                         dCDN-B                         dCDN-C
 
 {
   "generic-trigger-scope-type":
-     <Type of this trigger scope subject>,
-  "generic-trigger-scope-subject-type":
      <Type of this trigger scope subject>,
   "generic-trigger-scope-value":
       {
@@ -1967,7 +1954,6 @@ uCDN-A                         dCDN-B                         dCDN-C
          object's generic-trigger-scope-value field as defined in Section
          <xref target="generic-scope-object"/>, and their generic-trigger-scope-type
          property MUST be set to the appropriate CDNI Payload Type as defined in <xref target="sect-7.1"/> .
-         TODO Registration of generic-trigger-scope-subject-type.
       </t>
 
 
@@ -2001,7 +1987,6 @@ uCDN-A                         dCDN-B                         dCDN-C
           <artwork><![CDATA[
 {
    "generic-trigger-scope-type": "CIT.UrlScope",
-   "generic-trigger-scope-subject-type": "CIT.Content",
    "generic-trigger-scope-value":
     {
       "urls": [
