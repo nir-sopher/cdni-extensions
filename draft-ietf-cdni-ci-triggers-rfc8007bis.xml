@@ -843,6 +843,7 @@
 
 	</list>
 	</t>
+   
 
         <section anchor="error-propagation" title="Error propagation">
           <t>
@@ -1400,52 +1401,47 @@ uCDN-A                         dCDN-B                         dCDN-C
    </t>
 
 
+         <section anchor="generic-scope-object" title="Generic Scope Object">
+         <t>A GenericScopeObject object is a wrapper for managing individual CDNI
+            Trigger scope in an opaque manner.</t>
 
+         <t><list style="empty">
+            <t>Property: generic-trigger-scope-type<list style="empty">
 
+               <t>Description: Case-insensitive CDNI Trigger scope type.</t>
 
+               <t>Type: String containing the scope type of the object contained
+                  in the generic-trigger-scope-value property (see table in <xref target="sect-7.1"/>).</t>
 
-
-          <section anchor="generic-scope-object" title="Generic Scope Object">
-            <t>A GenericScopeObject object is a wrapper for managing individual CDNI
-               Trigger scope in an opaque manner.</t>
-
-            <t><list style="empty">
-              <t>Property: generic-trigger-scope-type<list style="empty">
-
-                 <t>Description: Case-insensitive CDNI Trigger scope type.</t>
-
-                 <t>Type: String containing the scope type of the object contained
-                    in the generic-trigger-scope-value property (see table in <xref target="sect-7.1"/>).</t>
-
-                 <t>Mandatory: Yes.</t>
-              </list></t>
-
-              <t>Property: generic-trigger-scope-subject-type<list style="empty">
-
-                 <t>Description: Case-insensitive CDNI Trigger scope subject type.</t>
-
-                 <t>Type: String containing the type of the subject matching the 
-                    generic-trigger-scope-value property, such as "content" or "metadata" 
-                    as define in registery (TODO).</t>
-
-                 <t>Mandatory: Yes.</t>
-              </list></t>
-
-              <t>Property: generic-trigger-scope-values<list style="empty">
-
-                 <t>Description: An array of CDNI Trigger scope object.</t>
-
-                 <t>Type: Format/Type is defined by the value of the
-                    generic-trigger-scope-type property above.</t>
-
-                 <t>Mandatory: Yes.</t>
-              </list></t>
-
+               <t>Mandatory: Yes.</t>
             </list></t>
-            <t>Example of a JSON serialized GenericTriggerExtension object containing a specific trigger extension object:</t>
 
-        <figure>
-          <artwork><![CDATA[
+            <t>Property: generic-trigger-scope-subject-type<list style="empty">
+
+               <t>Description: Case-insensitive CDNI Trigger scope subject type.</t>
+
+               <t>Type: String containing the type of the subject matching the 
+                  generic-trigger-scope-value property, such as "content" or "metadata" 
+                  as define in registery (TODO).</t>
+
+               <t>Mandatory: Yes.</t>
+            </list></t>
+
+            <t>Property: generic-trigger-scope-values<list style="empty">
+
+               <t>Description: An array of CDNI Trigger scope object.</t>
+
+               <t>Type: Format/Type is defined by the value of the
+                  generic-trigger-scope-type property above.</t>
+
+               <t>Mandatory: Yes.</t>
+            </list></t>
+
+         </list></t>
+         <t>Example of a JSON serialized GenericTriggerExtension object containing a specific trigger extension object:</t>
+
+      <figure>
+         <artwork><![CDATA[
 
 {
   "generic-trigger-scope-type":
@@ -1461,11 +1457,6 @@ uCDN-A                         dCDN-B                         dCDN-C
        ]]></artwork>
         </figure>
           </section>
-
-
-
-
-
 
 
         </section>
@@ -1739,6 +1730,9 @@ uCDN-A                         dCDN-B                         dCDN-C
    or failure in the activity it triggered.  It is encoded as a JSON
    object with the following name/value pairs:</t>
 
+
+
+
 	<t><list style="empty" hangIndent="3">
 	<t><list style="hanging" hangIndent="3"><t hangText="Name: error">
 	<vspace blankLines="1"/>
@@ -1753,43 +1747,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 	</list>
 	</t>
 
-	<t><list style="hanging" hangIndent="3"><t>
-      Names: metadata.urls, content.urls, metadata.patterns,
-      content.patterns</t>
-
-	</list>
-	</t>
-
-	<t><list style="hanging" hangIndent="6"><t>
-         Description: Metadata and content references copied from the
-         Trigger Specification.  Only those URLs and patterns to which
-         the error applies are included in each property, but those URLs
-         and patterns MUST be exactly as they appear in the request; the
-         dCDN MUST NOT generalize the URLs.  (For example, if the uCDN
-         requests pre-positioning of URLs
-         "https://content.example.com/a" and
-         "https://content.example.com/b", the dCDN must not generalize
-         its error report to the pattern
-         "https://content.example.com/*".)</t>
-
-	</list>
-	</t>
-
-	<t><list style="hanging" hangIndent="6"><t>
-         Value: A JSON array of JSON strings, where each string is
-         copied from a "content.*" or "metadata.*" value in the
-         corresponding Trigger Specification.</t>
-
-	</list>
-	</t>
-
-	<t><list style="hanging" hangIndent="6"><t>
-         Mandatory: At least one of these name/value pairs is mandatory
-         in each Error Description object.</t>
-
-	</list>
-	</t>
-
+	
 	<t><list style="empty" hangIndent="3">
 	<t><list style="hanging" hangIndent="3"><t hangText="Name: description">
 	<vspace blankLines="1"/>
@@ -1806,30 +1764,28 @@ uCDN-A                         dCDN-B                         dCDN-C
 	</list>
 	</t>
 
-	<t><list style="empty" hangIndent="3">
-	<t><list style="hanging" hangIndent="3"><t hangText="Name: content.regexs, content.playlists">
+	
+
+
+<t><list style="empty" hangIndent="3">
+	<t><list style="hanging" hangIndent="3"><t hangText="Name: scopes">
 	<vspace blankLines="1"/>
-	Description: Content Regex and Playlist references copied from the Trigger Specification.
-                Only those regexs and playlists to which the error applies are included in each property,
-                but those references MUST be exactly as they appear in the request; the dCDN MUST NOT change
-                or generalize the URLs or Regexs. Note that these properties are added on top of the already
-                existing properties: "metadata.urls", "content.urls", "metadata.patterns" and "content.patterns".
+	Description: Array of trigger scope objects copied from the corresponding "extensions" array
+                from the Trigger Specification. Only those scopes to which the error applies are included, but 
+                those scopes MUST be exactly as they appear in the request.
 	<vspace blankLines="1"/>
-	Value: A JSON array of JSON strings, where each string is copied from a "content.regexs" or
-                "content.playlists" value in the corresponding Trigger Specification.
+	Value: Array of GenericTriggerScope objects, where each scope object is copied
+                from the "scopes" array values in the Trigger Specification.
 	<vspace blankLines="1"/>
-	Mandatory: At least one of "content.regexs", "content.playlists", "metadata.urls", "content.urls",
-                "metadata.patterns" or "content.patterns" is mandatory in each Error Description object.
+	Mandatory: Yes.
 	</t>
 
 	</list>
-	</t>
+   </t>
 
 	</list>
 	</t>
-
-
-	<t><list style="empty" hangIndent="3">
+   <t><list style="empty" hangIndent="3">
 	<t><list style="hanging" hangIndent="3"><t hangText="Name: extensions">
 	<vspace blankLines="1"/>
 	Description: Array of trigger extension objects copied from the corresponding "extensions" array
@@ -1844,7 +1800,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 	</t>
 
 	</list>
-	</t>
+   </t>
 
 	</list>
 	</t>
@@ -2013,7 +1969,6 @@ uCDN-A                         dCDN-B                         dCDN-C
          property MUST be set to the appropriate CDNI Payload Type as defined in <xref target="sect-7.1"/> .
          TODO Registration of generic-trigger-scope-subject-type.
       </t>
-
 
 
 
