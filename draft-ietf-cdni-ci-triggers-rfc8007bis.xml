@@ -2312,30 +2312,6 @@ https://video.example.com/k/movie1/4/013.ts
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <section anchor="trigger-extension-objects" title="Trigger Extension Objects">
       <t>The objects defined below are intended to be used in the GenericTriggerExtension
          object's generic-trigger-extension-value field as defined in Section
