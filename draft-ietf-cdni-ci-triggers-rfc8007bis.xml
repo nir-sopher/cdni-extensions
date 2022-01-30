@@ -770,6 +770,28 @@
    SHOULD use the same CDN PID.</t>
 
 	</section>
+        <section anchor="trigger-scope" title="Trigger Scope">
+          <t>
+             The CDNI Control Interface / Triggers <xref target="RFC8007"/> defines a set of properties
+             and objects used by the trigger commands in order to specify the subjects the trigger is applied on.
+             In this document we generalize the trigger interface using a list of trigger scopes top be applied on. 
+             Furthermore, the document defines a generic trigger scope
+             object that act as a wrapper for managing individual CDNI trigger scope in an opaque manner.
+          </t>
+
+          <t>This document also registers CDNI Payload Types <xref target="RFC7736"/> under the namespace CIT
+             for the initial set of trigger extension types:
+            <list style="symbols">
+              <t>CIT.MetadataUrls (for TODO)</t>
+              <t>CIT.ContentUrls (for TODO)</t>
+              <t>CIT.ContentCcids (for TODO)</t>
+              <t>CIT.MetadataUriPatterns (for TODO)</t>
+              <t>CIT.ContentUriPatterns (for TODO)</t>
+              <t>CIT.ContentUrlRegexes (for TODO)</t>
+              <t>CIT.ContentUrlPlaylists (for TODO)</t>
+            </list>
+          </t>
+        </section>
 
         <section anchor="trigger-extensibility" title="Trigger Extensibility">
           <t>
@@ -1387,7 +1409,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 	</texttable>
 	</section>
 
-   <section anchor="trigger-scope" title="CI/T Trigger Scopes">
+   <section anchor="trigger-scopes" title="CI/T Trigger Scopes">
    <t>
    A "trigger.v2" object, as defined in <xref target="sect-5.2.1"/> includes an
    array of trigger scope objects. A trigger scope contains properties
@@ -1931,7 +1953,6 @@ uCDN-A                         dCDN-B                         dCDN-C
          property MUST be set to the appropriate CDNI Payload Type as defined in <xref target="sect-7.1"/> .
       </t>
 
-
       <section anchor="metadata-urls-scope" title="Metadata URLs Scope">
         <t>The metadata-urls scope type allows the uCDN to manage uCDN metadata objects
            held by the dCDN based on the metadata's URLs.
@@ -1949,7 +1970,6 @@ uCDN-A                         dCDN-B                         dCDN-C
               </list></t>
           </list></t>
       </section>
-
 
       <section anchor="content-urls-scope" title="Content URLs Scope">
         <t>The content-urls scope type allows the uCDN to manage content held by the dCDN
@@ -1986,8 +2006,6 @@ uCDN-A                         dCDN-B                         dCDN-C
        ]]></artwork>
        </figure>
       </section>
-
-
 
 
 
@@ -3579,6 +3597,27 @@ RESPONSE:
    <c>ci-trigger-status.v2</c>
    <c>RFCthis</c>
 
+   <c>CIT.MetadataUrls</c>
+   <c>RFCthis</c>
+   
+   <c>CIT.ContentUrls</c>
+   <c>RFCthis</c>
+   
+   <c>CIT.ContentCcids</c>
+   <c>RFCthis</c>
+   
+   <c>CIT.MetadataUriPatterns</c>
+   <c>RFCthis</c>
+   
+   <c>CIT.ContentUriPatterns</c>
+   <c>RFCthis</c>
+   
+   <c>CIT.ContentUrlRegexes</c>
+   <c>RFCthis</c>
+   
+   <c>CIT.ContentUrlPlaylists</c>
+   <c>RFCthis</c>
+
    <c>CIT.LocationPolicy</c>
    <c>RFCthis</c>
 
@@ -3615,6 +3654,48 @@ RESPONSE:
           <t>Purpose: TBD (came from 8007)</t>
           <t>Interface: CI/T</t>
           <t>Encoding: see <xref target="sect-5.1.3"/></t>
+        </section>
+
+        <section anchor="IANA.CDNI.payload.CIT.MetadataUrls" title="CDNI CI/T MetadataUrls Trigger Scope Type">
+          <t>Purpose: The purpose of this Trigger Scope type is to distinguish MetadataUrls CIT Trigger Scope objects.</t>
+          <t>Interface: CI/T</t>
+          <t>Encoding: see <xref target="metadata-urls-scope"/></t>
+        </section>
+
+        <section anchor="IANA.CDNI.payload.CIT.ContentUrls" title="CDNI CI/T ContentUrls Trigger Scope Type">
+          <t>Purpose: The purpose of this Trigger Scope type is to distinguish ContentUrls CIT Trigger Scope objects.</t>
+          <t>Interface: CI/T</t>
+          <t>Encoding: see <xref target="content-urls-scope"/></t>
+        </section>
+
+        <section anchor="IANA.CDNI.payload.CIT.ContentCcids" title="CDNI CI/T ContentCcids Trigger Scope Type">
+          <t>Purpose: The purpose of this Trigger Scope type is to distinguish ContentCcids CIT Trigger Scope objects.</t>
+          <t>Interface: CI/T</t>
+          <t>Encoding: see <xref target="content-ccids-scope"/></t>
+        </section>
+
+        <section anchor="IANA.CDNI.payload.CIT.MetadataUriPatterns" title="CDNI CI/T MetadataUriPatterns Trigger Scope Type">
+          <t>Purpose: The purpose of this Trigger Scope type is to distinguish MetadataUriPatterns CIT Trigger Scope objects.</t>
+          <t>Interface: CI/T</t>
+          <t>Encoding: see <xref target="metadata-uri-patterns-scope"/></t>
+        </section>
+
+        <section anchor="IANA.CDNI.payload.CIT.ContentUriPatterns" title="CDNI CI/T ContentUriPatterns Trigger Scope Type">
+          <t>Purpose: The purpose of this Trigger Scope type is to distinguish ContentUriPatterns CIT Trigger Scope objects.</t>
+          <t>Interface: CI/T</t>
+          <t>Encoding: see <xref target="content-uri-patterns-scope"/></t>
+        </section>
+
+        <section anchor="IANA.CDNI.payload.CIT.ContentUrlRegexes" title="CDNI CI/T ContentUrlRegexes Trigger Scope Type">
+          <t>Purpose: The purpose of this Trigger Scope type is to distinguish ContentUrlRegexes CIT Trigger Scope objects.</t>
+          <t>Interface: CI/T</t>
+          <t>Encoding: see <xref target="content-url-regexes-scope"/></t>
+        </section>
+
+        <section anchor="IANA.CDNI.payload.CIT.ContentPlaylists" title="CDNI CI/T ContentUrlPlaylists Trigger Scope Type">
+          <t>Purpose: The purpose of this Trigger Scope type is to distinguish ContentUrlPlaylists CIT Trigger Scope objects.</t>
+          <t>Interface: CI/T</t>
+          <t>Encoding: see <xref target="content-playlists-scope"/></t>
         </section>
 
         <section anchor="IANA.CDNI.payload.CIT.LocationPolicy" title="CDNI CI/T LocationPolicy Trigger Extension Type">
