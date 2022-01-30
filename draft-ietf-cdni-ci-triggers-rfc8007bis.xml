@@ -1976,28 +1976,48 @@ uCDN-A                         dCDN-B                         dCDN-C
 
 
 
-<t hangText="Name: metadata.urls">
-	<vspace blankLines="1"/>
-	Description: The uCDN URLs of the metadata the CI/T Trigger
-         Command applies to.
-	<vspace blankLines="1"/>
-	Value: A JSON array of URLs represented as JSON strings.
-	<vspace blankLines="1"/>
-	Mandatory: No, but at least one of "metadata.*" or "content.*"
-         MUST be present and non-empty.
-	</t>
+      <section anchor="url-scope" title="URL Scope Type">
+        <t>The URL scope type allows the uCDN to manage content and Metadata
+           based on their URLs.
+        </t>
 
-	<t hangText="Name: content.urls">
-	<vspace blankLines="1"/>
-	Description: URLs of content the CI/T Trigger Command applies
-         to.  See <xref target="sect-4.8"/>.
-	<vspace blankLines="1"/>
-	Value: A JSON array of URLs represented as JSON strings.
-	<vspace blankLines="1"/>
-	Mandatory: No, but at least one of "metadata.*" or "content.*"
-         MUST be present and non-empty.
-	</t>
+         <t>Object specification<list style="empty">
 
+              <t>Property: urls<list style="empty">
+
+                 <t>Description: An array of URLs to on which the trigger MUST be executed.</t>
+
+                 <t>Type:A JSON array of URLs represented as JSON strings.</t>
+
+                 <t>Mandatory: Yes.</t>
+              </list></t>
+          </list></t>
+
+        <t>Below is an example of a JSON serialized generic trigger scope object, matching the content at 
+        www.example.com/path/to/content.
+        </t>
+
+        <figure>
+          <artwork><![CDATA[
+{
+   "generic-trigger-scope-type": "CIT.UrlScope",
+   "generic-trigger-scope-subject-type": "CIT.Content",
+   "generic-trigger-scope-value":
+    {
+      "urls": [
+         "www.example.com/path/to/content"
+      ]
+    }
+}
+       ]]></artwork>
+       </figure>
+
+
+      </section>
+ </section>
+
+<section anchor="trigger-scope-objects2" title="Trigger Scope Objects2">
+    
 	<t hangText="Name: content.ccid">
 	<vspace blankLines="1"/>
 	Description: The Content Collection IDentifier of content the
