@@ -2010,6 +2010,8 @@ uCDN-A                         dCDN-B                         dCDN-C
           </list></t>
       </section>
 
+     <section anchor="uri-patterns-based-scopes" title="URI Patterns Based Scopes">
+
      <section anchor="metadata-uri-patterns-scope" title="Metadata URI Patterns Scope">
         <t>The metadata-uri-patterns scope type allows the uCDN to manage uCDN metadata objects
            held by the dCDN based on the metadata's URI patterns.
@@ -2048,45 +2050,6 @@ uCDN-A                         dCDN-B                         dCDN-C
       </section>
 
 
-     <section anchor="content-url-regexes-scope" title="Content URL Regexes Scope">
-        <t>The content-url-regexes scope type allows the uCDN to manage content held by the dCDN
-           based on the content's URL regexes.
-        </t>
-
-         <t>Scope object specification<list style="empty">
-
-              <t>Property: regexes<list style="empty">
-
-                 <t>Description: The content URL regexes the trigger applies to.</t>
-
-                 <t>Value: A JSON array of RegexMatch objects (see <xref target="regex-match"/>).</t>
-
-                 <t>Mandatory: Yes.</t>
-              </list></t>
-          </list></t>
-      </section>
-
-     <section anchor="content-playlists-scope" title="Content Playlists Scope">
-        <t>The content-playlists scope type allows the uCDN to manage content held by the dCDN
-           based on the content's playlists. TODO
-        </t>
-
-         <t>Scope object specification<list style="empty">
-
-              <t>Property: playlists<list style="empty">
-
-                 <t>Description: The content playlists the trigger applies to.</t>
-
-                 <t>Value: A JSON array of Playlist objects (see <xref target="playlist"/>).</t>
-
-                 <t>Mandatory: Yes.</t>
-              </list></t>
-          </list></t>
-      </section>
-
- </section>
-
-<section anchor="trigger-scope-objects2" title="Trigger Scope Objects2">
 
 	<section title="UriPatternMatch" anchor="sect-5.2.4"><t>
    A UriPatternMatch consists of a string pattern to match against a URI,
@@ -2150,7 +2113,28 @@ uCDN-A                         dCDN-B                         dCDN-C
 ]]></artwork>
 	</figure>
 	</section>
+</section>
 
+
+
+     <section anchor="url-regexes-scope" title="URL Regexes Based Scopes">
+     <section anchor="content-url-regexes-scope" title="Content URL Regexes Scope">
+        <t>The content-url-regexes scope type allows the uCDN to manage content held by the dCDN
+           based on the content's URL regexes.
+        </t>
+
+         <t>Scope object specification<list style="empty">
+
+              <t>Property: regexes<list style="empty">
+
+                 <t>Description: The content URL regexes the trigger applies to.</t>
+
+                 <t>Value: A JSON array of RegexMatch objects (see <xref target="regex-match"/>).</t>
+
+                 <t>Mandatory: Yes.</t>
+              </list></t>
+          </list></t>
+      </section>
 
 
 
@@ -2230,6 +2214,29 @@ https://video.example.com/k/movie1/4/013.ts
          ]]></artwork>
           </figure>
         </section>
+   </section>
+
+
+     <section anchor="playlists-based-scopes" title="Playlists Based Scopes">
+
+     <section anchor="content-playlists-scope" title="Content Playlists Scope">
+        <t>The content-playlists scope type allows the uCDN to manage content held by the dCDN
+           based on the content's playlists. TODO
+        </t>
+
+         <t>Scope object specification<list style="empty">
+
+              <t>Property: playlists<list style="empty">
+
+                 <t>Description: The content playlists the trigger applies to.</t>
+
+                 <t>Value: A JSON array of Playlist objects (see <xref target="playlist"/>).</t>
+
+                 <t>Mandatory: Yes.</t>
+              </list></t>
+          </list></t>
+      </section>
+   
 
         <section anchor="playlist" title="Playlist">
           <t>A Playlist consists of a full URL and a media protocol identifier.
@@ -2280,7 +2287,14 @@ https://video.example.com/k/movie1/4/013.ts
           <t>"dash"</t>
         </section>
 
-        </section>
+
+   </section>
+
+ </section>
+
+
+
+
 
 
 
