@@ -138,6 +138,10 @@
 
 	<t><xref target="sect-5"/> lists properties of CI/T Commands and Status Resources.</t>
 
+	<t><xref target="trigger-scope-objects"/> describes the Trigger's Scope object.</t>
+
+	<t><xref target="trigger-extension-objects"/> describes the Trigger's Extensions object.</t>
+
 	<t><xref target="sect-6"/> contains example messages.</t>
 
 	</list>
@@ -1445,13 +1449,13 @@ uCDN-A                         dCDN-B                         dCDN-C
                <t>Mandatory: Yes.</t>
             </list></t>
 
-            <t>Property: generic-trigger-scope-subject-type<list style="empty">
+            <t>Property: generic-trigger-scope-subject<list style="empty">
 
-               <t>Description: Case-insensitive CDNI Trigger scope subject type.</t>
+               <t>Description: Case-insensitive CDNI Trigger scope subject.</t>
 
                <t>Type: String containing the type of the subject matching the 
                   generic-trigger-scope-value property, such as "content" or "metadata" 
-                  as define in registery (TODO).</t>
+                  as define in TODO.</t>
 
                <t>Mandatory: Yes.</t>
             </list></t>
@@ -1474,9 +1478,9 @@ uCDN-A                         dCDN-B                         dCDN-C
 
 {
   "generic-trigger-scope-type":
-     <Type of this trigger scope subject>,
-  "generic-trigger-scope-subject-type":
-     <Type of this trigger scope subject>,
+     <Type of this trigger scope>,
+  "generic-trigger-scope-subject":
+     <Catagory of this trigger scope subject>,
   "generic-trigger-scope-value":
       {
         <properties of this trigger scope object>
@@ -1971,7 +1975,7 @@ uCDN-A                         dCDN-B                         dCDN-C
          object's generic-trigger-scope-value field as defined in Section
          <xref target="generic-scope-object"/>, and their generic-trigger-scope-type
          property MUST be set to the appropriate CDNI Payload Type as defined in <xref target="sect-7.1"/> .
-         TODO Registration of generic-trigger-scope-subject-type.
+         TODO Registration of generic-trigger-scope-subject.
       </t>
 
       <section anchor="urls-scope" title="URLs Scope">
@@ -1999,7 +2003,7 @@ uCDN-A                         dCDN-B                         dCDN-C
           <artwork><![CDATA[
 {
    "generic-trigger-scope-type": "CIT.UrlsScope",
-   "generic-trigger-scope-subject-type": "CIT.Content",
+   "generic-trigger-scope-subject": "CIT.Content",
    "generic-trigger-scope-value":
     {
       "urls": [
@@ -2017,7 +2021,7 @@ uCDN-A                         dCDN-B                         dCDN-C
         <t> The content-ccids scope type allows to specify the
         Content Collection IDentifier of content the trigger applies to.
         The "ccid" is a grouping of content, as defined by <xref target="RFC8006"/>.
-       The ccid scope type is valid only for CIT.Content scope subject type.
+       The ccid scope type is valid only for CIT.Content scope subject.
 
         </t>
 
@@ -2217,7 +2221,7 @@ https://video.example.com/k/movie1/4/013.ts
      <section anchor="content-playlists-scope" title="Content Playlists Scope">
         <t>The content-playlists scope type allows the uCDN to manage content held by the dCDN
            based on the content's playlists. 
-           The content-playlists scope type is valid only for CIT.Content scope subject type.
+           The content-playlists scope type is valid only for CIT.Content scope subject.
         </t>
 
          <t>Scope object specification<list style="empty">
@@ -2670,9 +2674,119 @@ Month Number  Month/Year           Maximum value of date-mday
 
     <section anchor="footprint-and-capabilities" title="Footprint and Capabilities">
       <t>
-        This section covers the FCI objects required for advertisement of the extensions and properties
+        This section covers the FCI objects required for advertisement of the scopes, extensions and properties
         introduced in this document.
       </t>
+        <t>
+        TBD Do we need capability for the commands as well?
+        </t>
+
+            <section title="CI/T Trigger Scope Capability Object">
+        <t>
+           The CI/T Generic Scope capability object is used to indicate support for one or more
+           GenericScopeObject types.
+        </t>
+        <t>
+        TBD should this capability mention only the supported scope or the supported scope subject and command as well
+        </t>
+        <t><list style="empty">
+           <t>Property: trigger-scope<list style="empty">
+
+                 <t>Description: A list of supported CDNI CI/T GenericScopeObject types.</t>
+
+                 <t>Type: List of strings corresponding to entries from the "CDNI Payload Types" registry
+                    <xref target="RFC7736"/> that are under the CIT namespace, and that correspond to CDNI
+                    CI/T GenericScopeObject objects.
+                 </t>
+
+                 <t>Mandatory: No. The default, in case of a missing or an empty list, MUST be 
+                    interpreted as "no GenericScopeObject types are supported". A non-empty list MUST be 
+                    interpreted as containing "the only GenericScopeObject types that are supported".
+                 </t>
+           </list></t>
+        </list></t>
+        <section anchor="trigger-scope-capability-object" title="CI/T Trigger Scope Capability Object Serialization">
+          <t>
+             The following shows an example of a JSON serialized CI/T Trigger Scope Capability object serialization for
+             a dCDN that supports the "CIT.LocationPolicy" and the "CIT.TimePolicy" objects.
+          </t>
+
+          <figure>
+           <artwork><![CDATA[
+
+{
+ "capabilities": [
+   {
+     "capability-type": "FCI.TriggerGenericScope",
+     "capability-value": {
+       "trigger-scope": ["CIT.LocationPolicy", "CIT.TimePolicy"]
+     },
+     "footprints": [
+       <Footprint objects>
+     ]
+   }
+ ]
+}
+        ]]></artwork>
+          </figure>
+        </section>
+      </section>
+
+
+      <section title="CI/T Trigger Extension Capability Object">
+        <t>
+           The CI/T Generic Extension capability object is used to indicate support for one or more
+           GenericExtensionObject types.
+        </t>
+         <t>
+        TBD should this capability mention only the supported extension or the supported scope subject as well
+        </t>
+       
+
+        <t><list style="empty">
+           <t>Property: trigger-extension<list style="empty">
+
+                 <t>Description: A list of supported CDNI CI/T GenericExtensionObject types.</t>
+
+                 <t>Type: List of strings corresponding to entries from the "CDNI Payload Types" registry
+                    <xref target="RFC7736"/> that are under the CIT namespace, and that correspond to CDNI
+                    CI/T GenericExtensionObject objects.
+                 </t>
+
+                 <t>Mandatory: No. The default, in case of a missing or an empty list, MUST be 
+                    interpreted as "no GenericExtensionObject types are supported". A non-empty list MUST be 
+                    interpreted as containing "the only GenericExtensionObject types that are supported".
+                 </t>
+           </list></t>
+        </list></t>
+        <section anchor="trigger-extension-capability-object" title="CI/T Trigger Extension Capability Object Serialization">
+          <t>
+             The following shows an example of a JSON serialized CI/T Trigger Extension Capability object serialization for
+             a dCDN that supports the "CIT.LocationPolicy" and the "CIT.TimePolicy" objects.
+          </t>
+
+          <figure>
+           <artwork><![CDATA[
+
+{
+ "capabilities": [
+   {
+     "capability-type": "FCI.TriggerGenericExtension",
+     "capability-value": {
+       "trigger-extension": ["CIT.LocationPolicy", "CIT.TimePolicy"]
+     },
+     "footprints": [
+       <Footprint objects>
+     ]
+   }
+ ]
+}
+        ]]></artwork>
+          </figure>
+        </section>
+      </section>
+
+
 
             <section title="CI/T Playlist Protocol Capability Object">
         <t>
@@ -2708,55 +2822,6 @@ Month Number  Month/Year           Maximum value of date-mday
      "capability-type": "FCI.TriggerPlaylistProtocol",
      "capability-value": {
        "media-protocols": ["hls", "dash"]
-     },
-     "footprints": [
-       <Footprint objects>
-     ]
-   }
- ]
-}
-        ]]></artwork>
-          </figure>
-        </section>
-      </section>
-
-      <section title="CI/T Trigger Extension Capability Object">
-        <t>
-           The CI/T Generic Extension capability object is used to indicate support for one or more
-           GenericExtensionObject types.
-        </t>
-
-        <t><list style="empty">
-           <t>Property: trigger-extension<list style="empty">
-
-                 <t>Description: A list of supported CDNI CI/T GenericExtensionObject types.</t>
-
-                 <t>Type: List of strings corresponding to entries from the "CDNI Payload Types" registry
-                    <xref target="RFC7736"/> that are under the CIT namespace, and that correspond to CDNI
-                    CI/T GenericExtensionObject objects.
-                 </t>
-
-                 <t>Mandatory: No. The default, in case of a missing or an empty list, MUST be 
-                    interpreted as "no GenericExtensionObject types are supported". A non-empty list MUST be 
-                    interpreted as containing "the only GenericExtensionObject types that are supported".
-                 </t>
-           </list></t>
-        </list></t>
-        <section anchor="trigger-extension-capability-object" title="CI/T Trigger Extension Capability Object Serialization">
-          <t>
-             The following shows an example of a JSON serialized CI/T Trigger Extension Capability object serialization for
-             a dCDN that supports the "CIT.LocationPolicy" and the "CIT.TimePolicy" objects.
-          </t>
-
-          <figure>
-           <artwork><![CDATA[
-
-{
- "capabilities": [
-   {
-     "capability-type": "FCI.TriggerGenericExtension",
-     "capability-value": {
-       "trigger-extension": ["CIT.LocationPolicy", "CIT.TimePolicy"]
      },
      "footprints": [
        <Footprint objects>
@@ -3579,11 +3644,15 @@ RESPONSE:
    <c>FCI.TriggerVersion</c>
    <c>RFCthis</c>
 
-   <c>FCI.TriggerPlaylistProtocol</c>
+   <c>FCI.TriggerGenericScope</c>
    <c>RFCthis</c>
 
    <c>FCI.TriggerGenericExtension</c>
    <c>RFCthis</c>
+
+   <c>FCI.TriggerPlaylistProtocol</c>
+   <c>RFCthis</c>
+
 	</texttable>
       <t>[RFC Editor: Please replace RFCthis with the published RFC
         number for this document.]</t>
