@@ -142,6 +142,8 @@
 
 	<t><xref target="trigger-extension-objects"/> describes the Trigger's Extensions object.</t>
 
+	<t><xref target="footprint-and-capabilities"/> describes the FCI capabilities objects used to inform on the supported CI/T capabilities.</t>
+
 	<t><xref target="sect-6"/> contains example messages.</t>
 
 	</list>
@@ -192,6 +194,9 @@
 	</list>
 	</t>
 
+   <t>
+   Note that additional Trigger Command Types may be defined and registered in the future. See TBD. 
+   </t>
 	<t>
    The CI/T interface is a web service offered by the dCDN.  It allows
    CI/T Commands to be issued and allows triggered activity to be
@@ -287,7 +292,10 @@
 
 	<section title="Timing of Triggered Activity" anchor="sect-2.1"><t>
    Timing of the execution of CI/T Commands is under the dCDN's control,
-   including its start time and pacing of the activity in the network.</t>
+   including its start time and pacing of the activity in the network. 
+   Instructions regarding this timing may be included in the trigger using 
+   one of the Trigger Extension Objects defined in 
+   <xref target="trigger-extension-objects"/> </t>
 
 	<t>
    CI/T "invalidate" and "purge" commands MUST be applied to all data
@@ -313,7 +321,11 @@
 	</section>
 
 	<section title="Scope of Triggered Activity" anchor="sect-2.2"><t>
-   Each CI/T Command can operate on multiple metadata and content URLs.</t>
+   Each CI/T Command can operate on multiple metadata and content elements, 
+   usually refered by their URLs. These elements are specified by specifying
+   both their subject (i.e. "metadata" or "content") as well as specification 
+   method (e.g. URL Regexes)
+   </t>
 
 	<t>
    Multiple representations of an HTTP resource may share the same URL.
