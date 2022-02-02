@@ -429,6 +429,63 @@
 
 	</section>
 
+   <section anchor="trigger-scope" title="Trigger Scope">
+   <t>
+      The CDNI Control Interface / Triggers <xref target="RFC8007"/> defines a set of properties
+      and objects used by the trigger commands in order to specify the subjects the trigger is applied on.
+      In this document we generalize the trigger interface using a list of trigger scopes top be applied on. 
+      Furthermore, the document defines a generic trigger scope
+      object that act as a wrapper for managing individual CDNI trigger scope in an opaque manner.
+   </t>
+
+   <t>This document also registers CDNI Payload Types <xref target="RFC7736"/> under the namespace CIT
+      for the initial set of trigger scope types:
+   <list style="symbols">
+      <t>CIT.UrlsScope (for TODO)</t>
+      <t>CIT.CcidsScope (for TODO)</t>
+      <t>CIT.UriPatternsScope (for TODO)</t>
+      <t>CIT.UrlRegexesScope (for TODO)</t>
+      <t>CIT.ContentPlaylistsScope (for TODO)</t>
+   </list>
+   </t>
+
+   <t>Furthermore, as the scope may apply for wither uCDN metadata as ell as content, the document 
+      registers additional CDNI Payload Types <xref target="RFC7736"/> under the namespace CIT
+      for the initial set of trigger scope subject types:
+   <list style="symbols">
+      <t>CIT.MetadataSubject (for TODO)</t>
+      <t>CIT.ContentSubject (for TODO)</t>
+   </list>
+   </t>
+</section>
+
+<section anchor="trigger-extensibility" title="Trigger Extensibility">
+   <t>
+      The CDNI Control Interface / Triggers <xref target="RFC8007"/> defines a set of properties
+      and objects used by the trigger commands. In this document we define an extension mechanism
+      to the triggers interface that enables the application to add various functions that allow
+      finer control over the trigger execution. This document specifies a generic trigger extension
+      object wrapper for managing individual CDNI trigger extensions in an opaque manner.
+   </t>
+
+   <t>This document also registers CDNI Payload Types <xref target="RFC7736"/> under the namespace CIT
+      for the initial set of trigger extension types:
+   <list style="symbols">
+      <t>CIT.LocationPolicy (for controlling the locations in which the trigger is executed)</t>
+      <t>CIT.TimePolicy (for scheduling a trigger to run in a specific time window)</t>
+   </list>
+   </t>
+
+
+   <t>Example use cases<list style="symbols">
+      <t>Pre-position with cache location policy</t>
+      <t>Purge content with cache location policy</t>
+      <t>Pre-position at a specific time</t>
+      <t>Purge by content acquisition time (e.g. purge all content acquired in the past X hours)</t>
+   </list></t>
+</section>
+
+
 	<section title="Collections of Trigger Status Resources" anchor="sect-3"><t>
    As described in <xref target="sect-2"/>, Trigger Status Resources exist in the dCDN
    to report the status of activity triggered by each uCDN.</t>
@@ -786,62 +843,7 @@
    SHOULD use the same CDN PID.</t>
 
 	</section>
-        <section anchor="trigger-scope" title="Trigger Scope">
-          <t>
-             The CDNI Control Interface / Triggers <xref target="RFC8007"/> defines a set of properties
-             and objects used by the trigger commands in order to specify the subjects the trigger is applied on.
-             In this document we generalize the trigger interface using a list of trigger scopes top be applied on. 
-             Furthermore, the document defines a generic trigger scope
-             object that act as a wrapper for managing individual CDNI trigger scope in an opaque manner.
-          </t>
-
-          <t>This document also registers CDNI Payload Types <xref target="RFC7736"/> under the namespace CIT
-             for the initial set of trigger scope types:
-            <list style="symbols">
-              <t>CIT.UrlsScope (for TODO)</t>
-              <t>CIT.CcidsScope (for TODO)</t>
-              <t>CIT.UriPatternsScope (for TODO)</t>
-              <t>CIT.UrlRegexesScope (for TODO)</t>
-              <t>CIT.ContentPlaylistsScope (for TODO)</t>
-            </list>
-          </t>
-
-          <t>Furthermore, as the scope may apply for wither uCDN metadata as ell as content, the document 
-             registers additional CDNI Payload Types <xref target="RFC7736"/> under the namespace CIT
-             for the initial set of trigger scope subject types:
-            <list style="symbols">
-              <t>CIT.MetadataSubject (for TODO)</t>
-              <t>CIT.ContentSubject (for TODO)</t>
-            </list>
-          </t>
-        </section>
-
-        <section anchor="trigger-extensibility" title="Trigger Extensibility">
-          <t>
-             The CDNI Control Interface / Triggers <xref target="RFC8007"/> defines a set of properties
-             and objects used by the trigger commands. In this document we define an extension mechanism
-             to the triggers interface that enables the application to add various functions that allow
-             finer control over the trigger execution. This document specifies a generic trigger extension
-             object wrapper for managing individual CDNI trigger extensions in an opaque manner.
-          </t>
-
-          <t>This document also registers CDNI Payload Types <xref target="RFC7736"/> under the namespace CIT
-             for the initial set of trigger extension types:
-            <list style="symbols">
-              <t>CIT.LocationPolicy (for controlling the locations in which the trigger is executed)</t>
-              <t>CIT.TimePolicy (for scheduling a trigger to run in a specific time window)</t>
-            </list>
-          </t>
-
-
-           <t>Example use cases<list style="symbols">
-              <t>Pre-position with cache location policy</t>
-              <t>Purge content with cache location policy</t>
-              <t>Pre-position at a specific time</t>
-              <t>Purge by content acquisition time (e.g. purge all content acquired in the past X hours)</t>
-           </list></t>
-        </section>
-
+        
 	<section title="Error Handling" anchor="sect-4.7"><t>
    A dCDN can signal rejection of a CI/T Command using HTTP status codes
    -- for example, 400 ("Bad Request") if the request is malformed, or
