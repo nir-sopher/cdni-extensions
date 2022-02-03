@@ -2763,13 +2763,11 @@ Month Number  Month/Year           Maximum value of date-mday
         TBD should this capability mention only the supported spec or the supported spec subject and trigger type as well
         </t>
         <t><list style="empty">
-           <t>Property: trigger-spec<list style="empty">
+           <t>Property: trigger-spec-capabilities<list style="empty">
 
-                 <t>Description: A list of supported CDNI CI/T GenericSpecObject types.</t>
+                 <t>Description: A list of supported CDNI CI/T Spec for Trigger type and subject.</t>
 
-                 <t>Type: List of strings corresponding to entries from the "CDNI Payload Types" registry
-                    <xref target="RFC7736"/> that are under the CIT namespace, and that correspond to CDNI
-                    CI/T GenericSpecObject objects.
+                 <t>Type: List trigger-spec-capability objects.
                  </t>
 
                  <t>Mandatory: No. The default, in case of a missing or an empty list, MUST be 
@@ -2778,10 +2776,54 @@ Month Number  Month/Year           Maximum value of date-mday
                  </t>
            </list></t>
         </list></t>
+
+        <t>The trigger-spec-capability object is defined below. Note that several such obejcts 
+        may be listed for the same Generic Trigger Spec Type to allow trigger types granularity of the response:</t>
+
+        <t><list style="empty">
+           <t>Property: trigger-spec<list style="empty">
+
+                 <t>Description: The supported CDNI CI/T GenericSpecObject type.</t>
+
+                 <t>Type: A strings corresponding to an entry from the "CDNI Payload Types" registry
+                    <xref target="RFC7736"/> that are under the CIT namespace, and that correspond to CDNI
+                    CI/T GenericSpecObject objects.
+                 </t>
+
+                 <t>Mandatory: Yes.
+                 </t>
+           </list></t>
+           <t>Property: trigger-types <list style="empty">
+
+                 <t>Description: A list of supported CDNI CI/T Trigger Types for the GenericSpecObject.</t>
+
+                 <t>Type: List of strings corresponding to entries from the "CDNI Payload Types" registry
+                    <xref target="RFC7736"/> that are under the CIT namespace, and that correspond to CDNI
+                    CI/T Trigger Types.
+                 </t>
+
+                 <t>Mandatory: Yes.
+                 </t>
+           </list></t>
+            <t>Property: trigger-subjects <list style="empty">
+
+                 <t>Description: A list of supported CDNI CI/T Trigger Subjects for the GenericSpecObject and trigger type.</t>
+
+                 <t>Type: List of strings corresponding to entries from the "CDNI Payload Types" registry
+                    <xref target="RFC7736"/> that are under the CIT namespace, and that correspond to CDNI
+                    CI/T Trigger Subject types.
+                 </t>
+
+                 <t>Mandatory: Yes.
+                 </t>
+           </list></t>
+        </list></t>
+
+
         <section anchor="trigger-spec-capability-object" title="CI/T Trigger Spec Capability Object Serialization">
           <t>
              The following shows an example of a JSON serialized CI/T Trigger Spec Capability object serialization for
-             a dCDN that supports the "CIT.UrlsSpec".
+             a dCDN that supports the "CIT.UrlsSpec" Spec type, for the invalidation of metadata as well as content.
           </t>
 
           <figure>
@@ -2792,7 +2834,13 @@ Month Number  Month/Year           Maximum value of date-mday
    {
      "capability-type": "FCI.TriggerGenericSpec",
      "capability-value": {
-       "trigger-spec": ["CIT.UrlsSpec"]
+       "trigger-spec-capabilities": [
+         {
+            "trigger-spec": "CIT.UrlsSpec",
+            "trigger-types": ["CIT.Invalidate"],
+            "trigger-subject": ["CIT.Metadata", "CIT.Content"]
+         }
+      ]
      },
      "footprints": [
        <Footprint objects>
