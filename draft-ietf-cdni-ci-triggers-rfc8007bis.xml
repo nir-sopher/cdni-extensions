@@ -2838,7 +2838,7 @@ Month Number  Month/Year           Maximum value of date-mday
          {
             "trigger-spec": "CIT.UrlsSpec",
             "trigger-types": ["CIT.Invalidate"],
-            "trigger-subject": ["CIT.Metadata", "CIT.Content"]
+            "trigger-subjects": ["CIT.Metadata", "CIT.Content"]
          }
       ]
      },
