@@ -1796,14 +1796,14 @@ uCDN-A                         dCDN-B                         dCDN-C
 <t><list style="empty" hangIndent="3">
 	<t><list style="hanging" hangIndent="3"><t hangText="Name: specs">
 	<vspace blankLines="1"/>
-	Description: Array of trigger spec objects copied from the corresponding "extensions" array
+	Description: Array of trigger spec objects copied from the corresponding "specs" array
                 from the Trigger Specification. Only those specs to which the error applies are included, but 
                 those specs MUST be exactly as they appear in the request.
 	<vspace blankLines="1"/>
 	Value: Array of GenericTriggerSpec objects, where each spec object is copied
                 from the "specs" array values in the Trigger Specification.
 	<vspace blankLines="1"/>
-	Mandatory: Yes.
+	Mandatory: No. Default is all trigger's spec objects.
 	</t>
 
 	</list>
@@ -2020,22 +2020,22 @@ uCDN-A                         dCDN-B                         dCDN-C
               </list></t>
           </list></t>
 
-        <t>Below is an example of a JSON serialized generic trigger spec object, matching the content at 
-        www.example.com/path/to/content.
+        <t>Below is an example of a JSON serialized generic trigger spec object, matching the metadata at 
+        metadata.example.com/a/b/c.
         </t>
 
         <figure> 
           <artwork><![CDATA[
 {
    "generic-trigger-spec-type": "CIT.UrlsSpec",
-   "generic-trigger-spec-value":
-    {
+   "generic-trigger-spec-value": {
       "urls": [
-         "www.example.com/path/to/content"
+         "https://metadata.example.com/a/b/c"
       ]
-    },
-   "trigger-subject": "CIT.Content"
+   },
+   "trigger-subject": "CIT.Metadata"
 }
+
        ]]></artwork>
        </figure>
       </section>
@@ -2900,18 +2900,33 @@ REQUEST:
   Content-Length: 352
 
   {
-    "trigger": {
-      "type": "preposition",
-
-      "metadata.urls": [ "https://metadata.example.com/a/b/c" ],
-      "content.urls": [
-          "https://www.example.com/a/b/c/1",
-          "https://www.example.com/a/b/c/2",
-          "https://www.example.com/a/b/c/3",
-          "https://www.example.com/a/b/c/4"
-        ]
-    },
-    "cdn-path": [ "AS64496:1" ]
+      "trigger.v2": {
+         "type": "preposition",
+         "specs": [
+            {
+               "generic-trigger-spec-type": "CIT.UrlsSpec",
+               "generic-trigger-spec-value": {
+                  "urls": [
+                     "https://metadata.example.com/a/b/c"
+                  ]
+               },
+               "trigger-subject": "CIT.Metadata"
+            },
+            {
+               "generic-trigger-spec-type": "CIT.UrlsSpec",
+               "generic-trigger-spec-value": {
+                  "urls": [
+                     "https://www.example.com/a/b/c/1",
+                     "https://www.example.com/a/b/c/2",
+                     "https://www.example.com/a/b/c/3",
+                     "https://www.example.com/a/b/c/4"
+                  ]
+               },
+               "trigger-subject": "CIT.Content"
+            }
+         ],
+      },
+      "cdn-path": [ "AS64496:1" ]
   }
 
 RESPONSE:
@@ -2928,17 +2943,31 @@ RESPONSE:
       "etime": 1462351698,
       "mtime": 1462351690,
       "status": "pending",
-      "trigger": {
-          "content.urls": [
-              "https://www.example.com/a/b/c/1",
-              "https://www.example.com/a/b/c/2",
-              "https://www.example.com/a/b/c/3",
-              "https://www.example.com/a/b/c/4"
-          ],
-          "metadata.urls": [
-              "https://metadata.example.com/a/b/c"
-          ],
-          "type": "preposition"
+      "trigger.v2": {
+         "type": "preposition"
+         "specs": [
+            {
+               "generic-trigger-spec-type": "CIT.UrlsSpec",
+               "generic-trigger-spec-value": {
+                  "urls": [
+                     "https://metadata.example.com/a/b/c"
+                  ]
+               },
+               "trigger-subject": "CIT.Metadata"
+            },
+            {
+               "generic-trigger-spec-type": "CIT.UrlsSpec",
+               "generic-trigger-spec-value": {
+                  "urls": [
+                     "https://www.example.com/a/b/c/1",
+                     "https://www.example.com/a/b/c/2",
+                     "https://www.example.com/a/b/c/3",
+                     "https://www.example.com/a/b/c/4"
+                  ]
+               },
+               "trigger-subject": "CIT.Content"
+            }
+         ]
       }
   }
 ]]></artwork>
@@ -2952,6 +2981,7 @@ RESPONSE:
    prefixed by "https://metadata.example.com/a/b/" using
    case-insensitive matching, and "https://www.example.com/a/b/" using
    case-sensitive matching, respectively.</t>
+   <t>TBD URL vs URi</t>
 
 	<figure><artwork><![CDATA[
 REQUEST:
@@ -2964,19 +2994,39 @@ REQUEST:
   Content-Length: 387
 
   {
-    "trigger": {
+    "trigger.v2": {
       "type": "invalidate",
-
-      "metadata.patterns": [
-          { "pattern": "https://metadata.example.com/a/b/*" }
-        ],
-
-      "content.urls": [ "https://www.example.com/a/index.html" ],
-      "content.patterns": [
-          { "pattern": "https://www.example.com/a/b/*",
-            "case-sensitive": true
-          }
-        ]
+      "specs": [
+         {
+            "generic-trigger-spec-type": "CIT.UriPatterns",
+            "generic-trigger-spec-value": {
+               "patterns": [
+                  { "pattern": "https://metadata.example.com/a/b/*" }
+               ]
+            },
+            "trigger-subject": "CIT.Metadata"
+         },
+         {
+            "generic-trigger-spec-type": "CIT.UrlsSpec",
+            "generic-trigger-spec-value": {
+               "urls": [
+                  "https://www.example.com/a/index.html"
+               ]
+            },
+            "trigger-subject": "CIT.Content"
+         },
+         {
+            "generic-trigger-spec-type": "CIT.UriPatterns",
+            "generic-trigger-spec-value": {
+               "patterns": [
+                  { "pattern": "https://www.example.com/a/b/*",
+                     "case-sensitive": true
+                  }
+               ]
+            },
+            "trigger-subject": "CIT.Content"
+         }
+      ]
     },
     "cdn-path": [ "AS64496:1" ]
   }
@@ -2995,22 +3045,39 @@ RESPONSE:
       "etime": 1462351699,
       "mtime": 1462351691,
       "status": "pending",
-      "trigger": {
-          "content.patterns": [
-              {
-                  "case-sensitive": true,
-                  "pattern": "https://www.example.com/a/b/*"
-              }
-          ],
-          "content.urls": [
-              "https://www.example.com/a/index.html"
-          ],
-          "metadata.patterns": [
-              {
-                  "pattern": "https://metadata.example.com/a/b/*"
-              }
-          ],
-          "type": "invalidate"
+      "trigger.v2": {
+         "type": "invalidate",
+         "specs": [
+            {
+               "generic-trigger-spec-type": "CIT.UriPatterns",
+               "generic-trigger-spec-value": {
+                  "patterns": [
+                     { "pattern": "https://metadata.example.com/a/b/*" }
+                  ]
+               },
+               "trigger-subject": "CIT.Metadata"
+            },
+            {
+               "generic-trigger-spec-type": "CIT.UrlsSpec",
+               "generic-trigger-spec-value": {
+                  "urls": [
+                     "https://www.example.com/a/index.html"
+                  ]
+               },
+               "trigger-subject": "CIT.Content"
+            },
+            {
+               "generic-trigger-spec-type": "CIT.UriPatterns",
+               "generic-trigger-spec-value": {
+                  "patterns": [
+                     { "pattern": "https://www.example.com/a/b/*",
+                        "case-sensitive": true
+                     }
+                  ]
+               },
+               "trigger-subject": "CIT.Content"
+            }
+         ]
       }
   }
 ]]></artwork>
@@ -3024,6 +3091,8 @@ RESPONSE:
             content objects for invalidation, the command is rejected by the dCDN due to regex complexity, and
             an appropriate error is reflected in the status response.
           </t>
+          <t> TBD: in case of failue in one object, maybe leave empty places in the tiggers list
+          for the objects that has not failed></t>
           <figure>
             <artwork><![CDATA[
 REQUEST:
@@ -3036,17 +3105,25 @@ REQUEST:
   {
     "trigger.v2": {
       "type": "invalidate",
-      "content.regexs": [
-        {
-          "regex": "^(https:\\/\\/video\\.example\\.com)\\/
-          ([a-z])\\/movie1\\/([1-7])\\/*(index.m3u8|\\d{3}.ts)$",
-          "case-sensitive": true,
-          "match-query-string": false
-        },
-        { <RegexMatch #2> },
-        ...
-        { <RegexMatch #N> },
-      ],
+      "specs": [
+         {
+            "generic-trigger-spec-type": "CIT.UrlRegexes",
+            "generic-trigger-spec-value": {
+               "regexes": [
+                  {
+                     "regex": "^(https:\\/\\/video\\.example\\.com)\\/
+                     ([a-z])\\/movie1\\/([1-7])\\/*(index.m3u8|\\d{3}.ts)$",
+                     "case-sensitive": true,
+                     "match-query-string": false
+                  },
+                  { <RegexMatch #2> },
+                  ...
+                  { <RegexMatch #N> }
+               ]
+            },
+            "trigger-subject": "CIT.Content"
+         }
+      ]
     },
     "cdn-path": [ "AS64496:0" ]
   }
@@ -3063,14 +3140,22 @@ RESPONSE:
   {
     "errors.v2": [
       {
-        "content.regexs": [
-          {
-            "regex": "^(https:\\/\\/video\\.example\\.com)\\/
-            ([a-z])\\/movie1\\/([1-7])\\/*(index.m3u8|\\d{3}.ts)$",
-            "case-sensitive": true,
-            "match-query-string": false
-          },
-        ],
+        "specs": [
+            {
+               "generic-trigger-spec-type": "CIT.UrlRegexes",
+               "generic-trigger-spec-value": {
+                  "regexes": [
+                     {
+                        "regex": "^(https:\\/\\/video\\.example\\.com)\\/
+                        ([a-z])\\/movie1\\/([1-7])\\/*(index.m3u8|\\d{3}.ts)$",
+                        "case-sensitive": true,
+                        "match-query-string": false
+                     }
+                  ]
+               },
+               "trigger-subject": "CIT.Content"
+            }
+         ],
         "description": "The dCDN rejected a regex due to complexity",
         "error": "ereject",
         "cdn": "AS64500:0"
@@ -3104,15 +3189,23 @@ REQUEST:
   {
     "trigger.v2": {
       "type": "preposition",
-      "content.playlists": [
-       {
-        "playlist": "https://www.example.com/hls/title/index.m3u8",
-        "media-protocol": "hls"
-       },
-       { <Playlist #2> },
-       ...
-       { <Playlist #N> },
-      ],
+      "specs": [
+         {
+            "generic-trigger-spec-type": "CIT.ContentPlaylists",
+            "generic-trigger-spec-value": {
+               "playlists": [
+                  {
+                  "playlist": "https://www.example.com/hls/title/index.m3u8",
+                  "media-protocol": "hls"
+                  },
+                  { <Playlist #2> },
+                  ...
+                  { <Playlist #N> }
+               ]
+            },
+            "trigger-subject": "CIT.Content"
+         }
+      ]
     },
     "cdn-path": [ "AS64496:0" ]
   }
@@ -3129,12 +3222,20 @@ RESPONSE:
   {
     "errors.v2": [ 
       {
-       "content.playlists": [
-         { 
-          "playlist": "https://www.example.com/hls/title/index.m3u8",
-          "media-protocol": "hls"
-         },                
-        ],
+        "specs": [
+          {
+            "generic-trigger-spec-type": "CIT.ContentPlaylists",
+            "generic-trigger-spec-value": {
+               "playlists": [
+                  {
+                  "playlist": "https://www.example.com/hls/title/index.m3u8",
+                  "media-protocol": "hls"
+                  }
+               ]
+            },
+            "trigger-subject": "CIT.Content"
+         }
+       ],
        "description": "The dCDN was not able to parse the playlist",
        "error": "econtent",
        "cdn": "AS64500:0"
@@ -3294,16 +3395,30 @@ RESPONSE:
       "mtime": 1462351690,
       "status": "pending",
       "trigger": {
-          "content.urls": [
-              "https://www.example.com/a/b/c/1",
-              "https://www.example.com/a/b/c/2",
-              "https://www.example.com/a/b/c/3",
-              "https://www.example.com/a/b/c/4"
-          ],
-          "metadata.urls": [
-              "https://metadata.example.com/a/b/c"
-          ],
-          "type": "preposition"
+          "type": "preposition",
+          "specs": [
+            {
+               "generic-trigger-spec-type": "CIT.UrlsSpec",
+               "generic-trigger-spec-value": {
+                  "urls": [
+                     "https://metadata.example.com/a/b/c"
+                  ]
+               },
+               "trigger-subject": "CIT.Metadata"
+            },
+            {
+               "generic-trigger-spec-type": "CIT.UrlsSpec",
+               "generic-trigger-spec-value": {
+                  "urls": [
+                     "https://www.example.com/a/b/c/1",
+                     "https://www.example.com/a/b/c/2",
+                     "https://www.example.com/a/b/c/3",
+                     "https://www.example.com/a/b/c/4"
+                  ]
+               },
+               "trigger-subject": "CIT.Content"
+            }
+         ]
       }
   }
 
@@ -3330,21 +3445,38 @@ RESPONSE:
       "mtime": 1462351691,
       "status": "pending",
       "trigger": {
-          "content.patterns": [
-              {
-                  "case-sensitive": true,
-                  "pattern": "https://www.example.com/a/b/*"
-              }
-          ],
-          "content.urls": [
-              "https://www.example.com/a/index.html"
-          ],
-          "metadata.patterns": [
-              {
-                  "pattern": "https://metadata.example.com/a/b/*"
-              }
-          ],
-          "type": "invalidate"
+          "type": "invalidate",
+          "specs": [
+            {
+               "generic-trigger-spec-type": "CIT.UriPatterns",
+               "generic-trigger-spec-value": {
+                  "patterns": [
+                     { "pattern": "https://metadata.example.com/a/b/*" }
+                  ]
+               },
+               "trigger-subject": "CIT.Metadata"
+            },
+            {
+               "generic-trigger-spec-type": "CIT.UrlsSpec",
+               "generic-trigger-spec-value": {
+                  "urls": [
+                     "https://www.example.com/a/index.html"
+                  ]
+               },
+               "trigger-subject": "CIT.Content"
+            },
+            {
+               "generic-trigger-spec-type": "CIT.UriPatterns",
+               "generic-trigger-spec-value": {
+                  "patterns": [
+                     { "pattern": "https://www.example.com/a/b/*",
+                        "case-sensitive": true
+                     }
+                  ]
+               },
+               "trigger-subject": "CIT.Content"
+            }
+         ]
       }
   }
 ]]></artwork>
@@ -3531,11 +3663,19 @@ REQUEST:
   {
     "trigger.v2": {
       "type": "preposition",
-      "content.playlists": [
-       {
-         "playlist": "https://www.example.com/hls/title/index.m3u8",
-         "media-protocol": "hls"
-       },
+     "specs": [
+         {
+            "generic-trigger-spec-type": "CIT.ContentPlaylists",
+            "generic-trigger-spec-value": {
+               "playlists": [
+                  {
+                  "playlist": "https://www.example.com/hls/title/index.m3u8",
+                  "media-protocol": "hls"
+                  }
+               ]
+            },
+            "trigger-subject": "CIT.Content"
+         }
       ],
       "extensions": [
           {
