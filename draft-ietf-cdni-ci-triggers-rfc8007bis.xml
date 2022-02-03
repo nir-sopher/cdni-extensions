@@ -138,7 +138,7 @@
 
 	<t><xref target="sect-5"/> lists properties of CI/T Commands and Status Resources.</t>
 
-	<t><xref target="trigger-scope-objects"/> describes the Trigger's Scope object.</t>
+	<t><xref target="trigger-scope-objects"/> describes the Trigger's Spec object.</t>
 
 	<t><xref target="trigger-extension-objects"/> describes the Trigger's Extensions object.</t>
 
@@ -429,29 +429,32 @@
 
 	</section>
 
-   <section anchor="trigger-scope" title="Trigger Scope">
+   <section anchor="trigger-spec" title="Trigger Spec">
    <t>
       The CDNI Control Interface / Triggers <xref target="RFC8007"/> defines a set of properties
-      and objects used by the trigger commands in order to specify the subjects the trigger is applied on.
-      In this document we generalize the trigger interface using a list of trigger scopes top be applied on. 
-      Furthermore, the document defines a generic trigger scope
-      object that act as a wrapper for managing individual CDNI trigger scope in an opaque manner.
+      and objects used by the trigger commands in order to specify the targets the trigger is applied on.
+      In this document we introduce additional flexibility to the trigger interface, 
+      allowing the specification of the trigger's targets via a list of "trigger specs" objects. 
+      Furthermore, the document defines a generic trigger spec
+      object that act as a wrapper for managing individual CDNI trigger spec in an opaque manner,
+      allowing future extension of the interface.
    </t>
 
-   <t>This document also registers CDNI Payload Types <xref target="RFC7736"/> under the namespace CIT
-      for the initial set of trigger scope types:
+   <t>This document also defines an initial set of trigger spec objects, and registers the 
+   defined tigger specs' types as CDNI Payload Types <xref target="RFC7736"/> under the namespace CIT:
    <list style="symbols">
-      <t>CIT.UrlsScope (for TODO)</t>
-      <t>CIT.CcidsScope (for TODO)</t>
-      <t>CIT.UriPatternsScope (for TODO)</t>
-      <t>CIT.UrlRegexesScope (for TODO)</t>
-      <t>CIT.ContentPlaylistsScope (for TODO)</t>
+      <t>CIT.UrlsSpec (for TODO)</t>
+      <t>CIT.CcidsSpec (for TODO)</t>
+      <t>CIT.UriPatternsSpec (for TODO)</t>
+      <t>CIT.UrlRegexesSpec (for TODO)</t>
+      <t>CIT.ContentPlaylistsSpec (for TODO)</t>
    </list>
    </t>
 
-   <t>Furthermore, as the scope may apply for wither uCDN metadata as ell as content, the document 
-      registers additional CDNI Payload Types <xref target="RFC7736"/> under the namespace CIT
-      for the initial set of trigger scope subject types:
+   <t>Furthermore, as the scope of the trigger may be either uCDN metadata as well as uCDN content, 
+   the "trigger spec object" also specify the trigger's target subject (i.e. metadata or content) 
+   to be matched with. The document registers additional as CDNI Payload Types <xref target="RFC7736"/> 
+   under the namespace CIT, the initial set of available trigger subjects:
    <list style="symbols">
       <t>CIT.MetadataSubject (for TODO)</t>
       <t>CIT.ContentSubject (for TODO)</t>
@@ -1327,9 +1330,9 @@ uCDN-A                         dCDN-B                         dCDN-C
 	Mandatory: Yes.
 	</t>
 
-	<t hangText="Name: scopes">
+	<t hangText="Name: specs">
 	<vspace blankLines="1"/>
-	Description: Array of trigger scope data.
+	Description: Array of trigger spec data.
 	<vspace blankLines="1"/>
 	Value: Array of GenericTriggerScope objects (see <xref target="generic-scope-object"/>).
 	<vspace blankLines="1"/>
