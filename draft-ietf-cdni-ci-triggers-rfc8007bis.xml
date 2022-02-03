@@ -1411,39 +1411,6 @@ uCDN-A                         dCDN-B                         dCDN-C
 	</texttable>
 	</section>
 
-	<section title="Trigger Status" anchor="sect-5.2.3"><t>
-   Trigger Status describes the current status of the triggered
-   activity.  It MUST be one of the JSON strings in the following table:</t>
-
-	<texttable style="full"><ttcol> JSON String</ttcol>
-	<ttcol> Description </ttcol>
-	<c>pending</c>
-	<c>The CI/T Trigger Command has not yet been acted upon.</c>
-	<c>active</c>
-	<c>The CI/T Trigger Command is currently being acted</c>
-	<c></c>
-	<c>upon.</c>
-	<c>complete</c>
-	<c>The CI/T Trigger Command completed successfully.</c>
-	<c>processed</c>
-	<c>The CI/T Trigger Command has been accepted, and no</c>
-	<c></c>
-	<c>further status update will be made (can be used in</c>
-	<c></c>
-	<c>cases where completion cannot be confirmed).</c>
-	<c>failed</c>
-	<c>The CI/T Trigger Command could not be completed.</c>
-	<c>cancelling</c>
-	<c>Processing of the CI/T Trigger Command is still in</c>
-	<c></c>
-	<c>progress, but the CI/T Trigger Command has been</c>
-	<c></c>
-	<c>canceled by the uCDN.</c>
-	<c>cancelled</c>
-	<c>The CI/T Trigger Command was canceled by the uCDN.</c>
-	</texttable>
-	</section>
-
    <section anchor="trigger-scopes" title="CI/T Trigger Scopes">
    <t>
    A "trigger.v2" object, as defined in <xref target="sect-5.2.1"/> includes an
@@ -1931,6 +1898,40 @@ uCDN-A                         dCDN-B                         dCDN-C
           </figure>
 
 	</section>
+
+	<section title="Trigger Status" anchor="sect-5.2.3"><t>
+   Trigger Status describes the current status of the triggered
+   activity.  It MUST be one of the JSON strings in the following table:</t>
+
+	<texttable style="full"><ttcol> JSON String</ttcol>
+	<ttcol> Description </ttcol>
+	<c>pending</c>
+	<c>The CI/T Trigger Command has not yet been acted upon.</c>
+	<c>active</c>
+	<c>The CI/T Trigger Command is currently being acted</c>
+	<c></c>
+	<c>upon.</c>
+	<c>complete</c>
+	<c>The CI/T Trigger Command completed successfully.</c>
+	<c>processed</c>
+	<c>The CI/T Trigger Command has been accepted, and no</c>
+	<c></c>
+	<c>further status update will be made (can be used in</c>
+	<c></c>
+	<c>cases where completion cannot be confirmed).</c>
+	<c>failed</c>
+	<c>The CI/T Trigger Command could not be completed.</c>
+	<c>cancelling</c>
+	<c>Processing of the CI/T Trigger Command is still in</c>
+	<c></c>
+	<c>progress, but the CI/T Trigger Command has been</c>
+	<c></c>
+	<c>canceled by the uCDN.</c>
+	<c>cancelled</c>
+	<c>The CI/T Trigger Command was canceled by the uCDN.</c>
+	</texttable>
+	</section>
+
 
 	<section title="Error Code" anchor="sect-5.2.7"><t>
    This type is used by the dCDN to report failures in trigger
