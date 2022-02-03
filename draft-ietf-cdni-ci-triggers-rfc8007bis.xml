@@ -195,7 +195,7 @@
 	</t>
 
    <t>
-   Note that additional Trigger Command Types may be defined and registered in the future. See TODO. 
+   Note that additional CI/T Trigger Types may be defined and registered in the future. 
    </t>
 	<t>
    The CI/T interface is a web service offered by the dCDN.  It allows
@@ -1382,11 +1382,11 @@ uCDN-A                         dCDN-B                         dCDN-C
 
 	<texttable style="full"><ttcol> JSON String</ttcol>
 	<ttcol> Description</ttcol>
-	<c>preposition</c>
+	<c>CIT.Preposition</c>
 	<c>A request for the dCDN to acquire metadata or</c>
 	<c></c>
 	<c>content.</c>
-	<c>invalidate</c>
+	<c>CIT.invalidate</c>
 	<c>A request for the dCDN to invalidate metadata or</c>
 	<c></c>
 	<c>content.  After servicing this request, the dCDN</c>
@@ -1398,7 +1398,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 	<c>"If-None-Match" HTTP request.  The dCDN need not</c>
 	<c></c>
 	<c>erase the associated data.</c>
-	<c>purge</c>
+	<c>CIT.purge</c>
 	<c>A request for the dCDN to erase metadata or</c>
 	<c></c>
 	<c>content.  After servicing the request, the</c>
@@ -1803,7 +1803,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 	Value: Array of GenericTriggerSpec objects, where each spec object is copied
                 from the "specs" array values in the Trigger Specification.
 	<vspace blankLines="1"/>
-	Mandatory: No. Default is all trigger's spec objects.
+	Mandatory: No. Default is all trigger's spec objects, i.e. the trigger spec array.
 	</t>
 
 	</list>
@@ -2702,9 +2702,57 @@ Month Number  Month/Year           Maximum value of date-mday
         This section covers the FCI objects required for advertisement of the specs, extensions and properties
         introduced in this document.
       </t>
+        
+      <section title="CI/T Trigger Type Capability Object">
         <t>
-        TBD Do we need capability for the commands as well?
+           The CI/T supports several trigger types as defined at <xref target="sect-5.2.2"/>. Additional types may be defined 
+           in the future. The Trigger Types capability object is used to indicate support for one or more
+           Trigger types.
         </t>
+        <t><list style="empty">
+           <t>Property: trigger-type<list style="empty">
+
+                 <t>Description: A list of supported CDNI CI/T Trigger types.</t>
+
+                 <t>Type: List of strings corresponding to entries from the "CDNI Payload Types" registry
+                    <xref target="RFC7736"/> that are under the CIT namespace, and that correspond to CDNI
+                    CI/T Trigger types.
+                 </t>
+
+                 <t>Mandatory: No. The default, in case of a missing or an empty list, MUST be 
+                    interpreted as "no trigger types are supported". A non-empty list MUST be 
+                    interpreted as containing "the only trigger types that are supported".
+                 </t>
+           </list></t>
+        </list></t>
+        <section anchor="trigger-type-capability-object" title="CI/T Trigger Type Capability Object Serialization">
+          <t>
+             The following shows an example of a JSON serialized CI/T Trigger Type Capability object serialization for
+             a dCDN that supports the "CIT.Purge" types.
+          </t>
+
+          <figure>
+           <artwork><![CDATA[
+
+{
+ "capabilities": [
+   {
+     "capability-type": "FCI.TriggerType",
+     "capability-value": {
+       "trigger-spec": ["CIT.Purge"]
+     },
+     "footprints": [
+       <Footprint objects>
+     ]
+   }
+ ]
+}
+        ]]></artwork>
+          </figure>
+        </section>
+      </section>
+
+
 
             <section title="CI/T Trigger Spec Capability Object">
         <t>
@@ -2712,7 +2760,7 @@ Month Number  Month/Year           Maximum value of date-mday
            GenericSpecObject types.
         </t>
         <t>
-        TBD should this capability mention only the supported spec or the supported spec subject and command as well
+        TBD should this capability mention only the supported spec or the supported spec subject and trigger type as well
         </t>
         <t><list style="empty">
            <t>Property: trigger-spec<list style="empty">
@@ -2733,7 +2781,7 @@ Month Number  Month/Year           Maximum value of date-mday
         <section anchor="trigger-spec-capability-object" title="CI/T Trigger Spec Capability Object Serialization">
           <t>
              The following shows an example of a JSON serialized CI/T Trigger Spec Capability object serialization for
-             a dCDN that supports the "CIT.LocationPolicy" and the "CIT.TimePolicy" objects.
+             a dCDN that supports the "CIT.UrlsSpec".
           </t>
 
           <figure>
@@ -2901,7 +2949,7 @@ REQUEST:
 
   {
       "trigger.v2": {
-         "type": "preposition",
+         "type": "CIT.Preposition",
          "specs": [
             {
                "generic-trigger-spec-type": "CIT.UrlsSpec",
@@ -2944,7 +2992,7 @@ RESPONSE:
       "mtime": 1462351690,
       "status": "pending",
       "trigger.v2": {
-         "type": "preposition"
+         "type": "CIT.Preposition"
          "specs": [
             {
                "generic-trigger-spec-type": "CIT.UrlsSpec",
@@ -2994,7 +3042,7 @@ REQUEST:
 
   {
     "trigger.v2": {
-      "type": "invalidate",
+      "type": "CIT.Invalidate",
       "specs": [
          {
             "generic-trigger-spec-type": "CIT.UriPatterns",
@@ -3045,7 +3093,7 @@ RESPONSE:
       "mtime": 1462351691,
       "status": "pending",
       "trigger.v2": {
-         "type": "invalidate",
+         "type": "CIT.Invalidate",
          "specs": [
             {
                "generic-trigger-spec-type": "CIT.UriPatterns",
@@ -3103,7 +3151,7 @@ REQUEST:
   Content-Type: application/cdni; ptype=ci-trigger-command.v2
   {
     "trigger.v2": {
-      "type": "invalidate",
+      "type": "CIT.Invalidate",
       "specs": [
          {
             "generic-trigger-spec-type": "CIT.UriRegexes",
@@ -3187,7 +3235,7 @@ REQUEST:
   Content-Type: application/cdni; ptype=ci-trigger-command.v2
   {
     "trigger.v2": {
-      "type": "preposition",
+      "type": "CIT.Preposition",
       "specs": [
          {
             "generic-trigger-spec-type": "CIT.ContentPlaylists",
@@ -3394,7 +3442,7 @@ RESPONSE:
       "mtime": 1462351690,
       "status": "pending",
       "trigger": {
-          "type": "preposition",
+          "type": "CIT.Preposition",
           "specs": [
             {
                "generic-trigger-spec-type": "CIT.UrlsSpec",
@@ -3444,7 +3492,7 @@ RESPONSE:
       "mtime": 1462351691,
       "status": "pending",
       "trigger": {
-          "type": "invalidate",
+          "type": "CIT.Invalidate",
           "specs": [
             {
                "generic-trigger-spec-type": "CIT.UriPatterns",
@@ -3661,7 +3709,7 @@ REQUEST:
   Content-Type: application/cdni; ptype=ci-trigger-command.v2
   {
     "trigger.v2": {
-      "type": "preposition",
+      "type": "CIT.Preposition",
      "specs": [
          {
             "generic-trigger-spec-type": "CIT.ContentPlaylists",
@@ -3778,6 +3826,15 @@ RESPONSE:
    <c>ci-trigger-status.v2</c>
    <c>RFCthis</c>
 
+   <c>CIT.Preposition</c>
+   <c>RFCthis</c>
+   
+    <c>CIT.Invalidate</c>
+   <c>RFCthis</c>
+   
+   <c>CIT.Purge</c>
+   <c>RFCthis</c>
+
    <c>CIT.UrlsSpec</c>
    <c>RFCthis</c>
    
@@ -3806,6 +3863,9 @@ RESPONSE:
    <c>RFCthis</c>
 
    <c>FCI.TriggerVersion</c>
+   <c>RFCthis</c>
+
+   <c>FCI.TriggerType</c>
    <c>RFCthis</c>
 
    <c>FCI.TriggerGenericSpec</c>
@@ -3840,6 +3900,27 @@ RESPONSE:
           <t>Interface: CI/T</t>
           <t>Encoding: see <xref target="sect-5.1.3"/></t>
         </section>
+
+        <section anchor="IANA.CDNI.payload.CIT.TriggerTypes" title="CDNI CI/T Trigger Type Payload Types">
+            <section anchor="IANA.CDNI.payload.CIT.Preposition" title="CDNI CI/T Preposition Trigger Type Payload Type">
+               <t>Purpose: The purpose of this Trigger type is to distinguish Preposition CIT Trigger Types Triggers.</t>
+               <t>Interface: CI/T</t>
+               <t>Encoding: see <xref target="sect-5.2.2"/></t>
+            </section>
+            
+            <section anchor="IANA.CDNI.payload.CIT.Invalidate" title="CDNI CI/T Invalidate Trigger Type Payload Type">
+               <t>Purpose: The purpose of this Trigger type is to distinguish Invalidate CIT Trigger Types Triggers.</t>
+               <t>Interface: CI/T</t>
+               <t>Encoding: see <xref target="sect-5.2.2"/></t>
+            </section>
+
+            <section anchor="IANA.CDNI.payload.CIT.Purge" title="CDNI CI/T Purge Trigger Type Payload Type">
+               <t>Purpose: The purpose of this Trigger type is to distinguish Purge CIT Trigger Types Triggers.</t>
+               <t>Interface: CI/T</t>
+               <t>Encoding: see <xref target="sect-5.2.2"/></t>
+            </section>
+            
+         </section>
 
         <section anchor="IANA.CDNI.payload.CIT.Specs" title="CDNI CI/T Trigger Spec Payload Types">
             <section anchor="IANA.CDNI.payload.CIT.UrlsSpec" title="CDNI CI/T Urls Trigger Spec Payload Type">
@@ -3902,7 +3983,15 @@ RESPONSE:
         </section>
 
         <section anchor="IANA.CDNI.payload.CIT.Footprint" title="CDNI FCI CI/T Payload Types">
-            <section anchor="IANA.CDNI.payload.FCI.PlaylistProtocol" title="CDNI FCI CI/T Playlist Protocol Payload Type">
+            <section anchor="IANA.CDNI.payload.FCI.TriggerType" title="CDNI FCI CI/T Trigger Type Payload Type">
+               <t>Purpose: The purpose of this payload type is to distinguish FCI advertisement objects for
+                  CI/T Truigger types</t>
+               <t>Interface: FCI</t>
+               <t>Encoding: see <xref target="trigger-type-capability-object"/></t>
+            </section>
+
+ 
+             <section anchor="IANA.CDNI.payload.FCI.PlaylistProtocol" title="CDNI FCI CI/T Playlist Protocol Payload Type">
                <t>Purpose: The purpose of this payload type is to distinguish FCI advertisement objects for
                   CI/T Playlist Protocol objects</t>
                <t>Interface: FCI</t>
@@ -4240,7 +4329,7 @@ RESPONSE:
 	</references>
 	<section title="Formalization of the JSON Data" anchor="sect-a"><t>
    This appendix is non-normative.</t>
-
+   <t>TODO should we remove it or compile a CDDL on our own</t>
 	<t>
    The JSON data described in this document has been formalized using
    the CBOR Data Definition Language (CDDL) <xref target="I-D.greevenbosch-appsawg-cbor-cddl"/> (where "CBOR"
