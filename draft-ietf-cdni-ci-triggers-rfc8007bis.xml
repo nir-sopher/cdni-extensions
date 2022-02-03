@@ -138,7 +138,7 @@
 
 	<t><xref target="sect-5"/> lists properties of CI/T Commands and Status Resources.</t>
 
-	<t><xref target="trigger-scope-objects"/> describes the Trigger's Spec object.</t>
+	<t><xref target="trigger-spec-objects"/> describes the Trigger's Spec object.</t>
 
 	<t><xref target="trigger-extension-objects"/> describes the Trigger's Extensions object.</t>
 
@@ -1341,7 +1341,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 	<vspace blankLines="1"/>
 	Description: Array of trigger spec data.
 	<vspace blankLines="1"/>
-	Value: Array of GenericTriggerScope objects (see <xref target="generic-scope-object"/>).
+	Value: Array of GenericTriggerSpec objects (see <xref target="generic-spec-object"/>).
 	<vspace blankLines="1"/>
 	Mandatory: Yes. TODO(nirs): Can the list be empty???
 	</t>
@@ -1411,52 +1411,53 @@ uCDN-A                         dCDN-B                         dCDN-C
 	</texttable>
 	</section>
 
-   <section anchor="trigger-scopes" title="CI/T Trigger Scopes">
+   <section anchor="trigger-specs" title="CI/T Trigger Specs">
    <t>
    A "trigger.v2" object, as defined in <xref target="sect-5.2.1"/> includes an
-   array of trigger scope objects. A trigger scope contains properties
-   that are used as trigger subject selection directives for dCDN when executing 
-   the trigger command -- for example content urls or metadata patterns. Each such CDNI Trigger 
-   Scope is a specialization
-   of a CDNI GenericTriggerScope object. The GenericTriggerScope object abstracts the basic
+   array of trigger spec objects. The trigger spec object contains properties
+   that are used as trigger target selection directives for dCDN when executing 
+   the trigger command -- for example content urls or metadata url patterns. Each such CDNI Trigger 
+   Spec is a specialization
+   of a CDNI GenericTriggerSpec object. The GenericTriggerSpec object abstracts the basic
    information required for trigger distribution from the specifics of any given property
-   (i.e., property semantics, enforcement options, etc.). The semantics of the Trigger Scopes list 
-   is addative, i.e. the trigger applies to any object matching one of the listed scopes.
+   (i.e., property semantics, enforcement options, etc.). The semantics of the Trigger Specs list 
+   is addative, i.e. the trigger applies to any object matching one of the listed specs.
    </t>
 
 
-         <section anchor="generic-scope-object" title="Generic Scope Object">
-         <t>A GenericScopeObject object is a wrapper for managing individual CDNI
-            Trigger scope in an opaque manner.</t>
+         <section anchor="generic-spec-object" title="Generic Spec Object">
+         <t>A GenericSpecObject object is a wrapper for managing individual CDNI
+            Trigger spec in an opaque manner.</t>
 
          <t><list style="empty">
-            <t>Property: generic-trigger-scope-type<list style="empty">
 
-               <t>Description: Case-insensitive CDNI Trigger scope type.</t>
+            <t>Property: generic-trigger-spec-type<list style="empty">
 
-               <t>Type: String containing the scope type of the object contained
-                  in the generic-trigger-scope-value property (see table in <xref target="sect-7.1"/>).</t>
+               <t>Description: Case-insensitive CDNI Trigger spec type.</t>
 
-               <t>Mandatory: Yes.</t>
-            </list></t>
-
-            <t>Property: generic-trigger-scope-subject<list style="empty">
-
-               <t>Description: Case-insensitive CDNI Trigger scope subject.</t>
-
-               <t>Type: String containing the type of the subject matching the 
-                  generic-trigger-scope-value property, such as "content" or "metadata" 
-                  as define in TODO.</t>
+               <t>Type: String containing the spec type of the object contained
+                  in the generic-trigger-spec-value property (see table in <xref target="sect-7.1"/>).</t>
 
                <t>Mandatory: Yes.</t>
             </list></t>
 
-            <t>Property: generic-trigger-scope-values<list style="empty">
+            <t>Property: generic-trigger-spec-values<list style="empty">
 
-               <t>Description: An array of CDNI Trigger scope object.</t>
+               <t>Description: An array of CDNI Trigger spec object values.</t>
 
                <t>Type: Format/Type is defined by the value of the
-                  generic-trigger-scope-type property above.</t>
+                  generic-trigger-spec-type property above.</t>
+
+               <t>Mandatory: Yes.</t>
+            </list></t>
+
+            <t>Property: trigger-subject<list style="empty">
+
+               <t>Description: Case-insensitive CDNI Trigger subject.</t>
+
+               <t>Type: String containing the type of the subject matching the 
+                  generic-trigger-spec-value property, such as "content" or "metadata" 
+                  as define in TODO.</t>
 
                <t>Mandatory: Yes.</t>
             </list></t>
@@ -1468,14 +1469,15 @@ uCDN-A                         dCDN-B                         dCDN-C
          <artwork><![CDATA[
 
 {
-  "generic-trigger-scope-type":
-     <Type of this trigger scope>,
-  "generic-trigger-scope-subject":
-     <Catagory of this trigger scope subject>,
-  "generic-trigger-scope-value":
+  "generic-trigger-spec-type":
+     <Type of this trigger spec>,
+  "generic-trigger-spec-value":
       {
-        <properties of this trigger scope object>
-      }
+        <properties of this trigger spec object>
+      },
+   "generic-trigger-spec-subject":
+     <Catagory of this trigger spec subject>
+
 }
 
        ]]></artwork>
@@ -1792,14 +1794,14 @@ uCDN-A                         dCDN-B                         dCDN-C
 
 
 <t><list style="empty" hangIndent="3">
-	<t><list style="hanging" hangIndent="3"><t hangText="Name: scopes">
+	<t><list style="hanging" hangIndent="3"><t hangText="Name: specs">
 	<vspace blankLines="1"/>
-	Description: Array of trigger scope objects copied from the corresponding "extensions" array
-                from the Trigger Specification. Only those scopes to which the error applies are included, but 
-                those scopes MUST be exactly as they appear in the request.
+	Description: Array of trigger spec objects copied from the corresponding "extensions" array
+                from the Trigger Specification. Only those specs to which the error applies are included, but 
+                those specs MUST be exactly as they appear in the request.
 	<vspace blankLines="1"/>
-	Value: Array of GenericTriggerScope objects, where each scope object is copied
-                from the "scopes" array values in the Trigger Specification.
+	Value: Array of GenericTriggerSpec objects, where each spec object is copied
+                from the "specs" array values in the Trigger Specification.
 	<vspace blankLines="1"/>
 	Mandatory: Yes.
 	</t>
@@ -1995,20 +1997,19 @@ uCDN-A                         dCDN-B                         dCDN-C
 	</section>
 
 
-    <section anchor="trigger-scope-objects" title="Trigger Scope Objects">
-      <t>The objects defined below are intended to be used in the GenericTriggerScope
-         object's generic-trigger-scope-value field as defined in Section
-         <xref target="generic-scope-object"/>, and their generic-trigger-scope-type
+    <section anchor="trigger-spec-objects" title="Trigger Spec Objects">
+      <t>The objects defined below are intended to be used in the GenericTriggerSpec
+         object's generic-trigger-spec-value field as defined in Section
+         <xref target="generic-spec-object"/>, and their generic-trigger-spec-type
          property MUST be set to the appropriate CDNI Payload Type as defined in <xref target="sect-7.1"/> .
-         TODO Registration of generic-trigger-scope-subject.
       </t>
 
-      <section anchor="urls-scope" title="URLs Scope">
-        <t>The urls scope type allows the uCDN to manage uCDN content or metadata objects
+      <section anchor="urls-spec" title="URLs Spec">
+        <t>The urls spec type allows the uCDN to manage uCDN content or metadata objects
            held by the dCDN based on the objects' URLs.
         </t>
 
-         <t>Scope object specification<list style="empty">
+         <t>Spec object specification<list style="empty">
 
               <t>Property: urls<list style="empty">
 
@@ -2020,21 +2021,21 @@ uCDN-A                         dCDN-B                         dCDN-C
               </list></t>
           </list></t>
 
-        <t>Below is an example of a JSON serialized generic trigger scope object, matching the content at 
+        <t>Below is an example of a JSON serialized generic trigger spec object, matching the content at 
         www.example.com/path/to/content.
         </t>
 
         <figure> 
           <artwork><![CDATA[
 {
-   "generic-trigger-scope-type": "CIT.UrlsScope",
-   "generic-trigger-scope-subject": "CIT.Content",
-   "generic-trigger-scope-value":
+   "generic-trigger-spec-type": "CIT.UrlsSpec",
+   "generic-trigger-spec-value":
     {
       "urls": [
          "www.example.com/path/to/content"
       ]
-    }
+    },
+   "trigger-subject": "CIT.Content"
 }
        ]]></artwork>
        </figure>
@@ -2042,15 +2043,15 @@ uCDN-A                         dCDN-B                         dCDN-C
 
 
 
-      <section anchor="ccids-scope" title="CCIDs Scope">
-        <t> The content-ccids scope type allows to specify the
+      <section anchor="ccids-spec" title="CCIDs Spec">
+        <t> The content-ccids spec type allows to specify the
         Content Collection IDentifier of content the trigger applies to.
         The "ccid" is a grouping of content, as defined by <xref target="RFC8006"/>.
-       The ccid scope type is valid only for CIT.Content scope subject.
+       The ccid spec type is valid only for CIT.Content spec subject.
 
         </t>
 
-         <t>Scope object specification<list style="empty">
+         <t>Spec object specification<list style="empty">
 
               <t>Property: ccids<list style="empty">
 
@@ -2063,12 +2064,12 @@ uCDN-A                         dCDN-B                         dCDN-C
           </list></t>
       </section>
 
-     <section anchor="uri-patterns-scope" title="URI Patterns Scope">
-        <t>The uri-patterns scope type allows the uCDN to manage uCDN content or metadata objects
+     <section anchor="uri-patterns-spec" title="URI Patterns Spec">
+        <t>The uri-patterns spec type allows the uCDN to manage uCDN content or metadata objects
            held by the dCDN based on the objects' URI patterns.
         </t>
 
-         <t>Scope object specification<list style="empty">
+         <t>Spec object specification<list style="empty">
 
               <t>Property: patterns<list style="empty">
 
@@ -2146,12 +2147,12 @@ uCDN-A                         dCDN-B                         dCDN-C
 
 
 
-     <section anchor="url-regexes-scope" title="URL Regexes Scope">
-        <t>The content-url-regexes scope type allows the uCDN to manage content or metadata objects
+     <section anchor="url-regexes-spec" title="URL Regexes Spec">
+        <t>The content-url-regexes spec type allows the uCDN to manage content or metadata objects
            held by the dCDN based on the objects' URL regexes.
         </t>
 
-         <t>Scope object specification<list style="empty">
+         <t>Spec object specification<list style="empty">
 
               <t>Property: regexes<list style="empty">
 
@@ -2243,13 +2244,13 @@ https://video.example.com/k/movie1/4/013.ts
    </section>
 
 
-     <section anchor="content-playlists-scope" title="Content Playlists Scope">
-        <t>The content-playlists scope type allows the uCDN to manage content held by the dCDN
+     <section anchor="content-playlists-spec" title="Content Playlists Spec">
+        <t>The content-playlists spec type allows the uCDN to manage content held by the dCDN
            based on the content's playlists. 
-           The content-playlists scope type is valid only for CIT.Content scope subject.
+           The content-playlists spec type is valid only for CIT.Content spec subject.
         </t>
 
-         <t>Scope object specification<list style="empty">
+         <t>Spec object specification<list style="empty">
 
               <t>Property: playlists<list style="empty">
 
@@ -2699,40 +2700,40 @@ Month Number  Month/Year           Maximum value of date-mday
 
     <section anchor="footprint-and-capabilities" title="Footprint and Capabilities">
       <t>
-        This section covers the FCI objects required for advertisement of the scopes, extensions and properties
+        This section covers the FCI objects required for advertisement of the specs, extensions and properties
         introduced in this document.
       </t>
         <t>
         TBD Do we need capability for the commands as well?
         </t>
 
-            <section title="CI/T Trigger Scope Capability Object">
+            <section title="CI/T Trigger Spec Capability Object">
         <t>
-           The CI/T Generic Scope capability object is used to indicate support for one or more
-           GenericScopeObject types.
+           The CI/T Generic Spec capability object is used to indicate support for one or more
+           GenericSpecObject types.
         </t>
         <t>
-        TBD should this capability mention only the supported scope or the supported scope subject and command as well
+        TBD should this capability mention only the supported spec or the supported spec subject and command as well
         </t>
         <t><list style="empty">
-           <t>Property: trigger-scope<list style="empty">
+           <t>Property: trigger-spec<list style="empty">
 
-                 <t>Description: A list of supported CDNI CI/T GenericScopeObject types.</t>
+                 <t>Description: A list of supported CDNI CI/T GenericSpecObject types.</t>
 
                  <t>Type: List of strings corresponding to entries from the "CDNI Payload Types" registry
                     <xref target="RFC7736"/> that are under the CIT namespace, and that correspond to CDNI
-                    CI/T GenericScopeObject objects.
+                    CI/T GenericSpecObject objects.
                  </t>
 
                  <t>Mandatory: No. The default, in case of a missing or an empty list, MUST be 
-                    interpreted as "no GenericScopeObject types are supported". A non-empty list MUST be 
-                    interpreted as containing "the only GenericScopeObject types that are supported".
+                    interpreted as "no GenericSpecObject types are supported". A non-empty list MUST be 
+                    interpreted as containing "the only GenericSpecObject types that are supported".
                  </t>
            </list></t>
         </list></t>
-        <section anchor="trigger-scope-capability-object" title="CI/T Trigger Scope Capability Object Serialization">
+        <section anchor="trigger-spec-capability-object" title="CI/T Trigger Spec Capability Object Serialization">
           <t>
-             The following shows an example of a JSON serialized CI/T Trigger Scope Capability object serialization for
+             The following shows an example of a JSON serialized CI/T Trigger Spec Capability object serialization for
              a dCDN that supports the "CIT.LocationPolicy" and the "CIT.TimePolicy" objects.
           </t>
 
@@ -2742,9 +2743,9 @@ Month Number  Month/Year           Maximum value of date-mday
 {
  "capabilities": [
    {
-     "capability-type": "FCI.TriggerGenericScope",
+     "capability-type": "FCI.TriggerGenericSpec",
      "capability-value": {
-       "trigger-scope": ["CIT.LocationPolicy", "CIT.TimePolicy"]
+       "trigger-spec": ["CIT.UrlsSpec"]
      },
      "footprints": [
        <Footprint objects>
@@ -2764,7 +2765,7 @@ Month Number  Month/Year           Maximum value of date-mday
            GenericExtensionObject types.
         </t>
          <t>
-        TBD should this capability mention only the supported extension or the supported scope subject as well
+        TBD should this capability mention only the supported extension or the supported spec subject as well
         </t>
        
 
@@ -3639,19 +3640,19 @@ RESPONSE:
    <c>ci-trigger-status.v2</c>
    <c>RFCthis</c>
 
-   <c>CIT.UrlsScope</c>
+   <c>CIT.UrlsSpec</c>
    <c>RFCthis</c>
    
-    <c>CIT.CcidsScope</c>
+    <c>CIT.CcidsSpec</c>
    <c>RFCthis</c>
    
-   <c>CIT.UriPatternsScope</c>
+   <c>CIT.UriPatternsSpec</c>
    <c>RFCthis</c>
    
-   <c>CIT.UrlsRegexesScope</c>
+   <c>CIT.UrlsRegexesSpec</c>
    <c>RFCthis</c>
    
-   <c>CIT.ContentPlaylistsScope</c>
+   <c>CIT.ContentPlaylistsSpec</c>
    <c>RFCthis</c>
 
    <c>CIT.MetadataSubject</c>
@@ -3669,7 +3670,7 @@ RESPONSE:
    <c>FCI.TriggerVersion</c>
    <c>RFCthis</c>
 
-   <c>FCI.TriggerGenericScope</c>
+   <c>FCI.TriggerGenericSpec</c>
    <c>RFCthis</c>
 
    <c>FCI.TriggerGenericExtension</c>
@@ -3702,44 +3703,44 @@ RESPONSE:
           <t>Encoding: see <xref target="sect-5.1.3"/></t>
         </section>
 
-        <section anchor="IANA.CDNI.payload.CIT.UrlsScope" title="CDNI CI/T Urls Trigger Scope Type">
-          <t>Purpose: The purpose of this Trigger Scope type is to distinguish Urls CIT Trigger Scope objects.</t>
+        <section anchor="IANA.CDNI.payload.CIT.UrlsSpec" title="CDNI CI/T Urls Trigger Spec Type">
+          <t>Purpose: The purpose of this Trigger Spec type is to distinguish Urls CIT Trigger Spec objects.</t>
           <t>Interface: CI/T</t>
-          <t>Encoding: see <xref target="urls-scope"/></t>
+          <t>Encoding: see <xref target="urls-spec"/></t>
         </section>
 
-        <section anchor="IANA.CDNI.payload.CIT.CcidsScope" title="CDNI CI/T Ccids Trigger Scope Type">
-          <t>Purpose: The purpose of this Trigger Scope type is to distinguish Ccids CIT Trigger Scope objects.</t>
+        <section anchor="IANA.CDNI.payload.CIT.CcidsSpec" title="CDNI CI/T Ccids Trigger Spec Type">
+          <t>Purpose: The purpose of this Trigger Spec type is to distinguish Ccids CIT Trigger Spec objects.</t>
           <t>Interface: CI/T</t>
-          <t>Encoding: see <xref target="ccids-scope"/></t>
+          <t>Encoding: see <xref target="ccids-spec"/></t>
         </section>
 
-        <section anchor="IANA.CDNI.payload.CIT.UriPatternsScope" title="CDNI CI/T UriPatterns Trigger Scope Type">
-          <t>Purpose: The purpose of this Trigger Scope type is to distinguish UriPatterns CIT Trigger Scope objects.</t>
+        <section anchor="IANA.CDNI.payload.CIT.UriPatternsSpec" title="CDNI CI/T UriPatterns Trigger Spec Type">
+          <t>Purpose: The purpose of this Trigger Spec type is to distinguish UriPatterns CIT Trigger Spec objects.</t>
           <t>Interface: CI/T</t>
-          <t>Encoding: see <xref target="uri-patterns-scope"/></t>
+          <t>Encoding: see <xref target="uri-patterns-spec"/></t>
         </section>
 
-        <section anchor="IANA.CDNI.payload.CIT.UrlRegexesScope" title="CDNI CI/T UrlRegexes Trigger Scope Type">
-          <t>Purpose: The purpose of this Trigger Scope type is to distinguish UrlRegexes CIT Trigger Scope objects.</t>
+        <section anchor="IANA.CDNI.payload.CIT.UrlRegexesSpec" title="CDNI CI/T UrlRegexes Trigger Spec Type">
+          <t>Purpose: The purpose of this Trigger Spec type is to distinguish UrlRegexes CIT Trigger Spec objects.</t>
           <t>Interface: CI/T</t>
-          <t>Encoding: see <xref target="url-regexes-scope"/></t>
+          <t>Encoding: see <xref target="url-regexes-spec"/></t>
         </section>
 
-        <section anchor="IANA.CDNI.payload.CIT.ContentPlaylistsScope" title="CDNI CI/T ContentPlaylists Trigger Scope Type">
-          <t>Purpose: The purpose of this Trigger Scope type is to distinguish ContentUrlPlaylists CIT Trigger Scope objects.</t>
+        <section anchor="IANA.CDNI.payload.CIT.ContentPlaylistsSpec" title="CDNI CI/T ContentPlaylists Trigger Spec Type">
+          <t>Purpose: The purpose of this Trigger Spec type is to distinguish ContentUrlPlaylists CIT Trigger Spec objects.</t>
           <t>Interface: CI/T</t>
-          <t>Encoding: see <xref target="content-playlists-scope"/></t>
+          <t>Encoding: see <xref target="content-playlists-spec"/></t>
         </section>
 
-        <section anchor="IANA.CDNI.payload.CIT.MetadataSubject" title="CDNI CI/T Metadata Trigger Scope Subject Type">
-          <t>Purpose: The purpose of this Trigger Scope subejct type is to distinguish Metadata CIT Trigger Scope objects.</t>
+        <section anchor="IANA.CDNI.payload.CIT.MetadataSubject" title="CDNI CI/T Metadata Trigger Spec Subject Type">
+          <t>Purpose: The purpose of this Trigger Spec subejct type is to distinguish Metadata CIT Trigger Spec objects.</t>
           <t>Interface: CI/T</t>
           <t>Encoding: see TODO - string "metatdata" - should we register it????</t>
         </section>
 
-        <section anchor="IANA.CDNI.payload.CIT.ContentSubject" title="CDNI CI/T Content Trigger Scope Subject Type">
-          <t>Purpose: The purpose of this Trigger Scope subejct type is to distinguish Content CIT Trigger Scope objects.</t>
+        <section anchor="IANA.CDNI.payload.CIT.ContentSubject" title="CDNI CI/T Content Trigger Spec Subject Type">
+          <t>Purpose: The purpose of this Trigger Spec subejct type is to distinguish Content CIT Trigger Spec objects.</t>
           <t>Interface: CI/T</t>
           <t>Encoding: see TODO - string "metatdata" - should we register it????</t>
         </section>
