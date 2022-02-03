@@ -1932,9 +1932,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 	<c>cancelled</c>
 	<c>The CI/T Trigger Command was canceled by the uCDN.</c>
 	</texttable>
-	</section>
-
-
+	
 	<section title="Error Code" anchor="sect-5.2.7"><t>
    This type is used by the dCDN to report failures in trigger
    processing.  All Error Codes MUST be registered in the IANA "CDNI CI/T Error Codes" registry (see <xref target="sect-7.3"/>).  Unknown Error Codes
@@ -1991,7 +1989,8 @@ uCDN-A                         dCDN-B                         dCDN-C
 	<c>contained a "type" that.</c>
 	</texttable>
 	</section>
-
+   </section>
+	
 	</section>
 
 	</section>
