@@ -2759,9 +2759,6 @@ Month Number  Month/Year           Maximum value of date-mday
            The CI/T Generic Spec capability object is used to indicate support for one or more
            GenericSpecObject types.
         </t>
-        <t>
-        TBD should this capability mention only the supported spec or the supported spec subject and trigger type as well
-        </t>
         <t><list style="empty">
            <t>Property: trigger-spec-capabilities<list style="empty">
 
