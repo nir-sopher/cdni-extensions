@@ -322,7 +322,7 @@
 
 	<section title="Scope of Triggered Activity" anchor="sect-2.2"><t>
    Each CI/T Command can operate on multiple metadata and content elements, 
-   usually refered by their URLs. These elements are specified by specifying
+   usually refered by their URLs. These elements are targeted by specifying
    both their subject (i.e. "metadata" or "content") as well as specification 
    method (e.g. URL Regexes)
    </t>
@@ -451,7 +451,7 @@
    </list>
    </t>
 
-   <t>Furthermore, as the scope of the trigger may be either uCDN metadata as well as uCDN content, 
+   <t>Furthermore, as the scope of the trigger may relate to either uCDN metadata as well as uCDN content, 
    the "trigger spec object" also specify the trigger's target subject (i.e. metadata or content) 
    to be matched with. The document registers additional as CDNI Payload Types <xref target="RFC7736"/> 
    under the namespace CIT, the initial set of available trigger subjects:
@@ -460,6 +460,26 @@
       <t>CIT.ContentSubject (for TODO)</t>
    </list>
    </t>
+
+   <section title="Content URLs" anchor="sect-4.8">
+   <t> TBD only content? what about metadata?</t>
+   <t>
+   Each CI/T Command usually refers the target content by the content URLs 
+   (e.g. using a CIT.UrlSpec trigger spec object).
+
+   If content URLs are transformed by an intermediate CDN in a cascade,
+   that intermediate CDN MUST similarly transform URLs in CI/T Commands
+   it passes to its dCDN.</t>
+
+	<t>
+   When processing Trigger Specifications, CDNs MUST ignore the URL
+   scheme (HTTP or HTTPS) in comparing URLs.  For example, for a CI/T
+   "invalidate" or "purge" command, content MUST be invalidated or
+   purged regardless of the protocol clients used to request it.</t>
+
+	</section>
+
+
 </section>
 
 <section anchor="trigger-extensibility" title="Trigger Extensibility">
@@ -1032,19 +1052,6 @@ uCDN-A                         dCDN-B                         dCDN-C
 
 	</section>
 
-	<section title="Content URLs" anchor="sect-4.8"><t>
-   If content URLs are transformed by an intermediate CDN in a cascade,
-   that intermediate CDN MUST similarly transform URLs in CI/T Commands
-   it passes to its dCDN.</t>
-
-	<t>
-   When processing Trigger Specifications, CDNs MUST ignore the URL
-   scheme (HTTP or HTTPS) in comparing URLs.  For example, for a CI/T
-   "invalidate" or "purge" command, content MUST be invalidated or
-   purged regardless of the protocol clients used to request it.</t>
-
-	</section>
-
 	</section>
 
 	<section title="CI/T Object Properties and Encoding" anchor="sect-5"><t>
@@ -1135,7 +1142,7 @@ uCDN-A                         dCDN-B                         dCDN-C
    following name/value pairs.</t>
 
 	<t><list style="empty" hangIndent="3">
-	<t><list style="hanging" hangIndent="3"><t hangText="Name: trigger">
+	<t><list style="hanging" hangIndent="3"><t hangText="Name: trigger.v2">
 	<vspace blankLines="1"/>
 	Description: The Trigger Specification POSTed in the body of
          the CI/T Command.  Note that this need not be a byte-for-byte
