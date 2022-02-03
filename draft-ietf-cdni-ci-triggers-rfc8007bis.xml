@@ -3842,72 +3842,87 @@ RESPONSE:
           <t>Encoding: see <xref target="sect-5.1.3"/></t>
         </section>
 
-        <section anchor="IANA.CDNI.payload.CIT.UrlsSpec" title="CDNI CI/T Urls Trigger Spec Type">
-          <t>Purpose: The purpose of this Trigger Spec type is to distinguish Urls CIT Trigger Spec objects.</t>
-          <t>Interface: CI/T</t>
-          <t>Encoding: see <xref target="urls-spec"/></t>
+        <section anchor="IANA.CDNI.payload.CIT.Specs" title="CDNI CI/T Trigger Spec Payload Types">
+            <section anchor="IANA.CDNI.payload.CIT.UrlsSpec" title="CDNI CI/T Urls Trigger Spec Payload Type">
+               <t>Purpose: The purpose of this Trigger Spec type is to distinguish Urls CIT Trigger Spec objects.</t>
+               <t>Interface: CI/T</t>
+               <t>Encoding: see <xref target="urls-spec"/></t>
+            </section>
+
+            <section anchor="IANA.CDNI.payload.CIT.CcidsSpec" title="CDNI CI/T Ccids Trigger Spec Payload Type">
+               <t>Purpose: The purpose of this Trigger Spec type is to distinguish Ccids CIT Trigger Spec objects.</t>
+               <t>Interface: CI/T</t>
+               <t>Encoding: see <xref target="ccids-spec"/></t>
+            </section>
+
+            <section anchor="IANA.CDNI.payload.CIT.UriPatternsSpec" title="CDNI CI/T UriPatterns Trigger Spec Payload Type">
+               <t>Purpose: The purpose of this Trigger Spec type is to distinguish UriPatterns CIT Trigger Spec objects.</t>
+               <t>Interface: CI/T</t>
+               <t>Encoding: see <xref target="uri-patterns-spec"/></t>
+            </section>
+
+            <section anchor="IANA.CDNI.payload.CIT.UrlRegexesSpec" title="CDNI CI/T UrlRegexes Trigger Spec Payload Type">
+               <t>Purpose: The purpose of this Trigger Spec type is to distinguish UrlRegexes CIT Trigger Spec objects.</t>
+               <t>Interface: CI/T</t>
+               <t>Encoding: see <xref target="url-regexes-spec"/></t>
+            </section>
+
+            <section anchor="IANA.CDNI.payload.CIT.ContentPlaylistsSpec" title="CDNI CI/T ContentPlaylists Trigger Spec Payload Type">
+               <t>Purpose: The purpose of this Trigger Spec type is to distinguish ContentUrlPlaylists CIT Trigger Spec objects.</t>
+               <t>Interface: CI/T</t>
+               <t>Encoding: see <xref target="content-playlists-spec"/></t>
+            </section>
+         </section>
+
+         <section anchor="IANA.CDNI.payload.CIT.Subjects" title="CDNI CI/T Trigger Subject types">
+            <section anchor="IANA.CDNI.payload.CIT.MetadataSubject" title="CDNI CI/T Metadata Trigger Subject Type">
+               <t>Purpose: The purpose of this Trigger Spec subejct type is to distinguish Metadata CIT Trigger Spec objects.</t>
+               <t>Interface: CI/T</t>
+               <t>Encoding: see TODO - string "metatdata" - should we register it????</t>
+            </section>
+
+            <section anchor="IANA.CDNI.payload.CIT.ContentSubject" title="CDNI CI/T Content Trigger Subject Type">
+               <t>Purpose: The purpose of this Trigger Spec subejct type is to distinguish Content CIT Trigger Spec objects.</t>
+               <t>Interface: CI/T</t>
+               <t>Encoding: see TODO - string "metatdata" - should we register it????</t>
+            </section>
+         </section>
+
+        <section anchor="IANA.CDNI.payload.CIT.Extensions" title="CDNI CI/T Trigger Extension Payload Types">
+            <section anchor="IANA.CDNI.payload.CIT.LocationPolicy" title="CDNI CI/T LocationPolicy Trigger Extension Type">
+               <t>Purpose: The purpose of this Trigger Extension type is to distinguish LocationPolicy CIT Trigger Extension objects.</t>
+               <t>Interface: CI/T</t>
+               <t>Encoding: see <xref target="location-policy"/></t>
+            </section>
+
+            <section anchor="IANA.CDNI.payload.CIT.TimePolicy" title="CDNI CI/T TimePolicy Trigger Extension Type">
+               <t>Purpose: The purpose of this Trigger Extension type is to distinguish TimePolicy CI/T Trigger Extension objects.</t>
+               <t>Interface: CI/T</t>
+               <t>Encoding: see <xref target="time-policy"/></t>
+            </section>
         </section>
 
-        <section anchor="IANA.CDNI.payload.CIT.CcidsSpec" title="CDNI CI/T Ccids Trigger Spec Type">
-          <t>Purpose: The purpose of this Trigger Spec type is to distinguish Ccids CIT Trigger Spec objects.</t>
-          <t>Interface: CI/T</t>
-          <t>Encoding: see <xref target="ccids-spec"/></t>
-        </section>
+        <section anchor="IANA.CDNI.payload.CIT.Footprint" title="CDNI FCI CI/T Payload Types">
+            <section anchor="IANA.CDNI.payload.FCI.PlaylistProtocol" title="CDNI FCI CI/T Playlist Protocol Payload Type">
+               <t>Purpose: The purpose of this payload type is to distinguish FCI advertisement objects for
+                  CI/T Playlist Protocol objects</t>
+               <t>Interface: FCI</t>
+               <t>Encoding: see <xref target="playlist-protocol-capability-object"/></t>
+            </section>
 
-        <section anchor="IANA.CDNI.payload.CIT.UriPatternsSpec" title="CDNI CI/T UriPatterns Trigger Spec Type">
-          <t>Purpose: The purpose of this Trigger Spec type is to distinguish UriPatterns CIT Trigger Spec objects.</t>
-          <t>Interface: CI/T</t>
-          <t>Encoding: see <xref target="uri-patterns-spec"/></t>
-        </section>
+            <section anchor="IANA.CDNI.payload.FCI.ExtensionObject" title="CDNI FCI CI/T Extension Objects Payload Type">
+               <t>Purpose: The purpose of this payload type is to distinguish FCI advertisement objects for
+                  CI/T Extension objects</t>
+               <t>Interface: FCI</t>
+               <t>Encoding: see <xref target="trigger-extension-capability-object"/></t>
+            </section>
 
-        <section anchor="IANA.CDNI.payload.CIT.UrlRegexesSpec" title="CDNI CI/T UrlRegexes Trigger Spec Type">
-          <t>Purpose: The purpose of this Trigger Spec type is to distinguish UrlRegexes CIT Trigger Spec objects.</t>
-          <t>Interface: CI/T</t>
-          <t>Encoding: see <xref target="url-regexes-spec"/></t>
-        </section>
-
-        <section anchor="IANA.CDNI.payload.CIT.ContentPlaylistsSpec" title="CDNI CI/T ContentPlaylists Trigger Spec Type">
-          <t>Purpose: The purpose of this Trigger Spec type is to distinguish ContentUrlPlaylists CIT Trigger Spec objects.</t>
-          <t>Interface: CI/T</t>
-          <t>Encoding: see <xref target="content-playlists-spec"/></t>
-        </section>
-
-        <section anchor="IANA.CDNI.payload.CIT.MetadataSubject" title="CDNI CI/T Metadata Trigger Spec Subject Type">
-          <t>Purpose: The purpose of this Trigger Spec subejct type is to distinguish Metadata CIT Trigger Spec objects.</t>
-          <t>Interface: CI/T</t>
-          <t>Encoding: see TODO - string "metatdata" - should we register it????</t>
-        </section>
-
-        <section anchor="IANA.CDNI.payload.CIT.ContentSubject" title="CDNI CI/T Content Trigger Spec Subject Type">
-          <t>Purpose: The purpose of this Trigger Spec subejct type is to distinguish Content CIT Trigger Spec objects.</t>
-          <t>Interface: CI/T</t>
-          <t>Encoding: see TODO - string "metatdata" - should we register it????</t>
-        </section>
-
-        <section anchor="IANA.CDNI.payload.CIT.LocationPolicy" title="CDNI CI/T LocationPolicy Trigger Extension Type">
-          <t>Purpose: The purpose of this Trigger Extension type is to distinguish LocationPolicy CIT Trigger Extension objects.</t>
-          <t>Interface: CI/T</t>
-          <t>Encoding: see <xref target="location-policy"/></t>
-        </section>
-
-        <section anchor="IANA.CDNI.payload.CIT.TimePolicy" title="CDNI CI/T TimePolicy Trigger Extension Type">
-          <t>Purpose: The purpose of this Trigger Extension type is to distinguish TimePolicy CI/T Trigger Extension objects.</t>
-          <t>Interface: CI/T</t>
-          <t>Encoding: see <xref target="time-policy"/></t>
-        </section>
-
-        <section anchor="IANA.CDNI.payload.FCI.PlaylistProtocol" title="CDNI FCI CI/T Playlist Protocol Payload Type">
-          <t>Purpose: The purpose of this payload type is to distinguish FCI advertisement objects for
-             CI/T Playlist Protocol objects</t>
-          <t>Interface: FCI</t>
-          <t>Encoding: see <xref target="playlist-protocol-capability-object"/></t>
-        </section>
-
-        <section anchor="IANA.CDNI.payload.FCI.ExtensionObject" title="CDNI FCI CI/T Extension Objects Payload Type">
-          <t>Purpose: The purpose of this payload type is to distinguish FCI advertisement objects for
-             CI/T Extension objects</t>
-          <t>Interface: FCI</t>
-          <t>Encoding: see <xref target="trigger-extension-capability-object"/></t>
+            <section anchor="IANA.CDNI.payload.FCI.SpecObject" title="CDNI FCI CI/T Spec Objects Payload Type">
+               <t>Purpose: The purpose of this payload type is to distinguish FCI advertisement objects for
+                  CI/T Spec objects</t>
+               <t>Interface: FCI</t>
+               <t>Encoding: see <xref target="trigger-spec-capability-object"/></t>
+            </section>
         </section>
 
 	</section>
