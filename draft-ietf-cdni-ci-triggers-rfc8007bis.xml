@@ -1416,7 +1416,7 @@ uCDN-A                         dCDN-B                         dCDN-C
    A "trigger.v2" object, as defined in <xref target="sect-5.2.1"/> includes an
    array of trigger spec objects. The trigger spec object contains properties
    that are used as trigger target selection directives for dCDN when executing 
-   the trigger command -- for example content urls or metadata url patterns. Each such CDNI Trigger 
+   the trigger command -- for example content urls or metadata uri patterns. Each such CDNI Trigger 
    Spec is a specialization
    of a CDNI GenericTriggerSpec object. The GenericTriggerSpec object abstracts the basic
    information required for trigger distribution from the specifics of any given property
@@ -2146,16 +2146,16 @@ uCDN-A                         dCDN-B                         dCDN-C
 
 
 
-     <section anchor="url-regexes-spec" title="URL Regexes Spec">
-        <t>The content-url-regexes spec type allows the uCDN to manage content or metadata objects
-           held by the dCDN based on the objects' URL regexes.
+     <section anchor="uri-regexes-spec" title="URI Regexes Spec">
+        <t>The content-uri-regexes spec type allows the uCDN to manage content or metadata objects
+           held by the dCDN based on the objects' URI regexes.
         </t>
 
          <t>Spec object specification<list style="empty">
 
               <t>Property: regexes<list style="empty">
 
-                 <t>Description: The content URL regexes the trigger applies to.</t>
+                 <t>Description: The content URI regexes the trigger applies to.</t>
 
                  <t>Value: A JSON array of RegexMatch objects (see <xref target="regex-match"/>).</t>
 
@@ -2981,7 +2981,6 @@ RESPONSE:
    prefixed by "https://metadata.example.com/a/b/" using
    case-insensitive matching, and "https://www.example.com/a/b/" using
    case-sensitive matching, respectively.</t>
-   <t>TBD URL vs URi</t>
 
 	<figure><artwork><![CDATA[
 REQUEST:
@@ -3107,7 +3106,7 @@ REQUEST:
       "type": "invalidate",
       "specs": [
          {
-            "generic-trigger-spec-type": "CIT.UrlRegexes",
+            "generic-trigger-spec-type": "CIT.UriRegexes",
             "generic-trigger-spec-value": {
                "regexes": [
                   {
@@ -3142,7 +3141,7 @@ RESPONSE:
       {
         "specs": [
             {
-               "generic-trigger-spec-type": "CIT.UrlRegexes",
+               "generic-trigger-spec-type": "CIT.UriRegexes",
                "generic-trigger-spec-value": {
                   "regexes": [
                      {
@@ -3788,7 +3787,7 @@ RESPONSE:
    <c>CIT.UriPatternsSpec</c>
    <c>RFCthis</c>
    
-   <c>CIT.UrlsRegexesSpec</c>
+   <c>CIT.UrisRegexesSpec</c>
    <c>RFCthis</c>
    
    <c>CIT.ContentPlaylistsSpec</c>
@@ -3861,14 +3860,14 @@ RESPONSE:
                <t>Encoding: see <xref target="uri-patterns-spec"/></t>
             </section>
 
-            <section anchor="IANA.CDNI.payload.CIT.UrlRegexesSpec" title="CDNI CI/T UrlRegexes Trigger Spec Payload Type">
-               <t>Purpose: The purpose of this Trigger Spec type is to distinguish UrlRegexes CIT Trigger Spec objects.</t>
+            <section anchor="IANA.CDNI.payload.CIT.UriRegexesSpec" title="CDNI CI/T UriRegexes Trigger Spec Payload Type">
+               <t>Purpose: The purpose of this Trigger Spec type is to distinguish UriRegexes CIT Trigger Spec objects.</t>
                <t>Interface: CI/T</t>
-               <t>Encoding: see <xref target="url-regexes-spec"/></t>
+               <t>Encoding: see <xref target="uri-regexes-spec"/></t>
             </section>
 
             <section anchor="IANA.CDNI.payload.CIT.ContentPlaylistsSpec" title="CDNI CI/T ContentPlaylists Trigger Spec Payload Type">
-               <t>Purpose: The purpose of this Trigger Spec type is to distinguish ContentUrlPlaylists CIT Trigger Spec objects.</t>
+               <t>Purpose: The purpose of this Trigger Spec type is to distinguish ContentPlaylists CIT Trigger Spec objects.</t>
                <t>Interface: CI/T</t>
                <t>Encoding: see <xref target="content-playlists-spec"/></t>
             </section>
