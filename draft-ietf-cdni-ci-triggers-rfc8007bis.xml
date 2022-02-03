@@ -195,7 +195,7 @@
 	</t>
 
    <t>
-   Note that additional Trigger Command Types may be defined and registered in the future. See TBD. 
+   Note that additional Trigger Command Types may be defined and registered in the future. See TODO. 
    </t>
 	<t>
    The CI/T interface is a web service offered by the dCDN.  It allows
@@ -1343,7 +1343,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 	<vspace blankLines="1"/>
 	Value: Array of GenericTriggerSpec objects (see <xref target="generic-spec-object"/>).
 	<vspace blankLines="1"/>
-	Mandatory: Yes. TODO(nirs): Can the list be empty???
+	Mandatory: Yes. TBD(nirs): Can the list be empty???
 	</t>
 
 	
@@ -3091,7 +3091,7 @@ RESPONSE:
             content objects for invalidation, the command is rejected by the dCDN due to regex complexity, and
             an appropriate error is reflected in the status response.
           </t>
-          <t> TBD: in case of failue in one object, maybe leave empty places in the tiggers list
+          <t> TBD: in case of failure in one object, maybe leave empty places in the tiggers list
           for the objects that has not failed></t>
           <figure>
             <artwork><![CDATA[
@@ -3823,21 +3823,21 @@ RESPONSE:
         number for this document.]</t>
 
          <section anchor="IANA.CDNI.payload.ci-trigger-command.v2" title="CDNI ci-trigger-command.v2 Payload Type">
-          <t>Purpose: TBD: The purpose of this payload type is to distinguish version 2 of the CI/T command
+          <t>Purpose: TODO: The purpose of this payload type is to distinguish version 2 of the CI/T command
             (and any associated capability advertisement)</t>
           <t>Interface: CI/T</t>
           <t>Encoding: see <xref target="sect-5.1.1"/></t>
         </section>
 
         <section anchor="IANA.CDNI.payload.ci-trigger-status.v2" title="CDNI ci-trigger-status.v2 Payload Type">
-          <t>Purpose: TBD: The purpose of this payload type is to distinguish version 2 of the CI/T status resource response
+          <t>Purpose: TODO: The purpose of this payload type is to distinguish version 2 of the CI/T status resource response
             (and any associated capability advertisement)</t>
           <t>Interface: CI/T</t>
           <t>Encoding: see <xref target="sect-5.1.2"/></t>
         </section>
 
          <section anchor="IANA.CDNI.payload.ci-trigger-collection" title="CDNI ci-trigger-collection.v2 Payload Type">
-          <t>Purpose: TBD (came from 8007)</t>
+          <t>Purpose: TODO (came from 8007)</t>
           <t>Interface: CI/T</t>
           <t>Encoding: see <xref target="sect-5.1.3"/></t>
         </section>
