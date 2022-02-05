@@ -2844,8 +2844,9 @@ Month Number  Month/Year           Maximum value of date-mday
         <section anchor="trigger-scope-capability-object" title="CI/T Trigger Scope Capability Object Serialization">
           <t>
              The following shows an example of a JSON serialized CI/T Trigger Scope Capability object serialization for
-             a dCDN that supports the preposition, invalidation, purge of content using "CIT.UrlsSpec" and "CIT.CcidSpec" 
-             Generic Spec types, with "CIT.TimePolicy" but only for the preposition.
+             a dCDN that supports the preposition and invalidation of content, using "CIT.UrlsSpec" and "CIT.CcidSpec" 
+             Generic Spec types, with "CIT.TimePolicy" but only for the preposition. Note that in this example purge 
+             is not supported neigher the operations on metadata.
           </t>
 
           <figure>
@@ -2865,11 +2866,6 @@ Month Number  Month/Year           Maximum value of date-mday
          },
          {
             "trigger-type": "CIT.Invalidate",
-            "trigger-subject": "CIT.Content",
-            "trigger-specs": ["CIT.UrlsSpec", "CIT.CcidSpec"]
-         },
-         {
-            "trigger-type": "CIT.Purge",
             "trigger-subject": "CIT.Content",
             "trigger-specs": ["CIT.UrlsSpec", "CIT.CcidSpec"]
          }
