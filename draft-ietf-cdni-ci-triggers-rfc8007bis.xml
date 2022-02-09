@@ -675,7 +675,8 @@
 
 	<section title="Checking Status" anchor="sect-4.2"><t>
    The uCDN has two ways to check the progress of CI/T Commands it has
-   issued to the dCDN, as described in Sections 4.2.1 and 4.2.2.</t>
+   issued to the dCDN, as described in Sections <xref target="sect-4.2.1"/> and 
+   <xref target="sect-4.2.2"/>.</t>
 
 	<t>
    To allow the uCDN to check for changes in the status of a Trigger
@@ -1796,14 +1797,18 @@ uCDN-A                         dCDN-B                         dCDN-C
 <t><list style="empty" hangIndent="3">
 	<t><list style="hanging" hangIndent="3"><t hangText="Name: specs">
 	<vspace blankLines="1"/>
-	Description: Array of trigger spec objects copied from the corresponding "specs" array
-                from the Trigger Specification. Only those specs to which the error applies are included, but 
-                those specs MUST be exactly as they appear in the request.
+	Description: Array of trigger spec objects based on from the corresponding "specs" array
+                at the Trigger Specification. Each such spec holds in its "generic-trigger-spec-value" array
+                only those values to which the error applies. 
+                TBD: Option 1: Specs with no failing values MAY(TODO?) be omitted. Option 2: Note that the order of the specs should be as listed
+                in the Trigger Specification. Specs with no failing values MUST not be omitted but MAY(TODO?)
+                be replaced with an empty object for simplicity.
 	<vspace blankLines="1"/>
-	Value: Array of GenericTriggerSpec objects, where each spec object is copied
-                from the "specs" array values in the Trigger Specification.
+	Value: Array of GenericTriggerSpec objects, where each spec object is based
+                on the "specs" array values in the Trigger Specification. TBD: or an empty object ('{}') 
+                as a place holder.
 	<vspace blankLines="1"/>
-	Mandatory: No. Default is all trigger's spec objects, i.e. the trigger spec array.
+	Mandatory: Yes. 
 	</t>
 
 	</list>
@@ -1822,7 +1827,8 @@ uCDN-A                         dCDN-B                         dCDN-C
                 from the "extensions" array values in the Trigger Specification.
 	<vspace blankLines="1"/>
 	Mandatory: No. The "extensions" array SHOULD be used only if the error relates to
-                extension objects.
+                extension objects. Missing property should be interpreted as 
+                "the error is not related to any extension".
 	</t>
 
 	</list>
