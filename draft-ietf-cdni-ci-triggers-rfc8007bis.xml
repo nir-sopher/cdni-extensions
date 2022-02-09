@@ -1028,7 +1028,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 							</t>
 							<t>
 								The dCDN-C acts upon the CI/T Command. However, the command fails at dCDN-C as,
-								for example, the Tigger Specification contains a "type" that is not supported by dCDN-C.
+								for example, the Trigger Specification contains a "type" that is not supported by dCDN-C.
 							</t>
 							<t>
 								The dCDN-B can poll, possibly repeatedly, the Trigger Status Resource in dCDN-C.
