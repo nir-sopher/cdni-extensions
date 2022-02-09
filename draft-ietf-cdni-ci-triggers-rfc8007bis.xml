@@ -2756,9 +2756,6 @@ Month Number  Month/Year           Maximum value of date-mday
       </section>
 
 
-
-
-      <section title="option 1">
       <section title="CI/T Trigger Scope Capability Object">
         <t>
            The CI/T supports several trigger types for different trigger's subjects as defined at 
@@ -2889,211 +2886,6 @@ Month Number  Month/Year           Maximum value of date-mday
       </section>
 
 
-
-       </section>
-        <section title="option 2">
-        
-      <section title="CI/T Trigger Type Capability Object">
-        <t>
-           The CI/T supports several trigger types as defined at <xref target="sect-5.2.2"/>. Additional types may be defined 
-           in the future. The Trigger Types capability object is used to indicate support for one or more
-           Trigger types.
-        </t>
-        <t><list style="empty">
-           <t>Property: trigger-type<list style="empty">
-
-                 <t>Description: A list of supported CDNI CI/T Trigger types.</t>
-
-                 <t>Type: List of strings corresponding to entries from the "CDNI Payload Types" registry
-                    <xref target="RFC7736"/> that are under the CIT namespace, and that correspond to CDNI
-                    CI/T Trigger types.
-                 </t>
-
-                 <t>Mandatory: No. The default, in case of a missing or an empty list, MUST be 
-                    interpreted as "no trigger types are supported". A non-empty list MUST be 
-                    interpreted as containing "the only trigger types that are supported".
-                 </t>
-           </list></t>
-        </list></t>
-        <section anchor="trigger-type-capability-object" title="CI/T Trigger Type Capability Object Serialization">
-          <t>
-             The following shows an example of a JSON serialized CI/T Trigger Type Capability object serialization for
-             a dCDN that supports the "CIT.Purge" types.
-          </t>
-
-          <figure>
-           <artwork><![CDATA[
-
-{
- "capabilities": [
-   {
-     "capability-type": "FCI.TriggerType",
-     "capability-value": {
-       "trigger-spec": ["CIT.Purge"]
-     },
-     "footprints": [
-       <Footprint objects>
-     ]
-   }
- ]
-}
-        ]]></artwork>
-          </figure>
-        </section>
-      </section>
-
-
-
-            <section title="CI/T Trigger Spec Capability Object">
-        <t>
-           The CI/T Generic Spec capability object is used to indicate support for one or more
-           GenericSpecObject types.
-        </t>
-        <t><list style="empty">
-           <t>Property: trigger-spec-capabilities<list style="empty">
-
-                 <t>Description: A list of supported CDNI CI/T Spec for Trigger type and subject.</t>
-
-                 <t>Type: List trigger-spec-capability objects.
-                 </t>
-
-                 <t>Mandatory: No. The default, in case of a missing or an empty list, MUST be 
-                    interpreted as "no GenericSpecObject types are supported". A non-empty list MUST be 
-                    interpreted as containing "the only GenericSpecObject types that are supported".
-                 </t>
-           </list></t>
-        </list></t>
-
-        <t>The trigger-spec-capability object is defined below. Note that several such obejcts 
-        may be listed for the same Generic Trigger Spec Type to allow trigger types granularity of the response:</t>
-
-        <t><list style="empty">
-           <t>Property: trigger-spec<list style="empty">
-
-                 <t>Description: The supported CDNI CI/T GenericSpecObject type.</t>
-
-                 <t>Type: A strings corresponding to an entry from the "CDNI Payload Types" registry
-                    <xref target="RFC7736"/> that are under the CIT namespace, and that correspond to CDNI
-                    CI/T GenericSpecObject objects.
-                 </t>
-
-                 <t>Mandatory: Yes.
-                 </t>
-           </list></t>
-           <t>Property: trigger-types <list style="empty">
-
-                 <t>Description: A list of supported CDNI CI/T Trigger Types for the GenericSpecObject.</t>
-
-                 <t>Type: List of strings corresponding to entries from the "CDNI Payload Types" registry
-                    <xref target="RFC7736"/> that are under the CIT namespace, and that correspond to CDNI
-                    CI/T Trigger Types.
-                 </t>
-
-                 <t>Mandatory: Yes.
-                 </t>
-           </list></t>
-            <t>Property: trigger-subjects <list style="empty">
-
-                 <t>Description: A list of supported CDNI CI/T Trigger Subjects for the GenericSpecObject and trigger type.</t>
-
-                 <t>Type: List of strings corresponding to entries from the "CDNI Payload Types" registry
-                    <xref target="RFC7736"/> that are under the CIT namespace, and that correspond to CDNI
-                    CI/T Trigger Subject types.
-                 </t>
-
-                 <t>Mandatory: Yes.
-                 </t>
-           </list></t>
-        </list></t>
-
-
-        <section anchor="trigger-spec-capability-object" title="CI/T Trigger Spec Capability Object Serialization">
-          <t>
-             The following shows an example of a JSON serialized CI/T Trigger Spec Capability object serialization for
-             a dCDN that supports the "CIT.UrlsSpec" Spec type, for the invalidation of metadata as well as content.
-          </t>
-
-          <figure>
-           <artwork><![CDATA[
-
-{
- "capabilities": [
-   {
-     "capability-type": "FCI.TriggerGenericSpec",
-     "capability-value": {
-       "trigger-spec-capabilities": [
-         {
-            "trigger-spec": "CIT.UrlsSpec",
-            "trigger-types": ["CIT.Invalidate"],
-            "trigger-subjects": ["CIT.Metadata", "CIT.Content"]
-         }
-      ]
-     },
-     "footprints": [
-       <Footprint objects>
-     ]
-   }
- ]
-}
-        ]]></artwork>
-          </figure>
-        </section>
-      </section>
-
-
-      <section title="CI/T Trigger Extension Capability Object">
-        <t>
-           The CI/T Generic Extension capability object is used to indicate support for one or more
-           GenericExtensionObject types.
-        </t>
-         <t>
-        TBD should this capability mention only the supported extension or the supported spec subject as well
-        </t>
-       
-
-        <t><list style="empty">
-           <t>Property: trigger-extension<list style="empty">
-
-                 <t>Description: A list of supported CDNI CI/T GenericExtensionObject types.</t>
-
-                 <t>Type: List of strings corresponding to entries from the "CDNI Payload Types" registry
-                    <xref target="RFC7736"/> that are under the CIT namespace, and that correspond to CDNI
-                    CI/T GenericExtensionObject objects.
-                 </t>
-
-                 <t>Mandatory: No. The default, in case of a missing or an empty list, MUST be 
-                    interpreted as "no GenericExtensionObject types are supported". A non-empty list MUST be 
-                    interpreted as containing "the only GenericExtensionObject types that are supported".
-                 </t>
-           </list></t>
-        </list></t>
-        <section anchor="trigger-extension-capability-object" title="CI/T Trigger Extension Capability Object Serialization">
-          <t>
-             The following shows an example of a JSON serialized CI/T Trigger Extension Capability object serialization for
-             a dCDN that supports the "CIT.LocationPolicy" and the "CIT.TimePolicy" objects.
-          </t>
-
-          <figure>
-           <artwork><![CDATA[
-
-{
- "capabilities": [
-   {
-     "capability-type": "FCI.TriggerGenericExtension",
-     "capability-value": {
-       "trigger-extension": ["CIT.LocationPolicy", "CIT.TimePolicy"]
-     },
-     "footprints": [
-       <Footprint objects>
-     ]
-   }
- ]
-}
-        ]]></artwork>
-          </figure>
-        </section>
-      </section>
-      </section>
        
 
             <section title="CI/T Playlist Protocol Capability Object">
@@ -4229,22 +4021,13 @@ RESPONSE:
                <t>Encoding: see <xref target="versions-capability-object"/></t>
             </section>
 
-
             <section anchor="IANA.CDNI.payload.FCI.TriggerScope" title="CDNI FCI CI/T Trigger Scope Payload Type">
                <t>Purpose: The purpose of this payload type is to distinguish FCI advertisement objects for
                   CI/T Trigger Scope</t>
                <t>Interface: FCI</t>
-               <t>Encoding: see <xref target="trigger-type-capability-object"/></t>
+               <t>Encoding: see <xref target="trigger-scope-capability-object"/></t>
             </section>
 
-            <section anchor="IANA.CDNI.payload.FCI.TriggerType" title="CDNI FCI CI/T Trigger Type Payload Type">
-               <t>Purpose: The purpose of this payload type is to distinguish FCI advertisement objects for
-                  CI/T Trigger types</t>
-               <t>Interface: FCI</t>
-               <t>Encoding: see <xref target="trigger-type-capability-object"/></t>
-            </section>
-
- 
              <section anchor="IANA.CDNI.payload.FCI.PlaylistProtocol" title="CDNI FCI CI/T Playlist Protocol Payload Type">
                <t>Purpose: The purpose of this payload type is to distinguish FCI advertisement objects for
                   CI/T Playlist Protocol objects</t>
@@ -4252,19 +4035,6 @@ RESPONSE:
                <t>Encoding: see <xref target="playlist-protocol-capability-object"/></t>
             </section>
 
-            <section anchor="IANA.CDNI.payload.FCI.ExtensionObject" title="CDNI FCI CI/T Extension Objects Payload Type">
-               <t>Purpose: The purpose of this payload type is to distinguish FCI advertisement objects for
-                  CI/T Extension objects</t>
-               <t>Interface: FCI</t>
-               <t>Encoding: see <xref target="trigger-extension-capability-object"/></t>
-            </section>
-
-            <section anchor="IANA.CDNI.payload.FCI.SpecObject" title="CDNI FCI CI/T Spec Objects Payload Type">
-               <t>Purpose: The purpose of this payload type is to distinguish FCI advertisement objects for
-                  CI/T Spec objects</t>
-               <t>Interface: FCI</t>
-               <t>Encoding: see <xref target="trigger-spec-capability-object"/></t>
-            </section>
         </section>
 
 	</section>
