@@ -180,7 +180,7 @@
    There are two types of CI/T Commands: CI/T Trigger Commands and CI/T
    Cancel Commands.  The CI/T Cancel Command can be used to request
    cancellation of an earlier CI/T Trigger Command.  A CI/T Trigger
-   Command is of one of the following types:</t>
+   Action is of one of the following types:</t>
 
 	<t><list style="symbols"><t>preposition - used to instruct the dCDN to fetch metadata from the
       uCDN, or content from any origin including the uCDN.</t>
@@ -195,7 +195,7 @@
 	</t>
 
    <t>
-   Note that additional CI/T Trigger Types may be defined and registered in the future. 
+   Note that additional CI/T Trigger Action Types may be defined and registered in the future. 
    </t>
 	<t>
    The CI/T interface is a web service offered by the dCDN.  It allows
@@ -441,7 +441,7 @@
    </t>
 
    <t>This document also defines an initial set of trigger spec objects, and registers the 
-   defined tigger specs' types as CDNI Payload Types <xref target="RFC7736"/> under the namespace CIT:
+   defined trigger specs' types as CDNI Payload Types <xref target="RFC7736"/> under the namespace CIT:
    <list style="symbols">
       <t>CIT.UrlsSpec (for TODO)</t>
       <t>CIT.CcidsSpec (for TODO)</t>
@@ -1028,7 +1028,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 							</t>
 							<t>
 								The dCDN-C acts upon the CI/T Command. However, the command fails at dCDN-C as,
-								for example, the Trigger Specification contains a "type" that is not supported by dCDN-C.
+								for example, the Trigger Specification contains a "action type" that is not supported by dCDN-C.
 							</t>
 							<t>
 								The dCDN-B can poll, possibly repeatedly, the Trigger Status Resource in dCDN-C.
@@ -1085,7 +1085,7 @@ uCDN-A                         dCDN-B                         dCDN-C
    <xref target="sect-5.2"/>.</t>
 
 	<section title="CI/T Commands" anchor="sect-5.1.1"><t>
-   CI/T Commands MUST use a MIME media type of "application/cdni; ptype=ci-trigger-command".</t>
+   CI/T Commands MUST use a MIME media type of "application/cdni; ptype=ci-trigger-command.v2".</t>
 
 	<t>
    A CI/T Command is encoded as a JSON object containing the following
@@ -1094,7 +1094,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 	<t><list style="empty" hangIndent="3">
 	<t><list style="hanging" hangIndent="3"><t hangText="Name: trigger.v2">
 	<vspace blankLines="1"/>
-	Description: A specification of the trigger type and a set of
+	Description: A specification of the trigger action type and a set of
          data to act upon.
 	<vspace blankLines="1"/>
 	Value: A Trigger Specification, as defined in <xref target="sect-5.2.1"/>.
@@ -1329,11 +1329,11 @@ uCDN-A                         dCDN-B                         dCDN-C
 	<t><list style="empty" hangIndent="3">
 	<t><list style="hanging" hangIndent="3">
    
-   <t hangText="Name: type">
+   <t hangText="Name: action">
 	<vspace blankLines="1"/>
-	Description: Defines the type of the CI/T Trigger Command.
+	Description: Defines the type of the CI/T Trigger Action.
 	<vspace blankLines="1"/>
-	Value: Trigger Type, as defined in <xref target="sect-5.2.2"/>.
+	Value: Trigger Action Type, as defined in <xref target="sect-5.2.2"/>.
 	<vspace blankLines="1"/>
 	Mandatory: Yes.
 	</t>
@@ -1365,15 +1365,15 @@ uCDN-A                         dCDN-B                         dCDN-C
 
 	</section>
 
-	<section title="Trigger Type" anchor="sect-5.2.2"><t>
-   Trigger Type is used in a Trigger Specification to describe trigger
+	<section title="Trigger Action Type" anchor="sect-5.2.2"><t>
+   Trigger Action Type is used in a Trigger Specification to describe trigger
    action.</t>
 
 	<t>
-   All trigger types MUST be registered in the IANA "CDNI CI/T Trigger Types" registry (see <xref target="sect-7.2"/>).</t>
+   All trigger types MUST be registered in the IANA "CDNI CI/T Trigger Action Types" registry (see <xref target="sect-7.2"/>).</t>
 
 	<t>
-   A dCDN receiving a request containing a trigger type it does not
+   A dCDN receiving a request containing a trigger action type it does not
    recognize or does not support MUST reject the request by creating a
    Trigger Status Resource with a status of "failed" and the "errors"
    array containing an Error Description with error "eunsupported".</t>
@@ -1978,7 +1978,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 	<c>ecancelled</c>
 	<c>The uCDN canceled the request.</c>
 	<c>eunsupported</c>
-	<c>The Trigger Specification contained a "type" that</c>
+	<c>The Trigger Specification contained an "action type" that</c>
 	<c></c>
 	<c>is not supported by the dCDN.  No action was taken</c>
 	<c></c>
@@ -1990,9 +1990,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 	<c></c>
 	<c>extension, or that the specific extension is not</c>
 	<c></c>
-	<c>supported by the CDN. The Trigger Specification</c>
-	<c></c>
-	<c>contained a "type" that.</c>
+	<c>supported by the CDN.</c>
 	</texttable>
 	</section>
    </section>
@@ -2761,7 +2759,7 @@ Month Number  Month/Year           Maximum value of date-mday
            The CI/T supports several trigger types for different trigger's subjects as defined at 
            <xref target="sect-5.2.2"/> and <xref target="trigger-spec"/>. Additional types, as well as
            subjects, may be defined 
-           in the future. The Trigger Scope capability object is used to indicate support of a Trigger Type
+           in the future. The Trigger Scope capability object is used to indicate support of a Trigger Action Type
            for a subject. It further specifies the Trigger Generic Spec types that may be used for 
            selecting the targets the triggers is applied on, along with the supported Trigger Generic Extension types.
         </t>
@@ -2785,13 +2783,13 @@ Month Number  Month/Year           Maximum value of date-mday
         <t>The trigger-scope-capability object is defined as follows:</t>
 
         <t><list style="empty">
-            <t>Property: trigger-type <list style="empty">
+            <t>Property: trigger-action <list style="empty">
 
-                 <t>Description: The supported CDNI CI/T Trigger Type.</t>
+                 <t>Description: The supported CDNI CI/T Trigger Action Type.</t>
 
                  <t>Type: A string corresponding to an entry from the "CDNI Payload Types" registry
                     <xref target="RFC7736"/> that is under the CIT namespace, and that correspond to CDNI
-                    CI/T Trigger Type.
+                    CI/T Trigger Action Type.
                  </t>
 
                  <t>Mandatory: Yes.
@@ -2862,13 +2860,13 @@ Month Number  Month/Year           Maximum value of date-mday
      "capability-value": {
        "trigger-scope-capabilities": [
          {
-            "trigger-type": "CIT.Preposition",
+            "trigger-action": "CIT.Preposition",
             "trigger-subject": "CIT.Content",
             "trigger-specs": ["CIT.UrlsSpec", "CIT.CcidSpec"],
             "trigger-extensions": ["CIT.TimePolicy"]
          },
          {
-            "trigger-type": "CIT.Invalidate",
+            "trigger-action": "CIT.Invalidate",
             "trigger-subject": "CIT.Content",
             "trigger-specs": ["CIT.UrlsSpec", "CIT.CcidSpec"]
          }
@@ -2971,12 +2969,12 @@ REQUEST:
   User-Agent: example-user-agent/0.1
   Host: dcdn.example.com
   Accept: */*
-  Content-Type: application/cdni; ptype=ci-trigger-command
+  Content-Type: application/cdni; ptype=ci-trigger-command.v2
   Content-Length: 352
 
   {
       "trigger.v2": {
-         "type": "CIT.Preposition",
+         "action": "CIT.Preposition",
          "specs": [
             {
                "generic-trigger-spec-type": "CIT.UrlsSpec",
@@ -3019,7 +3017,7 @@ RESPONSE:
       "mtime": 1462351690,
       "status": "pending",
       "trigger.v2": {
-         "type": "CIT.Preposition"
+         "action": "CIT.Preposition"
          "specs": [
             {
                "generic-trigger-spec-type": "CIT.UrlsSpec",
@@ -3064,12 +3062,12 @@ REQUEST:
   User-Agent: example-user-agent/0.1
   Host: dcdn.example.com
   Accept: */*
-  Content-Type: application/cdni; ptype=ci-trigger-command
+  Content-Type: application/cdni; ptype=ci-trigger-command.v2
   Content-Length: 387
 
   {
     "trigger.v2": {
-      "type": "CIT.Invalidate",
+      "action": "CIT.Invalidate",
       "specs": [
          {
             "generic-trigger-spec-type": "CIT.UriPatterns",
@@ -3120,7 +3118,7 @@ RESPONSE:
       "mtime": 1462351691,
       "status": "pending",
       "trigger.v2": {
-         "type": "CIT.Invalidate",
+         "action": "CIT.Invalidate",
          "specs": [
             {
                "generic-trigger-spec-type": "CIT.UriPatterns",
@@ -3165,7 +3163,7 @@ RESPONSE:
             content objects for invalidation, the command is rejected by the dCDN due to regex complexity, and
             an appropriate error is reflected in the status response.
           </t>
-          <t> TBD: in case of failure in one object, maybe leave empty places in the tiggers list
+          <t> TBD: in case of failure in one object, maybe leave empty places in the triggers list
           for the objects that has not failed></t>
           <figure>
             <artwork><![CDATA[
@@ -3178,7 +3176,7 @@ REQUEST:
   Content-Type: application/cdni; ptype=ci-trigger-command.v2
   {
     "trigger.v2": {
-      "type": "CIT.Invalidate",
+      "action": "CIT.Invalidate",
       "specs": [
          {
             "generic-trigger-spec-type": "CIT.UriRegexes",
@@ -3262,7 +3260,7 @@ REQUEST:
   Content-Type: application/cdni; ptype=ci-trigger-command.v2
   {
     "trigger.v2": {
-      "type": "CIT.Preposition",
+      "action": "CIT.Preposition",
       "specs": [
          {
             "generic-trigger-spec-type": "CIT.ContentPlaylists",
@@ -3469,7 +3467,7 @@ RESPONSE:
       "mtime": 1462351690,
       "status": "pending",
       "trigger": {
-          "type": "CIT.Preposition",
+          "action": "CIT.Preposition",
           "specs": [
             {
                "generic-trigger-spec-type": "CIT.UrlsSpec",
@@ -3519,7 +3517,7 @@ RESPONSE:
       "mtime": 1462351691,
       "status": "pending",
       "trigger": {
-          "type": "CIT.Invalidate",
+          "action": "CIT.Invalidate",
           "specs": [
             {
                "generic-trigger-spec-type": "CIT.UriPatterns",
@@ -3736,7 +3734,7 @@ REQUEST:
   Content-Type: application/cdni; ptype=ci-trigger-command.v2
   {
     "trigger.v2": {
-      "type": "CIT.Preposition",
+     "action": "CIT.Preposition",
      "specs": [
          {
             "generic-trigger-spec-type": "CIT.ContentPlaylists",
@@ -3931,21 +3929,21 @@ RESPONSE:
           <t>Encoding: see <xref target="sect-5.1.3"/></t>
         </section>
 
-        <section anchor="IANA.CDNI.payload.CIT.TriggerTypes" title="CDNI CI/T Trigger Type Payload Types">
-            <section anchor="IANA.CDNI.payload.CIT.Preposition" title="CDNI CI/T Preposition Trigger Type Payload Type">
-               <t>Purpose: The purpose of this Trigger type is to distinguish Preposition CIT Trigger Types Triggers.</t>
+        <section anchor="IANA.CDNI.payload.CIT.TriggerActionTypes" title="CDNI CI/T Trigger Action Payload Types">
+            <section anchor="IANA.CDNI.payload.CIT.Preposition" title="CDNI CI/T Preposition Trigger Action Payload Type">
+               <t>Purpose: The purpose of this Trigger action type is to distinguish Preposition CIT Trigger Types Triggers.</t>
                <t>Interface: CI/T</t>
                <t>Encoding: see <xref target="sect-5.2.2"/></t>
             </section>
             
-            <section anchor="IANA.CDNI.payload.CIT.Invalidate" title="CDNI CI/T Invalidate Trigger Type Payload Type">
-               <t>Purpose: The purpose of this Trigger type is to distinguish Invalidate CIT Trigger Types Triggers.</t>
+            <section anchor="IANA.CDNI.payload.CIT.Invalidate" title="CDNI CI/T Invalidate Trigger Action Payload Type">
+               <t>Purpose: The purpose of this Trigger action type is to distinguish Invalidate CIT Trigger Types Triggers.</t>
                <t>Interface: CI/T</t>
                <t>Encoding: see <xref target="sect-5.2.2"/></t>
             </section>
 
-            <section anchor="IANA.CDNI.payload.CIT.Purge" title="CDNI CI/T Purge Trigger Type Payload Type">
-               <t>Purpose: The purpose of this Trigger type is to distinguish Purge CIT Trigger Types Triggers.</t>
+            <section anchor="IANA.CDNI.payload.CIT.Purge" title="CDNI CI/T Purge Trigger Action Payload Type">
+               <t>Purpose: The purpose of this Trigger action type is to distinguish Purge CIT Trigger Types Triggers.</t>
                <t>Interface: CI/T</t>
                <t>Encoding: see <xref target="sect-5.2.2"/></t>
             </section>
