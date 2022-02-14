@@ -81,7 +81,7 @@
                 that works to solve streaming video challenges in an effort to improve end-user experience
                 and adoption. The Open Caching Working Group <xref target="OCWG" format="default" /> of the
                 Streaming Video Alliance <xref target="SVA" format="default" /> is focused on the delegation
-                of video delivery requests from commerical CDNs to a caching layer at the ISP's network.
+                of video delivery requests from commercial CDNs to a caching layer at the ISP's network.
                 Open Caching architecture is a specific use case of CDNI where the commercial CDN is the
                 upstream CDN (uCDN) and the ISP caching layer is the downstream CDN (dCDN).
                 The <xref target="OC-RR"> Open Caching Request Routing Specification </xref>
@@ -144,7 +144,7 @@
                 </t>
             </section>
         </section>
-        <section anchor="cdni-metadata-additional-footprint-types" title="CDNI Metadata Additonal Footprint Types">
+        <section anchor="cdni-metadata-additional-footprint-types" title="CDNI Metadata Additional Footprint Types">
             <t>
                 Section 5 of <xref target="RFC8008" /> describes the FCI Capability Advertisement Object, which
                  includes an array of CDNI Footprint Objects. Each such object has a footprint-type and
@@ -203,7 +203,7 @@
                         .
                     </t>
                     <t>
-                        Below is an example using footprint object of type "SubdivisionCode". 
+                        Below is an example using a footprint object of type "SubdivisionCode". 
                         The Footprint Object in this example creates
                         a constraints matching clients both in the Nova-Scotia province of Canada (ISO <xref target="ISO3166-2"/> code "CA-NS"), as well as in the state of
                         New-York In the US (ISO <xref target="ISO3166-2"/> code "US-NY").
@@ -281,7 +281,7 @@
                     To overcome the described limitation and allow a list of footprint constraints that
                     match both IPv4 and IPv6 client addresses, below is introduced the "FootprintUnion" footprint type. 
                     This footprint type allows the collection of multiple footprint-objects into a unified object. 
-                    It is useful for resolving the above limitaion, as well as for unifying footprints of additional types such as 
+                    It is useful for resolving the above limitation, as well as for unifying footprints of additional types such as 
                     countrycode and subdivisioncode.
                 </t>
                 <section anchor="cdni-metadata-footprint-union-data-type" title="CDNI Metadata FootprintUnion Data Type">
@@ -433,8 +433,8 @@
                 respectively.
             </t>
             <t>
-                It worth noting that the "Subdivision" footprint type allows dCDNs to expose its network
-                topology with higher level of granularity. Therefore, it further emphasize the transport level 
+                It is worth noting that the "SubdivisionCode" footprint type allows dCDNs to expose its network
+                topology with a higher level of granularity. Therefore, it further emphasizes the transport level 
                 confidentiality requirements,  already described in Sections 8.2 of <xref target="RFC8006" /> 
                 and in Section 7 of <xref target="RFC8008" />.
             </t>
