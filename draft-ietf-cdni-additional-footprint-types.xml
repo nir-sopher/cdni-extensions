@@ -430,13 +430,9 @@
                 <xref target="RFC8006" />
                 and in Section 7 of
                 <xref target="RFC8008" />
-                respectively.
-            </t>
-            <t>
-                It is worth noting that the "SubdivisionCode" footprint type allows dCDNs to expose its network
-                topology with a higher level of granularity. Therefore, it further emphasizes the transport level 
-                confidentiality requirements,  already described in Sections 8.2 of <xref target="RFC8006" /> 
-                and in Section 7 of <xref target="RFC8008" />.
+                respectively. More specifically, as the "SubdivisionCode" footprint type allows dCDNs to expose their network
+                topology with a higher level of granularity, its definition further affirms the demand of the specified transport 
+                level confidentiality requirements.
             </t>
         </section>
         <section anchor="Acknowledgements" title="Acknowledgements">
