@@ -9,7 +9,7 @@
 <?rfc comments="yes"?>
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
-<rfc category="std" docName="draft-ietf-cdni-additional-footprint-types-00" updates='8006,8008' ipr="trust200902">
+<rfc category="std" docName="draft-ietf-cdni-additional-footprint-types-00.1" updates='8006,8008' ipr="trust200902">
     <front>
         <title abbrev="Content Delivery Network Interconnection (CDNI) Footprint Types: Subdivision Code and Union">
             Content Delivery Network Interconnection (CDNI) Footprint Types: Subdivision Code and Union
@@ -431,6 +431,12 @@
                 and in Section 7 of
                 <xref target="RFC8008" />
                 respectively.
+            </t>
+            <t>
+                It worth noting that the "Subdivision" footprint type allows dCDNs to expose its network
+                topology with higher level of granularity. Therefore, it further emphasize the transport level 
+                confidentiality requirements,  already described in Sections 8.2 of <xref target="RFC8006" /> 
+                and in Section 7 of <xref target="RFC8008" />.
             </t>
         </section>
         <section anchor="Acknowledgements" title="Acknowledgements">
