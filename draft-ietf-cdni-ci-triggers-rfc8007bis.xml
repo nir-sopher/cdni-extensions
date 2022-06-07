@@ -1490,7 +1490,7 @@ uCDN-A                         dCDN-B                         dCDN-C
         <section anchor="trigger-extensions" title="CI/T Trigger Extensions">
           <t>
             A "trigger.v2" object, as defined in <xref target="sect-5.2.1"/> includes an
-            optional array of trigger extension objects. A trigger extension contain properties
+            optional array of trigger extension objects. A trigger extension contains properties
             that are used as directives for dCDN when executing the trigger command -- for example,
             location policies, time policies and so on. Each such CDNI Trigger extension is a specialization
             of a CDNI GenericTriggerExtension object. The GenericTriggerExtension object abstracts the basic
@@ -3332,7 +3332,7 @@ RESPONSE:
 
 	<section title="Collection of All Triggers" anchor="sect-6.2.1"><t>
    The uCDN can fetch the collection of all Trigger Status Resources it
-   has created that have not yet been deleted or removed as expired.
+   has created that have not yet been deleted or removed or expired.
    After creation of the "preposition" and "invalidate" triggers shown
    above, this collection might look as follows:</t>
 
