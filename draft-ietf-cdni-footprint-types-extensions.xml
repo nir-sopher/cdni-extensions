@@ -9,7 +9,7 @@
 <?rfc comments="yes"?>
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
-<rfc category="std" docName="draft-sopher-cdni-footprint-types-extensions-03" updates='8006,8008' ipr="trust200902">
+<rfc category="std" docName="draft-ietf-cdni-footprint-types-extensions-00" updates='8006,8008' ipr="trust200902">
     <front>
         <title abbrev="CDNI Footprint Types Extensions">
             CDNI Request Routing Extensions
@@ -235,7 +235,7 @@
                     </figure>
                 </section>
             </section>
-            <section anchor="cdni-metadata-footprint-object-footprint-type" title="CDNI Metadata FootprintObject Footprint Type">
+            <section anchor="cdni-metadata-footprint-union-footprint-type" title="CDNI Metadata FootprintUnion Footprint Type">
                 <t>
                     As described in section 5 of <xref target="RFC8008" />, 
                     the FCI Capability Advertisement Object includes an array of CDNI Footprint Objects. 
@@ -284,26 +284,26 @@
                 </figure>
                 <t>
                     To overcome the described limitation, and allow a list of footprint constraints that
-                    matches both IPv4 and IPv6 client addresses, we introduce below the "FootprintObject" footprint type. 
+                    matches both IPv4 and IPv6 client addresses, we introduce below the "FootprintUnion" footprint type. 
                     This footprint type allows the collection of multiple footprint-objects into a unified object. 
                     It is useful for resolving the above limitaion, as well as for unifying footprints of additional types such as 
                     countrycode and iso3166-2code.
                 </t>
-                <section anchor="cdni-metadata-footprint-object-data-type" title="CDNI Metadata FootprintObject Data Type">
+                <section anchor="cdni-metadata-footprint-union-data-type" title="CDNI Metadata FootprintUnion Data Type">
                     <t>
-                        The "FootprintObject" data type is based on the Footprint Object already defined in 
+                        The "FootprintUnion" data type is based on the Footprint Object already defined in 
                         section 4.2.2.2 of <xref target="RFC8006" />. It includes a footprint-type property and a footprint-value
                         array values.
                     </t>
                 </section>
-                <section anchor="cdni-metadata-footprint-object-footprint-type-description" title="CDNI Metadata FootprintObject Footprint Type Description">
+                <section anchor="cdni-metadata-footprint-union-footprint-type-description" title="CDNI Metadata FootprintUnion Footprint Type Description">
                     <t>
-                        The "footprintobject" data type specified in <xref target="cdni-metadata-footprint-object-data-type" />, 
+                        The "footprintunion" data type specified in <xref target="cdni-metadata-footprint-union-data-type" />, 
                         is added to the data types listed as footprint types in section 4.2.2.2 of <xref target="RFC8006" />.
                     </t>
                     <t>
-                        Below is an adjustment for the example in <xref target="cdni-metadata-footprint-object-data-type" />,
-                        now embedding a footprint object of type "footprintobject".
+                        Below is an adjustment for the example in <xref target="cdni-metadata-footprint-union-data-type" />,
+                        now embedding a footprint object of type "footprintunion".
                     </t>
                     <figure>
                         <artwork>
@@ -315,7 +315,7 @@
       "capability-value": <CDNI capability object>,
       "footprints": [
         {
-          "footprint-type": "footprintobject",
+          "footprint-type": "footprintunion",
           "footprint-value": [
             {
               "footprint-type": "ipv4cidr",
@@ -353,7 +353,7 @@
           "footprint-value": ["as64496"]
         },
         {
-          "footprint-type": "footprintobject",
+          "footprint-type": "footprintunion",
           "footprint-value": [
             {
               "footprint-type": "countrycode",
@@ -390,7 +390,7 @@
                 <t>
                     This document requests the registration of the two additional footprint type
                     as defined in
-                    <xref target="cdni-metadata-footprint-object-footprint-type" />
+                    <xref target="cdni-metadata-footprint-union-footprint-type" />
                     and
                     <xref target="cdni-metadata-iso3166-2code-footprint-type" />
                     :
@@ -415,7 +415,7 @@
                         RFCthis
                     </c>
                     <c>
-                        FCI.footprintobject
+                        FCI.footprintunion
                     </c>
                     <c>
                         Footprint Object as specified in <xref target="RFC8006" />

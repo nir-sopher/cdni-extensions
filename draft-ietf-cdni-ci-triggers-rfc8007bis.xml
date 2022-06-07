@@ -19,7 +19,7 @@
 <!ENTITY RFC7736 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7736.xml">
 <!ENTITY RFC7975 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7975.xml">
 ]>
-<rfc category="std" docName="draft-sopher-cdni-triggers-extensions-rfc8007bis-01" obsoletes='8007' ipr="trust200902">
+<rfc category="std" docName="draft-ietf-cdni-ci-triggers-rfc8007bis-01" obsoletes='8007' ipr="trust200902">
 	<?rfc strict="yes"?>
 	<?rfc compact="yes"?>
 	<?rfc subcompact="no"?>
@@ -138,6 +138,12 @@
 
 	<t><xref target="sect-5"/> lists properties of CI/T Commands and Status Resources.</t>
 
+	<t><xref target="trigger-spec-objects"/> describes the Trigger's Spec object.</t>
+
+	<t><xref target="trigger-extension-objects"/> describes the Trigger's Extensions object.</t>
+
+	<t><xref target="footprint-and-capabilities"/> describes the FCI capabilities objects used to inform on the supported CI/T capabilities.</t>
+
 	<t><xref target="sect-6"/> contains example messages.</t>
 
 	</list>
@@ -174,7 +180,7 @@
    There are two types of CI/T Commands: CI/T Trigger Commands and CI/T
    Cancel Commands.  The CI/T Cancel Command can be used to request
    cancellation of an earlier CI/T Trigger Command.  A CI/T Trigger
-   Command is of one of the following types:</t>
+   Action is of one of the following types:</t>
 
 	<t><list style="symbols"><t>preposition - used to instruct the dCDN to fetch metadata from the
       uCDN, or content from any origin including the uCDN.</t>
@@ -188,6 +194,9 @@
 	</list>
 	</t>
 
+   <t>
+   Note that additional CI/T Trigger Action Types may be defined and registered in the future. 
+   </t>
 	<t>
    The CI/T interface is a web service offered by the dCDN.  It allows
    CI/T Commands to be issued and allows triggered activity to be
@@ -283,7 +292,10 @@
 
 	<section title="Timing of Triggered Activity" anchor="sect-2.1"><t>
    Timing of the execution of CI/T Commands is under the dCDN's control,
-   including its start time and pacing of the activity in the network.</t>
+   including its start time and pacing of the activity in the network. 
+   Instructions regarding this timing may be included in the trigger using 
+   one of the Trigger Extension Objects defined in 
+   <xref target="trigger-extension-objects"/> </t>
 
 	<t>
    CI/T "invalidate" and "purge" commands MUST be applied to all data
@@ -309,7 +321,11 @@
 	</section>
 
 	<section title="Scope of Triggered Activity" anchor="sect-2.2"><t>
-   Each CI/T Command can operate on multiple metadata and content URLs.</t>
+   Each CI/T Command can operate on multiple metadata and content elements, 
+   usually refered by their URLs. These elements are targeted by specifying
+   both their subject (i.e. "metadata" or "content") as well as specification 
+   method (e.g. URL Regexes)
+   </t>
 
 	<t>
    Multiple representations of an HTTP resource may share the same URL.
@@ -412,6 +428,86 @@
 	</section>
 
 	</section>
+
+   <section anchor="trigger-spec" title="Trigger Spec">
+   <t>
+      The CDNI Control Interface / Triggers <xref target="RFC8007"/> defines a set of properties
+      and objects used by the trigger commands in order to specify the targets the trigger is applied on.
+      In this document we introduce additional flexibility to the trigger interface, 
+      allowing the specification of the trigger's targets via a list of "trigger specs" objects. 
+      Furthermore, the document defines a generic trigger spec
+      object that act as a wrapper for managing individual CDNI trigger spec in an opaque manner,
+      allowing future extension of the interface.
+   </t>
+
+   <t>This document also defines an initial set of trigger spec objects, and registers the 
+   defined trigger specs' types as CDNI Payload Types <xref target="RFC7736"/> under the namespace CIT:
+   <list style="symbols">
+      <t>CIT.UrlsSpec (for TODO)</t>
+      <t>CIT.CcidsSpec (for TODO)</t>
+      <t>CIT.UriPatternsSpec (for TODO)</t>
+      <t>CIT.UrlRegexesSpec (for TODO)</t>
+      <t>CIT.ContentPlaylistsSpec (for TODO)</t>
+   </list>
+   </t>
+
+   <t>Furthermore, as the scope of the trigger may relate to either uCDN metadata as well as uCDN content, 
+   the "trigger spec object" also specify the trigger's target subject (i.e. metadata or content) 
+   to be matched with. The document registers additional as CDNI Payload Types <xref target="RFC7736"/> 
+   under the namespace CIT, the initial set of available trigger subjects:
+   <list style="symbols">
+      <t>CIT.MetadataSubject (for TODO)</t>
+      <t>CIT.ContentSubject (for TODO)</t>
+   </list>
+   </t>
+
+   <section title="Content URLs" anchor="sect-4.8">
+   <t> TBD only content? what about metadata?</t>
+   <t>
+   Each CI/T Command usually refers the target content by the content URLs 
+   (e.g. using a CIT.UrlSpec trigger spec object).
+
+   If content URLs are transformed by an intermediate CDN in a cascade,
+   that intermediate CDN MUST similarly transform URLs in CI/T Commands
+   it passes to its dCDN.</t>
+
+	<t>
+   When processing Trigger Specifications, CDNs MUST ignore the URL
+   scheme (HTTP or HTTPS) in comparing URLs.  For example, for a CI/T
+   "invalidate" or "purge" command, content MUST be invalidated or
+   purged regardless of the protocol clients used to request it.</t>
+
+	</section>
+
+
+</section>
+
+<section anchor="trigger-extensibility" title="Trigger Extensibility">
+   <t>
+      The CDNI Control Interface / Triggers <xref target="RFC8007"/> defines a set of properties
+      and objects used by the trigger commands. In this document we define an extension mechanism
+      to the triggers interface that enables the application to add various functions that allow
+      finer control over the trigger execution. This document specifies a generic trigger extension
+      object wrapper for managing individual CDNI trigger extensions in an opaque manner.
+   </t>
+
+   <t>This document also registers CDNI Payload Types <xref target="RFC7736"/> under the namespace CIT
+      for the initial set of trigger extension types:
+   <list style="symbols">
+      <t>CIT.LocationPolicy (for controlling the locations in which the trigger is executed)</t>
+      <t>CIT.TimePolicy (for scheduling a trigger to run in a specific time window)</t>
+   </list>
+   </t>
+
+
+   <t>Example use cases<list style="symbols">
+      <t>Pre-position with cache location policy</t>
+      <t>Purge content with cache location policy</t>
+      <t>Pre-position at a specific time</t>
+      <t>Purge by content acquisition time (e.g. purge all content acquired in the past X hours)</t>
+   </list></t>
+</section>
+
 
 	<section title="Collections of Trigger Status Resources" anchor="sect-3"><t>
    As described in <xref target="sect-2"/>, Trigger Status Resources exist in the dCDN
@@ -524,9 +620,9 @@
    containing an appropriate Error Description.</t>
 
 	<t>
-   When a CI/T Trigger Command is accepted, the uCDN MUST create a new
+   When a CI/T Trigger Command is accepted, the dCDN MUST create a new
    Trigger Status Resource that will convey a specification of the CI/T
-   Command and its current status.  The HTTP response to the dCDN MUST
+   Command and its current status.  The HTTP response to the uCDN MUST
    have status code 201 and MUST convey the URI of the Trigger Status
    Resource in the Location header field <xref target="RFC7231"/>.  The HTTP response
    SHOULD include the content of the newly created Trigger Status
@@ -579,7 +675,8 @@
 
 	<section title="Checking Status" anchor="sect-4.2"><t>
    The uCDN has two ways to check the progress of CI/T Commands it has
-   issued to the dCDN, as described in Sections 4.2.1 and 4.2.2.</t>
+   issued to the dCDN, as described in Sections <xref target="sect-4.2.1"/> and 
+   <xref target="sect-4.2.2"/>.</t>
 
 	<t>
    To allow the uCDN to check for changes in the status of a Trigger
@@ -770,33 +867,7 @@
    SHOULD use the same CDN PID.</t>
 
 	</section>
-
-        <section anchor="trigger-extensibility" title="Trigger Extensibility">
-          <t>
-             The CDNI Control Interface / Triggers <xref target="RFC8007"/> defines a set of properties
-             and objects used by the trigger commands. In this document we define an extension mechanism
-             to the triggers interface that enables the application to add various functions that allow
-             finer control over the trigger execution. This document specifies a generic trigger extension
-             object wrapper for managing individual CDNI trigger extensions in an opaque manner.
-          </t>
-
-          <t>This document also registers CDNI Payload Types <xref target="RFC7736"/> under the namespace CIT
-             for the initial set of trigger extension types:
-            <list style="symbols">
-              <t>CIT.LocationPolicy (for controlling the locations in which the trigger is executed)</t>
-              <t>CIT.TimePolicy (for scheduling a trigger to run in a specific time window)</t>
-            </list>
-          </t>
-
-
-           <t>Example use cases<list style="symbols">
-              <t>Pre-position with cache location policy</t>
-              <t>Purge content with cache location policy</t>
-              <t>Pre-position at a specific time</t>
-              <t>Purge by content acquisition time (e.g. purge all content acquired in the past X hours)</t>
-           </list></t>
-        </section>
-
+        
 	<section title="Error Handling" anchor="sect-4.7"><t>
    A dCDN can signal rejection of a CI/T Command using HTTP status codes
    -- for example, 400 ("Bad Request") if the request is malformed, or
@@ -843,6 +914,7 @@
 
 	</list>
 	</t>
+   
 
         <section anchor="error-propagation" title="Error propagation">
           <t>
@@ -852,7 +924,7 @@
              to a downstream CDN C (dCDN-C). Triggers sent from uCDN-A to dCDN-B may be redistributed 
              from dCDN-B to dCDN-C and errors can occur anywhere along the path. Therefore, it might be essential for 
              uCDN-A that sets the trigger, to be able to trace back an error to the downstream CDN where it occurred. 
-             This document adds a mechanism to propagate the CDN Provider ID (PID) of the dCDN where the fault occured, back to the 
+             This document adds a mechanism to propagate the CDN Provider ID (PID) of the dCDN where the fault occurred, back to the 
              uCDN by adding the PID
              to the error description. When dCDN-B propagates a trigger to the further downstream dCDN-C, 
              it MUST also propagate back the errors received in the trigger status resource from dCDN-C by adding
@@ -956,7 +1028,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 							</t>
 							<t>
 								The dCDN-C acts upon the CI/T Command. However, the command fails at dCDN-C as,
-								for example, the Tigger Specification contains a "type" that is not supported by dCDN-C.
+								for example, the Trigger Specification contains a "action type" that is not supported by dCDN-C.
 							</t>
 							<t>
 								The dCDN-B can poll, possibly repeatedly, the Trigger Status Resource in dCDN-C.
@@ -978,19 +1050,6 @@ uCDN-A                         dCDN-B                         dCDN-C
 						</list>
 					</t>
       </section>
-
-	</section>
-
-	<section title="Content URLs" anchor="sect-4.8"><t>
-   If content URLs are transformed by an intermediate CDN in a cascade,
-   that intermediate CDN MUST similarly transform URLs in CI/T Commands
-   it passes to its dCDN.</t>
-
-	<t>
-   When processing Trigger Specifications, CDNs MUST ignore the URL
-   scheme (HTTP or HTTPS) in comparing URLs.  For example, for a CI/T
-   "invalidate" or "purge" command, content MUST be invalidated or
-   purged regardless of the protocol clients used to request it.</t>
 
 	</section>
 
@@ -1026,7 +1085,7 @@ uCDN-A                         dCDN-B                         dCDN-C
    <xref target="sect-5.2"/>.</t>
 
 	<section title="CI/T Commands" anchor="sect-5.1.1"><t>
-   CI/T Commands MUST use a MIME media type of "application/cdni; ptype=ci-trigger-command".</t>
+   CI/T Commands MUST use a MIME media type of "application/cdni; ptype=ci-trigger-command.v2".</t>
 
 	<t>
    A CI/T Command is encoded as a JSON object containing the following
@@ -1035,7 +1094,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 	<t><list style="empty" hangIndent="3">
 	<t><list style="hanging" hangIndent="3"><t hangText="Name: trigger.v2">
 	<vspace blankLines="1"/>
-	Description: A specification of the trigger type and a set of
+	Description: A specification of the trigger action type and a set of
          data to act upon.
 	<vspace blankLines="1"/>
 	Value: A Trigger Specification, as defined in <xref target="sect-5.2.1"/>.
@@ -1084,7 +1143,7 @@ uCDN-A                         dCDN-B                         dCDN-C
    following name/value pairs.</t>
 
 	<t><list style="empty" hangIndent="3">
-	<t><list style="hanging" hangIndent="3"><t hangText="Name: trigger">
+	<t><list style="hanging" hangIndent="3"><t hangText="Name: trigger.v2">
 	<vspace blankLines="1"/>
 	Description: The Trigger Specification POSTed in the body of
          the CI/T Command.  Note that this need not be a byte-for-byte
@@ -1259,7 +1318,7 @@ uCDN-A                         dCDN-B                         dCDN-C
    objects described in <xref target="sect-5.1"/>, and their encodings.</t>
 
 	<section title="Trigger Specification" anchor="sect-5.2.1"><t>
-   A Trigger Collection is encoded as a JSON object containing the
+   A Trigger.v2 Specification is encoded as a JSON object containing the
    following name/value pairs.</t>
 
 	<t>
@@ -1268,98 +1327,27 @@ uCDN-A                         dCDN-B                         dCDN-C
    Specification of any Trigger Status Resource it creates.</t>
 
 	<t><list style="empty" hangIndent="3">
-	<t><list style="hanging" hangIndent="3"><t hangText="Name: type">
+	<t><list style="hanging" hangIndent="3">
+   
+   <t hangText="Name: action">
 	<vspace blankLines="1"/>
-	Description: Defines the type of the CI/T Trigger Command.
+	Description: Defines the type of the CI/T Trigger Action.
 	<vspace blankLines="1"/>
-	Value: Trigger Type, as defined in <xref target="sect-5.2.2"/>.
+	Value: Trigger Action Type, as defined in <xref target="sect-5.2.2"/>.
 	<vspace blankLines="1"/>
 	Mandatory: Yes.
 	</t>
 
-	<t hangText="Name: metadata.urls">
+	<t hangText="Name: specs">
 	<vspace blankLines="1"/>
-	Description: The uCDN URLs of the metadata the CI/T Trigger
-         Command applies to.
+	Description: Array of trigger spec data.
 	<vspace blankLines="1"/>
-	Value: A JSON array of URLs represented as JSON strings.
+	Value: Array of GenericTriggerSpec objects (see <xref target="generic-spec-object"/>).
 	<vspace blankLines="1"/>
-	Mandatory: No, but at least one of "metadata.*" or "content.*"
-         MUST be present and non-empty.
+	Mandatory: Yes. TBD(nirs): Can the list be empty???
 	</t>
 
-	<t hangText="Name: content.urls">
-	<vspace blankLines="1"/>
-	Description: URLs of content the CI/T Trigger Command applies
-         to.  See <xref target="sect-4.8"/>.
-	<vspace blankLines="1"/>
-	Value: A JSON array of URLs represented as JSON strings.
-	<vspace blankLines="1"/>
-	Mandatory: No, but at least one of "metadata.*" or "content.*"
-         MUST be present and non-empty.
-	</t>
-
-	<t hangText="Name: content.ccid">
-	<vspace blankLines="1"/>
-	Description: The Content Collection IDentifier of content the
-         trigger applies to.  The "ccid" is a grouping of content, as
-         defined by <xref target="RFC8006"/>.
-	<vspace blankLines="1"/>
-	Value: A JSON array of strings, where each string is a Content
-         Collection IDentifier.
-	<vspace blankLines="1"/>
-	Mandatory: No, but at least one of "metadata.*" or "content.*"
-         MUST be present and non-empty.
-	</t>
-
-	<t hangText="Name: metadata.patterns">
-	<vspace blankLines="1"/>
-	Description: The metadata the trigger applies to.
-	<vspace blankLines="1"/>
-	Value: A JSON array of PatternMatch objects, as defined in
-         <xref target="sect-5.2.4"/>.
-	<vspace blankLines="1"/>
-	Mandatory: No, but at least one of "metadata.*" or "content.*"
-         MUST be present and non-empty, and metadata.patterns MUST NOT
-         be present if the Trigger Type is "preposition".
-	</t>
-
-	<t hangText="Name: content.patterns">
-	<vspace blankLines="1"/>
-	Description: The content data the trigger applies to.
-	<vspace blankLines="1"/>
-	Value: A JSON array of PatternMatch objects, as defined in
-         <xref target="sect-5.2.4"/>.
-	<vspace blankLines="1"/>
-	Mandatory: No, but at least one of "metadata.*" or "content.*"
-         MUST be present and non-empty, and content.patterns MUST NOT be
-         present if the Trigger Type is "preposition".
-	</t>
-
-	<t hangText="Name: content.regexs">
-	<vspace blankLines="1"/>
-	Description: Regexs of content URLs to which the CI/T trigger command applies.
-	<vspace blankLines="1"/>
-	Value: A JSON array of RegexMatch objects (see <xref target="regex-match"/>).
-	<vspace blankLines="1"/>
-	Mandatory: No, but at least one of "metadata.*" or "content.*"
-         MUST be present and non-empty, and content.patterns MUST NOT be
-         present if the Trigger Type is "preposition".
-	</t>
-
-
-	<t hangText="Name: content.playlists">
-	<vspace blankLines="1"/>
-	Description: Playlists of content the CI/T trigger command applies to.
-	<vspace blankLines="1"/>
-	Value: A JSON array of Playlist objects (see <xref target="playlist"/>).
-	<vspace blankLines="1"/>
-	Mandatory: No, but at least one of "metadata.*" or "content.*"
-         MUST be present and non-empty, and content.patterns MUST NOT be
-         present if the Trigger Type is "preposition".
-	</t>
-
-
+	
 	<t hangText="Name: extensions">
 	<vspace blankLines="1"/>
 	Description: Array of trigger extension data.
@@ -1377,15 +1365,15 @@ uCDN-A                         dCDN-B                         dCDN-C
 
 	</section>
 
-	<section title="Trigger Type" anchor="sect-5.2.2"><t>
-   Trigger Type is used in a Trigger Specification to describe trigger
+	<section title="Trigger Action Type" anchor="sect-5.2.2"><t>
+   Trigger Action Type is used in a Trigger Specification to describe trigger
    action.</t>
 
 	<t>
-   All trigger types MUST be registered in the IANA "CDNI CI/T Trigger Types" registry (see <xref target="sect-7.2"/>).</t>
+   All trigger types MUST be registered in the IANA "CDNI CI/T Trigger Action Types" registry (see <xref target="sect-7.2"/>).</t>
 
 	<t>
-   A dCDN receiving a request containing a trigger type it does not
+   A dCDN receiving a request containing a trigger action type it does not
    recognize or does not support MUST reject the request by creating a
    Trigger Status Resource with a status of "failed" and the "errors"
    array containing an Error Description with error "eunsupported".</t>
@@ -1395,11 +1383,11 @@ uCDN-A                         dCDN-B                         dCDN-C
 
 	<texttable style="full"><ttcol> JSON String</ttcol>
 	<ttcol> Description</ttcol>
-	<c>preposition</c>
+	<c>CIT.Preposition</c>
 	<c>A request for the dCDN to acquire metadata or</c>
 	<c></c>
 	<c>content.</c>
-	<c>invalidate</c>
+	<c>CIT.invalidate</c>
 	<c>A request for the dCDN to invalidate metadata or</c>
 	<c></c>
 	<c>content.  After servicing this request, the dCDN</c>
@@ -1411,7 +1399,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 	<c>"If-None-Match" HTTP request.  The dCDN need not</c>
 	<c></c>
 	<c>erase the associated data.</c>
-	<c>purge</c>
+	<c>CIT.purge</c>
 	<c>A request for the dCDN to erase metadata or</c>
 	<c></c>
 	<c>content.  After servicing the request, the</c>
@@ -1424,232 +1412,81 @@ uCDN-A                         dCDN-B                         dCDN-C
 	</texttable>
 	</section>
 
-	<section title="Trigger Status" anchor="sect-5.2.3"><t>
-   Trigger Status describes the current status of the triggered
-   activity.  It MUST be one of the JSON strings in the following table:</t>
-
-	<texttable style="full"><ttcol> JSON String</ttcol>
-	<ttcol> Description </ttcol>
-	<c>pending</c>
-	<c>The CI/T Trigger Command has not yet been acted upon.</c>
-	<c>active</c>
-	<c>The CI/T Trigger Command is currently being acted</c>
-	<c></c>
-	<c>upon.</c>
-	<c>complete</c>
-	<c>The CI/T Trigger Command completed successfully.</c>
-	<c>processed</c>
-	<c>The CI/T Trigger Command has been accepted, and no</c>
-	<c></c>
-	<c>further status update will be made (can be used in</c>
-	<c></c>
-	<c>cases where completion cannot be confirmed).</c>
-	<c>failed</c>
-	<c>The CI/T Trigger Command could not be completed.</c>
-	<c>canceling</c>
-	<c>Processing of the CI/T Trigger Command is still in</c>
-	<c></c>
-	<c>progress, but the CI/T Trigger Command has been</c>
-	<c></c>
-	<c>canceled by the uCDN.</c>
-	<c>canceled</c>
-	<c>The CI/T Trigger Command was canceled by the uCDN.</c>
-	</texttable>
-	</section>
-
-	<section title="PatternMatch" anchor="sect-5.2.4"><t>
-   A PatternMatch consists of a string pattern to match against a URI,
-   and flags describing the type of match.</t>
-
-	<t><list style="hanging" hangIndent="3"><t hangText="It is encoded as a JSON object with the following name/value pairs:">
-	<vspace blankLines="1"/>
-	Name: pattern
-	<vspace blankLines="1"/>
-	Description: A pattern for URI matching.
-	<vspace blankLines="1"/>
-	Value: A JSON string representing the pattern.  The pattern can
-         contain the wildcards * and ?, where * matches any sequence of
-         <xref target="RFC3986"/> pchar or "/" characters (including the empty string)
-         and ? matches exactly one <xref target="RFC3986"/> pchar character.  The three
-         literals $, * and ? MUST be escaped as $$, $* and $? (where $
-         is the designated escape character).  All other characters are
-         treated as literals.
-	<vspace blankLines="1"/>
-	Mandatory: Yes.
-	<list style="hanging" hangIndent="3"><t hangText="Name: case-sensitive">
-	<vspace blankLines="1"/>
-	Description: Flag indicating whether or not case-sensitive
-         matching should be used.
-	<vspace blankLines="1"/>
-	Value: One of the JSON values "true" (the matching is case
-         sensitive) or "false" (the matching is case insensitive).
-	<vspace blankLines="1"/>
-	Mandatory: No; default is case-insensitive match.
-	</t>
-
-	<t hangText="Name: match-query-string">
-	<vspace blankLines="1"/>
-	Description: Flag indicating whether to include the query part
-         of the URI when comparing against the pattern.
-	<vspace blankLines="1"/>
-	Value: One of the JSON values "true" (the full URI, including
-         the query part, should be compared against the given pattern)
-         or "false" (the query part of the URI should be dropped before
-         comparison with the given pattern).
-	<vspace blankLines="1"/>
-	Mandatory: No; default is "false".  The query part of the URI
-         should be dropped before comparison with the given pattern.
-	</t>
-
-	</list>
-	</t>
-
-	</list>
-	</t>
-
-	<t>
-   Example of case-sensitive prefix match against
-   "https://www.example.com/trailers/":</t>
-
-	<figure><artwork><![CDATA[
-{
-    "pattern": "https://www.example.com/trailers/*",
-    "case-sensitive": true
-}
-]]></artwork>
-	</figure>
-	</section>
+   <section anchor="trigger-specs" title="CI/T Trigger Specs">
+   <t>
+   A "trigger.v2" object, as defined in <xref target="sect-5.2.1"/> includes an
+   array of trigger spec objects. The trigger spec object contains properties
+   that are used as trigger target selection directives for dCDN when executing 
+   the trigger command -- for example content urls or metadata uri patterns. Each such CDNI Trigger 
+   Spec is a specialization
+   of a CDNI GenericTriggerSpec object. The GenericTriggerSpec object abstracts the basic
+   information required for trigger distribution from the specifics of any given property
+   (i.e., property semantics, enforcement options, etc.). The semantics of the Trigger Specs list 
+   is addative, i.e. the trigger applies to any object matching one of the listed specs.
+   </t>
 
 
+         <section anchor="generic-spec-object" title="Generic Spec Object">
+         <t>A GenericSpecObject object is a wrapper for managing individual CDNI
+            Trigger spec in an opaque manner.</t>
 
+         <t><list style="empty">
 
-        <section anchor="regex-match" title="RegexMatch">
-          <t>
-             A RegexMatch consists of a regular expression string a URI is matched against,
-             and flags describing the type of match. It is encoded as a JSON object with
-             following properties:
-          </t>
+            <t>Property: generic-trigger-spec-type<list style="empty">
 
-          <t><list style="empty">
-            <t>Property: regex<list style="empty">
+               <t>Description: Case-insensitive CDNI Trigger spec type.</t>
 
-              <t>Description: A regular expression for URI matching. </t>
-
-              <t>Type: A regular expression to match against the URI, i.e against the path-absolute
-                 and the query string parameters <xref target="RFC3986"/>. The regular expression
-                 string MUST be compatible with <xref target="PCRE841">PCRE</xref>.</t>
-
-              <t>Note: Because '\' has a special meaning in JSON <xref target="RFC8259"/> as the escape
-                 character within JSON strings, the regular expression character '\' MUST be escaped as '\\'.</t>
-
-              <t>Mandatory: Yes.</t>
-            </list></t>
-            <t>Property: case-sensitive<list style="empty">
-
-              <t>Description: Flag indicating whether or not case-sensitive matching should be used. </t>
-
-              <t>Type: JSON boolean. Either "true" (the matching is case sensitive) or "false"
-                 (the matching is case insensitive).</t>
-
-              <t>Mandatory: No; default is case-insensitive match (i.e., a value of "false").</t>
-            </list></t>
-            <t>Property: match-query-string<list style="empty">
-
-              <t>Description: Flag indicating whether to include the query part of the URI when
-                 comparing against the regex.</t>
-
-              <t>Type: JSON boolean. Either "true" (the full URI, including the query part,
-                 should be compared against the regex) or "false" (the query part of the URI
-                 should be dropped before comparison with the given regex).</t>
-
-              <t>Mandatory: No; default is "false".  The query part of the URI MUST be dropped
-                 before comparison with the given regex. This makes the regular expression simpler
-                 and safer for cases in which the query parameters are not relevant for the match.</t>
-            </list></t>
-          </list></t>
-
-          <t>Example of a case sensitive, no query parameters, regex match against:</t>
-          <figure>
-            <artwork><![CDATA[
-"^(https:\/\/video\.example\.com)\/([a-z])\/
- movie1\/([1-7])\/*(index.m3u8|\d{3}.ts)$"
-         ]]></artwork>
-          </figure>
-
-          <figure>
-            <artwork><![CDATA[
-{
-  "regex": "^(https:\\/\\/video\\.example\\.com)\\/([a-z])\\/movie1\
-           \/([1-7])\\/*(index.m3u8|\\d{3}.ts)$",
-  "case-sensitive": true,
-  "match-query-string": false
-}
-
-         ]]></artwork>
-          </figure>
-
-          <t>This regex matches URLs of domain video.example.com where the path structure is
-             /(single lower case letter)/(name-of-title)/(single digit between 1 to 7)/(index.m3u8 or a 3 digit number with ts extension).
-             For example:</t>
-          <figure>
-            <artwork><![CDATA[
-https://video.example.com/d/movie1/5/index.m3u8
-or
-https://video.example.com/k/movie1/4/013.ts
-         ]]></artwork>
-          </figure>
-        </section>
-
-        <section anchor="playlist" title="Playlist">
-          <t>A Playlist consists of a full URL and a media protocol identifier.
-             An implementation that supports a specific playlist media protocol MUST be able to parse playlist
-             files of that protocol type and extract, possibly recursively, the URLs to all media objects
-             and/or sub playlist files, and apply the trigger to each one of them separately.</t>
-
-          <t>Playlist is encoded as a JSON object with following properties:</t>
-
-          <t><list style="empty">
-             <t>Property: playlist<list style="empty">
-
-               <t>Description: A URL to the playlist file.</t>
-
-               <t>Type: A URL represented as a JSON string.</t>
+               <t>Type: String containing the spec type of the object contained
+                  in the generic-trigger-spec-value property (see table in <xref target="sect-7.1"/>).</t>
 
                <t>Mandatory: Yes.</t>
-             </list></t>
-             <t>Property: media-protocol<list style="empty">
+            </list></t>
 
-                <t>Description: Media protocol to be when parsing and interpreting this playlist. </t>
+            <t>Property: generic-trigger-spec-values<list style="empty">
 
-                <t>Type: MediaProtocol (see <xref target="media-protocol"/>).</t>
+               <t>Description: An array of CDNI Trigger spec object values.</t>
 
-                <t>Mandatory: Yes.</t>
-             </list></t>
-          </list></t>
-          <t>Example of a JSON serialized HLS playlist object:</t>
+               <t>Type: Format/Type is defined by the value of the
+                  generic-trigger-spec-type property above.</t>
 
-           <figure>
-            <artwork><![CDATA[
+               <t>Mandatory: Yes.</t>
+            </list></t>
+
+            <t>Property: trigger-subject<list style="empty">
+
+               <t>Description: Case-insensitive CDNI Trigger subject.</t>
+
+               <t>Type: String containing the type of the subject matching the 
+                  generic-trigger-spec-value property, such as "content" or "metadata" 
+                  as define in TODO.</t>
+
+               <t>Mandatory: Yes.</t>
+            </list></t>
+
+         </list></t>
+         <t>Example of a JSON serialized GenericTriggerExtension object containing a specific trigger extension object:</t>
+
+      <figure>
+         <artwork><![CDATA[
+
 {
-  "playlist": "https://www.example.com/hls/title/index.m3u8",
-  "media-protocol": "hls"
+  "generic-trigger-spec-type":
+     <Type of this trigger spec>,
+  "generic-trigger-spec-value":
+      {
+        <properties of this trigger spec object>
+      },
+   "generic-trigger-spec-subject":
+     <Catagory of this trigger spec subject>
+
 }
 
-         ]]></artwork>
-           </figure>
+       ]]></artwork>
+        </figure>
+          </section>
+
 
         </section>
-
-        <section anchor="media-protocol" title="MediaProtocol">
-          <t>Media Protocol objects are used to specify registered type of media protocol
-             (see <xref target="IANA.CDNI.MediaProtocolReg"/>) used for protocol related
-             operations like pre-position according to playlist.</t>
-          <t>Type: JSON string</t>
-          <t>Example:</t>
-          <t>"dash"</t>
-        </section>
-
-
         <section anchor="trigger-extensions" title="CI/T Trigger Extensions">
           <t>
             A "trigger.v2" object, as defined in <xref target="sect-5.2.1"/> includes an
@@ -1752,7 +1589,7 @@ https://video.example.com/k/movie1/4/013.ts
                <c>True</c>
                <c>True</c>
                <c>False</c>
-               <c>MUST NOT execute but can redistribute..</c>
+               <c>MUST NOT execute but can redistribute.</c>
 
                <c>True</c>
                <c>False</c>
@@ -1920,6 +1757,9 @@ https://video.example.com/k/movie1/4/013.ts
    or failure in the activity it triggered.  It is encoded as a JSON
    object with the following name/value pairs:</t>
 
+
+
+
 	<t><list style="empty" hangIndent="3">
 	<t><list style="hanging" hangIndent="3"><t hangText="Name: error">
 	<vspace blankLines="1"/>
@@ -1934,43 +1774,7 @@ https://video.example.com/k/movie1/4/013.ts
 	</list>
 	</t>
 
-	<t><list style="hanging" hangIndent="3"><t>
-      Names: metadata.urls, content.urls, metadata.patterns,
-      content.patterns</t>
-
-	</list>
-	</t>
-
-	<t><list style="hanging" hangIndent="6"><t>
-         Description: Metadata and content references copied from the
-         Trigger Specification.  Only those URLs and patterns to which
-         the error applies are included in each property, but those URLs
-         and patterns MUST be exactly as they appear in the request; the
-         dCDN MUST NOT generalize the URLs.  (For example, if the uCDN
-         requests pre-positioning of URLs
-         "https://content.example.com/a" and
-         "https://content.example.com/b", the dCDN must not generalize
-         its error report to the pattern
-         "https://content.example.com/*".)</t>
-
-	</list>
-	</t>
-
-	<t><list style="hanging" hangIndent="6"><t>
-         Value: A JSON array of JSON strings, where each string is
-         copied from a "content.*" or "metadata.*" value in the
-         corresponding Trigger Specification.</t>
-
-	</list>
-	</t>
-
-	<t><list style="hanging" hangIndent="6"><t>
-         Mandatory: At least one of these name/value pairs is mandatory
-         in each Error Description object.</t>
-
-	</list>
-	</t>
-
+	
 	<t><list style="empty" hangIndent="3">
 	<t><list style="hanging" hangIndent="3"><t hangText="Name: description">
 	<vspace blankLines="1"/>
@@ -1987,30 +1791,32 @@ https://video.example.com/k/movie1/4/013.ts
 	</list>
 	</t>
 
-	<t><list style="empty" hangIndent="3">
-	<t><list style="hanging" hangIndent="3"><t hangText="Name: content.regexs, content.playlists">
+	
+
+
+<t><list style="empty" hangIndent="3">
+	<t><list style="hanging" hangIndent="3"><t hangText="Name: specs">
 	<vspace blankLines="1"/>
-	Description: Content Regex and Playlist references copied from the Trigger Specification.
-                Only those regexs and playlists to which the error applies are included in each property,
-                but those references MUST be exactly as they appear in the request; the dCDN MUST NOT change
-                or generalize the URLs or Regexs. Note that these properties are added on top of the already
-                existing properties: "metadata.urls", "content.urls", "metadata.patterns" and "content.patterns".
+	Description: Array of trigger spec objects based on from the corresponding "specs" array
+                at the Trigger Specification. Each such spec holds in its "generic-trigger-spec-value" array
+                only those values to which the error applies. 
+                TBD: Option 1: Specs with no failing values MAY(TODO?) be omitted. Option 2: Note that the order of the specs should be as listed
+                in the Trigger Specification. Specs with no failing values MUST not be omitted but MAY(TODO?)
+                be replaced with an empty object for simplicity.
 	<vspace blankLines="1"/>
-	Value: A JSON array of JSON strings, where each string is copied from a "content.regexs" or
-                "content.playlists" value in the corresponding Trigger Specification.
+	Value: Array of GenericTriggerSpec objects, where each spec object is based
+                on the "specs" array values in the Trigger Specification. TBD: or an empty object ('{}') 
+                as a place holder.
 	<vspace blankLines="1"/>
-	Mandatory: At least one of "content.regexs", "content.playlists", "metadata.urls", "content.urls",
-                "metadata.patterns" or "content.patterns" is mandatory in each Error Description object.
+	Mandatory: Yes. 
 	</t>
 
 	</list>
-	</t>
+   </t>
 
 	</list>
 	</t>
-
-
-	<t><list style="empty" hangIndent="3">
+   <t><list style="empty" hangIndent="3">
 	<t><list style="hanging" hangIndent="3"><t hangText="Name: extensions">
 	<vspace blankLines="1"/>
 	Description: Array of trigger extension objects copied from the corresponding "extensions" array
@@ -2021,11 +1827,12 @@ https://video.example.com/k/movie1/4/013.ts
                 from the "extensions" array values in the Trigger Specification.
 	<vspace blankLines="1"/>
 	Mandatory: No. The "extensions" array SHOULD be used only if the error relates to
-                extension objects.
+                extension objects. Missing property should be interpreted as 
+                "the error is not related to any extension".
 	</t>
 
 	</list>
-	</t>
+   </t>
 
 	</list>
 	</t>
@@ -2035,7 +1842,7 @@ https://video.example.com/k/movie1/4/013.ts
 	<vspace blankLines="1"/>
 	Description: The CDN PID of the CDN where the error occurred. The "cdn" property is used
                 by the originating uCDN or by propagating dCDN in order to distinguish in which CDN the 
-                error occured.
+                error occurred.
 	<vspace blankLines="1"/>
 	Value:  A non-empty JSON string, where the string is a CDN PID as defined in Section 
                  <xref target="sect-4.6"/>
@@ -2100,6 +1907,38 @@ https://video.example.com/k/movie1/4/013.ts
 
 	</section>
 
+	<section title="Trigger Status" anchor="sect-5.2.3"><t>
+   Trigger Status describes the current status of the triggered
+   activity.  It MUST be one of the JSON strings in the following table:</t>
+
+	<texttable style="full"><ttcol> JSON String</ttcol>
+	<ttcol> Description </ttcol>
+	<c>pending</c>
+	<c>The CI/T Trigger Command has not yet been acted upon.</c>
+	<c>active</c>
+	<c>The CI/T Trigger Command is currently being acted</c>
+	<c></c>
+	<c>upon.</c>
+	<c>complete</c>
+	<c>The CI/T Trigger Command completed successfully.</c>
+	<c>processed</c>
+	<c>The CI/T Trigger Command has been accepted, and no</c>
+	<c></c>
+	<c>further status update will be made (can be used in</c>
+	<c></c>
+	<c>cases where completion cannot be confirmed).</c>
+	<c>failed</c>
+	<c>The CI/T Trigger Command could not be completed.</c>
+	<c>cancelling</c>
+	<c>Processing of the CI/T Trigger Command is still in</c>
+	<c></c>
+	<c>progress, but the CI/T Trigger Command has been</c>
+	<c></c>
+	<c>canceled by the uCDN.</c>
+	<c>cancelled</c>
+	<c>The CI/T Trigger Command was canceled by the uCDN.</c>
+	</texttable>
+	
 	<section title="Error Code" anchor="sect-5.2.7"><t>
    This type is used by the dCDN to report failures in trigger
    processing.  All Error Codes MUST be registered in the IANA "CDNI CI/T Error Codes" registry (see <xref target="sect-7.3"/>).  Unknown Error Codes
@@ -2136,10 +1975,10 @@ https://video.example.com/k/movie1/4/013.ts
 	<c>Request Routing requests from the uCDN).</c>
 	<c>ecdn</c>
 	<c>An internal error in the dCDN or one of its dCDNs.</c>
-	<c>ecanceled</c>
+	<c>ecancelled</c>
 	<c>The uCDN canceled the request.</c>
 	<c>eunsupported</c>
-	<c>The Trigger Specification contained a "type" that</c>
+	<c>The Trigger Specification contained an "action type" that</c>
 	<c></c>
 	<c>is not supported by the dCDN.  No action was taken</c>
 	<c></c>
@@ -2151,15 +1990,335 @@ https://video.example.com/k/movie1/4/013.ts
 	<c></c>
 	<c>extension, or that the specific extension is not</c>
 	<c></c>
-	<c>supported by the CDN. The Trigger Specification</c>
-	<c></c>
-	<c>contained a "type" that.</c>
+	<c>supported by the CDN.</c>
 	</texttable>
 	</section>
-
+   </section>
+	
 	</section>
 
 	</section>
+
+
+    <section anchor="trigger-spec-objects" title="Trigger Spec Objects">
+      <t>The objects defined below are intended to be used in the GenericTriggerSpec
+         object's generic-trigger-spec-value field as defined in Section
+         <xref target="generic-spec-object"/>, and their generic-trigger-spec-type
+         property MUST be set to the appropriate CDNI Payload Type as defined in <xref target="sect-7.1"/> .
+      </t>
+
+      <section anchor="urls-spec" title="URLs Spec">
+        <t>The urls spec type allows the uCDN to manage uCDN content or metadata objects
+           held by the dCDN based on the objects' URLs.
+        </t>
+
+         <t>Spec object specification<list style="empty">
+
+              <t>Property: urls<list style="empty">
+
+                 <t>Description: An array of URLs to on which the trigger MUST be executed.</t>
+
+                 <t>Value: A JSON array of URLs represented as JSON strings.</t>
+
+                 <t>Mandatory: Yes.</t>
+              </list></t>
+          </list></t>
+
+        <t>Below is an example of a JSON serialized generic trigger spec object, matching the metadata at 
+        metadata.example.com/a/b/c.
+        </t>
+
+        <figure> 
+          <artwork><![CDATA[
+{
+   "generic-trigger-spec-type": "CIT.UrlsSpec",
+   "generic-trigger-spec-value": {
+      "urls": [
+         "https://metadata.example.com/a/b/c"
+      ]
+   },
+   "trigger-subject": "CIT.Metadata"
+}
+
+       ]]></artwork>
+       </figure>
+      </section>
+
+
+
+      <section anchor="ccids-spec" title="CCIDs Spec">
+        <t> The content-ccids spec type allows to specify the
+        Content Collection IDentifier of content the trigger applies to.
+        The "ccid" is a grouping of content, as defined by <xref target="RFC8006"/>.
+       The ccid spec type is valid only for CIT.Content spec subject.
+
+        </t>
+
+         <t>Spec object specification<list style="empty">
+
+              <t>Property: ccids<list style="empty">
+
+                 <t>Description: An array of Content Collection IDentifier to on which the trigger MUST be executed.</t>
+
+                 <t>Value: A JSON array of strings, where each string is a Content Collection IDentifier.</t>
+
+                 <t>Mandatory: Yes.</t>
+              </list></t>
+          </list></t>
+      </section>
+
+     <section anchor="uri-patterns-spec" title="URI Patterns Spec">
+        <t>The uri-patterns spec type allows the uCDN to manage uCDN content or metadata objects
+           held by the dCDN based on the objects' URI patterns.
+        </t>
+
+         <t>Spec object specification<list style="empty">
+
+              <t>Property: patterns<list style="empty">
+
+                 <t>Description: The objects' URI patterns the trigger applies to.</t>
+
+                 <t>Value: A JSON array of UriPatternMatch objects, as defined in <xref target="sect-5.2.4"/>.</t>
+
+                 <t>Mandatory: Yes.</t>
+              </list></t>
+          </list></t>
+
+	<section title="UriPatternMatch" anchor="sect-5.2.4"><t>
+   A UriPatternMatch consists of a string pattern to match against a URI,
+   and flags describing the type of match.</t>
+
+	<t><list style="hanging" hangIndent="3"><t hangText="It is encoded as a JSON object with the following name/value pairs:">
+	<vspace blankLines="1"/>
+	Name: pattern
+	<vspace blankLines="1"/>
+	Description: A pattern for URI matching.
+	<vspace blankLines="1"/>
+	Value: A JSON string representing the pattern.  The pattern can
+         contain the wildcards * and ?, where * matches any sequence of
+         <xref target="RFC3986"/> pchar or "/" characters (including the empty string)
+         and ? matches exactly one <xref target="RFC3986"/> pchar character.  The three
+         literals $, * and ? MUST be escaped as $$, $* and $? (where $
+         is the designated escape character).  All other characters are
+         treated as literals.
+	<vspace blankLines="1"/>
+	Mandatory: Yes.
+	<list style="hanging" hangIndent="3"><t hangText="Name: case-sensitive">
+	<vspace blankLines="1"/>
+	Description: Flag indicating whether or not case-sensitive
+         matching should be used.
+	<vspace blankLines="1"/>
+	Value: One of the JSON values "true" (the matching is case
+         sensitive) or "false" (the matching is case insensitive).
+	<vspace blankLines="1"/>
+	Mandatory: No; default is case-insensitive match.
+	</t>
+
+	<t hangText="Name: match-query-string">
+	<vspace blankLines="1"/>
+	Description: Flag indicating whether to include the query part
+         of the URI when comparing against the pattern.
+	<vspace blankLines="1"/>
+	Value: One of the JSON values "true" (the full URI, including
+         the query part, should be compared against the given pattern)
+         or "false" (the query part of the URI should be dropped before
+         comparison with the given pattern).
+	<vspace blankLines="1"/>
+	Mandatory: No; default is "false".  The query part of the URI
+         should be dropped before comparison with the given pattern.
+	</t>
+
+	</list>
+	</t>
+
+	</list>
+	</t>
+
+	<t>
+   Example of case-sensitive prefix match against
+   "https://www.example.com/trailers/":</t>
+
+	<figure><artwork><![CDATA[
+{
+    "pattern": "https://www.example.com/trailers/*",
+    "case-sensitive": true
+}
+]]></artwork>
+	</figure>
+	</section>
+</section>
+
+
+
+     <section anchor="uri-regexes-spec" title="URI Regexes Spec">
+        <t>The content-uri-regexes spec type allows the uCDN to manage content or metadata objects
+           held by the dCDN based on the objects' URI regexes.
+        </t>
+
+         <t>Spec object specification<list style="empty">
+
+              <t>Property: regexes<list style="empty">
+
+                 <t>Description: The content URI regexes the trigger applies to.</t>
+
+                 <t>Value: A JSON array of RegexMatch objects (see <xref target="regex-match"/>).</t>
+
+                 <t>Mandatory: Yes.</t>
+              </list></t>
+          </list></t>
+
+
+        <section anchor="regex-match" title="RegexMatch">
+          <t>
+             A RegexMatch consists of a regular expression string a URI is matched against,
+             and flags describing the type of match. It is encoded as a JSON object with
+             following properties:
+          </t>
+
+          <t><list style="empty">
+            <t>Property: regex<list style="empty">
+
+              <t>Description: A regular expression for URI matching. </t>
+
+              <t>Type: A regular expression to match against the URI, i.e against the path-absolute
+                 and the query string parameters <xref target="RFC3986"/>. The regular expression
+                 string MUST be compatible with <xref target="PCRE841">PCRE</xref>.</t>
+
+              <t>Note: Because '\' has a special meaning in JSON <xref target="RFC8259"/> as the escape
+                 character within JSON strings, the regular expression character '\' MUST be escaped as '\\'.</t>
+
+              <t>Mandatory: Yes.</t>
+            </list></t>
+            <t>Property: case-sensitive<list style="empty">
+
+              <t>Description: Flag indicating whether or not case-sensitive matching should be used. </t>
+
+              <t>Type: JSON boolean. Either "true" (the matching is case sensitive) or "false"
+                 (the matching is case insensitive).</t>
+
+              <t>Mandatory: No; default is case-insensitive match (i.e., a value of "false").</t>
+            </list></t>
+            <t>Property: match-query-string<list style="empty">
+
+              <t>Description: Flag indicating whether to include the query part of the URI when
+                 comparing against the regex.</t>
+
+              <t>Type: JSON boolean. Either "true" (the full URI, including the query part,
+                 should be compared against the regex) or "false" (the query part of the URI
+                 should be dropped before comparison with the given regex).</t>
+
+              <t>Mandatory: No; default is "false".  The query part of the URI MUST be dropped
+                 before comparison with the given regex. This makes the regular expression simpler
+                 and safer for cases in which the query parameters are not relevant for the match.</t>
+            </list></t>
+          </list></t>
+
+          <t>Example of a case sensitive, no query parameters, regex match against:</t>
+          <figure>
+            <artwork><![CDATA[
+"^(https:\/\/video\.example\.com)\/([a-z])\/
+ movie1\/([1-7])\/*(index.m3u8|\d{3}.ts)$"
+         ]]></artwork>
+          </figure>
+
+          <figure>
+            <artwork><![CDATA[
+{
+  "regex": "^(https:\\/\\/video\\.example\\.com)\\/([a-z])\\/movie1\
+           \/([1-7])\\/*(index.m3u8|\\d{3}.ts)$",
+  "case-sensitive": true,
+  "match-query-string": false
+}
+
+         ]]></artwork>
+          </figure>
+
+          <t>This regex matches URLs of domain video.example.com where the path structure is
+             /(single lower case letter)/(name-of-title)/(single digit between 1 to 7)/(index.m3u8 or a 3 digit number with ts extension).
+             For example:</t>
+          <figure>
+            <artwork><![CDATA[
+https://video.example.com/d/movie1/5/index.m3u8
+or
+https://video.example.com/k/movie1/4/013.ts
+         ]]></artwork>
+          </figure>
+        </section>
+   </section>
+
+
+     <section anchor="content-playlists-spec" title="Content Playlists Spec">
+        <t>The content-playlists spec type allows the uCDN to manage content held by the dCDN
+           based on the content's playlists. 
+           The content-playlists spec type is valid only for CIT.Content spec subject.
+        </t>
+
+         <t>Spec object specification<list style="empty">
+
+              <t>Property: playlists<list style="empty">
+
+                 <t>Description: The content playlists the trigger applies to.</t>
+
+                 <t>Value: A JSON array of Playlist objects (see <xref target="playlist"/>).</t>
+
+                 <t>Mandatory: Yes.</t>
+              </list></t>
+          </list></t>   
+
+        <section anchor="playlist" title="Playlist">
+          <t>A Playlist consists of a full URL and a media protocol identifier.
+             An implementation that supports a specific playlist media protocol MUST be able to parse playlist
+             files of that protocol type and extract, possibly recursively, the URLs to all media objects
+             and/or sub playlist files, and apply the trigger to each one of them separately.</t>
+
+          <t>Playlist is encoded as a JSON object with following properties:</t>
+
+          <t><list style="empty">
+             <t>Property: playlist<list style="empty">
+
+               <t>Description: A URL to the playlist file.</t>
+
+               <t>Type: A URL represented as a JSON string.</t>
+
+               <t>Mandatory: Yes.</t>
+             </list></t>
+             <t>Property: media-protocol<list style="empty">
+
+                <t>Description: Media protocol to be when parsing and interpreting this playlist. </t>
+
+                <t>Type: MediaProtocol (see <xref target="media-protocol"/>).</t>
+
+                <t>Mandatory: Yes.</t>
+             </list></t>
+          </list></t>
+          <t>Example of a JSON serialized HLS playlist object:</t>
+
+           <figure>
+            <artwork><![CDATA[
+{
+  "playlist": "https://www.example.com/hls/title/index.m3u8",
+  "media-protocol": "hls"
+}
+
+         ]]></artwork>
+           </figure>
+
+        </section>
+
+        <section anchor="media-protocol" title="MediaProtocol">
+          <t>Media Protocol objects are used to specify registered type of media protocol
+             (see <xref target="IANA.CDNI.MediaProtocolReg"/>) used for protocol related
+             operations like pre-position according to playlist.</t>
+          <t>Type: JSON string</t>
+          <t>Example:</t>
+          <t>"dash"</t>
+        </section>
+
+
+   </section>
+
+ </section>
+
 
 
     <section anchor="trigger-extension-objects" title="Trigger Extension Objects">
@@ -2188,7 +2347,7 @@ https://video.example.com/k/movie1/4/013.ts
 
             <t>Purge: In certain cases, content may have been located on servers in regions
                where the content must not reside. In such cases, a purge operation to
-               remove content specifically from that region, is required.</t>
+               remove content specifically from that region is required.</t>
 
         </list></t>
 
@@ -2544,9 +2703,188 @@ Month Number  Month/Year           Maximum value of date-mday
 
     <section anchor="footprint-and-capabilities" title="Footprint and Capabilities">
       <t>
-        This section covers the FCI objects required for advertisement of the extensions and properties
+        This section covers the FCI objects required for advertisement of the specs, extensions and properties
         introduced in this document.
       </t>
+
+
+     <section title="CI/T Versions Capability Object">
+        <t>
+           The CI/T versions capability object is used to indicate support for one or more CI/T objects versions.
+           Note that the default version as originally defined in <xref target="RFC8007"/> MUST be implicitly
+           supported regardless of the versions listed in this capability object.
+        </t>
+
+        <t><list style="empty">
+           <t>Property: versions<list style="empty">
+
+                 <t>Description: A list of version numbers.</t>
+
+                 <t>Type: An array of JSON strings</t>
+
+                 <t>Mandatory: No. The default is version 1. A missing or an empty versions list
+                    means that  only version 1 of the interface and objects is supported.</t>
+           </list></t>
+        </list></t>
+        <section anchor="versions-capability-object" title="CI/T Versions Capability Object Serialization">
+          <t>
+             The following shows an example of CI/T Versions Capability object serialization for a dCDN that supports
+             versions 2 and 2.1 of the CI/T interface.
+          </t>
+
+          <figure>
+           <artwork><![CDATA[
+
+{
+ "capabilities": [
+   {
+     "capability-type": "FCI.TriggerVersion",
+     "capability-value": {
+       "versions": [ "1", "2", "2.1" ]
+     },
+     "footprints": [
+       <Footprint objects>
+     ]
+   }
+ ]
+}
+        ]]></artwork>
+          </figure>
+        </section>
+      </section>
+
+
+      <section title="CI/T Trigger Scope Capability Object">
+        <t>
+           The CI/T supports several trigger types for different trigger's subjects as defined at 
+           <xref target="sect-5.2.2"/> and <xref target="trigger-spec"/>. Additional types, as well as
+           subjects, may be defined 
+           in the future. The Trigger Scope capability object is used to indicate support of a Trigger Action Type
+           for a subject. It further specifies the Trigger Generic Spec types that may be used for 
+           selecting the targets the triggers is applied on, along with the supported Trigger Generic Extension types.
+        </t>
+
+        <t><list style="empty">
+           <t>Property: trigger-scope-capabilities<list style="empty">
+
+                 <t>Description: A list of supported CDNI CI/T Trigger types and subjects
+                 with the relevant Trigger Generic Spec and Trigger Generic Extension objects.</t>
+
+                 <t>Type: List trigger-scope-capability objects.
+                 </t>
+
+                 <t>Mandatory: No. The default, in case of a missing or an empty list, MUST be 
+                    interpreted as "no GenericSpecObject types are supported". A non-empty list MUST be 
+                    interpreted as containing "the only GenericSpecObject types that are supported".
+                 </t>
+           </list></t>
+        </list></t>
+
+        <t>The trigger-scope-capability object is defined as follows:</t>
+
+        <t><list style="empty">
+            <t>Property: trigger-action <list style="empty">
+
+                 <t>Description: The supported CDNI CI/T Trigger Action Type.</t>
+
+                 <t>Type: A string corresponding to an entry from the "CDNI Payload Types" registry
+                    <xref target="RFC7736"/> that is under the CIT namespace, and that correspond to CDNI
+                    CI/T Trigger Action Type.
+                 </t>
+
+                 <t>Mandatory: Yes.
+                 </t>
+           </list></t>
+            <t>Property: trigger-subject <list style="empty">
+
+                 <t>Description: The supported CDNI CI/T Trigger Subject type.</t>
+
+                 <t>Type: A string corresponding to an entry from the "CDNI Payload Types" registry
+                    <xref target="RFC7736"/> that is under the CIT namespace, and that correspond to CDNI
+                    CI/T Trigger Subject type.
+                 </t>
+
+                 <t>Mandatory: Yes.
+                 </t>
+           </list></t>
+
+            <t>Property: trigger-specs<list style="empty">
+
+                 <t>Description: A list of supported CDNI CI/T GenericSpecObject types for
+                 the Trigger Type and Subject.</t>
+
+                 <t>Type: List of strings corresponding to entries from the "CDNI Payload Types" registry
+                    <xref target="RFC7736"/> that are under the CIT namespace, and that correspond to CDNI
+                    CI/T GenericSpecObject objects.
+                 </t>
+
+                 <t>Mandatory: No. The default, in case of a missing or an empty list, MUST be 
+                    interpreted as "no GenericExtensionObject types are supported". A non-empty list MUST be 
+                    interpreted as containing "the only GenericExtensionObject types that are supported".
+                 </t>
+           </list></t>
+
+            <t>Property: trigger-extensions<list style="empty">
+
+                 <t>Description: A list of supported CDNI CI/T GenericExtensionObject types for
+                 the Trigger Type and Subject.</t>
+
+                 <t>Type: List of strings corresponding to entries from the "CDNI Payload Types" registry
+                    <xref target="RFC7736"/> that are under the CIT namespace, and that correspond to CDNI
+                    CI/T GenericExtensionObject objects.
+                 </t>
+
+                 <t>Mandatory: No. The default, in case of a missing or an empty list, MUST be 
+                    interpreted as "no GenericExtensionObject types are supported". A non-empty list MUST be 
+                    interpreted as containing "the only GenericExtensionObject types that are supported".
+                 </t>
+           </list></t>
+           
+        </list></t>
+
+        <section anchor="trigger-scope-capability-object" title="CI/T Trigger Scope Capability Object Serialization">
+          <t>
+             The following shows an example of a JSON serialized CI/T Trigger Scope Capability object serialization for
+             a dCDN that supports the preposition and invalidation of content, using "CIT.UrlsSpec" and "CIT.CcidSpec" 
+             Generic Spec types, with "CIT.TimePolicy" but only for the preposition. Note that in this example purge 
+             is not supported neigher the operations on metadata.
+          </t>
+
+          <figure>
+           <artwork><![CDATA[
+
+{
+ "capabilities": [
+   {
+     "capability-type": "FCI.TriggerScope",
+     "capability-value": {
+       "trigger-scope-capabilities": [
+         {
+            "trigger-action": "CIT.Preposition",
+            "trigger-subject": "CIT.Content",
+            "trigger-specs": ["CIT.UrlsSpec", "CIT.CcidSpec"],
+            "trigger-extensions": ["CIT.TimePolicy"]
+         },
+         {
+            "trigger-action": "CIT.Invalidate",
+            "trigger-subject": "CIT.Content",
+            "trigger-specs": ["CIT.UrlsSpec", "CIT.CcidSpec"]
+         }
+      ]
+     },
+     "footprints": [
+       <Footprint objects>
+     ]
+   }
+ ]
+}
+        ]]></artwork>
+          </figure>
+        </section>
+      </section>
+
+
+       
 
             <section title="CI/T Playlist Protocol Capability Object">
         <t>
@@ -2594,55 +2932,6 @@ Month Number  Month/Year           Maximum value of date-mday
         </section>
       </section>
 
-      <section title="CI/T Trigger Extension Capability Object">
-        <t>
-           The CI/T Generic Extension capability object is used to indicate support for one or more
-           GenericExtensionObject types.
-        </t>
-
-        <t><list style="empty">
-           <t>Property: trigger-extension<list style="empty">
-
-                 <t>Description: A list of supported CDNI CI/T GenericExtensionObject types.</t>
-
-                 <t>Type: List of strings corresponding to entries from the "CDNI Payload Types" registry
-                    <xref target="RFC7736"/> that are under the CIT namespace, and that correspond to CDNI
-                    CI/T GenericExtensionObject objects.
-                 </t>
-
-                 <t>Mandatory: No. The default, in case of a missing or an empty list, MUST be 
-                    interpreted as "no GenericExtensionObject types are supported". A non-empty list MUST be 
-                    interpreted as containing "the only GenericExtensionObject types that are supported".
-                 </t>
-           </list></t>
-        </list></t>
-        <section anchor="trigger-extension-capability-object" title="CI/T Trigger Extension Capability Object Serialization">
-          <t>
-             The following shows an example of a JSON serialized CI/T Trigger Extension Capability object serialization for
-             a dCDN that supports the "CIT.LocationPolicy" and the "CIT.TimePolicy" objects.
-          </t>
-
-          <figure>
-           <artwork><![CDATA[
-
-{
- "capabilities": [
-   {
-     "capability-type": "FCI.TriggerGenericExtension",
-     "capability-value": {
-       "trigger-extension": ["CIT.LocationPolicy", "CIT.TimePolicy"]
-     },
-     "footprints": [
-       <Footprint objects>
-     ]
-   }
- ]
-}
-        ]]></artwork>
-          </figure>
-        </section>
-      </section>
-
     </section>
 
 
@@ -2673,34 +2962,44 @@ Month Number  Month/Year           Maximum value of date-mday
    Note that "metadata.patterns" and "content.patterns" are not allowed
    in a pre-position Trigger Specification.</t>
 
-	<t><list style="hanging" hangIndent="-1"><t hangText="REQUEST:">
-	<vspace blankLines="0"/>
-	</t>
-
-	</list>
-	</t>
-
 	<figure><artwork><![CDATA[
+REQUEST:
+
   POST /triggers HTTP/1.1
   User-Agent: example-user-agent/0.1
   Host: dcdn.example.com
   Accept: */*
-  Content-Type: application/cdni; ptype=ci-trigger-command
+  Content-Type: application/cdni; ptype=ci-trigger-command.v2
   Content-Length: 352
 
   {
-    "trigger": {
-      "type": "preposition",
-
-      "metadata.urls": [ "https://metadata.example.com/a/b/c" ],
-      "content.urls": [
-          "https://www.example.com/a/b/c/1",
-          "https://www.example.com/a/b/c/2",
-          "https://www.example.com/a/b/c/3",
-          "https://www.example.com/a/b/c/4"
-        ]
-    },
-    "cdn-path": [ "AS64496:1" ]
+      "trigger.v2": {
+         "action": "CIT.Preposition",
+         "specs": [
+            {
+               "generic-trigger-spec-type": "CIT.UrlsSpec",
+               "generic-trigger-spec-value": {
+                  "urls": [
+                     "https://metadata.example.com/a/b/c"
+                  ]
+               },
+               "trigger-subject": "CIT.Metadata"
+            },
+            {
+               "generic-trigger-spec-type": "CIT.UrlsSpec",
+               "generic-trigger-spec-value": {
+                  "urls": [
+                     "https://www.example.com/a/b/c/1",
+                     "https://www.example.com/a/b/c/2",
+                     "https://www.example.com/a/b/c/3",
+                     "https://www.example.com/a/b/c/4"
+                  ]
+               },
+               "trigger-subject": "CIT.Content"
+            }
+         ],
+      },
+      "cdn-path": [ "AS64496:1" ]
   }
 
 RESPONSE:
@@ -2717,17 +3016,31 @@ RESPONSE:
       "etime": 1462351698,
       "mtime": 1462351690,
       "status": "pending",
-      "trigger": {
-          "content.urls": [
-              "https://www.example.com/a/b/c/1",
-              "https://www.example.com/a/b/c/2",
-              "https://www.example.com/a/b/c/3",
-              "https://www.example.com/a/b/c/4"
-          ],
-          "metadata.urls": [
-              "https://metadata.example.com/a/b/c"
-          ],
-          "type": "preposition"
+      "trigger.v2": {
+         "action": "CIT.Preposition"
+         "specs": [
+            {
+               "generic-trigger-spec-type": "CIT.UrlsSpec",
+               "generic-trigger-spec-value": {
+                  "urls": [
+                     "https://metadata.example.com/a/b/c"
+                  ]
+               },
+               "trigger-subject": "CIT.Metadata"
+            },
+            {
+               "generic-trigger-spec-type": "CIT.UrlsSpec",
+               "generic-trigger-spec-value": {
+                  "urls": [
+                     "https://www.example.com/a/b/c/1",
+                     "https://www.example.com/a/b/c/2",
+                     "https://www.example.com/a/b/c/3",
+                     "https://www.example.com/a/b/c/4"
+                  ]
+               },
+               "trigger-subject": "CIT.Content"
+            }
+         ]
       }
   }
 ]]></artwork>
@@ -2742,35 +3055,50 @@ RESPONSE:
    case-insensitive matching, and "https://www.example.com/a/b/" using
    case-sensitive matching, respectively.</t>
 
-	<t><list style="hanging" hangIndent="-1"><t hangText="REQUEST:">
-	<vspace blankLines="0"/>
-	</t>
-
-	</list>
-	</t>
-
 	<figure><artwork><![CDATA[
+REQUEST:
+
   POST /triggers HTTP/1.1
   User-Agent: example-user-agent/0.1
   Host: dcdn.example.com
   Accept: */*
-  Content-Type: application/cdni; ptype=ci-trigger-command
+  Content-Type: application/cdni; ptype=ci-trigger-command.v2
   Content-Length: 387
 
   {
-    "trigger": {
-      "type": "invalidate",
-
-      "metadata.patterns": [
-          { "pattern": "https://metadata.example.com/a/b/*" }
-        ],
-
-      "content.urls": [ "https://www.example.com/a/index.html" ],
-      "content.patterns": [
-          { "pattern": "https://www.example.com/a/b/*",
-            "case-sensitive": true
-          }
-        ]
+    "trigger.v2": {
+      "action": "CIT.Invalidate",
+      "specs": [
+         {
+            "generic-trigger-spec-type": "CIT.UriPatterns",
+            "generic-trigger-spec-value": {
+               "patterns": [
+                  { "pattern": "https://metadata.example.com/a/b/*" }
+               ]
+            },
+            "trigger-subject": "CIT.Metadata"
+         },
+         {
+            "generic-trigger-spec-type": "CIT.UrlsSpec",
+            "generic-trigger-spec-value": {
+               "urls": [
+                  "https://www.example.com/a/index.html"
+               ]
+            },
+            "trigger-subject": "CIT.Content"
+         },
+         {
+            "generic-trigger-spec-type": "CIT.UriPatterns",
+            "generic-trigger-spec-value": {
+               "patterns": [
+                  { "pattern": "https://www.example.com/a/b/*",
+                     "case-sensitive": true
+                  }
+               ]
+            },
+            "trigger-subject": "CIT.Content"
+         }
+      ]
     },
     "cdn-path": [ "AS64496:1" ]
   }
@@ -2789,22 +3117,39 @@ RESPONSE:
       "etime": 1462351699,
       "mtime": 1462351691,
       "status": "pending",
-      "trigger": {
-          "content.patterns": [
-              {
-                  "case-sensitive": true,
-                  "pattern": "https://www.example.com/a/b/*"
-              }
-          ],
-          "content.urls": [
-              "https://www.example.com/a/index.html"
-          ],
-          "metadata.patterns": [
-              {
-                  "pattern": "https://metadata.example.com/a/b/*"
-              }
-          ],
-          "type": "invalidate"
+      "trigger.v2": {
+         "action": "CIT.Invalidate",
+         "specs": [
+            {
+               "generic-trigger-spec-type": "CIT.UriPatterns",
+               "generic-trigger-spec-value": {
+                  "patterns": [
+                     { "pattern": "https://metadata.example.com/a/b/*" }
+                  ]
+               },
+               "trigger-subject": "CIT.Metadata"
+            },
+            {
+               "generic-trigger-spec-type": "CIT.UrlsSpec",
+               "generic-trigger-spec-value": {
+                  "urls": [
+                     "https://www.example.com/a/index.html"
+                  ]
+               },
+               "trigger-subject": "CIT.Content"
+            },
+            {
+               "generic-trigger-spec-type": "CIT.UriPatterns",
+               "generic-trigger-spec-value": {
+                  "patterns": [
+                     { "pattern": "https://www.example.com/a/b/*",
+                        "case-sensitive": true
+                     }
+                  ]
+               },
+               "trigger-subject": "CIT.Content"
+            }
+         ]
       }
   }
 ]]></artwork>
@@ -2818,6 +3163,8 @@ RESPONSE:
             content objects for invalidation, the command is rejected by the dCDN due to regex complexity, and
             an appropriate error is reflected in the status response.
           </t>
+          <t> TBD: in case of failure in one object, maybe leave empty places in the triggers list
+          for the objects that has not failed></t>
           <figure>
             <artwork><![CDATA[
 REQUEST:
@@ -2829,18 +3176,26 @@ REQUEST:
   Content-Type: application/cdni; ptype=ci-trigger-command.v2
   {
     "trigger.v2": {
-      "type": "invalidate",
-      "content.regexs": [
-        {
-          "regex": "^(https:\\/\\/video\\.example\\.com)\\/
-          ([a-z])\\/movie1\\/([1-7])\\/*(index.m3u8|\\d{3}.ts)$",
-          "case-sensitive": true,
-          "match-query-string": false
-        },
-        { <RegexMatch #2> },
-        ...
-        { <RegexMatch #N> },
-      ],
+      "action": "CIT.Invalidate",
+      "specs": [
+         {
+            "generic-trigger-spec-type": "CIT.UriRegexes",
+            "generic-trigger-spec-value": {
+               "regexes": [
+                  {
+                     "regex": "^(https:\\/\\/video\\.example\\.com)\\/
+                     ([a-z])\\/movie1\\/([1-7])\\/*(index.m3u8|\\d{3}.ts)$",
+                     "case-sensitive": true,
+                     "match-query-string": false
+                  },
+                  { <RegexMatch #2> },
+                  ...
+                  { <RegexMatch #N> }
+               ]
+            },
+            "trigger-subject": "CIT.Content"
+         }
+      ]
     },
     "cdn-path": [ "AS64496:0" ]
   }
@@ -2857,14 +3212,22 @@ RESPONSE:
   {
     "errors.v2": [
       {
-        "content.regexs": [
-          {
-            "regex": "^(https:\\/\\/video\\.example\\.com)\\/
-            ([a-z])\\/movie1\\/([1-7])\\/*(index.m3u8|\\d{3}.ts)$",
-            "case-sensitive": true,
-            "match-query-string": false
-          },
-        ],
+        "specs": [
+            {
+               "generic-trigger-spec-type": "CIT.UriRegexes",
+               "generic-trigger-spec-value": {
+                  "regexes": [
+                     {
+                        "regex": "^(https:\\/\\/video\\.example\\.com)\\/
+                        ([a-z])\\/movie1\\/([1-7])\\/*(index.m3u8|\\d{3}.ts)$",
+                        "case-sensitive": true,
+                        "match-query-string": false
+                     }
+                  ]
+               },
+               "trigger-subject": "CIT.Content"
+            }
+         ],
         "description": "The dCDN rejected a regex due to complexity",
         "error": "ereject",
         "cdn": "AS64500:0"
@@ -2897,16 +3260,24 @@ REQUEST:
   Content-Type: application/cdni; ptype=ci-trigger-command.v2
   {
     "trigger.v2": {
-      "type": "preposition",
-      "content.playlists": [
-       {
-        "playlist": "https://www.example.com/hls/title/index.m3u8",
-        "media-protocol": "hls"
-       },
-       { <Playlist #2> },
-       ...
-       { <Playlist #N> },
-      ],
+      "action": "CIT.Preposition",
+      "specs": [
+         {
+            "generic-trigger-spec-type": "CIT.ContentPlaylists",
+            "generic-trigger-spec-value": {
+               "playlists": [
+                  {
+                  "playlist": "https://www.example.com/hls/title/index.m3u8",
+                  "media-protocol": "hls"
+                  },
+                  { <Playlist #2> },
+                  ...
+                  { <Playlist #N> }
+               ]
+            },
+            "trigger-subject": "CIT.Content"
+         }
+      ]
     },
     "cdn-path": [ "AS64496:0" ]
   }
@@ -2923,12 +3294,20 @@ RESPONSE:
   {
     "errors.v2": [ 
       {
-       "content.playlists": [
-         { 
-          "playlist": "https://www.example.com/hls/title/index.m3u8",
-          "media-protocol": "hls"
-         },                
-        ],
+        "specs": [
+          {
+            "generic-trigger-spec-type": "CIT.ContentPlaylists",
+            "generic-trigger-spec-value": {
+               "playlists": [
+                  {
+                  "playlist": "https://www.example.com/hls/title/index.m3u8",
+                  "media-protocol": "hls"
+                  }
+               ]
+            },
+            "trigger-subject": "CIT.Content"
+         }
+       ],
        "description": "The dCDN was not able to parse the playlist",
        "error": "econtent",
        "cdn": "AS64500:0"
@@ -2957,14 +3336,10 @@ RESPONSE:
    After creation of the "preposition" and "invalidate" triggers shown
    above, this collection might look as follows:</t>
 
-	<t><list style="hanging" hangIndent="-1"><t hangText="REQUEST:">
-	<vspace blankLines="0"/>
-	</t>
-
-	</list>
-	</t>
 
 	<figure><artwork><![CDATA[
+REQUEST:
+
   GET /triggers HTTP/1.1
   User-Agent: example-user-agent/0.1
   Host: dcdn.example.com
@@ -3002,14 +3377,9 @@ RESPONSE:
    dCDN starts processing the two CI/T Trigger Commands shown above,
    both will appear in the collection of pending triggers.  For example:</t>
 
-	<t><list style="hanging" hangIndent="-1"><t hangText="REQUEST:">
-	<vspace blankLines="0"/>
-	</t>
-
-	</list>
-	</t>
-
 	<figure><artwork><![CDATA[
+REQUEST:
+
   GET /triggers/pending HTTP/1.1
   User-Agent: example-user-agent/0.1
   Host: dcdn.example.com
@@ -3039,14 +3409,9 @@ RESPONSE:
    At this point, if no other Trigger Status Resources had been created,
    the other filtered views would be empty.  For example:</t>
 
-	<t><list style="hanging" hangIndent="-1"><t hangText="REQUEST:">
-	<vspace blankLines="0"/>
-	</t>
-
-	</list>
-	</t>
-
 	<figure><artwork><![CDATA[
+REQUEST:
+
   GET /triggers/complete HTTP/1.1
   User-Agent: example-user-agent/0.1
   Host: dcdn.example.com
@@ -3076,14 +3441,10 @@ RESPONSE:
    individual CI/T Trigger Commands.  For example, for the CI/T
    "preposition" and "invalidate" commands from previous examples:</t>
 
-	<t><list style="hanging" hangIndent="-1"><t hangText="REQUEST:">
-	<vspace blankLines="0"/>
-	</t>
-
-	</list>
-	</t>
 
 	<figure><artwork><![CDATA[
+REQUEST:
+
   GET /triggers/0 HTTP/1.1
   User-Agent: example-user-agent/0.1
   Host: dcdn.example.com
@@ -3106,16 +3467,30 @@ RESPONSE:
       "mtime": 1462351690,
       "status": "pending",
       "trigger": {
-          "content.urls": [
-              "https://www.example.com/a/b/c/1",
-              "https://www.example.com/a/b/c/2",
-              "https://www.example.com/a/b/c/3",
-              "https://www.example.com/a/b/c/4"
-          ],
-          "metadata.urls": [
-              "https://metadata.example.com/a/b/c"
-          ],
-          "type": "preposition"
+          "action": "CIT.Preposition",
+          "specs": [
+            {
+               "generic-trigger-spec-type": "CIT.UrlsSpec",
+               "generic-trigger-spec-value": {
+                  "urls": [
+                     "https://metadata.example.com/a/b/c"
+                  ]
+               },
+               "trigger-subject": "CIT.Metadata"
+            },
+            {
+               "generic-trigger-spec-type": "CIT.UrlsSpec",
+               "generic-trigger-spec-value": {
+                  "urls": [
+                     "https://www.example.com/a/b/c/1",
+                     "https://www.example.com/a/b/c/2",
+                     "https://www.example.com/a/b/c/3",
+                     "https://www.example.com/a/b/c/4"
+                  ]
+               },
+               "trigger-subject": "CIT.Content"
+            }
+         ]
       }
   }
 
@@ -3142,21 +3517,38 @@ RESPONSE:
       "mtime": 1462351691,
       "status": "pending",
       "trigger": {
-          "content.patterns": [
-              {
-                  "case-sensitive": true,
-                  "pattern": "https://www.example.com/a/b/*"
-              }
-          ],
-          "content.urls": [
-              "https://www.example.com/a/index.html"
-          ],
-          "metadata.patterns": [
-              {
-                  "pattern": "https://metadata.example.com/a/b/*"
-              }
-          ],
-          "type": "invalidate"
+          "action": "CIT.Invalidate",
+          "specs": [
+            {
+               "generic-trigger-spec-type": "CIT.UriPatterns",
+               "generic-trigger-spec-value": {
+                  "patterns": [
+                     { "pattern": "https://metadata.example.com/a/b/*" }
+                  ]
+               },
+               "trigger-subject": "CIT.Metadata"
+            },
+            {
+               "generic-trigger-spec-type": "CIT.UrlsSpec",
+               "generic-trigger-spec-value": {
+                  "urls": [
+                     "https://www.example.com/a/index.html"
+                  ]
+               },
+               "trigger-subject": "CIT.Content"
+            },
+            {
+               "generic-trigger-spec-type": "CIT.UriPatterns",
+               "generic-trigger-spec-value": {
+                  "patterns": [
+                     { "pattern": "https://www.example.com/a/b/*",
+                        "case-sensitive": true
+                     }
+                  ]
+               },
+               "trigger-subject": "CIT.Content"
+            }
+         ]
       }
   }
 ]]></artwork>
@@ -3168,14 +3560,9 @@ RESPONSE:
    Resources when polling for changes in status, as shown in the
    following examples:</t>
 
-	<t><list style="hanging" hangIndent="-1"><t hangText="REQUEST:">
-	<vspace blankLines="0"/>
-	</t>
-
-	</list>
-	</t>
-
 	<figure><artwork><![CDATA[
+REQUEST:
+
   GET /triggers/pending HTTP/1.1
   User-Agent: example-user-agent/0.1
   Host: dcdn.example.com
@@ -3183,30 +3570,17 @@ RESPONSE:
   If-None-Match: "4331492443626270781"
 
 RESPONSE:
-]]></artwork>
-	</figure>
-	<t><list style="hanging" hangIndent="-1"><?rfc subcompact="yes"?>
-	<t>     HTTP/1.1 304 Not Modified
-     Content-Length: 0
-     Expires: Wed, 04 May 2016 08:49:11 GMT
-     Server: example-server/0.1
-     ETag: "4331492443626270781"
-     Cache-Control: max-age=60
-     Date: Wed, 04 May 2016 08:48:11 GMT
-     Content-Type: application/cdni; ptype=ci-trigger-collection<list style="hanging" hangIndent="-1"><?rfc subcompact="no"?>
-	<t hangText="REQUEST:">
-	<vspace blankLines="0"/>
-	</t>
+   HTTP/1.1 304 Not Modified
+   Content-Length: 0
+   Expires: Wed, 04 May 2016 08:49:11 GMT
+   Server: example-server/0.1
+   ETag: "4331492443626270781"
+   Cache-Control: max-age=60
+   Date: Wed, 04 May 2016 08:48:11 GMT
+   Content-Type: application/cdni; ptype=ci-trigger-collection
 
-	<?rfc subcompact="yes"?>
-	</list>
-	</t>
+REQUEST:
 
-	<?rfc subcompact="no"?>
-	</list>
-	</t>
-
-	<figure><artwork><![CDATA[
   GET /triggers/0 HTTP/1.1
   User-Agent: example-user-agent/0.1
   Host: dcdn.example.com
@@ -3232,14 +3606,9 @@ RESPONSE:
    collections of pending and complete Trigger Status Resources might
    look like:</t>
 
-	<t><list style="hanging" hangIndent="-1"><t hangText="REQUEST:">
-	<vspace blankLines="0"/>
-	</t>
-
-	</list>
-	</t>
-
 	<figure><artwork><![CDATA[
+REQUEST:
+
   GET /triggers/pending HTTP/1.1
   User-Agent: example-user-agent/0.1
   Host: dcdn.example.com
@@ -3295,14 +3664,9 @@ RESPONSE:
    reduce the size of the collections, as described in <xref target="sect-4.4"/>.  For
    example, to delete the "preposition" request from earlier examples:</t>
 
-	<t><list style="hanging" hangIndent="-1"><t hangText="REQUEST:">
-	<vspace blankLines="0"/>
-	</t>
-
-	</list>
-	</t>
-
 	<figure><artwork><![CDATA[
+REQUEST:
+
   DELETE /triggers/0 HTTP/1.1
   User-Agent: example-user-agent/0.1
   Host: dcdn.example.com
@@ -3321,14 +3685,9 @@ RESPONSE:
    This would, for example, cause the collection of completed Trigger
    Status Resources shown in the example above to be updated to:</t>
 
-	<t><list style="hanging" hangIndent="-1"><t hangText="REQUEST:">
-	<vspace blankLines="0"/>
-	</t>
-
-	</list>
-	</t>
-
 	<figure><artwork><![CDATA[
+REQUEST:
+
   GET /triggers/complete HTTP/1.1
   User-Agent: example-user-agent/0.1
   Host: dcdn.example.com
@@ -3375,12 +3734,20 @@ REQUEST:
   Content-Type: application/cdni; ptype=ci-trigger-command.v2
   {
     "trigger.v2": {
-      "type": "preposition",
-      "content.playlists": [
-       {
-         "playlist": "https://www.example.com/hls/title/index.m3u8",
-         "media-protocol": "hls"
-       },
+     "action": "CIT.Preposition",
+     "specs": [
+         {
+            "generic-trigger-spec-type": "CIT.ContentPlaylists",
+            "generic-trigger-spec-value": {
+               "playlists": [
+                  {
+                  "playlist": "https://www.example.com/hls/title/index.m3u8",
+                  "media-protocol": "hls"
+                  }
+               ]
+            },
+            "trigger-subject": "CIT.Content"
+         }
       ],
       "extensions": [
           {
@@ -3484,6 +3851,36 @@ RESPONSE:
    <c>ci-trigger-status.v2</c>
    <c>RFCthis</c>
 
+   <c>CIT.Preposition</c>
+   <c>RFCthis</c>
+   
+    <c>CIT.Invalidate</c>
+   <c>RFCthis</c>
+   
+   <c>CIT.Purge</c>
+   <c>RFCthis</c>
+
+   <c>CIT.UrlsSpec</c>
+   <c>RFCthis</c>
+   
+    <c>CIT.CcidsSpec</c>
+   <c>RFCthis</c>
+   
+   <c>CIT.UriPatternsSpec</c>
+   <c>RFCthis</c>
+   
+   <c>CIT.UrisRegexesSpec</c>
+   <c>RFCthis</c>
+   
+   <c>CIT.ContentPlaylistsSpec</c>
+   <c>RFCthis</c>
+
+   <c>CIT.MetadataSubject</c>
+   <c>RFCthis</c>
+
+   <c>CIT.ContentSubject</c>
+   <c>RFCthis</c>
+
    <c>CIT.LocationPolicy</c>
    <c>RFCthis</c>
 
@@ -3493,59 +3890,149 @@ RESPONSE:
    <c>FCI.TriggerVersion</c>
    <c>RFCthis</c>
 
-   <c>FCI.TriggerPlaylistProtocol</c>
+   <c>FCI.TriggerScope</c>
+   <c>RFCthis</c>
+
+   <c>FCI.TriggerType</c>
+   <c>RFCthis</c>
+
+   <c>FCI.TriggerGenericSpec</c>
    <c>RFCthis</c>
 
    <c>FCI.TriggerGenericExtension</c>
    <c>RFCthis</c>
+
+   <c>FCI.TriggerPlaylistProtocol</c>
+   <c>RFCthis</c>
+
 	</texttable>
       <t>[RFC Editor: Please replace RFCthis with the published RFC
         number for this document.]</t>
 
          <section anchor="IANA.CDNI.payload.ci-trigger-command.v2" title="CDNI ci-trigger-command.v2 Payload Type">
-          <t>Purpose: TBD: The purpose of this payload type is to distinguish version 2 of the CI/T command
+          <t>Purpose: TODO: The purpose of this payload type is to distinguish version 2 of the CI/T command
             (and any associated capability advertisement)</t>
           <t>Interface: CI/T</t>
           <t>Encoding: see <xref target="sect-5.1.1"/></t>
         </section>
 
         <section anchor="IANA.CDNI.payload.ci-trigger-status.v2" title="CDNI ci-trigger-status.v2 Payload Type">
-          <t>Purpose: TBD: The purpose of this payload type is to distinguish version 2 of the CI/T status resource response
+          <t>Purpose: TODO: The purpose of this payload type is to distinguish version 2 of the CI/T status resource response
             (and any associated capability advertisement)</t>
           <t>Interface: CI/T</t>
           <t>Encoding: see <xref target="sect-5.1.2"/></t>
         </section>
 
-         <section anchor="IANA.CDNI.payload.ci-trigger-collection" title="CDNI ci-trigger-command.v2 Payload Type">
-          <t>Purpose: TBD (came from 8007)</t>
+         <section anchor="IANA.CDNI.payload.ci-trigger-collection" title="CDNI ci-trigger-collection.v2 Payload Type">
+          <t>Purpose: TODO (came from 8007)</t>
           <t>Interface: CI/T</t>
           <t>Encoding: see <xref target="sect-5.1.3"/></t>
         </section>
 
-        <section anchor="IANA.CDNI.payload.CIT.LocationPolicy" title="CDNI CI/T LocationPolicy Trigger Extension Type">
-          <t>Purpose: The purpose of this Trigger Extension type is to distinguish LocationPolicy CIT Trigger Extension objects.</t>
-          <t>Interface: CI/T</t>
-          <t>Encoding: see <xref target="location-policy"/></t>
+        <section anchor="IANA.CDNI.payload.CIT.TriggerActionTypes" title="CDNI CI/T Trigger Action Payload Types">
+            <section anchor="IANA.CDNI.payload.CIT.Preposition" title="CDNI CI/T Preposition Trigger Action Payload Type">
+               <t>Purpose: The purpose of this Trigger action type is to distinguish Preposition CIT Trigger Types Triggers.</t>
+               <t>Interface: CI/T</t>
+               <t>Encoding: see <xref target="sect-5.2.2"/></t>
+            </section>
+            
+            <section anchor="IANA.CDNI.payload.CIT.Invalidate" title="CDNI CI/T Invalidate Trigger Action Payload Type">
+               <t>Purpose: The purpose of this Trigger action type is to distinguish Invalidate CIT Trigger Types Triggers.</t>
+               <t>Interface: CI/T</t>
+               <t>Encoding: see <xref target="sect-5.2.2"/></t>
+            </section>
+
+            <section anchor="IANA.CDNI.payload.CIT.Purge" title="CDNI CI/T Purge Trigger Action Payload Type">
+               <t>Purpose: The purpose of this Trigger action type is to distinguish Purge CIT Trigger Types Triggers.</t>
+               <t>Interface: CI/T</t>
+               <t>Encoding: see <xref target="sect-5.2.2"/></t>
+            </section>
+            
+         </section>
+
+        <section anchor="IANA.CDNI.payload.CIT.Specs" title="CDNI CI/T Trigger Spec Payload Types">
+            <section anchor="IANA.CDNI.payload.CIT.UrlsSpec" title="CDNI CI/T Urls Trigger Spec Payload Type">
+               <t>Purpose: The purpose of this Trigger Spec type is to distinguish Urls CIT Trigger Spec objects.</t>
+               <t>Interface: CI/T</t>
+               <t>Encoding: see <xref target="urls-spec"/></t>
+            </section>
+
+            <section anchor="IANA.CDNI.payload.CIT.CcidsSpec" title="CDNI CI/T Ccids Trigger Spec Payload Type">
+               <t>Purpose: The purpose of this Trigger Spec type is to distinguish Ccids CIT Trigger Spec objects.</t>
+               <t>Interface: CI/T</t>
+               <t>Encoding: see <xref target="ccids-spec"/></t>
+            </section>
+
+            <section anchor="IANA.CDNI.payload.CIT.UriPatternsSpec" title="CDNI CI/T UriPatterns Trigger Spec Payload Type">
+               <t>Purpose: The purpose of this Trigger Spec type is to distinguish UriPatterns CIT Trigger Spec objects.</t>
+               <t>Interface: CI/T</t>
+               <t>Encoding: see <xref target="uri-patterns-spec"/></t>
+            </section>
+
+            <section anchor="IANA.CDNI.payload.CIT.UriRegexesSpec" title="CDNI CI/T UriRegexes Trigger Spec Payload Type">
+               <t>Purpose: The purpose of this Trigger Spec type is to distinguish UriRegexes CIT Trigger Spec objects.</t>
+               <t>Interface: CI/T</t>
+               <t>Encoding: see <xref target="uri-regexes-spec"/></t>
+            </section>
+
+            <section anchor="IANA.CDNI.payload.CIT.ContentPlaylistsSpec" title="CDNI CI/T ContentPlaylists Trigger Spec Payload Type">
+               <t>Purpose: The purpose of this Trigger Spec type is to distinguish ContentPlaylists CIT Trigger Spec objects.</t>
+               <t>Interface: CI/T</t>
+               <t>Encoding: see <xref target="content-playlists-spec"/></t>
+            </section>
+         </section>
+
+         <section anchor="IANA.CDNI.payload.CIT.Subjects" title="CDNI CI/T Trigger Subject types">
+            <section anchor="IANA.CDNI.payload.CIT.MetadataSubject" title="CDNI CI/T Metadata Trigger Subject Type">
+               <t>Purpose: The purpose of this Trigger Spec subejct type is to distinguish Metadata CIT Trigger Spec objects.</t>
+               <t>Interface: CI/T</t>
+               <t>Encoding: see TODO - string "metatdata" - should we register it????</t>
+            </section>
+
+            <section anchor="IANA.CDNI.payload.CIT.ContentSubject" title="CDNI CI/T Content Trigger Subject Type">
+               <t>Purpose: The purpose of this Trigger Spec subejct type is to distinguish Content CIT Trigger Spec objects.</t>
+               <t>Interface: CI/T</t>
+               <t>Encoding: see TODO - string "metatdata" - should we register it????</t>
+            </section>
+         </section>
+
+        <section anchor="IANA.CDNI.payload.CIT.Extensions" title="CDNI CI/T Trigger Extension Payload Types">
+            <section anchor="IANA.CDNI.payload.CIT.LocationPolicy" title="CDNI CI/T LocationPolicy Trigger Extension Type">
+               <t>Purpose: The purpose of this Trigger Extension type is to distinguish LocationPolicy CIT Trigger Extension objects.</t>
+               <t>Interface: CI/T</t>
+               <t>Encoding: see <xref target="location-policy"/></t>
+            </section>
+
+            <section anchor="IANA.CDNI.payload.CIT.TimePolicy" title="CDNI CI/T TimePolicy Trigger Extension Type">
+               <t>Purpose: The purpose of this Trigger Extension type is to distinguish TimePolicy CI/T Trigger Extension objects.</t>
+               <t>Interface: CI/T</t>
+               <t>Encoding: see <xref target="time-policy"/></t>
+            </section>
         </section>
 
-        <section anchor="IANA.CDNI.payload.CIT.TimePolicy" title="CDNI CI/T TimePolicy Trigger Extension Type">
-          <t>Purpose: The purpose of this Trigger Extension type is to distinguish TimePolicy CI/T Trigger Extension objects.</t>
-          <t>Interface: CI/T</t>
-          <t>Encoding: see <xref target="time-policy"/></t>
-        </section>
+        <section anchor="IANA.CDNI.payload.CIT.Footprint" title="CDNI FCI CI/T Payload Types">
 
-        <section anchor="IANA.CDNI.payload.FCI.PlaylistProtocol" title="CDNI FCI CI/T Playlist Protocol Payload Type">
-          <t>Purpose: The purpose of this payload type is to distinguish FCI advertisement objects for
-             CI/T Playlist Protocol objects</t>
-          <t>Interface: FCI</t>
-          <t>Encoding: see <xref target="playlist-protocol-capability-object"/></t>
-        </section>
+            <section anchor="IANA.CDNI.payload.FCI.TriggersVersions" title="CDNI FCI CI/T Versions Payload Type">
+               <t>Purpose: The purpose of this payload type is to distinguish FCI advertisement objects for
+                  CI/T Triggers Versions objects</t>
+               <t>Interface: FCI</t>
+               <t>Encoding: see <xref target="versions-capability-object"/></t>
+            </section>
 
-        <section anchor="IANA.CDNI.payload.FCI.ExtensionObject" title="CDNI FCI CI/T Extension Objects Payload Type">
-          <t>Purpose: The purpose of this payload type is to distinguish FCI advertisement objects for
-             CI/T Extension objects</t>
-          <t>Interface: FCI</t>
-          <t>Encoding: see <xref target="trigger-extension-capability-object"/></t>
+            <section anchor="IANA.CDNI.payload.FCI.TriggerScope" title="CDNI FCI CI/T Trigger Scope Payload Type">
+               <t>Purpose: The purpose of this payload type is to distinguish FCI advertisement objects for
+                  CI/T Trigger Scope</t>
+               <t>Interface: FCI</t>
+               <t>Encoding: see <xref target="trigger-scope-capability-object"/></t>
+            </section>
+
+             <section anchor="IANA.CDNI.payload.FCI.PlaylistProtocol" title="CDNI FCI CI/T Playlist Protocol Payload Type">
+               <t>Purpose: The purpose of this payload type is to distinguish FCI advertisement objects for
+                  CI/T Playlist Protocol objects</t>
+               <t>Interface: FCI</t>
+               <t>Encoding: see <xref target="playlist-protocol-capability-object"/></t>
+            </section>
+
         </section>
 
 	</section>
@@ -3774,8 +4261,6 @@ RESPONSE:
 
       <?rfc include="reference.RFC.3339" ?>
 
-      <?rfc include="reference.RFC.8008" ?>
-
       <reference anchor="ABNF" target="https://www.rfc-editor.org/info/rfc5234">
         <front>
           <title>Augmented BNF for Syntax Specifications: ABNF</title>
@@ -3861,46 +4346,12 @@ RESPONSE:
         <seriesInfo name="Edition" value="3"/>
       </reference>
 
-      <reference anchor="SVA" target="https://www.streamingvideoalliance.org">
-          <front>
-            <title>Streaming Video Alliance</title>
-            <author/>
-            <date/>
-          </front>
-        </reference>
-
-        <reference anchor="OCWG" target="https://www.streamingvideoalliance.org/technical-groups/open-caching/">
-          <front>
-            <title>Open Caching</title>
-            <author><organization>Streaming Video Alliance</organization>
-            </author>
-            <date/>
-          </front>
-        </reference>
-
-      <reference anchor="OC-CM" target="https://www.streamingvideoalliance.org/document/open-caching-content-management-operations-specification/">
-          <front>
-            <title>
-              Open Caching Content Management Operations Specification
-            </title>
-            <author initials="O." surname="Finkelman" fullname="Ori Finkelman" role="editor">
-              <organization>Qwilt</organization>
-            </author>
-            <author initials="J." surname="Devabhaktuni" fullname="Jaya Devabhaktuni">
-              <organization>Concurrent</organization>
-            </author>
-            <author initials="M." surname="Stock" fullname="Matt Sanjay Stock">
-              <organization>Limelight Networks</organization>
-            </author>
-            <date month="November" year="2017"/>
-          </front>
-        </reference>
 
 
 	</references>
 	<section title="Formalization of the JSON Data" anchor="sect-a"><t>
    This appendix is non-normative.</t>
-
+   <t>TODO should we remove it or compile a CDDL on our own</t>
 	<t>
    The JSON data described in this document has been formalized using
    the CBOR Data Definition Language (CDDL) <xref target="I-D.greevenbosch-appsawg-cbor-cddl"/> (where "CBOR"
@@ -3971,7 +4422,7 @@ Error-Description = { ; see Section 5.2.6
 }
 
 Error-Code = "emeta" / "econtent" / "eperm" / "ereject"
-   / "ecdn" / "ecanceled"  ; see Section 5.2.7
+   / "ecdn" / "ecancelled"  ; see Section 5.2.7
 
 Ccid = tstr ; see RFC 8006
 
