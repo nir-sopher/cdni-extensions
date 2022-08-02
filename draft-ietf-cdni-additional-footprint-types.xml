@@ -421,6 +421,54 @@
                     number for this document.]
                 </t>
             </section>
+             <section anchor="IANA.ALTO.entity.domain.types" title="ALTO Entity Domain Types">
+                <t>
+                    Section 12.3 of <xref target="RFC9240" /> creates
+                    the "ALTO Entity Domain Types" registry.
+                </t>
+                <t>
+                    This document requests the registration of an additional ALTO Entity Domain Types
+                    :
+                </t>
+                <texttable>
+                    <ttcol align="left">
+                        Identifier
+                    </ttcol>
+                     <ttcol align="left">
+                       Entity Identifier Encoding
+                    </ttcol>
+                     <ttcol align="left">
+                       Hierarchy and Inheritance
+                    </ttcol>
+                    <ttcol align="left">
+                        Media Type of Defining Resource
+                    </ttcol>
+                    <ttcol align="left">
+                        Mapping to ALTO Address Type
+                    </ttcol>
+                    <c>
+                        subdivisioncode
+                    </c>
+                    <c>
+                        ISO 3166-2 Subdivision Code: An alpha-2 ISO 3166-1 Country Code, followed by a separator 
+                        and up to three alphanumeric characters
+                    </c>
+                    <c>
+                        None
+                    </c>
+                    <c>
+                        None
+                    </c>
+                    <c>
+                        false 
+                    </c>
+                    
+                </texttable>
+                <t>
+                    [RFC Editor: Please replace RFCthis with the published RFC
+                    number for this document.]
+                </t>
+            </section>
         </section>
         <section anchor="Security" title="Security Considerations">
             <t>
@@ -449,6 +497,7 @@
             <?rfc include="reference.RFC.8006"?>
             <?rfc include="reference.RFC.8008"?>
             <?rfc include="reference.RFC.8174"?>
+            <?rfc include="reference.RFC.9240"?>
             <reference anchor="ISO3166-1" target="https://www.iso.org/standard/72482.html">
                 <front>
                 <title>
