@@ -99,12 +99,12 @@
                 <xref target="RFC8006" />) for the defined objects:
                 <list style="symbols">
                     <t>
-                        SubdivisionCode Footprint Type (e.g., for dCDN advertising a footprint that is specific to
+                        SubdivisionCode Footprint Type (e.g., for a dCDN advertising a footprint that is specific to
                         a State in the USA)
                     </t>
                     <t>
-                        Collection Footprint Type (for dCDN advertising a footprint that consists of a group built 
-                        from multiple Footprints Types. E.g., both IPv4 and IPv6 client addresses)
+                        Collection Footprint Type (for a dCDN advertising a footprint that consists of a group built 
+                        from multiple Footprints Types, e.g., both IPv4 and IPv6 client addresses)
                     </t>
                 </list>
             </t>
@@ -157,7 +157,7 @@
                     Section 4.3.8 of <xref target="RFC8006" />
                     specifies the "Country Code" footprint type
                     for listing <xref target="ISO3166-1"/> alpha-2 codes. Using Footprint Objects of this type, one can define an
-                    FCI Capability Advertisement Object footprint constraints that match a specific country.
+                    FCI Capability Advertisement Object footprint constraint that matches a specific country.
                     Herein is define the subdivisioncode simple data type, as well as a footprint type
                     allowing the dCDN to define constraints matching geographic areas
                     with better granularity, specifically using the <xref target="ISO3166-2"/> Country Subdivision codes.
@@ -172,7 +172,7 @@
                     </t>
                     <section anchor="cdni-metadata-subdivisioncode-data-type-description" title="CDNI Metadata SubdivisionCode Data Type Description">
                         <t>
-                        A <xref target="ISO3166-2"/> code in lower case. Each code consists of two parts, separated by a hyphen. 
+                        An <xref target="ISO3166-2"/> code in lower case. Each code consists of two parts separated by a hyphen. 
                         The first part is the <xref target="ISO3166-1"/> code of the country. The second part is a string of up to three alphanumeric characters.
                         </t>
                         <t>
@@ -205,7 +205,7 @@
                     <t>
                         Below is an example using a footprint object of type "SubdivisionCode". 
                         The Footprint Object in this example creates
-                        a constraints matching clients both in the Nova-Scotia province of Canada (ISO <xref target="ISO3166-2"/> code "CA-NS"), as well as in the state of
+                        a constraint matching clients both in the Nova-Scotia province of Canada (ISO <xref target="ISO3166-2"/> code "CA-NS"), as well as in the state of
                         New-York In the US (ISO <xref target="ISO3166-2"/> code "US-NY").
                     </t>
                     <figure>
@@ -330,7 +330,7 @@
                         </artwork>
                     </figure>
                     <t>
-                    The footprint union also allows to compose a countrycode and subdivisioncode based footprint objects. 
+                    The footprint union also enables composing a countrycode and subdivisioncode based footprint objects. 
                     In the example below 
                     we create a constraint covering autonomous system 64496 within the US (ISO <xref target="ISO3166-1"/> alpha-2 code "US")
                     and the Nova-Scotia province of Canada (ISO <xref target="ISO3166-2"/> code "CA-NS").
@@ -410,7 +410,7 @@
                         FCI.footprintunion
                     </c>
                     <c>
-                        Footprint Object as specified in <xref target="RFC8006" />
+                        A combination of other Footprint Objects 
                     </c>
                     <c>
                         RFCthis
@@ -432,7 +432,7 @@
                 <xref target="RFC8008" />
                 respectively. More specifically, the use of "SubdivisionCode" footprint type, introduces a higher level of granularity into the published dCDN Footprint.
                 Therefore, to meet confidentiality requirements, the use of transport-layer security mechanisms as specified in Section 7 
-                of <xref target="RFC8008"/>, is required.
+                of <xref target="RFC8008"/> is required.
             </t>
         </section>
         <section anchor="Acknowledgements" title="Acknowledgements">
