@@ -427,9 +427,8 @@
                     the "ALTO Entity Domain Types" registry.
                 </t>
                 <t>
-                    This document requests the registration of an additional ALTO Entity Domain Types
-                    :
-                </t>
+                    This document requests the registration of an additional ALTO Entity Domain Types:
+               </t>
                 <texttable>
                     <ttcol align="left">
                         Identifier
@@ -450,8 +449,7 @@
                         subdivisioncode
                     </c>
                     <c>
-                        ISO 3166-2 Subdivision Code: An alpha-2 ISO 3166-1 Country Code, followed by a separator 
-                        and up to three alphanumeric characters
+                        See RFCthis, <xref target="IANA.ALTO.entity.domain.types.subdivison" /> 
                     </c>
                     <c>
                         None
@@ -468,6 +466,14 @@
                     [RFC Editor: Please replace RFCthis with the published RFC
                     number for this document.]
                 </t>
+                 <section anchor="IANA.ALTO.entity.domain.types.subdivison" title="Subdivisioncode Entity Domain-specific Identifiers">
+                 The entity identifier of an entity in a SUBDIVISIONCODE is encoded as an alpha-2 ISO 3166-1 Country Code, followed by a separator 
+                 and up to three alphanumeric characters.
+                 </section>
+                 
+                 
+                 
+                 
             </section>
         </section>
         <section anchor="Security" title="Security Considerations">
