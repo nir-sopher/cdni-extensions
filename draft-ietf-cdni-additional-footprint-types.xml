@@ -231,7 +231,11 @@
                 </section>
                 <section anchor="cdni-metadata-subdivisioncode-alto-property-map-service-entity" title="SUBDIVISIONCODE ALTO Property Map Service Entity">
                 <t>
-                    <xref target="RFC9241" />,
+                   Section 6 of <xref target="RFC9241" /> describes how to represent footprint objects as entities in the ALTO property map.
+                   The approach is to represent the "footprint-type" as an entity domain type of the ALTO entity,
+                   and the footprint value as its domain-specific identifier. <xref target="RFC9241" /> further refers to the representation of footprint objects 
+                   of types "asn" and "countrycode". 
+                   Here we extend this definition to the "subdivisioncode" footprint type.
                  </t>   
                 <section anchor="cdni-metadata-subdivisioncode-alto-property-map-service-entity-domain" title="SUBDIVISIONCODE Domain">
                 <t>
