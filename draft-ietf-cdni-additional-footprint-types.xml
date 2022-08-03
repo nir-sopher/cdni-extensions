@@ -466,12 +466,14 @@
                     [RFC Editor: Please replace RFCthis with the published RFC
                     number for this document.]
                 </t>
-                 <t>
+                 
                  <section anchor="IANA.ALTO.entity.domain.types.subdivison" title="Subdivisioncode Entity Domain-specific Identifiers">
+                  <t>
                  The entity identifier of an entity in a SUBDIVISIONCODE is encoded as an alpha-2 ISO 3166-1 Country Code, followed by a separator 
                  and up to three alphanumeric characters.
+                 <\t>
                  </section>
-                  <\t>
+                 
                  
             </section>
         </section>
