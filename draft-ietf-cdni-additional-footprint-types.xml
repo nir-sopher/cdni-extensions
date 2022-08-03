@@ -9,7 +9,7 @@
 <?rfc comments="yes"?>
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
-<rfc category="std" docName="draft-ietf-cdni-additional-footprint-types-02" updates='8006,8008' ipr="trust200902">
+<rfc category="std" docName="draft-ietf-cdni-additional-footprint-types-02" updates='8006,8008,9241' ipr="trust200902">
     <front>
         <title abbrev="Content Delivery Network Interconnection (CDNI) Footprint Types: Subdivision Code and Union">
             Content Delivery Network Interconnection (CDNI) Footprint Types: Subdivision Code and Union
@@ -197,7 +197,7 @@
                     <t>
                         The "SubdivisionCode" simple data type specified in
                         <xref target="cdni-metadata-subdivisioncode-data-type" />
-                        , is added
+                       , is added
                         to the data types listed as footprint types in section 4.2.2.2 of
                         <xref target="RFC8006" />
                         .
@@ -229,6 +229,29 @@
                         </artwork>
                     </figure>
                 </section>
+                <section anchor="cdni-metadata-subdivisioncode-alto-property-map-service-entity" title="SUBDIVISIONCODE ALTO Property Map Service Entity">
+                <t>
+                    <xref target="RFC9241" />,
+                 <\t>   
+                <section anchor="cdni-metadata-subdivisioncode-alto-property-map-service-entity-domain" title="SUBDIVISIONCODE Domain">
+                <t>
+                    The SUBDIVISIONCODE domain associates property values that defines codes for the names of the principal subdivisions.
+                <\t>
+                <section anchor="cdni-metadata-subdivisioncode-alto-property-map-service-entity-domain-type" title="Entity Domain Type">
+                <t>
+                    The entity domain type of the SUBDIVISIONCODE domain is "subdivisioncode" (in lowercase).
+                <\t>
+                <section anchor="cdni-metadata-subdivisioncode-alto-property-map-service-entity-domain-identifiers" title="Domain-Specific Entity Identifiers">
+                <t>
+                    The entity identifier of an entity in a SUBDIVISIONCODE is encoded as an alpha-2 ISO 3166-1 Country Code, followed by a separator 
+                    and up to three alphanumeric characters.
+                <\t>
+            <\section>
+            <\section>
+            <\section>
+            <\section>
+   
+                    
             </section>
             <section anchor="cdni-metadata-footprint-union-footprint-type" title="CDNI Metadata FootprintUnion Footprint Type">
                 <t>
@@ -449,7 +472,7 @@
                         subdivisioncode
                     </c>
                     <c>
-                        See RFCthis, <xref target="IANA.ALTO.entity.domain.types.subdivison" /> 
+                        See RFCthis, <xref target="cdni-metadata-subdivisioncode-alto-property-map-service-entity-domain-identifiers" /> 
                     </c>
                     <c>
                         None
@@ -467,13 +490,7 @@
                     number for this document.]
                 </t>
                  
-                 <section anchor="IANA.ALTO.entity.domain.types.subdivison" title="Subdivisioncode Entity Domain-specific Identifiers">
-                  <t>
-                 The entity identifier of an entity in a SUBDIVISIONCODE is encoded as an alpha-2 ISO 3166-1 Country Code, followed by a separator 
-                 and up to three alphanumeric characters.
-                 <\t>
-                 </section>
-                 
+                
                  
             </section>
         </section>
@@ -505,6 +522,7 @@
             <?rfc include="reference.RFC.8008"?>
             <?rfc include="reference.RFC.8174"?>
             <?rfc include="reference.RFC.9240"?>
+            <?rfc include="reference.RFC.9241"?>
             <reference anchor="ISO3166-1" target="https://www.iso.org/standard/72482.html">
                 <front>
                 <title>
