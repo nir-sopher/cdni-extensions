@@ -196,8 +196,7 @@
                 <section anchor="cdni-metadata-subdivisioncode-footprint-type-description" title="CDNI Metadata SubdivisionCode Footprint Type Description">
                     <t>
                         The "SubdivisionCode" simple data type specified in
-                        <xref target="cdni-metadata-subdivisioncode-data-type" />
-                       , is added
+                        <xref target="cdni-metadata-subdivisioncode-data-type" />, is added
                         to the data types listed as footprint types in section 4.2.2.2 of
                         <xref target="RFC8006" />
                         .
