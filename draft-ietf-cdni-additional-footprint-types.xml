@@ -232,24 +232,24 @@
                 <section anchor="cdni-metadata-subdivisioncode-alto-property-map-service-entity" title="SUBDIVISIONCODE ALTO Property Map Service Entity">
                 <t>
                     <xref target="RFC9241" />,
-                 <\t>   
+                 </t>   
                 <section anchor="cdni-metadata-subdivisioncode-alto-property-map-service-entity-domain" title="SUBDIVISIONCODE Domain">
                 <t>
                     The SUBDIVISIONCODE domain associates property values that defines codes for the names of the principal subdivisions.
-                <\t>
+                </t>
                 <section anchor="cdni-metadata-subdivisioncode-alto-property-map-service-entity-domain-type" title="Entity Domain Type">
                 <t>
                     The entity domain type of the SUBDIVISIONCODE domain is "subdivisioncode" (in lowercase).
-                <\t>
+                </t>
                 <section anchor="cdni-metadata-subdivisioncode-alto-property-map-service-entity-domain-identifiers" title="Domain-Specific Entity Identifiers">
                 <t>
                     The entity identifier of an entity in a SUBDIVISIONCODE is encoded as an alpha-2 ISO 3166-1 Country Code, followed by a separator 
                     and up to three alphanumeric characters.
-                <\t>
-            <\section>
-            <\section>
-            <\section>
-            <\section>
+                </t>
+            </section>
+            </section>
+            </section>
+            </section>
    
                     
             </section>
