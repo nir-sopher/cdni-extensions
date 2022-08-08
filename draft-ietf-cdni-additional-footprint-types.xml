@@ -173,7 +173,7 @@
                     <section anchor="cdni-metadata-subdivisioncode-data-type-description" title="CDNI Metadata SubdivisionCode Data Type Description">
                         <t>
                         An <xref target="ISO3166-2"/> code in lower case. Each code consists of two parts separated by a hyphen. 
-                        The first part is the <xref target="ISO3166-1"/> code of the country. The second part is a string of up to three alphanumeric characters.
+                        The first part is the <xref target="ISO3166-1"/> code of the country. The second part is a string of up to three alphanumeric characters as per <xref target="ISO3166-2"/>.
                         </t>
                         <t>
                             <list style="empty">
@@ -228,31 +228,7 @@
                         </artwork>
                     </figure>
                 </section>
-                <section anchor="cdni-metadata-subdivisioncode-alto-property-map-service-entity" title="SUBDIVISIONCODE ALTO Property Map Service Entity">
-                <t>
-                   Section 6 of <xref target="RFC9241" /> describes how to represent footprint objects as entities in the ALTO property map. The approach is to represent the "footprint-type" as an entity domain type of the ALTO entity,
-                   and the footprint value as its domain-specific identifier. <xref target="RFC9241" /> further refers to the representation of footprint objects 
-                   of types "asn" and "countrycode". Here we extend this definition to the "subdivisioncode" footprint-type.
-                 </t>   
-                <section anchor="cdni-metadata-subdivisioncode-alto-property-map-service-entity-domain" title="SUBDIVISIONCODE Domain">
-                <t>
-                    The SUBDIVISIONCODE domain associates property values that defines codes for the names of the principal subdivisions.
-                </t>
-                <section anchor="cdni-metadata-subdivisioncode-alto-property-map-service-entity-domain-type" title="Entity Domain Type">
-                <t>
-                    The entity domain type of the SUBDIVISIONCODE domain is "subdivisioncode" (in lowercase).
-                </t>
-                <section anchor="cdni-metadata-subdivisioncode-alto-property-map-service-entity-domain-identifiers" title="Domain-Specific Entity Identifiers">
-                <t>
-                    The entity identifier of an entity in a SUBDIVISIONCODE is encoded as an alpha-2 ISO 3166-1 Country Code, followed by a separator 
-                    and up to three alphanumeric characters.
-                </t>
-            </section>
-            </section>
-            </section>
-            </section>
-   
-                    
+                              
             </section>
             <section anchor="cdni-metadata-footprint-union-footprint-type" title="CDNI Metadata FootprintUnion Footprint Type">
                 <t>
@@ -395,6 +371,29 @@
                 </section>
             </section>
         </section>
+        <section anchor="cdni-metadata-alto-property-map-service-entity" title="ALTO Property Map Service Entity">
+                <t>
+                   Section 6 of <xref target="RFC9241" /> describes how to represent footprint objects as entities in the ALTO property map. The approach is to represent the "footprint-type" as an entity domain type of the ALTO entity,
+                   and the footprint value as its domain-specific identifier. <xref target="RFC9241" /> further refers to the representation of footprint objects 
+                   of types "asn" and "countrycode". Here we extend this definition to the "subdivisioncode" footprint-type.
+                 </t>   
+                <section anchor="cdni-metadata-subdivisioncode-alto-property-map-service-entity-domain" title="SUBDIVISIONCODE Domain">
+                <t>
+                    The SUBDIVISIONCODE domain associates property values that defines codes for the names of the principal subdivisions.
+                </t>
+                <section anchor="cdni-metadata-subdivisioncode-alto-property-map-service-entity-domain-type" title="Entity Domain Type">
+                <t>
+                    The entity domain type of the SUBDIVISIONCODE domain is "subdivisioncode" (in lowercase).
+                </t>
+                <section anchor="cdni-metadata-subdivisioncode-alto-property-map-service-entity-domain-identifiers" title="Domain-Specific Entity Identifiers">
+                <t>
+                    The entity identifier of an entity in a SUBDIVISIONCODE is encoded as an alpha-2 ISO 3166-1 Country Code, followed by a separator 
+                    and up to three alphanumeric characters.
+                </t>
+            </section>
+            </section>
+            </section>
+            </section>
         <section anchor="IANA" title="IANA Considerations">
             <section anchor="IANA.cdni.metadata.footprint.types" title="CDNI Metadata Footprint Types">
                 <t>
