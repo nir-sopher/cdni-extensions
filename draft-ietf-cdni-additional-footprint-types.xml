@@ -165,7 +165,7 @@
                     <section anchor="cdni-metadata-subdivisioncode-data-type-description" title="CDNI Metadata SubdivisionCode Data Type Description">
                         <t>
                         An <xref target="ISO3166-2"/> code in lower case. Each code consists of two parts separated by a hyphen. 
-                        The first part is the <xref target="ISO3166-1"/> code of the country. The second part is a string of up to three alphanumeric characters as per <xref target="ISO3166-2"/>.
+                        The first part is the <xref target="ISO3166-1"/> code of the country. The second part is a string of up to three alphanumeric characters.
                         </t>
                         <t>
                             <list style="empty">
@@ -380,7 +380,7 @@
                 <section anchor="cdni-metadata-subdivisioncode-alto-property-map-service-entity-domain-identifiers" title="Domain-Specific Entity Identifiers">
                 <t>
                     The entity identifier of an entity in a SUBDIVISIONCODE is encoded as an alpha-2  <xref target="ISO3166-1"/> Country Code, followed by a separator 
-                    and up to three alphanumeric characters as per <xref target="ISO3166-2"/>.
+                    and up to three alphanumeric characters.
                 </t>
             </section>
             </section>
@@ -415,8 +415,8 @@
                         FCI.subdivisioncode
                     </c>
                     <c>
-                        ISO 3166-2 Subdivision Code: An alpha-2  <xref target="ISO3166-1"/> Country Code, followed by a separator 
-                        and up to three alphanumeric characters as per <xref target="ISO3166-2"/>.
+                        <xref target="ISO3166-2"/> Subdivision Code: An alpha-2  <xref target="ISO3166-1"/> Country Code, followed by a separator 
+                        and up to three alphanumeric characters.
                     </c>
                     <c>
                         RFCthis
