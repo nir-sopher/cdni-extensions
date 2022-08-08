@@ -387,8 +387,8 @@
                 </t>
                 <section anchor="cdni-metadata-subdivisioncode-alto-property-map-service-entity-domain-identifiers" title="Domain-Specific Entity Identifiers">
                 <t>
-                    The entity identifier of an entity in a SUBDIVISIONCODE is encoded as an alpha-2 ISO 3166-1 Country Code, followed by a separator 
-                    and up to three alphanumeric characters.
+                    The entity identifier of an entity in a SUBDIVISIONCODE is encoded as an alpha-2  <xref target="ISO3166-1"/> Country Code, followed by a separator 
+                    and up to three alphanumeric characters as per <xref target="ISO3166-2"/>.
                 </t>
             </section>
             </section>
@@ -423,8 +423,8 @@
                         FCI.subdivisioncode
                     </c>
                     <c>
-                        ISO 3166-2 Subdivision Code: An alpha-2 ISO 3166-1 Country Code, followed by a separator 
-                        and up to three alphanumeric characters
+                        ISO 3166-2 Subdivision Code: An alpha-2  <xref target="ISO3166-1"/> Country Code, followed by a separator 
+                        and up to three alphanumeric characters as per <xref target="ISO3166-2"/>.
                     </c>
                     <c>
                         RFCthis
