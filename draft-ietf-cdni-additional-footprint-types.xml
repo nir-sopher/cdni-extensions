@@ -100,7 +100,7 @@
                 <xref target="RFC8006" />) for the defined objects:
                 <list style="symbols">
                     <t>
-                        SubdivisionCode Footprint Type (e.g., for a dCDN advertising a footprint that is specific to
+                        Subdivision Code Footprint Type (e.g., for a dCDN advertising a footprint that is specific to
                         a State in the USA)
                     </t>
                     <t>
@@ -144,7 +144,7 @@
                 This document defines additional footprint types, beyond those mentioned in CDNI metadata
                 <xref target="RFC8006" />.
             </t>
-            <section anchor="cdni-metadata-subdivisioncode-footprint-type" title="CDNI Metadata SubdivisionCode Footprint Type">
+            <section anchor="cdni-metadata-subdivisioncode-footprint-type" title="CDNI Metadata Subdivision Code Footprint Type">
                 <t>
                     Section 4.3.8 of <xref target="RFC8006" />
                     specifies the "Country Code" footprint type
@@ -154,15 +154,15 @@
                     allowing the dCDN to define constraints matching geographic areas
                     with better granularity, specifically using the <xref target="ISO3166-2"/> Country Subdivision codes.
                 </t>
-                <section anchor="cdni-metadata-subdivisioncode-data-type" title="CDNI Metadata SubdivisionCode Data Type">
+                <section anchor="cdni-metadata-subdivisioncode-data-type" title="CDNI Metadata Subdivision Code Data Type">
                     <t>
-                        The "SubdivisionCode" data type specified in
+                        The "subdivisioncode" data type specified in
                         <xref target="cdni-metadata-subdivisioncode-data-type-description" />,
                         describes a country specific subdivision using an <xref target="ISO3166-2"/> code. 
                         The data type is added to the list of data types  described in section 4.3 of
                         <xref target="RFC8006" /> that are used as properties of CDNI Metadata objects.
                     </t>
-                    <section anchor="cdni-metadata-subdivisioncode-data-type-description" title="CDNI Metadata SubdivisionCode Data Type Description">
+                    <section anchor="cdni-metadata-subdivisioncode-data-type-description" title="CDNI Metadata Subdivision Code Data Type Description">
                         <t>
                         An <xref target="ISO3166-2"/> code in lower case. Each code consists of two parts separated by a hyphen. 
                         The first part is the <xref target="ISO3166-1"/> code of the country. The second part is a string of up to three alphanumeric characters.
@@ -173,7 +173,7 @@
                                     Type: String
                                 </t>
                                 <t>
-                                    Example SubdivisionCodes:
+                                    Example Subdivision Codes:
                                 </t>
                                 <t>
                                     "ca-ns"
@@ -185,16 +185,16 @@
                         </t>
                     </section>
                 </section>
-                <section anchor="cdni-metadata-subdivisioncode-footprint-type-description" title="CDNI Metadata SubdivisionCode Footprint Type Description">
+                <section anchor="cdni-metadata-subdivisioncode-footprint-type-description" title="CDNI Metadata Subdivision Code Footprint Type Description">
                     <t>
-                        The "SubdivisionCode" simple data type specified in
+                        The "subdivisioncode" simple data type specified in
                         <xref target="cdni-metadata-subdivisioncode-data-type" />, is added
                         to the data types listed as footprint types in section 4.2.2.2 of
                         <xref target="RFC8006" />
                         .
                     </t>
                     <t>
-                        Below is an example using a footprint object of type "SubdivisionCode". 
+                        Below is an example using a footprint object of type "subdivisioncode". 
                         The Footprint Object in this example creates
                         a constraint matching clients both in the Nova-Scotia province of Canada (ISO <xref target="ISO3166-2"/> code "CA-NS"), as well as in the state of
                         New-York In the US (ISO <xref target="ISO3166-2"/> code "US-NY").
@@ -494,7 +494,7 @@
                 <xref target="RFC8006" />
                 and in Section 7 of
                 <xref target="RFC8008" />
-                respectively. More specifically, the use of "SubdivisionCode" footprint type, introduces a higher level of granularity into the published dCDN Footprint.
+                respectively. More specifically, the use of "subdivisioncode" footprint type, introduces a higher level of granularity into the published dCDN Footprint.
                 Therefore, to meet confidentiality requirements, the use of transport-layer security mechanisms as specified in Section 7 
                 of <xref target="RFC8008"/> is required.
             </t>
