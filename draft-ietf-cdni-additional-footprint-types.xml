@@ -78,10 +78,10 @@
     <middle>
         <section title="Introduction">
             <t>
-                The Streaming Video Alliance <xref target="SVA" format="default" /> is a global association
+                The Streaming Video Technology Alliance <xref target="SVTA" format="default" /> is a global association
                 that works to solve streaming video challenges in an effort to improve end-user experience
                 and adoption. The Open Caching Working Group <xref target="OCWG" format="default" /> of the
-                Streaming Video Alliance <xref target="SVA" format="default" /> is focused on the delegation
+                Streaming Video Technology Alliance <xref target="SVTA" format="default" /> is focused on the delegation
                 of video delivery requests from commercial CDNs to a caching layer at the ISP's network.
                 Open Caching architecture is a specific use case of CDNI where the commercial CDN is the
                 upstream CDN (uCDN) and the ISP caching layer is the downstream CDN (dCDN).
@@ -545,16 +545,16 @@
         <references title="Informative References">
             <?rfc include="reference.RFC.6707"?>
             <?rfc include="reference.RFC.7336"?>
-            <reference anchor="SVA" target="https://www.streamingvideoalliance.org">
+            <reference anchor="SVTA" target="https://www.svta.org/">
                 <front>
                     <title>
-                        Streaming Video Alliance Home Page
+                        Streaming Video Technology Alliance Home Page
                     </title>
                     <author />
                     <date />
                 </front>
             </reference>
-            <reference anchor="OCWG" target="https://www.streamingvideoalliance.org/technical-groups/open-caching/">
+            <reference anchor="OCWG" target="https://opencaching.svta.org/">
                 <front>
                     <title>
                         Open Caching Home Page
@@ -563,7 +563,7 @@
                     <date />
                 </front>
             </reference>
-            <reference anchor="OC-RR" target="https://www.streamingvideoalliance.org/books/open-cache-request-routing-functional-specification/">
+            <reference anchor="OC-RR" target="https://www.svta.org/product/open-cache-request-routing-functional-specification/">
                 <front>
                     <title>
                         Open Caching - Request Routing Functional Specification
@@ -603,9 +603,9 @@
                             Disney Streaming Services
                         </organization>
                     </author>
-                    <date day="4" month="October" year="2019" />
+                    <date day="15" month="January" year="2021" />
                 </front>
-                <seriesInfo name="Version" value="1.1" />
+                <seriesInfo name="Version" value="2.0" />
             </reference>
         </references>
     </back>
