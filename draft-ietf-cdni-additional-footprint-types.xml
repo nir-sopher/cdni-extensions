@@ -150,7 +150,7 @@
                     specifies the "Country Code" footprint type
                     for listing <xref target="ISO3166-1"/> alpha-2 codes. Using Footprint Objects of this type, one can define an
                     FCI Capability Advertisement Object footprint constraint that matches a specific country.
-                    Herein is define the subdivisioncode simple data type, as well as a footprint type
+                    Herein is defined the subdivisioncode simple data type, as well as a footprint type
                     allowing the dCDN to define constraints matching geographic areas
                     with better granularity, specifically using the <xref target="ISO3166-2"/> Country Subdivision codes.
                 </t>
@@ -290,7 +290,7 @@
                         is added to the data types listed as footprint types in section 4.2.2.2 of <xref target="RFC8006" />.
                     </t>
                     <t>
-                        Below is an example using a footprint object of type "footprintunion".
+                        Below is an example using a footprint object of type "footprintunion" combining both IPv4 and IPv6 client addresses.
                     </t>
                     <figure>
                         <artwork>
@@ -415,7 +415,7 @@
                         FCI.subdivisioncode
                     </c>
                     <c>
-                        <xref target="ISO3166-2"/> Subdivision Code: An alpha-2  <xref target="ISO3166-1"/> Country Code, followed by a separator 
+                        <xref target="ISO3166-2"/> Subdivision Code: An alpha-2  <xref target="ISO3166-1"/> Country Code, followed by a hyphen 
                         and up to three alphanumeric characters.
                     </c>
                     <c>
