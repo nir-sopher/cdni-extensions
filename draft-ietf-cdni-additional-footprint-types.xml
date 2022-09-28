@@ -222,7 +222,7 @@
                 </section>
                               
             </section>
-            <section anchor="cdni-metadata-footprint-union-footprint-type" title="CDNI Metadata FootprintUnion Footprint Type">
+            <section anchor="cdni-metadata-footprint-union-footprint-type" title="CDNI Metadata Footprint Union Footprint Type">
                 <t>
                     As described in section 5 of <xref target="RFC8008" />, 
                     the FCI Capability Advertisement Object includes an array of CDNI Footprint Objects. 
@@ -271,17 +271,17 @@
                 </figure>
                 <t>
                     To overcome the described limitation and allow a list of footprint constraints that
-                    match both IPv4 and IPv6 client addresses, below is introduced the "FootprintUnion" footprint type. 
+                    match both IPv4 and IPv6 client addresses, below is introduced the "footprintunion" footprint type. 
                     This footprint type allows the collection of multiple footprint-objects into a unified object. 
                     It is useful for resolving the above limitation, as well as for unifying footprints of additional types such as 
                     countrycode and subdivisioncode.
                 </t>
-                <section anchor="cdni-metadata-footprint-union-data-type" title="CDNI Metadata FootprintUnion Data Type">
+                <section anchor="cdni-metadata-footprint-union-data-type" title="CDNI Metadata Footprint Union Data Type">
                     <t>
-                        The "FootprintUnion" data type is based on the Footprint Object already defined in 
-                        section 4.2.2.2 of <xref target="RFC8006" />. The footprint-value for a FootprintUnion object 
+                        The "footprintunion" data type is based on the Footprint Object already defined in 
+                        section 4.2.2.2 of <xref target="RFC8006" />. The footprint-value for a footprintunion object 
                         is an array of Footprint objects, where the Footprint objects may be of any Footprint Type 
-                        other than FootprintUnion.
+                        other than footprintunion.
                     </t>
                 </section>
                 <section anchor="cdni-metadata-footprint-union-footprint-type-description" title="CDNI Metadata FootprintUnion Footprint Type Description">
