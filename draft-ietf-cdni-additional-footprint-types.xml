@@ -190,8 +190,7 @@
                         The "subdivisioncode" simple data type specified in
                         <xref target="cdni-metadata-subdivisioncode-data-type" />, is added
                         to the data types listed as footprint types in section 4.2.2.2 of
-                        <xref target="RFC8006" />
-                        .
+                        <xref target="RFC8006" />.
                     </t>
                     <t>
                         Below is an example using a footprint object of type "subdivisioncode". 
@@ -235,7 +234,8 @@
                     Sections 4.3.5 and 4.3.6 of <xref target="RFC8006" /> specify the "IPv4CIDR" and "IPv6CIDR"
                     footprint types, respectively, for listing IP addresses blocks. Using Footprint Objects of these
                     types, one can define FCI Capability Advertisement Object footprint constraints that match IPv4
-                    or IPv6 clients. However, the described "narrowing" semantic of the Footprint Objects array prevents
+                    or IPv6 clients. However, the described "narrowing" semantic of the Footprint Objects array, as described 
+                    in Appendix B of <xref target="RFC8008" />, prevents
                     the usage of these objects together to create a footprint constraint that matches IPv4
                     clients together with IPv6 clients.
                 </t>
@@ -279,7 +279,7 @@
                 <section anchor="cdni-metadata-footprint-union-data-type" title="CDNI Metadata Footprint Union Data Type">
                     <t>
                         The "footprintunion" data type is based on the Footprint Object already defined in 
-                        section 4.2.2.2 of <xref target="RFC8006" />. The footprint-value for a footprintunion object 
+                        section 4.2.2.2 of <xref target="RFC8006" />. The footprint-value for a "footprintunion" object 
                         is an array of Footprint objects, where the Footprint objects may be of any Footprint Type 
                         other than footprintunion.
                     </t>
