@@ -9,7 +9,7 @@
 <?rfc comments="yes"?>
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
-<rfc category="std" docName="draft-ietf-cdni-additional-footprint-types-01" updates='8006,8008' ipr="trust200902">
+<rfc category="std" docName="draft-ietf-cdni-additional-footprint-types-03" updates='8006,8008,9241' ipr="trust200902">
     <front>
         <title abbrev="Content Delivery Network Interconnection (CDNI) Footprint Types: Subdivision Code and Union">
             Content Delivery Network Interconnection (CDNI) Footprint Types: Subdivision Code and Union
@@ -70,17 +70,18 @@
                 downstream CDN (dCDN). This document supplements the CDNI Metadata Footprint Types defined in RFC 8006.
                 The Footprint Types defined in this document can be used for Footprint objects as part of 
                 the Metadata interface (MI) defined in RFC 8006 or
-                the Footprint &amp; Capabilities Advertisement interface (FCI) defined in RFC 8008. The defined Footprint Types are derived from requirements raised by Open Caching but are also applicable to CDNI use cases in general.
+                the Footprint &amp; Capabilities Advertisement interface (FCI) defined in RFC 8008. The document also updates RFC 9241 with relevant ALTO entity domain types.
+                The defined Footprint Types are derived from requirements raised by Open Caching but are also applicable to CDNI use cases in general.
             </t>
         </abstract>
     </front>
     <middle>
         <section title="Introduction">
             <t>
-                The Streaming Video Alliance <xref target="SVA" format="default" /> is a global association
+                The Streaming Video Technology Alliance <xref target="SVTA" format="default" /> is a global association
                 that works to solve streaming video challenges in an effort to improve end-user experience
                 and adoption. The Open Caching Working Group <xref target="OCWG" format="default" /> of the
-                Streaming Video Alliance <xref target="SVA" format="default" /> is focused on the delegation
+                Streaming Video Technology Alliance <xref target="SVTA" format="default" /> is focused on the delegation
                 of video delivery requests from commercial CDNs to a caching layer at the ISP's network.
                 Open Caching architecture is a specific use case of CDNI where the commercial CDN is the
                 upstream CDN (uCDN) and the ISP caching layer is the downstream CDN (dCDN).
@@ -99,12 +100,12 @@
                 <xref target="RFC8006" />) for the defined objects:
                 <list style="symbols">
                     <t>
-                        SubdivisionCode Footprint Type (e.g., for dCDN advertising a footprint that is specific to
+                        Subdivision Code Footprint Type (e.g., for a dCDN advertising a footprint that is specific to
                         a State in the USA)
                     </t>
                     <t>
-                        Collection Footprint Type (for dCDN advertising a footprint that consists of a group built 
-                        from multiple Footprints Types. E.g., both IPv4 and IPv6 client addresses)
+                        Collection Footprint Type (for a dCDN advertising a footprint that consists of a group built 
+                        from multiple Footprints Types, e.g., both IPv4 and IPv6 client addresses)
                     </t>
                 </list>
             </t>
@@ -133,16 +134,7 @@
                     </list>
                 </t>
             </section>
-            <section title="Requirements Language">
-                <t>
-                    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
-                    "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this
-                    document are to be interpreted as described in BCP 14
-                    <xref target="RFC2119" />
-                    <xref target="RFC8174" />
-                    when, and only when, they appear in all capitals, as shown here.
-                </t>
-            </section>
+           
         </section>
         <section anchor="cdni-metadata-additional-footprint-types" title="CDNI Metadata Additional Footprint Types">
             <t>
@@ -152,27 +144,27 @@
                 This document defines additional footprint types, beyond those mentioned in CDNI metadata
                 <xref target="RFC8006" />.
             </t>
-            <section anchor="cdni-metadata-subdivisioncode-footprint-type" title="CDNI Metadata SubdivisionCode Footprint Type">
+            <section anchor="cdni-metadata-subdivisioncode-footprint-type" title="CDNI Metadata Subdivision Code Footprint Type">
                 <t>
                     Section 4.3.8 of <xref target="RFC8006" />
                     specifies the "Country Code" footprint type
                     for listing <xref target="ISO3166-1"/> alpha-2 codes. Using Footprint Objects of this type, one can define an
-                    FCI Capability Advertisement Object footprint constraints that match a specific country.
-                    Herein is define the subdivisioncode simple data type, as well as a footprint type
+                    FCI Capability Advertisement Object footprint constraint that matches a specific country.
+                    Herein is defined the subdivisioncode simple data type, as well as a footprint type
                     allowing the dCDN to define constraints matching geographic areas
                     with better granularity, specifically using the <xref target="ISO3166-2"/> Country Subdivision codes.
                 </t>
-                <section anchor="cdni-metadata-subdivisioncode-data-type" title="CDNI Metadata SubdivisionCode Data Type">
+                <section anchor="cdni-metadata-subdivisioncode-data-type" title="CDNI Metadata Subdivision Code Data Type">
                     <t>
-                        The "SubdivisionCode" data type specified in
+                        The "subdivisioncode" data type specified in
                         <xref target="cdni-metadata-subdivisioncode-data-type-description" />,
                         describes a country specific subdivision using an <xref target="ISO3166-2"/> code. 
                         The data type is added to the list of data types  described in section 4.3 of
                         <xref target="RFC8006" /> that are used as properties of CDNI Metadata objects.
                     </t>
-                    <section anchor="cdni-metadata-subdivisioncode-data-type-description" title="CDNI Metadata SubdivisionCode Data Type Description">
+                    <section anchor="cdni-metadata-subdivisioncode-data-type-description" title="CDNI Metadata Subdivision Code Data Type Description">
                         <t>
-                        A <xref target="ISO3166-2"/> code in lower case. Each code consists of two parts, separated by a hyphen. 
+                        An <xref target="ISO3166-2"/> code in lower case. Each code consists of two parts separated by a hyphen. 
                         The first part is the <xref target="ISO3166-1"/> code of the country. The second part is a string of up to three alphanumeric characters.
                         </t>
                         <t>
@@ -181,7 +173,7 @@
                                     Type: String
                                 </t>
                                 <t>
-                                    Example SubdivisionCodes:
+                                    Example Subdivision Codes:
                                 </t>
                                 <t>
                                     "ca-ns"
@@ -193,19 +185,18 @@
                         </t>
                     </section>
                 </section>
-                <section anchor="cdni-metadata-subdivisioncode-footprint-type-description" title="CDNI Metadata SubdivisionCode Footprint Type Description">
+                <section anchor="cdni-metadata-subdivisioncode-footprint-type-description" title="CDNI Metadata Subdivision Code Footprint Type Description">
                     <t>
-                        The "SubdivisionCode" simple data type specified in
-                        <xref target="cdni-metadata-subdivisioncode-data-type" />
-                        , is added
+                        The "subdivisioncode" simple data type specified in
+                        <xref target="cdni-metadata-subdivisioncode-data-type" />, is added
                         to the data types listed as footprint types in section 4.2.2.2 of
                         <xref target="RFC8006" />
                         .
                     </t>
                     <t>
-                        Below is an example using a footprint object of type "SubdivisionCode". 
+                        Below is an example using a footprint object of type "subdivisioncode". 
                         The Footprint Object in this example creates
-                        a constraints matching clients both in the Nova-Scotia province of Canada (ISO <xref target="ISO3166-2"/> code "CA-NS"), as well as in the state of
+                        a constraint matching clients both in the Nova-Scotia province of Canada (ISO <xref target="ISO3166-2"/> code "CA-NS"), as well as in the state of
                         New-York In the US (ISO <xref target="ISO3166-2"/> code "US-NY").
                     </t>
                     <figure>
@@ -229,8 +220,9 @@
                         </artwork>
                     </figure>
                 </section>
+                              
             </section>
-            <section anchor="cdni-metadata-footprint-union-footprint-type" title="CDNI Metadata FootprintUnion Footprint Type">
+            <section anchor="cdni-metadata-footprint-union-footprint-type" title="CDNI Metadata Footprint Union Footprint Type">
                 <t>
                     As described in section 5 of <xref target="RFC8008" />, 
                     the FCI Capability Advertisement Object includes an array of CDNI Footprint Objects. 
@@ -279,17 +271,17 @@
                 </figure>
                 <t>
                     To overcome the described limitation and allow a list of footprint constraints that
-                    match both IPv4 and IPv6 client addresses, below is introduced the "FootprintUnion" footprint type. 
+                    match both IPv4 and IPv6 client addresses, below is introduced the "footprintunion" footprint type. 
                     This footprint type allows the collection of multiple footprint-objects into a unified object. 
                     It is useful for resolving the above limitation, as well as for unifying footprints of additional types such as 
                     countrycode and subdivisioncode.
                 </t>
-                <section anchor="cdni-metadata-footprint-union-data-type" title="CDNI Metadata FootprintUnion Data Type">
+                <section anchor="cdni-metadata-footprint-union-data-type" title="CDNI Metadata Footprint Union Data Type">
                     <t>
-                        The "FootprintUnion" data type is based on the Footprint Object already defined in 
-                        section 4.2.2.2 of <xref target="RFC8006" />. The footprint-value for a FootprintUnion object 
+                        The "footprintunion" data type is based on the Footprint Object already defined in 
+                        section 4.2.2.2 of <xref target="RFC8006" />. The footprint-value for a footprintunion object 
                         is an array of Footprint objects, where the Footprint objects may be of any Footprint Type 
-                        other than FootprintUnion.
+                        other than footprintunion.
                     </t>
                 </section>
                 <section anchor="cdni-metadata-footprint-union-footprint-type-description" title="CDNI Metadata FootprintUnion Footprint Type Description">
@@ -298,7 +290,7 @@
                         is added to the data types listed as footprint types in section 4.2.2.2 of <xref target="RFC8006" />.
                     </t>
                     <t>
-                        Below is an example using a footprint object of type "footprintunion".
+                        Below is an example using a footprint object of type "footprintunion" combining both IPv4 and IPv6 client addresses.
                     </t>
                     <figure>
                         <artwork>
@@ -330,7 +322,7 @@
                         </artwork>
                     </figure>
                     <t>
-                    The footprint union also allows to compose a countrycode and subdivisioncode based footprint objects. 
+                    The footprint union also enables composing a countrycode and subdivisioncode based footprint objects. 
                     In the example below 
                     we create a constraint covering autonomous system 64496 within the US (ISO <xref target="ISO3166-1"/> alpha-2 code "US")
                     and the Nova-Scotia province of Canada (ISO <xref target="ISO3166-2"/> code "CA-NS").
@@ -371,6 +363,29 @@
                 </section>
             </section>
         </section>
+        <section anchor="cdni-metadata-alto-property-map-service-entity" title="ALTO Property Map Service Entity">
+                <t>
+                   Section 6 of <xref target="RFC9241" /> describes how to represent footprint objects as entities in the ALTO property map. The approach is to represent the "footprint-type" as an entity domain type of the ALTO entity,
+                   and the footprint value as its domain-specific identifier. <xref target="RFC9241" /> further refers to the representation of footprint objects 
+                   of types "asn" and "countrycode". Here we extend this definition to the "subdivisioncode" footprint-type.
+                 </t>   
+                <section anchor="cdni-metadata-subdivisioncode-alto-property-map-service-entity-domain" title="SUBDIVISIONCODE Domain">
+                <t>
+                    The SUBDIVISIONCODE domain associates property values that defines codes for the names of the principal subdivisions.
+                </t>
+                <section anchor="cdni-metadata-subdivisioncode-alto-property-map-service-entity-domain-type" title="Entity Domain Type">
+                <t>
+                    The entity domain type of the SUBDIVISIONCODE domain is "subdivisioncode" (in lowercase).
+                </t>
+                <section anchor="cdni-metadata-subdivisioncode-alto-property-map-service-entity-domain-identifiers" title="Domain-Specific Entity Identifiers">
+                <t>
+                    The entity identifier of an entity in a SUBDIVISIONCODE is encoded as an alpha-2  <xref target="ISO3166-1"/> Country Code, followed by a separator 
+                    and up to three alphanumeric characters.
+                </t>
+            </section>
+            </section>
+            </section>
+            </section>
         <section anchor="IANA" title="IANA Considerations">
             <section anchor="IANA.cdni.metadata.footprint.types" title="CDNI Metadata Footprint Types">
                 <t>
@@ -400,8 +415,8 @@
                         FCI.subdivisioncode
                     </c>
                     <c>
-                        ISO 3166-2 Subdivision Code: An alpha-2 ISO 3166-1 Country Code, followed by a separator 
-                        and up to three alphanumeric characters
+                        <xref target="ISO3166-2"/> Subdivision Code: An alpha-2  <xref target="ISO3166-1"/> Country Code, followed by a hyphen 
+                        and up to three alphanumeric characters.
                     </c>
                     <c>
                         RFCthis
@@ -410,7 +425,7 @@
                         FCI.footprintunion
                     </c>
                     <c>
-                        Footprint Object as specified in <xref target="RFC8006" />
+                        A combination of other Footprint Objects 
                     </c>
                     <c>
                         RFCthis
@@ -421,6 +436,55 @@
                     number for this document.]
                 </t>
             </section>
+             <section anchor="IANA.ALTO.entity.domain.types" title="ALTO Entity Domain Types">
+                <t>
+                    Section 12.3 of <xref target="RFC9240" /> creates
+                    the "ALTO Entity Domain Types" registry.
+                </t>
+                <t>
+                    This document requests the registration of an additional ALTO Entity Domain Types:
+               </t>
+                <texttable>
+                    <ttcol align="left">
+                        Identifier
+                    </ttcol>
+                     <ttcol align="left">
+                       Entity Identifier Encoding
+                    </ttcol>
+                     <ttcol align="left">
+                       Hierarchy and Inheritance
+                    </ttcol>
+                    <ttcol align="left">
+                        Media Type of Defining Resource
+                    </ttcol>
+                    <ttcol align="left">
+                        Mapping to ALTO Address Type
+                    </ttcol>
+                    <c>
+                        subdivisioncode
+                    </c>
+                    <c>
+                        See RFCthis, <xref target="cdni-metadata-subdivisioncode-alto-property-map-service-entity-domain-identifiers" /> 
+                    </c>
+                    <c>
+                        None
+                    </c>
+                    <c>
+                        None
+                    </c>
+                    <c>
+                        false 
+                    </c>
+                    
+                </texttable>
+                <t>
+                    [RFC Editor: Please replace RFCthis with the published RFC
+                    number for this document.]
+                </t>
+                 
+                
+                 
+            </section>
         </section>
         <section anchor="Security" title="Security Considerations">
             <t>
@@ -430,9 +494,9 @@
                 <xref target="RFC8006" />
                 and in Section 7 of
                 <xref target="RFC8008" />
-                respectively. More specifically, the use of "SubdivisionCode" footprint type, introduces a higher level of granularity into the published dCDN Footprint.
+                respectively. More specifically, the use of "subdivisioncode" footprint type, introduces a higher level of granularity into the published dCDN Footprint.
                 Therefore, to meet confidentiality requirements, the use of transport-layer security mechanisms as specified in Section 7 
-                of <xref target="RFC8008"/>, is required.
+                of <xref target="RFC8008"/> is required.
             </t>
         </section>
         <section anchor="Acknowledgements" title="Acknowledgements">
@@ -445,10 +509,10 @@
     </middle>
     <back>
         <references title="Normative References">
-            <?rfc include="reference.RFC.2119"?>
             <?rfc include="reference.RFC.8006"?>
             <?rfc include="reference.RFC.8008"?>
-            <?rfc include="reference.RFC.8174"?>
+            <?rfc include="reference.RFC.9240"?>
+            <?rfc include="reference.RFC.9241"?>
             <reference anchor="ISO3166-1" target="https://www.iso.org/standard/72482.html">
                 <front>
                 <title>
@@ -481,16 +545,16 @@
         <references title="Informative References">
             <?rfc include="reference.RFC.6707"?>
             <?rfc include="reference.RFC.7336"?>
-            <reference anchor="SVA" target="https://www.streamingvideoalliance.org">
+            <reference anchor="SVTA" target="https://www.svta.org/">
                 <front>
                     <title>
-                        Streaming Video Alliance Home Page
+                        Streaming Video Technology Alliance Home Page
                     </title>
                     <author />
                     <date />
                 </front>
             </reference>
-            <reference anchor="OCWG" target="https://www.streamingvideoalliance.org/technical-groups/open-caching/">
+            <reference anchor="OCWG" target="https://opencaching.svta.org/">
                 <front>
                     <title>
                         Open Caching Home Page
@@ -499,7 +563,7 @@
                     <date />
                 </front>
             </reference>
-            <reference anchor="OC-RR" target="https://www.streamingvideoalliance.org/books/open-cache-request-routing-functional-specification/">
+            <reference anchor="OC-RR" target="https://www.svta.org/product/open-cache-request-routing-functional-specification/">
                 <front>
                     <title>
                         Open Caching - Request Routing Functional Specification
@@ -539,9 +603,9 @@
                             Disney Streaming Services
                         </organization>
                     </author>
-                    <date day="4" month="October" year="2019" />
+                    <date day="15" month="January" year="2021" />
                 </front>
-                <seriesInfo name="Version" value="1.1" />
+                <seriesInfo name="Version" value="2.0" />
             </reference>
         </references>
     </back>
