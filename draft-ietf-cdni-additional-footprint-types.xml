@@ -104,7 +104,7 @@
                         a State in the USA)
                     </t>
                     <t>
-                        Collection Footprint Type (for a dCDN advertising a footprint that consists of a group built 
+                        Union Footprint Type (for a dCDN advertising a footprint that consists of a group built 
                         from multiple Footprints Types, e.g., both IPv4 and IPv6 client addresses)
                     </t>
                 </list>
