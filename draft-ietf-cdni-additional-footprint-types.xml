@@ -522,6 +522,7 @@
     </middle>
     <back>
         <references title="Normative References">
+            <?rfc include="reference.RFC.9241"?>
             <?rfc include="reference.RFC.8006"?>
             <?rfc include="reference.RFC.8008"?>
             <?rfc include="reference.RFC.9240"?>
