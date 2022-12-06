@@ -76,6 +76,13 @@
                 The defined Footprint Types are derived from requirements raised by Open Caching but are also applicable to CDNI use cases in general.
             </t>
         </abstract>
+        
+        <note title="Requirements Language">
+          <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+             "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+             document are to be interpreted as described in <xref
+             target="RFC2119">RFC 2119</xref>.</t>
+        </note>
     </front>
     <middle>
         <section title="Introduction">
@@ -282,7 +289,7 @@
                     <t>
                         The "footprintunion" data type is based on the Footprint Object already defined in 
                         section 4.2.2.2 of <xref target="RFC8006" />. The footprint-value for a "footprintunion" object 
-                        is an array of Footprint objects, where the Footprint objects may be of any Footprint Type 
+                        is an array of Footprint objects, where the Footprint objects MUST be of any Footprint Type 
                         other than footprintunion.
                     </t>
                 </section>
@@ -498,7 +505,7 @@
                 <xref target="RFC8008" />
                 respectively. More specifically, the use of "subdivisioncode" footprint type, introduces a higher level of granularity into the published dCDN Footprint.
                 Therefore, to meet confidentiality requirements, the use of transport-layer security mechanisms as specified in Section 7 
-                of <xref target="RFC8008"/> is required.
+                of <xref target="RFC8008"/> is expected.
             </t>
         </section>
         <section anchor="Acknowledgements" title="Acknowledgements">
