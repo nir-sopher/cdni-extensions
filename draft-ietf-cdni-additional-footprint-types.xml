@@ -424,8 +424,7 @@
                         subdivisioncode
                     </c>
                     <c>
-                        <xref target="ISO3166-2"/> Subdivision Code: An alpha-2  <xref target="ISO3166-1"/> Country Code, followed by a hyphen 
-                        and up to three alphanumeric characters.
+                        <xref target="ISO3166-2"/> ISO 3166-2 country subdivision code: alpha-2 country code, followed by a hyphen-minus, and up to 3 characters from A-Z;0-9 as a code within the country.
                     </c>
                     <c>
                         RFCthis
