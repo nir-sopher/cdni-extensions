@@ -70,7 +70,9 @@
                 downstream CDN (dCDN). This document supplements the CDNI Metadata Footprint Types defined in RFC 8006.
                 The Footprint Types defined in this document can be used for Footprint objects as part of 
                 the Metadata interface (MI) defined in RFC 8006 or
-                the Footprint &amp; Capabilities Advertisement interface (FCI) defined in RFC 8008. The document also updates RFC 9241 with relevant ALTO entity domain types.
+                the Footprint &amp; Capabilities Advertisement interface (FCI) defined in RFC 8008. By defining the footprint union Footprint Type,
+                this document updates RFC 8008, allowing an additive semantic over the narrowing semantics defined in Appendix B of RFC 8008.
+                The document also suppliments RFC 9241 with relevant ALTO entity domain types.
                 The defined Footprint Types are derived from requirements raised by Open Caching but are also applicable to CDNI use cases in general.
             </t>
         </abstract>
