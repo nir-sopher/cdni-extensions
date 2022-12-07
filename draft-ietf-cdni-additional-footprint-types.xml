@@ -410,9 +410,9 @@
                 <t>
                     This document requests the registration of the two additional Footprint Types
                     as defined in
-                    <xref target="cdni-metadata-footprint-union-footprint-type" />
-                    and
                     <xref target="cdni-metadata-subdivisioncode-footprint-type" />
+                    and
+                    <xref target="cdni-metadata-footprint-union-footprint-type" />
                     :
                 </t>
                 <texttable>
