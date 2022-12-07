@@ -280,7 +280,7 @@
                 </figure>
                 <t>
                     To overcome the described limitation and allow a list of footprint constraints that
-                    match both IPv4 and IPv6 client addresses, below is introduced the "footprintunion" footprint type. 
+                    match both IPv4 and IPv6 client addresses, this document defines the "footprintunion" footprint type. 
                     This footprint type allows the collection of multiple footprint-objects into a unified object. 
                     It is useful for resolving the above limitation, as well as for unifying footprints of additional types such as 
                     countrycode and subdivisioncode.
@@ -423,7 +423,7 @@
                         Description
                     </ttcol>
                     <ttcol align="left">
-                        Specification
+                        Reference
                     </ttcol>
                     <c>
                         subdivisioncode
