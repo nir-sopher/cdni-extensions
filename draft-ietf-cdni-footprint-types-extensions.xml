@@ -188,7 +188,7 @@
                                     Example ISO3166-2Codes:
                                 </t>
                                 <t>
-                                    "ca-ns"
+                                    "us-nj"
                                 </t>
                                 <t>
                                     "us-ny"
@@ -210,8 +210,7 @@
                         Below is an adjustment for the example in
                         <xref target="cdni-metadata-iso3166-2code-data-type" />,
                         now embedding a footprint object of type "ISO3166-2Code". The Footprint Object in this example creates
-                        a constraints matching clients both in Nova-Scotia province of Canada (ISO <xref target="ISO3166-2"/> code "CA-NS"), as well as in the state of
-                        New-York In the US (ISO <xref target="ISO3166-2"/> code "US-NY").
+                        a constraint matching clients in the states of New Jersey and New York (ISO <xref target="ISO3166-2"/> codes "US-NJ" and "US-NY" respectively).
                     </t>
                     <figure>
                         <artwork>
@@ -337,7 +336,7 @@
                     <t>
                     An additional example is the collection of countrycode and iso3166-2code based footprint objects. In the example below 
                     we create a constraint covering autonomous system 64496 within the US (ISO <xref target="ISO3166-1"/> alpha-2 code "US"),
-                    as well as Nova-Scotia province of Canada (ISO <xref target="ISO3166-2"/> code "CA-NS").
+                    as well as Ontario province of Canada (ISO <xref target="ISO3166-2"/> code "CA-ON").
                     </t>
                     <figure>
                         <artwork>
@@ -361,7 +360,7 @@
             },
             {
               "footprint-type": "iso3166-2code",
-              "footprint-value": ["ca-ns"]
+              "footprint-value": ["ca-on"]
             }
           ]
         }
