@@ -173,7 +173,7 @@
                     </t>
                     <section anchor="cdni-metadata-subdivisioncode-data-type-description" title="CDNI Metadata Subdivision Code Data Type Description">
                         <t>
-                        An <xref target="ISO3166-2"/> code in lower case. Each code consists of two parts separated by a hyphen. 
+                        An <xref target="ISO3166-2"/> code in lowercase. Each code consists of two parts separated by a hyphen. 
                         The first part is the <xref target="ISO3166-1"/> code of the country. The second part is a string of up to three alphanumeric characters.
                         </t>
                         <t>
@@ -189,6 +189,9 @@
                                 </t>
                                 <t>
                                     "us-ny"
+                                </t>
+                                <t>
+                                    "ca-on"
                                 </t>
                             </list>
                         </t>
