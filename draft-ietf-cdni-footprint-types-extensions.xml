@@ -223,7 +223,7 @@
       "footprints": [
           {
               "footprint-type": "iso3166-2code",
-              "footprint-value": ["ca-ns", "us-ny"]
+              "footprint-value": ["us-nj", "us-ny"]
           }
       ]
     }
