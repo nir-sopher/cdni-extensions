@@ -184,15 +184,8 @@
                                 <t>
                                     Example Subdivision Codes:
                                 </t>
-                                <t>
-                                    "us-nj"
-                                </t>
-                                <t>
-                                    "us-ny"
-                                </t>
-                                <t>
-                                    "ca-on"
-                                </t>
+                                <t>"ca-on"</t>
+                                <t>"us-ny"</t>
                             </list>
                         </t>
                     </section>
