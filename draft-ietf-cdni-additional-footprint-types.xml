@@ -185,7 +185,7 @@
                                     Example Subdivision Codes:
                                 </t>
                                 <t>
-                                    "ca-ns"
+                                    "us-nj"
                                 </t>
                                 <t>
                                     "us-ny"
@@ -204,8 +204,7 @@
                     <t>
                         Below is an example using a footprint object of type "subdivisioncode". 
                         The Footprint Object in this example creates
-                        a constraint matching clients both in the Nova-Scotia province of Canada (ISO <xref target="ISO3166-2"/> code "CA-NS"), as well as in the state of
-                        New-York In the US (ISO <xref target="ISO3166-2"/> code "US-NY").
+                        a constraint matching clients in the states of New Jersey and New York (ISO <xref target="ISO3166-2"/> codes "US-NJ" and "US-NY" respectively).
                     </t>
                     <figure>
                         <artwork>
@@ -218,7 +217,7 @@
       "footprints": [
           {
               "footprint-type": "subdivisioncode",
-              "footprint-value": ["ca-ns", "us-ny"]
+              "footprint-value": ["us-nj", "us-ny"]
           }
       ]
     }
@@ -334,7 +333,7 @@
                     The footprint union also enables composing a countrycode and subdivisioncode based footprint objects. 
                     In the example below 
                     we create a constraint covering autonomous system 64496 within the US (ISO <xref target="ISO3166-1"/> alpha-2 code "US")
-                    and the Nova-Scotia province of Canada (ISO <xref target="ISO3166-2"/> code "CA-NS").
+                    and the Ontario province of Canada (ISO <xref target="ISO3166-2"/> code "CA-ON").
                     </t>
                     <figure>
                         <artwork>
@@ -358,7 +357,7 @@
             },
             {
               "footprint-type": "subdivisioncode",
-              "footprint-value": ["ca-ns"]
+              "footprint-value": ["ca-on"]
             }
           ]
         }
