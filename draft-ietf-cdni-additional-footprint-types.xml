@@ -237,7 +237,7 @@
                 </t>
                 <t>
                     Sections 4.3.5 and 4.3.6 of <xref target="RFC8006" /> specify the "IPv4CIDR" and "IPv6CIDR"
-                    footprint types, respectively, for listing IP unscoped addresses blocks. Using Footprint Objects of these
+                    footprint types, respectively, for listing IP unscoped address blocks. Using Footprint Objects of these
                     types, one can define FCI Capability Advertisement Object footprint constraints that match IPv4
                     or IPv6 clients. However, the described "narrowing" semantic of the Footprint Objects array, as described 
                     in Appendix B of <xref target="RFC8008" />, prevents
