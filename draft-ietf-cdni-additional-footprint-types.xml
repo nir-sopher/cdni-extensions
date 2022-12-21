@@ -278,8 +278,12 @@
                     To overcome the described limitation and allow a list of footprint constraints that
                     match both IPv4 and IPv6 client addresses, this document defines the "footprintunion" footprint type. 
                     This footprint type allows the collection of multiple footprint-objects into a unified object. 
-                    It is useful for resolving the above limitation, as well as for unifying footprints of additional types such as 
-                    countrycode and subdivisioncode.
+                    It is useful for resolving the above limitation, as well as for unifying footprints of additional types that have inherent similarity such as 
+                    countrycode and subdivisioncode. 
+                </t>
+                <t>
+                    Note: to avoid implementation complexity, a "footprintunion" MUST not list any "footprintunion" as a value. 
+                    As a union of unions is simply a union, this syntextual restrication does not result with any semantic limitation.  
                 </t>
                 <section anchor="cdni-metadata-footprint-union-data-type" title="CDNI Metadata Footprint Union Data Type">
                     <t>
