@@ -200,8 +200,8 @@
                     </t>
                     <t>
                         Below is an example using a footprint object of type "subdivisioncode". 
-                        The Footprint Object in this example creates
-                        a constraint matching clients in the states of New Jersey and New York (ISO <xref target="ISO3166-2"/> codes "US-NJ" and "US-NY" respectively).
+                        The Footprint Object in this example creates a constraint matching clients in the  
+                        states of New Jersey and New York, USA (ISO <xref target="ISO3166-2"/> codes "US-NJ" and "US-NY" respectively).
                     </t>
                     <figure>
                         <artwork>
