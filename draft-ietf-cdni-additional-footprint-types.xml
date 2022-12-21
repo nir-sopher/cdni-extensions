@@ -81,7 +81,8 @@
           <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
              "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
              document are to be interpreted as described in <xref
-             target="RFC2119">RFC 2119</xref>.</t>
+             target="RFC2119">RFC 2119</xref> <xref
+             target="RFC8174">RFC 8174</xref>.</t>
         </note>
     </front>
     <middle>
@@ -525,6 +526,7 @@
             <?rfc include="reference.RFC.2119"?>
             <?rfc include="reference.RFC.8006"?>
             <?rfc include="reference.RFC.8008"?>
+            <?rfc include="reference.RFC.8174"?>
             <?rfc include="reference.RFC.9240"?>
             <?rfc include="reference.RFC.9241"?>
             <reference anchor="ISO3166-1" target="https://www.iso.org/standard/72482.html">
