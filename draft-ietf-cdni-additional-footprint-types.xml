@@ -90,9 +90,10 @@
                 The Streaming Video Technology Alliance <xref target="SVTA" format="default" /> is a global association
                 that works to solve streaming video challenges in an effort to improve end-user experience
                 and adoption. The Open Caching Working Group <xref target="OCWG" format="default" /> of the
-                Streaming Video Technology Alliance <xref target="SVTA" format="default" /> is focused on the delegation
-                of video delivery requests from commercial CDNs to a caching layer at the ISP's network.
-                Open Caching architecture is a specific use case of CDNI where the commercial CDN is the
+                SVTA is focused on the delegation
+                of video delivery requests from commercial Content Delivery Networks (CDNs) to a caching layer at the ISP's network.
+                Open Caching architecture is a specific use case of Content Delivery Networks Interconnection (CDNI)
+                where the commercial CDN is the
                 upstream CDN (uCDN) and the ISP caching layer is the downstream CDN (dCDN).
                 The <xref target="OC-RR"> Open Caching Request Routing Specification </xref>
                 defines the Request Routing process and the interfaces that are required for its provisioning.
@@ -147,7 +148,7 @@
         </section>
         <section anchor="cdni-metadata-additional-footprint-types" title="CDNI Metadata Additional Footprint Types">
             <t>
-                Section 5 of <xref target="RFC8008" /> describes the FCI Capability Advertisement Object, which
+                Section 5 of <xref target="RFC8008" /> describes the Footprint &amp; Capabilities Advertisement interface (FCI) Capability Advertisement Object, which
                  includes an array of CDNI Footprint Objects. Each such object has a footprint-type and
                 a footprint-value, as described in section 4.2.2.2 of <xref target="RFC8006" />.
                 This document defines additional footprint types, beyond those mentioned in CDNI metadata
