@@ -116,7 +116,7 @@
                     </t>
                     <t>
                         Union Footprint Type (for a dCDN advertising a footprint that consists of a group built 
-                        from multiple Footprints Types, e.g., both IPv4 and IPv6 client addresses)
+                        from multiple Footprints Types, e.g., both IPv4 and IPv6 client subnets)
                     </t>
                 </list>
             </t>
@@ -277,7 +277,7 @@
                 </figure>
                 <t>
                     To overcome the described limitation and allow a list of footprint constraints that
-                    match both IPv4 and IPv6 client addresses, this document defines the "footprintunion" footprint type. 
+                    match both IPv4 and IPv6 client subnets, this document defines the "footprintunion" footprint type. 
                     This footprint type allows the collection of multiple footprint-objects into a unified object. 
                     It is useful for resolving the above limitation, unifying objects of footprints types 
                     with inherent semantic similarity such as ipv4cidr together with ipv6cidr, as well as countrycode together with subdivisioncode. 
@@ -300,7 +300,7 @@
                         is added to the data types listed as footprint types in section 4.2.2.2 of <xref target="RFC8006" />.
                     </t>
                     <t>
-                        Below is an example using a footprint object of type "footprintunion" combining both IPv4 and IPv6 client addresses.
+                        Below is an example using a footprint object of type "footprintunion" combining both IPv4 and IPv6 client subnets.
                     </t>
                     <figure>
                         <artwork>
