@@ -279,8 +279,8 @@
                     To overcome the described limitation and allow a list of footprint constraints that
                     match both IPv4 and IPv6 client subnets, this document defines the "footprintunion" footprint type. 
                     This footprint type allows the collection of multiple footprint-objects into a unified object. 
-                    It is useful for resolving the above limitation, unifying objects of footprints types 
-                    with inherent semantic similarity such as ipv4cidr together with ipv6cidr, as well as countrycode together with subdivisioncode. 
+                    Therefore it resolves the above limitation and can be particularly useful to unify semantically related objects, 
+                    for example, an ipv4cidr together with an ipv6cidr or a countrycode together with a subdivisoncode. 
                 </t>
                 <t>
                     Note: to avoid implementation complexity, a "footprintunion" MUST not list any "footprintunion" as a value. 
