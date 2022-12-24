@@ -9,7 +9,7 @@
 <?rfc comments="yes"?>
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
-<rfc category="std" docName="draft-ietf-cdni-additional-footprint-types-06" updates='8008' ipr="trust200902">
+<rfc category="std" docName="draft-ietf-cdni-additional-footprint-types-07" updates='8008' ipr="trust200902">
     <front>
         <title abbrev="CDNI Additional Footprint Types">
               Content Delivery Network Interconnection (CDNI) Footprint Types: Subdivision Code and Footprint Union
@@ -278,7 +278,7 @@
                     To overcome the described limitation and allow a list of footprint constraints that
                     match both IPv4 and IPv6 client subnets, this document defines the "footprintunion" footprint type. 
                     This footprint type allows the collection of multiple footprint-objects into a unified object. 
-                    Therefore it resolves the above limitation and can be particularly useful to unify semantically related objects, 
+                    Therefore it resolves the above limitation and can be particularly applicable to unify semantically related objects, 
                     for example, an ipv4cidr together with an ipv6cidr or a countrycode together with a subdivisoncode. 
                 </t>
                 <t>
