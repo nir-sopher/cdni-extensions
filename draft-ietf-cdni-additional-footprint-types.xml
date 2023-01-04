@@ -404,7 +404,7 @@
         <section anchor="IANA" title="IANA Considerations">
             <section anchor="IANA.cdni.metadata.footprint.types" title="CDNI Metadata Footprint Types">
                 <t>
-                    Section 7.2 of <xref target="RFC8006" /> creates
+                    Section 7.2 of <xref target="RFC8006" /> specifies
                     the "CDNI Metadata Footprint Types" subregistry
                     within the "Content Delivery Network Interconnection (CDNI) Parameters" registry.
                 </t>
