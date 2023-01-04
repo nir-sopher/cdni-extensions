@@ -282,7 +282,7 @@
                     for example, an ipv4cidr together with an ipv6cidr or a countrycode together with a subdivisoncode. 
                 </t>
                 <t>
-                    Note: to avoid implementation complexity, a "footprintunion" MUST not list any "footprintunion" as a value. 
+                    Note: to avoid implementation complexity, a "footprintunion" MUST NOT list any "footprintunion" as a value. 
                     As a union of unions is simply a union, this syntextual restrication does not result with any semantic limitation.  
                 </t>
                 <section anchor="cdni-metadata-footprint-union-data-type" title="CDNI Metadata Footprint Union Data Type">
@@ -290,7 +290,7 @@
                         The "footprintunion" data type is based on the Footprint Object already defined in 
                         section 4.2.2.2 of <xref target="RFC8006" />. The footprint-value for a "footprintunion" object 
                         is an array of Footprint objects, where the Footprint objects MUST be of any Footprint Type 
-                        other than footprintunion.
+                        other than "footprintunion".
                     </t>
                 </section>
                 <section anchor="cdni-metadata-footprint-union-footprint-type-description" title="CDNI Metadata FootprintUnion Footprint Type Description">
