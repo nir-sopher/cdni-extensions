@@ -175,7 +175,7 @@
                     <section anchor="cdni-metadata-subdivisioncode-data-type-description" title="CDNI Metadata Subdivision Code Data Type Description">
                         <t>
                         An <xref target="ISO3166-2"/> code in lowercase. Each code consists of two parts separated by a hyphen. 
-                        The first part is the <xref target="ISO3166-1"/> code of the country. The second part is a string of up to three alphanumeric characters.
+                        As per <xref target="ISO3166-2"/>, the first part is the <xref target="ISO3166-1"/> code of the country. The second part is a string of up to three alphanumeric characters.
                         </t>
                         <t>
                             <list style="empty">
@@ -283,7 +283,7 @@
                 </t>
                 <t>
                     Note: to avoid implementation complexity, a "footprintunion" MUST NOT list any "footprintunion" as a value. 
-                    As a union of unions is simply a union, this syntextual restrication does not result with any semantic limitation.  
+                    As a union of unions is simply a union, this syntactic restriction does not result with any semantic limitation.  
                 </t>
                 <section anchor="cdni-metadata-footprint-union-data-type" title="CDNI Metadata Footprint Union Data Type">
                     <t>
@@ -502,14 +502,12 @@
         <section anchor="Security" title="Security Considerations">
             <t>
                 This specification is in accordance with the CDNI Metadata and the CDNI Request Routing:
-                Footprint and Capabilities Semantics. As such, it is subject to the security and privacy considerations as
+                Footprint and Capabilities Semantics. As such, it is subject to the security and confidentiality considerations as
                 defined in Section 8 of
                 <xref target="RFC8006" />
                 and in Section 7 of
                 <xref target="RFC8008" />
-                respectively. More specifically, the use of "subdivisioncode" footprint type, introduces a higher level of granularity into the published dCDN Footprint.
-                Therefore, to meet confidentiality requirements, the use of transport-layer security mechanisms as specified in Section 7 
-                of <xref target="RFC8008"/> is expected.
+                respectively.
             </t>
         </section>
         <section anchor="Acknowledgements" title="Acknowledgements">
