@@ -204,7 +204,7 @@
                         The Footprint Object in this example creates a constraint matching clients in the  
                         states of New Jersey and New York, USA (ISO <xref target="ISO3166-2"/> codes "US-NJ" and "US-NY" respectively).
                     </t>
-                    <figure title="Subdivision code based footprint advertisement example">
+                    <figure title="title: Illustration of subdivision-code footprint advertisement">
                         <artwork>
 <![CDATA[
 {
@@ -251,7 +251,7 @@
                     Such a definition results in an empty list of clients, as the constraints are additives and
                     a client address cannot be both IPv4 and IPv6.
                 </t>
-                <figure title="Narrowing semantic null footprint advertisement example">
+                <figure title="Example of narrowing semantic illustrating advertisement of a null footprint"">
                     <artwork>
 <![CDATA[
 {
@@ -302,7 +302,7 @@
                     <t>
                         Below is an example using a footprint object of type "footprintunion" combining both IPv4 and IPv6 client subnets.
                     </t>
-                    <figure title="Multi CIDR footprint types based footprint advertisement example, using footprint union">
+                    <figure title="Example of an advertisement of footprint union for multiple CIDR footprint types">
                         <artwork>
 <![CDATA[
 {
@@ -337,7 +337,7 @@
                     we create a constraint covering autonomous system 64496 within the US (ISO <xref target="ISO3166-1"/> alpha-2 code "US")
                     and the Ontario province of Canada (ISO <xref target="ISO3166-2"/> code "CA-ON").
                     </t>
-                    <figure title="Multi geographical footprint types based footprint advertisement example, using footprint union">
+                    <figure title="Example of an advertisement of footprint union for multiple geographical footprint types">
                         <artwork>
 <![CDATA[
 {
