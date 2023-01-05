@@ -416,7 +416,7 @@
                     <xref target="cdni-metadata-footprint-union-footprint-type" />
                     :
                 </t>
-                <texttable>
+                <texttable table="CDNI metadata footprint types registration">
                     <ttcol align="left">
                         Footprint Type
                     </ttcol>
@@ -458,7 +458,7 @@
                 <t>
                     This document requests the registration of an additional ALTO Entity Domain Types:
                </t>
-                <texttable>
+                <texttable title="ALTO entity domain types registration">
                     <ttcol align="left">
                         Identifier
                     </ttcol>
