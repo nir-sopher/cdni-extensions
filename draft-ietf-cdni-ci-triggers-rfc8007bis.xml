@@ -3954,7 +3954,7 @@ RESPONSE:
             <section anchor="IANA.CDNI.payload.CIT.UriPatternSpec" title="CDNI CI/T UriPatterns Trigger Spec Payload Type">
                <t>Purpose: The purpose of this Trigger Spec type is to distinguish UriPatterns CIT Trigger Spec objects.</t>
                <t>Interface: CI/T</t>
-               <t>Encoding: see <xref target="uri-patterns-spec"/></t>
+               <t>Encoding: see <xref target="uri-pattern-match-spec"/></t>
             </section>
 
             <section anchor="IANA.CDNI.payload.CIT.UriRegexesSpec" title="CDNI CI/T UriRegexes Trigger Spec Payload Type">
