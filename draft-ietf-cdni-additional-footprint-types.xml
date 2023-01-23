@@ -9,7 +9,7 @@
 <?rfc comments="yes"?>
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
-<rfc category="std" docName="draft-ietf-cdni-additional-footprint-types-10" updates='8008' ipr="trust200902">
+<rfc category="std" docName="draft-ietf-cdni-additional-footprint-types-11" updates='8008' ipr="trust200902">
     <front>
         <title abbrev="CDNI Additional Footprint Types">
               Content Delivery Network Interconnection (CDNI) Footprint Types: Subdivision Code and Footprint Union
