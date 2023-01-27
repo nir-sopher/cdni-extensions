@@ -19,7 +19,7 @@
 <!ENTITY RFC7736 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7736.xml">
 <!ENTITY RFC7975 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7975.xml">
 ]>
-<rfc category="std" docName="draft-ietf-cdni-ci-triggers-rfc8007bis-03" obsoletes='8007' ipr="trust200902">
+<rfc category="std" docName="draft-ietf-cdni-ci-triggers-rfc8007bis-04" obsoletes='8007' ipr="trust200902">
 	<?rfc strict="yes"?>
 	<?rfc compact="yes"?>
 	<?rfc subcompact="no"?>
@@ -1422,7 +1422,7 @@ uCDN-A                         dCDN-B                         dCDN-C
    of a CDNI GenericTriggerSpec object. The GenericTriggerSpec object abstracts the basic
    information required for trigger distribution from the specifics of any given property
    (i.e., property semantics, enforcement options, etc.). The semantics of the Trigger Specs list 
-   is addative, i.e. the trigger applies to any object matching one of the listed specs.
+   is additive, i.e. the trigger applies to any object matching one of the listed specs.
    </t>
 
 
@@ -1442,9 +1442,9 @@ uCDN-A                         dCDN-B                         dCDN-C
                <t>Mandatory: Yes.</t>
             </list></t>
 
-            <t>Property: generic-trigger-spec-values<list style="empty">
+            <t>Property: generic-trigger-spec-value<list style="empty">
 
-               <t>Description: An array of CDNI Trigger spec object values.</t>
+               <t>Description:A CDNI Trigger spec object.</t>
 
                <t>Type: Format/Type is defined by the value of the
                   generic-trigger-spec-type property above.</t>
@@ -2138,23 +2138,10 @@ uCDN-A                         dCDN-B                         dCDN-C
 
 
 
-     <section anchor="uri-regexes-spec" title="URI Regexes Spec">
+     <section anchor="uri-regex-match-spec" title="URI Regex Match Spec">
         <t>The content-uri-regexes spec type allows the uCDN to manage content or metadata objects
-           held by the dCDN based on the objects' URI regexes.
+           held by the dCDN based on the objects' URI regex.
         </t>
-
-         <t>Spec object specification<list style="empty">
-
-              <t>Property: regexes<list style="empty">
-
-                 <t>Description: The content URI regexes the trigger applies to.</t>
-
-                 <t>Value: A JSON array of RegexMatch objects (see <xref target="regex-match"/>).</t>
-
-                 <t>Mandatory: Yes.</t>
-              </list></t>
-          </list></t>
-
 
         <section anchor="regex-match" title="RegexMatch">
           <t>
@@ -2235,23 +2222,11 @@ https://video.example.com/k/movie1/4/013.ts
    </section>
 
 
-     <section anchor="content-playlists-spec" title="Content Playlists Spec">
-        <t>The content-playlists spec type allows the uCDN to manage content held by the dCDN
-           based on the content's playlists. 
-           The content-playlists spec type is valid only for CIT.Content spec subject.
+     <section anchor="content-playlist-spec" title="Content Playlist Spec">
+        <t>The content-playlist spec type allows the uCDN to manage content held by the dCDN
+           based on the content's playlist. 
+           The content-playlist spec type is valid only for CIT.Content spec subject.
         </t>
-
-         <t>Spec object specification<list style="empty">
-
-              <t>Property: playlists<list style="empty">
-
-                 <t>Description: The content playlists the trigger applies to.</t>
-
-                 <t>Value: A JSON array of Playlist objects (see <xref target="playlist"/>).</t>
-
-                 <t>Mandatory: Yes.</t>
-              </list></t>
-          </list></t>   
 
         <section anchor="playlist" title="Playlist">
           <t>A Playlist consists of a full URL and a media protocol identifier.
@@ -3058,11 +3033,9 @@ REQUEST:
       "action": "CIT.Invalidate",
       "specs": [
          {
-            "generic-trigger-spec-type": "CIT.UriPatterns",
+            "generic-trigger-spec-type": "CIT.UriPatternMatch",
             "generic-trigger-spec-value": {
-               "patterns": [
-                  { "pattern": "https://metadata.example.com/a/b/*" }
-               ]
+               "pattern": "https://metadata.example.com/a/b/*"
             },
             "trigger-subject": "CIT.Metadata"
          },
@@ -3076,13 +3049,10 @@ REQUEST:
             "trigger-subject": "CIT.Content"
          },
          {
-            "generic-trigger-spec-type": "CIT.UriPatterns",
+            "generic-trigger-spec-type": "CIT.UriPatternMatch",
             "generic-trigger-spec-value": {
-               "patterns": [
-                  { "pattern": "https://www.example.com/a/b/*",
-                     "case-sensitive": true
-                  }
-               ]
+               "pattern": "https://www.example.com/a/b/*",
+               "case-sensitive": true
             },
             "trigger-subject": "CIT.Content"
          }
@@ -3109,11 +3079,9 @@ RESPONSE:
          "action": "CIT.Invalidate",
          "specs": [
             {
-               "generic-trigger-spec-type": "CIT.UriPatterns",
+               "generic-trigger-spec-type": "CIT.UriPatternMatch",
                "generic-trigger-spec-value": {
-                  "patterns": [
-                     { "pattern": "https://metadata.example.com/a/b/*" }
-                  ]
+                  "pattern": "https://metadata.example.com/a/b/*"
                },
                "trigger-subject": "CIT.Metadata"
             },
@@ -3127,13 +3095,10 @@ RESPONSE:
                "trigger-subject": "CIT.Content"
             },
             {
-               "generic-trigger-spec-type": "CIT.UriPatterns",
+               "generic-trigger-spec-type": "CIT.UriPatternMatch",
                "generic-trigger-spec-value": {
-                  "patterns": [
-                     { "pattern": "https://www.example.com/a/b/*",
-                        "case-sensitive": true
-                     }
-                  ]
+                  "pattern": "https://www.example.com/a/b/*",
+                  "case-sensitive": true
                },
                "trigger-subject": "CIT.Content"
             }
@@ -3167,19 +3132,12 @@ REQUEST:
       "action": "CIT.Invalidate",
       "specs": [
          {
-            "generic-trigger-spec-type": "CIT.UriRegexes",
+            "generic-trigger-spec-type": "CIT.UriRegexMatch",
             "generic-trigger-spec-value": {
-               "regexes": [
-                  {
-                     "regex": "^(https:\\/\\/video\\.example\\.com)\\/
-                     ([a-z])\\/movie1\\/([1-7])\\/*(index.m3u8|\\d{3}.ts)$",
-                     "case-sensitive": true,
-                     "match-query-string": false
-                  },
-                  { <RegexMatch #2> },
-                  ...
-                  { <RegexMatch #N> }
-               ]
+                 "regex": "^(https:\\/\\/video\\.example\\.com)\\/
+                 ([a-z])\\/movie1\\/([1-7])\\/*(index.m3u8|\\d{3}.ts)$",
+                 "case-sensitive": true,
+                 "match-query-string": false
             },
             "trigger-subject": "CIT.Content"
          }
@@ -3202,16 +3160,12 @@ RESPONSE:
       {
         "specs": [
             {
-               "generic-trigger-spec-type": "CIT.UriRegexes",
+               "generic-trigger-spec-type": "CIT.UriRegexMatch",
                "generic-trigger-spec-value": {
-                  "regexes": [
-                     {
-                        "regex": "^(https:\\/\\/video\\.example\\.com)\\/
-                        ([a-z])\\/movie1\\/([1-7])\\/*(index.m3u8|\\d{3}.ts)$",
-                        "case-sensitive": true,
-                        "match-query-string": false
-                     }
-                  ]
+                   "regex": "^(https:\\/\\/video\\.example\\.com)\\/
+                   ([a-z])\\/movie1\\/([1-7])\\/*(index.m3u8|\\d{3}.ts)$",
+                   "case-sensitive": true,
+                   "match-query-string": false
                },
                "trigger-subject": "CIT.Content"
             }
@@ -3251,17 +3205,10 @@ REQUEST:
       "action": "CIT.Preposition",
       "specs": [
          {
-            "generic-trigger-spec-type": "CIT.ContentPlaylists",
+            "generic-trigger-spec-type": "CIT.ContentPlaylist",
             "generic-trigger-spec-value": {
-               "playlists": [
-                  {
-                  "playlist": "https://www.example.com/hls/title/index.m3u8",
-                  "media-protocol": "hls"
-                  },
-                  { <Playlist #2> },
-                  ...
-                  { <Playlist #N> }
-               ]
+                "playlist": "https://www.example.com/hls/title/index.m3u8",
+                "media-protocol": "hls"
             },
             "trigger-subject": "CIT.Content"
          }
@@ -3284,14 +3231,10 @@ RESPONSE:
       {
         "specs": [
           {
-            "generic-trigger-spec-type": "CIT.ContentPlaylists",
+            "generic-trigger-spec-type": "CIT.ContentPlaylist",
             "generic-trigger-spec-value": {
-               "playlists": [
-                  {
-                  "playlist": "https://www.example.com/hls/title/index.m3u8",
-                  "media-protocol": "hls"
-                  }
-               ]
+                "playlist": "https://www.example.com/hls/title/index.m3u8",
+                "media-protocol": "hls"
             },
             "trigger-subject": "CIT.Content"
          }
@@ -3508,11 +3451,9 @@ RESPONSE:
           "action": "CIT.Invalidate",
           "specs": [
             {
-               "generic-trigger-spec-type": "CIT.UriPatterns",
-               "generic-trigger-spec-value": {
-                  "patterns": [
-                     { "pattern": "https://metadata.example.com/a/b/*" }
-                  ]
+               "generic-trigger-spec-type": "CIT.UriPatternMatch",
+               "generic-trigger-spec-value": { 
+                  "pattern": "https://metadata.example.com/a/b/*"
                },
                "trigger-subject": "CIT.Metadata"
             },
@@ -3526,13 +3467,10 @@ RESPONSE:
                "trigger-subject": "CIT.Content"
             },
             {
-               "generic-trigger-spec-type": "CIT.UriPatterns",
+               "generic-trigger-spec-type": "CIT.UriPatternMatch",
                "generic-trigger-spec-value": {
-                  "patterns": [
-                     { "pattern": "https://www.example.com/a/b/*",
-                        "case-sensitive": true
-                     }
-                  ]
+                   "pattern": "https://www.example.com/a/b/*",
+                   "case-sensitive": true
                },
                "trigger-subject": "CIT.Content"
             }
@@ -3725,14 +3663,10 @@ REQUEST:
      "action": "CIT.Preposition",
      "specs": [
          {
-            "generic-trigger-spec-type": "CIT.ContentPlaylists",
+            "generic-trigger-spec-type": "CIT.ContentPlaylist",
             "generic-trigger-spec-value": {
-               "playlists": [
-                  {
-                  "playlist": "https://www.example.com/hls/title/index.m3u8",
-                  "media-protocol": "hls"
-                  }
-               ]
+                "playlist": "https://www.example.com/hls/title/index.m3u8",
+                "media-protocol": "hls"
             },
             "trigger-subject": "CIT.Content"
          }
@@ -3951,22 +3885,22 @@ RESPONSE:
                <t>Encoding: see <xref target="ccids-spec"/></t>
             </section>
 
-            <section anchor="IANA.CDNI.payload.CIT.UriPatternSpec" title="CDNI CI/T UriPatterns Trigger Spec Payload Type">
-               <t>Purpose: The purpose of this Trigger Spec type is to distinguish UriPatterns CIT Trigger Spec objects.</t>
+            <section anchor="IANA.CDNI.payload.CIT.UriPatternMatchSpec" title="CDNI CI/T UriPatternMatch Trigger Spec Payload Type">
+               <t>Purpose: The purpose of this Trigger Spec type is to distinguish UriPatternMatch CIT Trigger Spec objects.</t>
                <t>Interface: CI/T</t>
                <t>Encoding: see <xref target="uri-pattern-match-spec"/></t>
             </section>
 
-            <section anchor="IANA.CDNI.payload.CIT.UriRegexesSpec" title="CDNI CI/T UriRegexes Trigger Spec Payload Type">
-               <t>Purpose: The purpose of this Trigger Spec type is to distinguish UriRegexes CIT Trigger Spec objects.</t>
+            <section anchor="IANA.CDNI.payload.CIT.UriRegexMatchSpec" title="CDNI CI/T UriRegexMatch Trigger Spec Payload Type">
+               <t>Purpose: The purpose of this Trigger Spec type is to distinguish UriRegexMatch CIT Trigger Spec objects.</t>
                <t>Interface: CI/T</t>
-               <t>Encoding: see <xref target="uri-regexes-spec"/></t>
+               <t>Encoding: see <xref target="uri-regex-match-spec"/></t>
             </section>
 
-            <section anchor="IANA.CDNI.payload.CIT.ContentPlaylistsSpec" title="CDNI CI/T ContentPlaylists Trigger Spec Payload Type">
-               <t>Purpose: The purpose of this Trigger Spec type is to distinguish ContentPlaylists CIT Trigger Spec objects.</t>
+            <section anchor="IANA.CDNI.payload.CIT.ContentPlaylistSpec" title="CDNI CI/T ContentPlaylist Trigger Spec Payload Type">
+               <t>Purpose: The purpose of this Trigger Spec type is to distinguish ContentPlaylist CIT Trigger Spec objects.</t>
                <t>Interface: CI/T</t>
-               <t>Encoding: see <xref target="content-playlists-spec"/></t>
+               <t>Encoding: see <xref target="content-playlist-spec"/></t>
             </section>
          </section>
 
