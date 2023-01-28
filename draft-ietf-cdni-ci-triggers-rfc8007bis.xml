@@ -445,8 +445,8 @@
    <list style="symbols">
       <t>CIT.UrlsSpec (for TODO)</t>
       <t>CIT.CcidsSpec (for TODO)</t>
-      <t>CIT.UriPatternSpec (for TODO)</t>
-      <t>CIT.UrlRegexeSpec (for TODO)</t>
+      <t>CIT.UriPatternMatchSpec (for TODO)</t>
+      <t>CIT.UrlRegexMatchSpec (for TODO)</t>
       <t>CIT.ContentPlaylistSpec (for TODO)</t>
    </list>
    </t>
@@ -3789,10 +3789,10 @@ RESPONSE:
     <c>CIT.CcidsSpec</c>
    <c>RFCthis</c>
    
-   <c>CIT.UriPatternSpec</c>
+   <c>CIT.UriPatternMatchSpec</c>
    <c>RFCthis</c>
    
-   <c>CIT.UrisRegexeSpec</c>
+   <c>CIT.UrisRegexMatchSpec</c>
    <c>RFCthis</c>
    
    <c>CIT.ContentPlaylistSpec</c>
