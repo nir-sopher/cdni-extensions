@@ -466,7 +466,6 @@
    </t>
 
    <section title="Content URLs" anchor="sect-4.8">
-   <t> TBD only content? what about metadata?</t>
    <t>
    Each CI/T Command usually refers the target content by the content URLs 
    (e.g. using a CIT.UrlSpec trigger spec object).
@@ -1349,7 +1348,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 	<vspace blankLines="1"/>
 	Value: Array of GenericTriggerSpec objects (see <xref target="generic-spec-object"/>).
 	<vspace blankLines="1"/>
-	Mandatory: Yes. TBD(nirs): Can the list be empty???
+	Mandatory: Yes. Futhermore, the list MUST NOT be empty.
 	</t>
 
 	
