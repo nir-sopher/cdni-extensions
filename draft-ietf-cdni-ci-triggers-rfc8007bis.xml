@@ -437,8 +437,8 @@
    <t>
       The CDNI Control Interface / Triggers <xref target="RFC8007"/> defines a set of properties
       and objects used by the trigger commands in order to specify the targets the trigger is applied on.
-      In this document we introduce additional flexibility to the trigger interface, 
-      allowing the specification of the trigger's targets via a list of "trigger specs" objects. 
+      This document modifies the trigger interface so it has a list of trigger specs. 
+      Such structure improves the interface's extensibility and flexibility. 
       Furthermore, the document defines a generic trigger spec
       object that act as a wrapper for managing individual CDNI trigger spec in an opaque manner,
       allowing future extension of the interface.
@@ -490,8 +490,9 @@
    <t>
       The CDNI Control Interface / Triggers <xref target="RFC8007"/> defines a set of properties
       and objects used by the trigger commands. In this document we define an extension mechanism
-      to the triggers interface that enables the application to add various functions that allow
-      finer control over the trigger execution. This document specifies a generic trigger extension
+      to the triggers interface that enables applications to add instructions for 
+      finer control over the trigger execution, for example indicating a time window for the trigger to be executed. 
+      This document specifies a generic trigger extension
       object wrapper for managing individual CDNI trigger extensions in an opaque manner.
    </t>
 
