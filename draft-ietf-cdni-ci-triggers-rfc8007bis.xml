@@ -1462,7 +1462,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 
                <t>Type: String containing the type of the subject matching the 
                   generic-trigger-spec-value property, such as "content" or "metadata" 
-                  as define in TODO(nir).</t>
+                  as define in TODO.</t>
 
                <t>Mandatory: Yes.</t>
             </list></t>
