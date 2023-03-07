@@ -1807,8 +1807,7 @@ uCDN-A                         dCDN-B                         dCDN-C
                 Only those spec to which the error applies are listed. 
 	<vspace blankLines="1"/>
 	Value: A Trigger Specification, as defined in <xref target="sect-5.2.1"/>, where each spec object is based
-                on the "specs" in the Trigger Specification. TBD: or an empty object ('{}') 
-                as a place holder.
+                on the "specs" in the Trigger Specification. 
 	<vspace blankLines="1"/>
 	Mandatory: Yes. 
 	</t>
