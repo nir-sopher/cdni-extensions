@@ -1805,10 +1805,6 @@ uCDN-A                         dCDN-B                         dCDN-C
 	Description: Array of trigger spec objects based on from the corresponding "specs" array
                 at the Trigger Specification.
                 Only those spec to which the error applies are listed. 
-                TBD: Option 1: Specs to which the error does not apply MAY(TODO?) are omitted from the array. 
-                Option 2: Note that the order of the specs should be as listed
-                in the Trigger Specification. Specs to which the error does not apply MUST not be omitted but MAY(TODO?)
-                be replaced with an empty object for simplicity.
 	<vspace blankLines="1"/>
 	Value: A Trigger Specification, as defined in <xref target="sect-5.2.1"/>, where each spec object is based
                 on the "specs" in the Trigger Specification. TBD: or an empty object ('{}') 
