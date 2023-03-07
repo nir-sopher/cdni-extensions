@@ -3117,8 +3117,6 @@ RESPONSE:
             content objects for invalidation, the command is rejected by the dCDN due to regex complexity, and
             an appropriate error is reflected in the status response.
           </t>
-          <t> TBD: in case of failure in one object, maybe leave empty places in the triggers list
-          for the objects that has not failed></t>
           <figure>
             <artwork><![CDATA[
 REQUEST:
