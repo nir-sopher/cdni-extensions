@@ -131,6 +131,10 @@
 
 	<t><list style="symbols"><t><xref target="sect-2"/> outlines the model for the CI/T interface at a high
       level.</t>
+		
+	<t><xref target="trigger-spec"/> describes the trigger spec object, specifying the trigger's targets.</t>
+
+	<t><xref target="trigger-extensibility"/> describes the trigger extensibility mechanisem, specifying how the trigger should be executed.</t>
 
 	<t><xref target="sect-3"/> describes collections of Trigger Status Resources.</t>
 
