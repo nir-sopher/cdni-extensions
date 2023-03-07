@@ -1462,7 +1462,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 
                <t>Type: String containing the type of the subject matching the 
                   generic-trigger-spec-value property, such as "content" or "metadata" 
-                  as define in TODO.</t>
+                  as define in TODO(nir).</t>
 
                <t>Mandatory: Yes.</t>
             </list></t>
@@ -3830,21 +3830,21 @@ RESPONSE:
         number for this document.]</t>
 
          <section anchor="IANA.CDNI.payload.ci-trigger-command.v2" title="CDNI ci-trigger-command.v2 Payload Type">
-          <t>Purpose: TODO: The purpose of this payload type is to distinguish version 2 of the CI/T command
+          <t>Purpose: TBD: The purpose of this payload type is to distinguish version 2 of the CI/T command
             (and any associated capability advertisement)</t>
           <t>Interface: CI/T</t>
           <t>Encoding: see <xref target="sect-5.1.1"/></t>
         </section>
 
         <section anchor="IANA.CDNI.payload.ci-trigger-status.v2" title="CDNI ci-trigger-status.v2 Payload Type">
-          <t>Purpose: TODO: The purpose of this payload type is to distinguish version 2 of the CI/T status resource response
+          <t>Purpose: TBD: The purpose of this payload type is to distinguish version 2 of the CI/T status resource response
             (and any associated capability advertisement)</t>
           <t>Interface: CI/T</t>
           <t>Encoding: see <xref target="sect-5.1.2"/></t>
         </section>
 
          <section anchor="IANA.CDNI.payload.ci-trigger-collection" title="CDNI ci-trigger-collection.v2 Payload Type">
-          <t>Purpose: TODO (came from 8007)</t>
+          <t>Purpose: TBD (came from 8007)</t>
           <t>Interface: CI/T</t>
           <t>Encoding: see <xref target="sect-5.1.3"/></t>
         </section>
@@ -3906,13 +3906,13 @@ RESPONSE:
             <section anchor="IANA.CDNI.payload.CIT.MetadataSubject" title="CDNI CI/T Metadata Trigger Subject Type">
                <t>Purpose: The purpose of this Trigger Spec subejct type is to distinguish Metadata CIT Trigger Spec objects.</t>
                <t>Interface: CI/T</t>
-               <t>Encoding: see TODO - string "metatdata" - should we register it????</t>
+               <t>Encoding: see TBD - string "metatdata" - should we register it????</t>
             </section>
 
             <section anchor="IANA.CDNI.payload.CIT.ContentSubject" title="CDNI CI/T Content Trigger Subject Type">
                <t>Purpose: The purpose of this Trigger Spec subejct type is to distinguish Content CIT Trigger Spec objects.</t>
                <t>Interface: CI/T</t>
-               <t>Encoding: see TODO - string "metatdata" - should we register it????</t>
+               <t>Encoding: see TBD - string "metatdata" - should we register it????</t>
             </section>
          </section>
 
@@ -4271,7 +4271,7 @@ RESPONSE:
 	</references>
 	<section title="Formalization of the JSON Data" anchor="sect-a"><t>
    This appendix is non-normative.</t>
-   <t>TODO should we remove it or compile a CDDL on our own</t>
+   <t>TBD should we remove it or compile a CDDL on our own</t>
 	<t>
    The JSON data described in this document has been formalized using
    the CBOR Data Definition Language (CDDL) <xref target="I-D.greevenbosch-appsawg-cbor-cddl"/> (where "CBOR"
