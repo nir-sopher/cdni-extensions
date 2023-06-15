@@ -18,6 +18,7 @@
 <!ENTITY RFC7337 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7337.xml">
 <!ENTITY RFC7736 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7736.xml">
 <!ENTITY RFC7975 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7975.xml">
+<!ENTITY RFC8174 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml">
 ]>
 <rfc category="std" docName="draft-ietf-cdni-ci-triggers-rfc8007bis-04" obsoletes='8007' ipr="trust200902">
 	<?rfc strict="yes"?>
@@ -167,9 +168,12 @@
    </list></t>
 
 	<t>
-   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
-   document are to be interpreted as described in RFC 2119 <xref target="RFC2119"/>.</t>
+       The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
+      NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED",
+      "MAY", and "OPTIONAL" in this document are to be interpreted as
+      described in BCP 14 <xref target="RFC2119"></xref> 
+              <xref target="RFC8174"></xref> when, and only when, they
+      appear in all capitals, as shown here.</t>
 
 	</section>
 
@@ -4177,6 +4181,7 @@ RESPONSE:
 	&RFC7525;
 	&RFC8006;
 	&RFC8007;
+        &RFC8174;
 
 
       <?rfc include="reference.RFC.3339" ?>
