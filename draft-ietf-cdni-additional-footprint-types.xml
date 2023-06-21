@@ -67,13 +67,13 @@
             <t>
                 Open Caching architecture is a use case of Content Delivery Networks Interconnection (CDNI) in which the
                 commercial Content Delivery Network (CDN) is the upstream CDN (uCDN) and the ISP caching layer serves as the
-                downstream CDN (dCDN). This document supplements the CDNI Metadata Footprint Types defined in RFC 8006.
-                The Footprint Types defined in this document can be used for Footprint objects as part of 
+                downstream CDN (dCDN). This document supplements the CDNI Metadata footprint types defined in RFC 8006.
+                The footprint types defined in this document can be used for Footprint objects as part of 
                 the Metadata interface (MI) defined in RFC 8006 and for
                 the Footprint &amp; Capabilities Advertisement interface (FCI) defined in RFC 8008. By defining the footprint union Footprint Type,
                 this document updates RFC 8008, allowing an additive semantic over the narrowing semantics defined in Appendix B of RFC 8008.
                 This document also supplements RFC 9241 with relevant ALTO entity domain types.
-                The defined Footprint Types are derived from requirements raised by Open Caching but are also applicable to CDNI use cases in general.
+                The defined footprint types are derived from requirements raised by Open Caching but are also applicable to CDNI use cases in general.
             </t>
         </abstract>
         
@@ -108,16 +108,16 @@
                 layer respectively.
             </t>
             <t>
-                This document registers two CDNI Metadata Footprint Types (section 7.2 of
+                This document registers two CDNI Metadata footprint types (section 7.2 of
                 <xref target="RFC8006" />) for the defined objects:
                 <list style="symbols">
                     <t>
-                        Subdivision Code Footprint Type (e.g., for a dCDN advertising a footprint that is specific to
+                        Subdivision code footprint type (e.g., for a dCDN advertising a footprint that is specific to
                         a State in the USA)
                     </t>
                     <t>
-                        Union Footprint Type (for a dCDN advertising a footprint that consists of a group built 
-                        from multiple Footprints Types, e.g., both IPv4 and IPv6 client subnets)
+                        Footprint union footprint type (for a dCDN advertising a footprint that consists of a group built 
+                        from multiple footprints types, e.g., both IPv4 and IPv6 client subnets)
                     </t>
                 </list>
             </t>
@@ -151,7 +151,7 @@
         <section anchor="cdni-metadata-additional-footprint-types" title="CDNI Metadata Additional Footprint Types">
             <t>
                 Section 5 of <xref target="RFC8008" /> describes the Footprint &amp; Capabilities Advertisement interface (FCI) Capability Advertisement object, which
-                 includes an array of CDNI Footprint objects. Each such object has a footprint-type and
+                 includes an array of CDNI footprint objects. Each such object has a footprint type and
                 a footprint-value, as described in section 4.2.2.2 of <xref target="RFC8006" />.
                 This document defines additional footprint types, beyond those mentioned in CDNI metadata
                 <xref target="RFC8006" />.
@@ -160,11 +160,11 @@
                 <t>
                     Section 4.3.8 of <xref target="RFC8006" />
                     specifies the "Country Code" footprint type
-                    for listing <xref target="ISO3166-1"/> alpha-2 codes. Using Footprint objects of this type, one can define an
+                    for listing <xref target="ISO3166-1"/> alpha-2 codes. Using footprint objects of this type, one can define an
                     FCI Capability Advertisement object footprint constraint that matches a specific country.
-                    Herein is defined the subdivisioncode simple data type, as well as a footprint type
+                    Herein is defined the "subdivisioncode" simple data type, as well as a footprint type
                     allowing the dCDN to define constraints matching geographic areas
-                    with better granularity, specifically using the <xref target="ISO3166-2"/> Country Subdivision codes.
+                    with better granularity, specifically using the <xref target="ISO3166-2"/> country subdivision codes.
                 </t>
                 <section anchor="cdni-metadata-subdivisioncode-data-type" title="CDNI Metadata Subdivision Code Data Type">
                     <t>
@@ -186,7 +186,7 @@
                                     Type: String
                                 </t>
                                 <t>
-                                    Example Subdivision Codes:
+                                    Example subdivision codes:
                                 </t>
                                 <t>"ca-on"</t>
                                 <t>"us-ny"</t>
@@ -203,7 +203,7 @@
                     </t>
                     <t>
                         Below is an example using a footprint object of type "subdivisioncode". 
-                        The Footprint object in this example creates a constraint matching clients in the  
+                        The footprint object in this example creates a constraint matching clients in the  
                         states of New Jersey and New York, USA (ISO <xref target="ISO3166-2"/> codes "US-NJ" and "US-NY" respectively).
                     </t>
                     <figure title="Illustration of subdivision-code footprint advertisement">
@@ -232,17 +232,17 @@
             <section anchor="cdni-metadata-footprint-union-footprint-type" title="CDNI Metadata Footprint Union Footprint Type">
                 <t>
                     As described in section 5 of <xref target="RFC8008" />, 
-                    the FCI Capability Advertisement object includes an array of CDNI Footprint objects. 
+                    the FCI Capability Advertisement object includes an array of CDNI footprint objects. 
                     Appendix B of <xref target="RFC8008" /> specifies the
-                    semantics of a Footprint objects array as a multiple, additive, footprint constraints.
+                    semantics of a footprint objects array as a multiple, additive, footprint constraints.
                     This implies that the advertisement of different footprint types narrows
                     the dCDN's candidacy cumulatively.
                 </t>
                 <t>
-                    Sections 4.3.5 and 4.3.6 of <xref target="RFC8006" /> specify the "IPv4CIDR" and "IPv6CIDR"
-                    footprint types, respectively, for listing IP unscoped address blocks. Using Footprint objects of these
+                    Sections 4.3.5 and 4.3.6 of <xref target="RFC8006" /> specify the IPv4 CIDR and the IPv6 CIDR
+                    footprint types, respectively, for listing IP unscoped address blocks. Using footprint objects of these
                     types, one can define FCI Capability Advertisement object footprint constraints that match IPv4
-                    or IPv6 clients. However, the described "narrowing" semantic of the Footprint objects array, as described 
+                    or IPv6 clients. However, the described "narrowing" semantic of the footprint objects array, as described 
                     in Appendix B of <xref target="RFC8008" />, prevents
                     the usage of these objects together to create a footprint constraint that matches IPv4
                     clients together with IPv6 clients.
@@ -282,7 +282,7 @@
                     match both IPv4 and IPv6 client subnets, this document defines the "footprintunion" footprint type. 
                     This footprint type allows the collection of multiple footprint-objects into a unified object. 
                     Therefore it resolves the above limitation and can be particularly applicable to unify semantically related objects, 
-                    for example, an ipv4cidr together with an ipv6cidr or a countrycode together with a subdivisoncode. 
+                    for example, an IPv4 CIDR together with an IPv6 CIDR or a country code together with a subdivisoncode. 
                 </t>
                 <t>
                     Note: to avoid implementation complexity, a "footprintunion" MUST NOT list any "footprintunion" as a value. 
@@ -290,19 +290,19 @@
                 </t>
                 <section anchor="cdni-metadata-footprint-union-data-type" title="CDNI Metadata Footprint Union Data Type">
                     <t>
-                        The "footprintunion" data type is based on the Footprint object already defined in 
+                        The "footprintunion" data type is based on the footprint object already defined in 
                         section 4.2.2.2 of <xref target="RFC8006" />. The footprint-value for a "footprintunion" object 
-                        is an array of Footprint objects, where the Footprint objects MUST be of any Footprint Type 
+                        is an array of footprint objects, where the footprint objects MUST be of any footprint type 
                         other than "footprintunion".
                     </t>
                 </section>
-                <section anchor="cdni-metadata-footprint-union-footprint-type-description" title="CDNI Metadata FootprintUnion Footprint Type Description">
+                <section anchor="cdni-metadata-footprint-union-footprint-type-description" title="CDNI Metadata Footprint Union Footprint Type Description">
                     <t>
                         The "footprintunion" data type specified in <xref target="cdni-metadata-footprint-union-data-type" />, 
                         is added to the data types listed as footprint types in section 4.2.2.2 of <xref target="RFC8006" />.
                     </t>
                     <t>
-                        Below is an example using a footprint object of type "footprintunion" combining both IPv4 and IPv6 client subnets.
+                        Below is an example using a footprint union combining both IPv4 and IPv6 client subnets.
                     </t>
                     <figure title="Example of an advertisement of footprint union for multiple CIDR footprint types">
                         <artwork>
@@ -334,7 +334,7 @@
                         </artwork>
                     </figure>
                     <t>
-                    The footprint union also enables composing a countrycode and subdivisioncode based footprint objects. 
+                    The footprint union also enables composing a country code and subdivision code based footprint objects. 
                     In the example below 
                     we create a constraint covering autonomous system 64496 within the US (ISO <xref target="ISO3166-1"/> alpha-2 code "US")
                     and the Ontario province of Canada (ISO <xref target="ISO3166-2"/> code "CA-ON").
@@ -377,9 +377,9 @@
         </section>
         <section anchor="cdni-metadata-alto-property-map-service-entity" title="ALTO Property Map Service Entity">
                 <t>
-                   Section 6 of <xref target="RFC9241" /> describes how to represent footprint objects as entities in the ALTO property map. The approach is to represent the "footprint-type" as an entity domain type of the ALTO entity,
+                   Section 6 of <xref target="RFC9241" /> describes how to represent footprint objects as entities in the ALTO property map. The approach is to represent the footprint type as an entity domain type of the ALTO entity,
                    and the footprint value as its domain-specific identifier. <xref target="RFC9241" /> further refers to the representation of footprint objects 
-                   of types "asn" and "countrycode". Here we extend this definition to the "subdivisioncode" footprint-type.
+                   of types "asn" and "countrycode". Here we extend this definition to the "subdivisioncode" footprint type.
                  </t>   
                 <section anchor="cdni-metadata-subdivisioncode-alto-property-map-service-entity-domain" title="SUBDIVISIONCODE Domain">
                 <t>
@@ -392,7 +392,7 @@
                 </section>
                 <section anchor="cdni-metadata-subdivisioncode-alto-property-map-service-entity-domain-identifiers" title="Domain-Specific Entity Identifiers">
                 <t>
-                    The entity identifier of an entity in a SUBDIVISIONCODE is encoded as an alpha-2  <xref target="ISO3166-1"/> Country Code, followed by a separator 
+                    The entity identifier of an entity in a SUBDIVISIONCODE is encoded as an alpha-2  <xref target="ISO3166-1"/> country code, followed by a separator 
                     and up to three alphanumeric characters.
                 </t>
                 </section>
@@ -411,7 +411,7 @@
                     within the "Content Delivery Network Interconnection (CDNI) Parameters" registry.
                 </t>
                 <t>
-                    This document requests the registration of the two additional Footprint Types
+                    This document requests the registration of the two additional footprint types
                     as defined in
                     <xref target="cdni-metadata-subdivisioncode-footprint-type" />
                     and
@@ -441,7 +441,7 @@
                         footprintunion
                     </c>
                     <c>
-                        A combination of other Footprint objects 
+                        A combination of other footprint objects 
                     </c>
                     <c>
                         RFCthis
