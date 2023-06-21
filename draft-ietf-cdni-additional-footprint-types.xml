@@ -156,17 +156,17 @@
                 This document defines additional footprint types, beyond those mentioned in CDNI metadata
                 <xref target="RFC8006" />.
             </t>
-            <section anchor="cdni-metadata-subdivisioncode-footprint-type" title="CDNI Metadata Subdivision Code Footprint Type">
+            <section anchor="cdni-metadata-subdivisioncode-footprint-type" title="CDNI Metadata &#34;subdivisioncode&#34; Footprint Type">
                 <t>
                     Section 4.3.8 of <xref target="RFC8006" />
-                    specifies the "Country Code" footprint type
+                    specifies the "countrycode" footprint type
                     for listing <xref target="ISO3166-1"/> alpha-2 codes. Using footprint objects of this type, one can define an
                     FCI Capability Advertisement object footprint constraint that matches a specific country.
                     Herein is defined the "subdivisioncode" simple data type, as well as a footprint type
                     allowing the dCDN to define constraints matching geographic areas
                     with better granularity, specifically using the <xref target="ISO3166-2"/> country subdivision codes.
                 </t>
-                <section anchor="cdni-metadata-subdivisioncode-data-type" title="CDNI Metadata Subdivision Code Data Type">
+                <section anchor="cdni-metadata-subdivisioncode-data-type" title="CDNI Metadata &#34;subdivisioncode&#34; Data Type">
                     <t>
                         The "subdivisioncode" data type specified in
                         <xref target="cdni-metadata-subdivisioncode-data-type-description" />,
@@ -174,7 +174,7 @@
                         The data type is added to the list of data types  described in section 4.3 of
                         <xref target="RFC8006" /> that are used as properties of CDNI Metadata objects.
                     </t>
-                    <section anchor="cdni-metadata-subdivisioncode-data-type-description" title="CDNI Metadata Subdivision Code Data Type Description">
+                    <section anchor="cdni-metadata-subdivisioncode-data-type-description" title="CDNI Metadata &#34;subdivisioncode&#34; Data Type Description">
                         <t>
                         An <xref target="ISO3166-2"/> code in lowercase. Each code consists of two parts separated by a hyphen. 
                         As per <xref target="ISO3166-2"/>, the first part is the <xref target="ISO3166-1"/> code of the country, 
@@ -194,7 +194,7 @@
                         </t>
                     </section>
                 </section>
-                <section anchor="cdni-metadata-subdivisioncode-footprint-type-description" title="CDNI Metadata Subdivision Code Footprint Type Description">
+                <section anchor="cdni-metadata-subdivisioncode-footprint-type-description" title="CDNI Metadata &#34;subdivisioncode&#34; Footprint Type Description">
                     <t>
                         The "subdivisioncode" simple data type specified in
                         <xref target="cdni-metadata-subdivisioncode-data-type" />, is added
@@ -229,7 +229,7 @@
                 </section>
                               
             </section>
-            <section anchor="cdni-metadata-footprint-union-footprint-type" title="CDNI Metadata Footprint Union Footprint Type">
+            <section anchor="cdni-metadata-footprint-union-footprint-type" title="CDNI Metadata &#34;footprintunion&#34; Footprint Type">
                 <t>
                     As described in section 5 of <xref target="RFC8008" />, 
                     the FCI Capability Advertisement object includes an array of CDNI footprint objects. 
@@ -288,7 +288,7 @@
                     Note: to avoid implementation complexity, a "footprintunion" MUST NOT list any "footprintunion" as a value. 
                     As a union of unions is simply a union, this syntactic restriction does not result with any semantic limitation.  
                 </t>
-                <section anchor="cdni-metadata-footprint-union-data-type" title="CDNI Metadata Footprint Union Data Type">
+                <section anchor="cdni-metadata-footprint-union-data-type" title="CDNI Metadata &#34;footprintunion&#34; Data Type">
                     <t>
                         The "footprintunion" data type is based on the footprint object already defined in 
                         section 4.2.2.2 of <xref target="RFC8006" />. The footprint value for a "footprintunion" object 
@@ -296,7 +296,7 @@
                         other than "footprintunion".
                     </t>
                 </section>
-                <section anchor="cdni-metadata-footprint-union-footprint-type-description" title="CDNI Metadata Footprint Union Footprint Type Description">
+                <section anchor="cdni-metadata-footprint-union-footprint-type-description" title="CDNI Metadata &#34;footprintunion&#34; Footprint Type Description">
                     <t>
                         The "footprintunion" data type specified in <xref target="cdni-metadata-footprint-union-data-type" />, 
                         is added to the data types listed as footprint types in section 4.2.2.2 of <xref target="RFC8006" />.
