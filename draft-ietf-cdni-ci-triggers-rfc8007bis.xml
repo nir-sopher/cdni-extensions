@@ -3967,15 +3967,15 @@ RESPONSE:
 
          <section anchor="IANA.CDNI.payload.CIT.Subjects" title="CDNI CI/T Trigger Subject types">
             <section anchor="IANA.CDNI.payload.CIT.MetadataSubject" title="CDNI CI/T Metadata Trigger Subject Type">
-               <t>Purpose: The purpose of this Trigger Spec subejct type is to distinguish Metadata CIT Trigger Spec objects.</t>
+               <t>Purpose: The purpose of this Trigger Spec subject type is to distinguish Metadata CIT Trigger Spec objects.</t>
                <t>Interface: CI/T</t>
-               <t>Encoding: see TBD - string "metatdata" - should we register it????</t>
+               <t>Encoding: see TBD - string "metatdata"</t>
             </section>
 
             <section anchor="IANA.CDNI.payload.CIT.ContentSubject" title="CDNI CI/T Content Trigger Subject Type">
-               <t>Purpose: The purpose of this Trigger Spec subejct type is to distinguish Content CIT Trigger Spec objects.</t>
+               <t>Purpose: The purpose of this Trigger Spec subject type is to distinguish Content CIT Trigger Spec objects.</t>
                <t>Interface: CI/T</t>
-               <t>Encoding: see TBD - string "metatdata" - should we register it????</t>
+               <t>Encoding: see TBD - string "content"</t>
             </section>
          </section>
 
