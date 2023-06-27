@@ -20,7 +20,7 @@
 <!ENTITY RFC7975 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7975.xml">
 <!ENTITY RFC8174 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml">
 ]>
-<rfc category="std" docName="draft-ietf-cdni-ci-triggers-rfc8007bis-04" obsoletes='8007' ipr="trust200902">
+<rfc category="std" docName="draft-ietf-cdni-ci-triggers-rfc8007bis-05" obsoletes='8007' ipr="trust200902">
 	<?rfc strict="yes"?>
 	<?rfc compact="yes"?>
 	<?rfc subcompact="no"?>
@@ -524,10 +524,10 @@
 	<t>
    A collection of Trigger Status Resources is a resource that contains
    a reference to each Trigger Status Resource in that collection.
-   Note that the collection may refer to Trigger Status Resources of triggers from several protocol versions.
+   Note that the collection may refer to Trigger Status Resources of triggers from several CIT versions.
    I.e. a subsequent call for the retrieval of the relevant trigger status may provide 
-   objects of MIME media type ci-trigger-status as defined in <xref target="RFC8007"/>, ci-trigger-status.v2 
-   or future version, derived from the protocol version creating with which the trigger was created. </t>
+   objects of various MIME media types: ci-trigger-status as defined in <xref target="RFC8007"/>, ci-trigger-status.v2 
+   defined in this document, or objects from future CIT versions, based on the CIT version used for the creation of the trigger. </t>
 
 	<t>
    The dCDN MUST make a collection of a uCDN's Trigger Status Resources
@@ -1209,7 +1209,16 @@ uCDN-A                         dCDN-B                         dCDN-C
 	<vspace blankLines="1"/>
 	Mandatory: Yes.
 	</t>
-
+	
+	<t hangText="Name: status-reason">
+	<vspace blankLines="1"/>
+	Description: A human-readable explaination for the object status.
+	<vspace blankLines="1"/>
+	Value: A JSON string, the human-readable status reason.
+	<vspace blankLines="1"/>
+	Mandatory: No.
+	</t>
+	
 	<t hangText="Name: errors">
 	<vspace blankLines="1"/>
 	Description: Descriptions of errors that have occurred while
@@ -1947,6 +1956,12 @@ uCDN-A                         dCDN-B                         dCDN-C
 	<c>The CI/T Trigger Command was canceled by the uCDN.</c>
 	</texttable>
 	
+	<t>
+   Along with the Trigger Status, the Trigger Status Resource object includes a Status Reason property,
+   allowing the dCDN to provide additional information for the trigger status.
+   For example, an indication that trigger status is "pending" as one of the execution prerequisites is not fulfilled. 
+   Such a prerequisite may be specified via one of the extensions.</t>
+	
 	<section title="Error Code" anchor="sect-5.2.7"><t>
    This type is used by the dCDN to report failures in trigger
    processing.  All Error Codes MUST be registered in the IANA "CDNI CI/T Error Codes" registry (see <xref target="sect-7.3"/>).  Unknown Error Codes
@@ -2471,7 +2486,7 @@ https://video.example.com/k/movie1/4/013.ts
          "start": 946717200,
          "end": 946746000
       }
-    }
+    },
    "mandatory-to-enforce": true,
    "safe-to-redistribute": true,
    "incomprehensible": false
@@ -3678,30 +3693,50 @@ REQUEST:
          }
       ],
       "extensions": [
-          {
-            "generic-trigger-extension-type":
-               <Type of trigger extension object #1>,
+         {
+            "generic-trigger-extension-type": "CIT.LocationPolicy",
             "generic-trigger-extension-value":
-                {
-                  <properties of trigger extension object #1>
-                },
+               {
+                  "locations": [
+                     {
+                        "action": "allow",
+                        "footprints": [
+                           {
+                              "footprint-type": "countrycode",
+                              "footprint-value": ["us"]
+                           }
+                        ]
+                     },
+                     {
+                        "action": "deny",
+                        "footprints": [
+                           {
+                              "footprint-type": "countrycode",
+                              "footprint-value": ["ca"]
+                           }
+                        ]
+                     }
+                  ]
+               },
             "mandatory-to-enforce": true,
-            "safe-to-redistribute": true,
-          },
-          {
-            "generic-trigger-extension-type":
-               <Type of trigger extension object #2>,
+            "safe-to-redistribute": true
+         },
+         {
+            "generic-trigger-extension-type": "CIT.TimePolicy",
             "generic-trigger-extension-value":
-                {
-                  <properties of trigger extension object #2>
-                },
+               {
+                  "unix-time-window": {
+                     "start": 946717200,
+                     "end": 946746000
+                  }
+               },
             "mandatory-to-enforce": true,
-            "safe-to-redistribute": true,
-          },
+            "safe-to-redistribute": true
+         }
       ],
-    },
-    "cdn-path": [ "AS64496:0" ]
-  }
+   },
+   "cdn-path": [ "AS64496:0" ]
+ }
 
 RESPONSE:
 
@@ -3716,38 +3751,58 @@ RESPONSE:
      "errors": [
        {
          "extensions": [
-            {
-              "generic-trigger-extension-type":
-                 <Type of trigger extension object #1>,
-              "generic-trigger-extension-value":
-                  {
-                    <properties of trigger extension object #1>
+             {
+                "generic-trigger-extension-type": "CIT.LocationPolicy",
+                "generic-trigger-extension-value":
+                   {
+                      "locations": [
+                        {
+                           "action": "allow",
+                           "footprints": [
+                              {
+                                 "footprint-type": "countrycode",
+                                 "footprint-value": ["us"]
+                              }
+                           ]
+                        },
+                        {
+                           "action": "deny",
+                           "footprints": [
+                              {
+                                 "footprint-type": "countrycode",
+                                 "footprint-value": ["ca"]
+                              }
+                           ]
+                        }
+                     ]
                   },
-              "mandatory-to-enforce": true,
-              "safe-to-redistribute": true,
+               "mandatory-to-enforce": true,
+               "safe-to-redistribute": true
             },
-          ],
+         ],
          "description": "unrecognized extension <type>",
          "error": "eextension",
          "cdn": "AS64500:0"
        },
        {
          "extensions": [
-            {
-              "generic-trigger-extension-type":
-                 <Type of trigger extension object #2>,
-              "generic-trigger-extension-value":
-                  {
-                    <properties of trigger extension object #2>
-                  },
-              "mandatory-to-enforce": true,
-              "safe-to-redistribute": true,
-            },
-          ],
+             {
+                "generic-trigger-extension-type": "CIT.TimePolicy",
+                "generic-trigger-extension-value":
+                   {
+                      "unix-time-window": {
+                         "start": 946717200,
+                         "end": 946746000
+                      }
+                   },
+                "mandatory-to-enforce": true,
+                "safe-to-redistribute": true
+             }
+         ],
          "description": "unrecognized extension <type>",
          "error": "eextension",
          "cdn": "AS64501:0"
-       },        
+       }        
      ],
      "ctime": 1462351690,
      "etime": 1462351698,
