@@ -1346,8 +1346,8 @@ uCDN-A                         dCDN-B                         dCDN-C
    An unrecognized name/value pair in the Trigger Specification object
    contained in a CI/T Command SHOULD be preserved in the Trigger
    Specification of any Trigger Status Resource it creates. 
-   Note however that the preferable method for extending the CI/T capabilities, is by defining new related trigger extensions, 
-   rather than adding new properties to the Trigger.v2 object  </t>
+   Note that the preferable method for extending the CI/T capabilities, is by defining new related trigger extensions, 
+   rather than adding new properties to the Trigger.v2 object.</t>
 
 	<t><list style="empty" hangIndent="3">
 	<t><list style="hanging" hangIndent="3">
