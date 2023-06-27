@@ -524,10 +524,10 @@
 	<t>
    A collection of Trigger Status Resources is a resource that contains
    a reference to each Trigger Status Resource in that collection.
-   Note that the collection may refer to Trigger Status Resources of triggers from several CIT versions.
+   Note that the collection may possibly refer to Trigger Status Resources of triggers from several CI/T versions.
    I.e. a subsequent call for the retrieval of the relevant trigger status may provide 
    objects of various MIME media types: ci-trigger-status as defined in <xref target="RFC8007"/>, ci-trigger-status.v2 
-   defined in this document, or objects from future CIT versions, based on the CIT version used for the creation of the trigger. </t>
+   defined in this document, or objects from future CI/T versions, based on the CI/T version used for the creation of the trigger. </t>
 
 	<t>
    The dCDN MUST make a collection of a uCDN's Trigger Status Resources
@@ -1960,7 +1960,7 @@ uCDN-A                         dCDN-B                         dCDN-C
    Along with the Trigger Status, the Trigger Status Resource object includes a Status Reason property,
    allowing the dCDN to provide additional information for the trigger status.
    For example, an indication that trigger status is "pending" as one of the execution prerequisites is not fulfilled. 
-   Such a prerequisite may be specified via one of the extensions.</t>
+   Such a prerequisite may possibly be specified via one of the extensions.</t>
 	
 	<section title="Error Code" anchor="sect-5.2.7"><t>
    This type is used by the dCDN to report failures in trigger
