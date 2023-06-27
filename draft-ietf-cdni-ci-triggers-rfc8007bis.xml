@@ -451,11 +451,11 @@
    <t>This document also defines an initial set of trigger spec objects, and registers the 
    defined trigger specs' types as CDNI Payload Types <xref target="RFC7736"/> under the namespace CIT:
    <list style="symbols">
-      <t>CIT.UrlsSpec (for TODO)</t>
-      <t>CIT.CcidsSpec (for TODO)</t>
-      <t>CIT.UriPatternMatchSpec (for TODO)</t>
-      <t>CIT.UrlRegexMatchSpec (for TODO)</t>
-      <t>CIT.ContentPlaylistSpec (for TODO)</t>
+      <t>CIT.UrlsSpec (for specifying targets via URLs)</t>
+      <t>CIT.CcidsSpec (for specifying targets via CCIDs, as defined at <xref target="RFC8006"/>)</t>
+      <t>CIT.UriPatternMatchSpec (for specifying targets via URI patterns)</t>
+      <t>CIT.UrlRegexMatchSpec (for specifying targets via URI regexes)</t>
+      <t>CIT.ContentPlaylistSpec (for specifying content targets via playlists)</t>
    </list>
    </t>
 
@@ -464,8 +464,8 @@
    to be matched with. The document registers additional as CDNI Payload Types <xref target="RFC7736"/> 
    under the namespace CIT, the initial set of available trigger subjects:
    <list style="symbols">
-      <t>CIT.MetadataSubject (for TODO)</t>
-      <t>CIT.ContentSubject (for TODO)</t>
+      <t>CIT.MetadataSubject (for indicating targets are of metadata, as defined at <xref target="RFC8006"/>)</t>
+      <t>CIT.ContentSubject (for indicating targets are of client facing content)</t>
    </list>
    </t>
 
@@ -1481,7 +1481,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 
                <t>Type: String containing the type of the subject matching the 
                   generic-trigger-spec-value property, such as "content" or "metadata" 
-                  as define in TODO.</t>
+                  as define in <xref target="trigger-spec"/>.</t>  
 
                <t>Mandatory: Yes.</t>
             </list></t>
@@ -2074,7 +2074,7 @@ uCDN-A                         dCDN-B                         dCDN-C
       <section anchor="ccids-spec" title="CCIDs Spec">
         <t> The content-ccids spec type allows to specify the
         Content Collection IDentifier of content the trigger applies to.
-        The "ccid" is a grouping of content, as defined by <xref target="RFC8006"/>.
+        The "ccid" is a grouping of content, as defined at <xref target="RFC8006"/>.
        The ccid spec type is valid only for CIT.Content spec subject.
 
         </t>
@@ -3895,21 +3895,21 @@ RESPONSE:
         number for this document.]</t>
 
          <section anchor="IANA.CDNI.payload.ci-trigger-command.v2" title="CDNI ci-trigger-command.v2 Payload Type">
-          <t>Purpose: TBD: The purpose of this payload type is to distinguish version 2 of the CI/T command
+          <t>Purpose: The purpose of this payload type is to distinguish version 2 of the CI/T command
             (and any associated capability advertisement)</t>
           <t>Interface: CI/T</t>
           <t>Encoding: see <xref target="sect-5.1.1"/></t>
         </section>
 
         <section anchor="IANA.CDNI.payload.ci-trigger-status.v2" title="CDNI ci-trigger-status.v2 Payload Type">
-          <t>Purpose: TBD: The purpose of this payload type is to distinguish version 2 of the CI/T status resource response
+          <t>Purpose: The purpose of this payload type is to distinguish version 2 of the CI/T status resource response
             (and any associated capability advertisement)</t>
           <t>Interface: CI/T</t>
           <t>Encoding: see <xref target="sect-5.1.2"/></t>
         </section>
 
-         <section anchor="IANA.CDNI.payload.ci-trigger-collection" title="CDNI ci-trigger-collection.v2 Payload Type">
-          <t>Purpose: TBD (came from 8007)</t>
+         <section anchor="IANA.CDNI.payload.ci-trigger-collection.v2" title="CDNI ci-trigger-collection.v2 Payload Type">
+          <t>Purpose: The purpose of this payload type is to distinguish version 2 of the CI/T collections response</t>
           <t>Interface: CI/T</t>
           <t>Encoding: see <xref target="sect-5.1.3"/></t>
         </section>
@@ -3971,13 +3971,13 @@ RESPONSE:
             <section anchor="IANA.CDNI.payload.CIT.MetadataSubject" title="CDNI CI/T Metadata Trigger Subject Type">
                <t>Purpose: The purpose of this Trigger Spec subject type is to distinguish Metadata CIT Trigger Spec objects.</t>
                <t>Interface: CI/T</t>
-               <t>Encoding: see TBD - string "metatdata"</t>
+               <t>Encoding: see  <xref target="trigger-spec"/> - string "metatdata"</t>
             </section>
 
             <section anchor="IANA.CDNI.payload.CIT.ContentSubject" title="CDNI CI/T Content Trigger Subject Type">
                <t>Purpose: The purpose of this Trigger Spec subject type is to distinguish Content CIT Trigger Spec objects.</t>
                <t>Interface: CI/T</t>
-               <t>Encoding: see TBD - string "content"</t>
+               <t>Encoding: see  <xref target="trigger-spec"/> - string "content"</t>
             </section>
          </section>
 
