@@ -523,7 +523,11 @@
 
 	<t>
    A collection of Trigger Status Resources is a resource that contains
-   a reference to each Trigger Status Resource in that collection.</t>
+   a reference to each Trigger Status Resource in that collection.
+   Note that the collection may refer to Trigger Status Resources of triggers from several protocol versions.
+   I.e. a subsequent call for the retrieval of the relevant trigger status may provide 
+   objects of MIME media type ci-trigger-status as defined in <xref target="RFC8007"/>, ci-trigger-status.v2 
+   or future version, derived from the protocol version creating with which the trigger was created. </t>
 
 	<t>
    The dCDN MUST make a collection of a uCDN's Trigger Status Resources
@@ -625,7 +629,7 @@
    the uCDN does not have sufficient access rights, the dCDN MUST either
    respond with an appropriate 4xx HTTP error code and not create a
    Trigger Status Resource or create a "failed" Trigger Status Resource
-   containing an appropriate Error Description.</t>
+   containing an appropriate Error.v2 Description.</t>
 
 	<t>
    When a CI/T Trigger Command is accepted, the dCDN MUST create a new
@@ -895,8 +899,8 @@
 
 	<t>
    Once a request has been accepted, processing errors are reported in
-   the Trigger Status Resource using a list of Error Descriptions.  Each
-   Error Description is used to report errors against one or more of the
+   the Trigger Status Resource using a list of Error.v2 Descriptions.  Each
+   Error.v2 Description is used to report errors against one or more of the
    URLs or patterns in the Trigger Specification.</t>
 
 	<t>
@@ -934,7 +938,7 @@
              uCDN-A that sets the trigger, to be able to trace back an error to the downstream CDN where it occurred. 
              This document adds a mechanism to propagate the CDN Provider ID (PID) of the dCDN where the fault occurred, back to the 
              uCDN by adding the PID
-             to the error description. When dCDN-B propagates a trigger to the further downstream dCDN-C, 
+             to the error.v2 description. When dCDN-B propagates a trigger to the further downstream dCDN-C, 
              it MUST also propagate back the errors received in the trigger status resource from dCDN-C by adding
              them to the errors array in its own status resource to be sent back to the originating uCDN-A.
              While propagating back the errors, and depending on the implementation, dCDN-B MAY also 
@@ -1044,7 +1048,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 							<t>
 								The dCDN-C responds with the Trigger Status Resource, describing the progress or results
 								of the CI/T Trigger Command. In the described flow, the returned Status is "failed",
-								with an Error Description Object holding an "eunsupported" Error Code reflecting the status response.
+								with an Error.v2 Description Object holding an "eunsupported" Error Code reflecting the status response.
 							</t>
 							<t>
 								The uCDN-A can poll, possibly repeatedly, the Trigger Status Resource in dCDN-B.
@@ -1100,12 +1104,12 @@ uCDN-A                         dCDN-B                         dCDN-C
    name/value pairs.</t>
 
 	<t><list style="empty" hangIndent="3">
-	<t><list style="hanging" hangIndent="3"><t hangText="Name: trigger.v2">
+	<t><list style="hanging" hangIndent="3"><t hangText="Name: trigger">
 	<vspace blankLines="1"/>
-	Description: A specification of the trigger action type and a set of
+	Description: A specification of the trigger action and a set of
          data to act upon.
 	<vspace blankLines="1"/>
-	Value: A Trigger Specification, as defined in <xref target="sect-5.2.1"/>.
+	Value: A Trigger.v2 Specification, as defined in <xref target="sect-5.2.1"/>.
 	<vspace blankLines="1"/>
 	Mandatory: No, but exactly one of "trigger" or "cancel" MUST be
          present in a CI/T Command.
@@ -1144,21 +1148,21 @@ uCDN-A                         dCDN-B                         dCDN-C
 
 	<section title="Trigger Status Resources" anchor="sect-5.1.2"><t>
    Trigger Status Resources MUST use a MIME media type of
-   "application/cdni; ptype=ci-trigger-status".</t>
+   "application/cdni; ptype=ci-trigger-status.v2".</t>
 
 	<t>
    A Trigger Status Resource is encoded as a JSON object containing the
    following name/value pairs.</t>
 
 	<t><list style="empty" hangIndent="3">
-	<t><list style="hanging" hangIndent="3"><t hangText="Name: trigger.v2">
+	<t><list style="hanging" hangIndent="3"><t hangText="Name: trigger">
 	<vspace blankLines="1"/>
 	Description: The Trigger Specification POSTed in the body of
          the CI/T Command.  Note that this need not be a byte-for-byte
          copy.  For example, in the JSON representation the dCDN may
          re-serialize the information differently.
 	<vspace blankLines="1"/>
-	Value: A Trigger Specification, as defined in <xref target="sect-5.2.1"/>.
+	Value: A Trigger.v2 Specification, as defined in <xref target="sect-5.2.1"/>.
 	<vspace blankLines="1"/>
 	Mandatory: Yes.
 	</t>
@@ -1211,7 +1215,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 	Description: Descriptions of errors that have occurred while
          processing a Trigger Command.
 	<vspace blankLines="1"/>
-	Value: An array of Error Descriptions, as defined in
+	Value: An array of Error.v2 Descriptions, as defined in
          <xref target="sect-5.2.6"/>.  An empty array is allowed and is equivalent to
          omitting "errors" from the object.
 	<vspace blankLines="1"/>
@@ -1227,7 +1231,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 	</section>
 
 	<section title="Trigger Collections" anchor="sect-5.1.3"><t>
-   Trigger Collections MUST use a MIME media type of "application/cdni; ptype=ci-trigger-collection".</t>
+   Trigger Collections MUST use a MIME media type of "application/cdni; ptype=ci-trigger-collection.v2".</t>
 
 	<t>
    A Trigger Collection is encoded as a JSON object containing the
@@ -1325,7 +1329,7 @@ uCDN-A                         dCDN-B                         dCDN-C
    This section defines the values that can appear in the top-level
    objects described in <xref target="sect-5.1"/>, and their encodings.</t>
 
-	<section title="Trigger Specification" anchor="sect-5.2.1"><t>
+	<section title="Trigger.v2 Specification" anchor="sect-5.2.1"><t>
    A Trigger.v2 Specification is encoded as a JSON object containing the
    following name/value pairs.</t>
 
@@ -1384,7 +1388,7 @@ uCDN-A                         dCDN-B                         dCDN-C
    A dCDN receiving a request containing a trigger action type it does not
    recognize or does not support MUST reject the request by creating a
    Trigger Status Resource with a status of "failed" and the "errors"
-   array containing an Error Description with error "eunsupported".</t>
+   array containing an Error.v2 Description with error "eunsupported".</t>
 
 	<t>
    The following trigger types are defined by this document:</t>
@@ -1760,8 +1764,8 @@ uCDN-A                         dCDN-B                         dCDN-C
 
 	</section>
 
-	<section title="Error Description" anchor="sect-5.2.6"><t>
-   An Error Description is used to report the failure of a CI/T Command
+	<section title="Error.v2 Description" anchor="sect-5.2.6"><t>
+   An Error.v2 Description is used to report the failure of a CI/T Command
    or failure in the activity it triggered.  It is encoded as a JSON
    object with the following name/value pairs:</t>
 
@@ -1862,7 +1866,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 	</t>
 
 
-          <t>Example of a JSON serialized Error Description object reporting a malformed Playlist:
+          <t>Example of a JSON serialized Error.v2 Description object reporting a malformed Playlist:
           </t>
 
           <figure>
@@ -1882,13 +1886,13 @@ uCDN-A                         dCDN-B                         dCDN-C
          ]]></artwork>
           </figure>
 
-          <t>Example of a JSON serialized Error Description object reporting an unsupported extension object:
+          <t>Example of a JSON serialized Error.v2 Description object reporting an unsupported extension object:
           </t>
 
           <figure>
             <artwork><![CDATA[
 {
-  "errors.v2": [
+  "errors": [
    {
      "extensions": [
        {
@@ -2940,7 +2944,7 @@ REQUEST:
   Content-Length: 352
 
   {
-      "trigger.v2": {
+      "trigger": {
          "action": "CIT.Preposition",
          "specs": [
             {
@@ -2974,7 +2978,7 @@ RESPONSE:
   HTTP/1.1 201 Created
   Date: Wed, 04 May 2016 08:48:10 GMT
   Content-Length: 467
-  Content-Type: application/cdni; ptype=ci-trigger-status
+  Content-Type: application/cdni; ptype=ci-trigger-status.v2
   Location: https://dcdn.example.com/triggers/0
   Server: example-server/0.1
 
@@ -2983,7 +2987,7 @@ RESPONSE:
       "etime": 1462351698,
       "mtime": 1462351690,
       "status": "pending",
-      "trigger.v2": {
+      "trigger": {
          "action": "CIT.Preposition"
          "specs": [
             {
@@ -3033,7 +3037,7 @@ REQUEST:
   Content-Length: 387
 
   {
-    "trigger.v2": {
+    "trigger": {
       "action": "CIT.Invalidate",
       "specs": [
          {
@@ -3070,7 +3074,7 @@ RESPONSE:
   HTTP/1.1 201 Created
   Date: Wed, 04 May 2016 08:48:11 GMT
   Content-Length: 545
-  Content-Type: application/cdni; ptype=ci-trigger-status
+  Content-Type: application/cdni; ptype=ci-trigger-status.v2
   Location: https://dcdn.example.com/triggers/1
   Server: example-server/0.1
 
@@ -3079,7 +3083,7 @@ RESPONSE:
       "etime": 1462351699,
       "mtime": 1462351691,
       "status": "pending",
-      "trigger.v2": {
+      "trigger": {
          "action": "CIT.Invalidate",
          "specs": [
             {
@@ -3130,7 +3134,7 @@ REQUEST:
   Accept: */*
   Content-Type: application/cdni; ptype=ci-trigger-command.v2
   {
-    "trigger.v2": {
+    "trigger": {
       "action": "CIT.Invalidate",
       "specs": [
          {
@@ -3158,7 +3162,7 @@ RESPONSE:
   Server: example-server/0.1
 
   {
-    "errors.v2": [
+    "errors": [
       {
         "specs": [
             {
@@ -3181,7 +3185,7 @@ RESPONSE:
     "etime": 1462351698,
     "mtime": 1462351690,
     "status": "failed",
-    "trigger.v2": { <content of trigger object from the command> }
+    "trigger": { <content of trigger.v2 object from the command> }
   }
          ]]></artwork>
           </figure>
@@ -3203,7 +3207,7 @@ REQUEST:
   Accept: */*
   Content-Type: application/cdni; ptype=ci-trigger-command.v2
   {
-    "trigger.v2": {
+    "trigger": {
       "action": "CIT.Preposition",
       "specs": [
          {
@@ -3229,7 +3233,7 @@ RESPONSE:
   Server: example-server/0.1
 
   {
-    "errors.v2": [ 
+    "errors": [ 
       {
         "specs": [
           {
@@ -3250,7 +3254,7 @@ RESPONSE:
     "etime": 1462351698,
     "mtime": 1462351690,
     "status": "failed",       
-    "trigger.v2": { <content of trigger object from the command> }
+    "trigger": { <content of trigger.v2 object from the command> }
   }
          ]]></artwork>
           </figure>
@@ -3287,7 +3291,7 @@ RESPONSE:
   ETag: "-936094426920308378"
   Cache-Control: max-age=60
   Date: Wed, 04 May 2016 08:48:11 GMT
-  Content-Type: application/cdni; ptype=ci-trigger-collection
+  Content-Type: application/cdni; ptype=ci-trigger-collection.v2
 
   {
       "cdn-id": "AS64496:0",
@@ -3327,7 +3331,7 @@ RESPONSE:
   ETag: "4331492443626270781"
   Cache-Control: max-age=60
   Date: Wed, 04 May 2016 08:48:11 GMT
-  Content-Type: application/cdni; ptype=ci-trigger-collection
+  Content-Type: application/cdni; ptype=ci-trigger-collection.v2
 
   {
       "staleresourcetime": 86400,
@@ -3359,7 +3363,7 @@ RESPONSE:
   ETag: "7958041393922269003"
   Cache-Control: max-age=60
   Date: Wed, 04 May 2016 08:48:11 GMT
-  Content-Type: application/cdni; ptype=ci-trigger-collection
+  Content-Type: application/cdni; ptype=ci-trigger-collection.v2
 
   {
       "staleresourcetime": 86400,
@@ -3392,7 +3396,7 @@ RESPONSE:
   ETag: "6990548174277557683"
   Cache-Control: max-age=60
   Date: Wed, 04 May 2016 08:48:10 GMT
-  Content-Type: application/cdni; ptype=ci-trigger-status
+  Content-Type: application/cdni; ptype=ci-trigger-status.v2
 
   {
       "ctime": 1462351690,
@@ -3443,7 +3447,7 @@ RESPONSE:
   ETag: "-554385204989405469"
   Cache-Control: max-age=60
   Date: Wed, 04 May 2016 08:48:11 GMT
-  Content-Type: application/cdni; ptype=ci-trigger-status
+  Content-Type: application/cdni; ptype=ci-trigger-status.v2
   {
       "ctime": 1462351691,
       "etime": 1462351699,
@@ -3505,7 +3509,7 @@ RESPONSE:
    ETag: "4331492443626270781"
    Cache-Control: max-age=60
    Date: Wed, 04 May 2016 08:48:11 GMT
-   Content-Type: application/cdni; ptype=ci-trigger-collection
+   Content-Type: application/cdni; ptype=ci-trigger-collection.v2
 
 REQUEST:
 
@@ -3524,7 +3528,7 @@ RESPONSE:
   ETag: "6990548174277557683"
   Cache-Control: max-age=60
   Date: Wed, 04 May 2016 08:48:10 GMT
-  Content-Type: application/cdni; ptype=ci-trigger-status
+  Content-Type: application/cdni; ptype=ci-trigger-status.v2
 ]]></artwork>
 	</figure>
 	<t>
@@ -3551,7 +3555,7 @@ RESPONSE:
   ETag: "1337503181677633762"
   Cache-Control: max-age=60
   Date: Wed, 04 May 2016 08:48:15 GMT
-  Content-Type: application/cdni; ptype=ci-trigger-collection
+  Content-Type: application/cdni; ptype=ci-trigger-collection.v2
 
   {
       "staleresourcetime": 86400,
@@ -3574,7 +3578,7 @@ RESPONSE:
   ETag: "4481489539378529796"
   Cache-Control: max-age=60
   Date: Wed, 04 May 2016 08:48:22 GMT
-  Content-Type: application/cdni; ptype=ci-trigger-collection
+  Content-Type: application/cdni; ptype=ci-trigger-collection.v2
 
   {
       "staleresourcetime": 86400,
@@ -3630,7 +3634,7 @@ RESPONSE:
   ETag: "-6938620031669085677"
   Cache-Control: max-age=60
   Date: Wed, 04 May 2016 08:48:22 GMT
-  Content-Type: application/cdni; ptype=ci-trigger-collection
+  Content-Type: application/cdni; ptype=ci-trigger-collection.v2
 
   {
       "staleresourcetime": 86400,
@@ -3661,7 +3665,7 @@ REQUEST:
   Accept: */*
   Content-Type: application/cdni; ptype=ci-trigger-command.v2
   {
-    "trigger.v2": {
+    "trigger": {
      "action": "CIT.Preposition",
      "specs": [
          {
@@ -3709,7 +3713,7 @@ RESPONSE:
   Server: example-server/0.1
 
   {
-     "errors.v2": [
+     "errors": [
        {
          "extensions": [
             {
@@ -3749,7 +3753,7 @@ RESPONSE:
      "etime": 1462351698,
      "mtime": 1462351690,
      "status": "failed",
-     "trigger.v2": { <content of trigger object from the command> }
+     "trigger": { <content of trigger.v2 object from the command> }
   }
          ]]></artwork>
           </figure>
@@ -3767,7 +3771,7 @@ RESPONSE:
 
 	<texttable style="full"><ttcol> Payload Type</ttcol>
 	<ttcol> Specification</ttcol>
-	<c>ci-trigger-collection</c>
+	<c>ci-trigger-collection.v2</c>
    <c>RFCthis</c>
    <c>ci-trigger-command.v2</c>
    <c>RFCthis</c>
@@ -4285,14 +4289,14 @@ RESPONSE:
 	<figure><artwork><![CDATA[
 CIT-object = CIT-command / Trigger-Status-Resource / Trigger-Collection
 
-CIT-command ; use media type application/cdni; ptype=ci-trigger-command
+CIT-command ; use media type application/cdni; ptype=ci-trigger-command.v2
 = {
   ? trigger: Triggerspec
   ? cancel: [* URI]
   cdn-path: [* Cdn-PID]
 }
 
-Trigger-Status-Resource ; application/cdni; ptype=ci-trigger-status
+Trigger-Status-Resource ; application/cdni; ptype=ci-trigger-status.v2
 = {
   trigger: Triggerspec
   ctime: Absolute-Time
@@ -4302,7 +4306,7 @@ Trigger-Status-Resource ; application/cdni; ptype=ci-trigger-status
   ? errors: [* Error-Description]
 }
 
-Trigger-Collection ; application/cdni; ptype=ci-trigger-collection
+Trigger-Collection ; application/cdni; ptype=ci-trigger-collection.v2
 = {
   triggers: [* URI]
   ? staleresourcetime: int ; time in seconds
@@ -4337,7 +4341,7 @@ Pattern-Match = { ; see Section 5.2.4
 
 Absolute-Time = number ; seconds since UNIX epoch (Section 5.2.5)
 
-Error-Description = { ; see Section 5.2.6
+Error.v2-Description = { ; see Section 5.2.6
   error: Error-Code
   ? metadata.urls: [* URI]
   ? content.urls: [* URI]
