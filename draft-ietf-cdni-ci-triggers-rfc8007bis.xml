@@ -501,7 +501,7 @@
       This document specifies a generic trigger extension
       object wrapper for managing individual CDNI trigger extensions in an opaque manner.
    </t>
-   </t>
+   <t>
    All trigger extensions are optional, and it is thus the responsibility of the extension specification to define a consistent default behavior
    for the case the extension is not present.
 	</t>
