@@ -99,13 +99,13 @@
 
 	<date/>
 	<abstract><t>
-   This document obsoletes RFC8007. This document describes the part of the Content Delivery Network
+   This document obsoletes RFC8007. The document describes the part of Content Delivery Network
    Interconnection (CDNI) Control interface that allows a CDN to trigger
    activity in an interconnected CDN that is configured to deliver
-   content on its behalf.  The upstream CDN can use this mechanism to
-   request that the downstream CDN pre-position metadata or content or
+   content on its behalf.  The upstream CDN MAY use this mechanism to
+   request that the downstream CDN to pre-position metadata or content as well as 
    to request that it invalidate or purge metadata or content.  The
-   upstream CDN can monitor the status of activity that it has triggered
+   upstream CDN MAY monitor the status of activity that it has triggered
    in the downstream CDN.</t>
 
 	</abstract>
@@ -124,18 +124,21 @@
    in more detail.</t>
 
 	<t>
-   This document describes the "CI/T" interface -- "CDNI Control interface / Triggers".  It does not consider those parts of the
+   The CDNI Control Interface / Triggers 1st edition <xref target="RFC8007"/> 1st edition, deprecated by this document describes the "CI/T" interface -- "CDNI Control interface / Triggers".  It does not consider those parts of the
    Control interface that relate to configuration, bootstrapping, or
    authentication of CDN Interconnect interfaces.  Section 4 of
    <xref target="RFC7337"/> identifies the requirements specific to the CI/T interface;
    requirements applicable to the CI/T interface are CI-1 to CI-6.</t>
+   
+   <t>This document is a 2nd edition for the CDNI Control Interface / Triggers, which only modifies the trigger interface’s object structure. This change is intended to improve the interface’s flexibility and extensibility. It also provides a Trigger Extension mechanism that MAY be used to provide further instruction on  the trigger execution. The trigger interface mechanism itself is not changed by this new edition.
+   </t>
 
 	<t><list style="symbols"><t><xref target="sect-2"/> outlines the model for the CI/T interface at a high
       level.</t>
 		
 	<t><xref target="trigger-spec"/> describes the trigger spec object, specifying the trigger's targets.</t>
 
-	<t><xref target="trigger-extensibility"/> describes the trigger extensibility mechanism.</t>
+	<t><xref target="trigger-extensibility"/> describes the trigger's extensibility mechanism.</t>
 
 	<t><xref target="sect-3"/> describes collections of Trigger Status Resources.</t>
 
@@ -147,7 +150,7 @@
 
 	<t><xref target="trigger-extension-objects"/> describes the Trigger's Extensions object.</t>
 
-	<t><xref target="footprint-and-capabilities"/> describes the FCI capabilities objects used to inform on the supported CI/T capabilities.</t>
+	<t><xref target="footprint-and-capabilities"/> describes the FCI capabilities objects used to inform on the supported CI/T related capabilities.</t>
 
 	<t><xref target="sect-6"/> contains example messages.</t>
 
@@ -181,14 +184,14 @@
 
 	<section title="Model for CDNI Triggers" anchor="sect-2"><t>
    A CI/T Command, sent from the uCDN to the dCDN, is a request for the
-   dCDN to do some work relating to data associated with content
+   dCDN to do some work (an "action") relating to data associated with content
    requests originating from the uCDN.</t>
 
 	<t>
    There are two types of CI/T Commands: CI/T Trigger Commands and CI/T
    Cancel Commands.  The CI/T Cancel Command can be used to request
-   cancellation of an earlier CI/T Trigger Command.  A CI/T Trigger
-   Action is of one of the following types:</t>
+   cancellation of an earlier CI/T Trigger Command. </t>
+   <t>A CI/T Trigger Action is of one of the following types:</t>
 
 	<t><list style="symbols"><t>preposition - used to instruct the dCDN to fetch metadata from the
       uCDN, or content from any origin including the uCDN.</t>
@@ -203,7 +206,7 @@
 	</t>
 
    <t>
-   Note that additional CI/T Trigger Action Types may be defined and registered in the future. 
+   Note that additional CI/T Trigger Action Types can be defined and registered in the future. 
    </t>
 	<t>
    The CI/T interface is a web service offered by the dCDN.  It allows
@@ -245,7 +248,7 @@
    Figure 1 is an example showing the basic message flow used by the
    uCDN to trigger activity in the dCDN and for the uCDN to discover the
    status of that activity.  Only successful triggering is shown.
-   Examples of the messages are given in <xref target="sect-6"/>.</t>
+   Examples of the messages are shown in <xref target="sect-6"/>.</t>
 
 	<figure title="Basic CDNI Message Flow for Triggers" anchor="ure-basic-cdni-message-flow-for-triggers"><artwork><![CDATA[
    uCDN                                                   dCDN
@@ -284,10 +287,10 @@
 	<t>The dCDN responds to the uCDN with an HTTP 201 response status
        and the location of the Trigger Status Resource.</t>
 
-	<t>The uCDN can poll, possibly repeatedly, the Trigger Status
+	<t>The uCDN MAY query, possibly repeatedly, the Trigger Status
        Resource in the dCDN.</t>
 
-	<t>The dCDN responds with the Trigger Status Resource, describing
+	<t>The dCDN responds to each query with the Trigger Status Resource, describing
        the progress or results of the CI/T Trigger Command.</t>
 
 	</list>
@@ -330,9 +333,9 @@
 
 	<section title="Scope of Triggered Activity" anchor="sect-2.2"><t>
    Each CI/T Command can operate on multiple metadata and content elements, 
-   usually refered by their URLs. These elements are targeted by specifying
+   usually referred to by their URLs. These elements are targeted by specifying
    both their subject (i.e. "metadata" or "content") as well as specification 
-   method (e.g. URL Regexes)
+   method (e.g. URL Regexes) and value.
    </t>
 
 	<t>
@@ -342,9 +345,9 @@
 
 	<section title="Multiple Interconnected CDNs" anchor="sect-2.2.1"><t>
    In a network of interconnected CDNs, a single uCDN will originate a
-   given item of metadata and associated content.  It may distribute
-   that metadata and content to more than one dCDN, which may in turn
-   distribute that metadata and content to CDNs located further
+   given item of metadata and associated content.  It would possibly distribute
+   that metadata and content to more than one dCDN, which in turn
+   distribute that metadata and content to additional CDNs located further
    downstream.</t>
 
 	<t>
@@ -417,7 +420,7 @@
 
 	<t>
    The CI/T Trigger Command MUST NOT be reported as "complete" until all
-   actions have been completed successfully.  The reasons for failure,
+   operations have been completed successfully.  The reasons for failure,
    and URLs or patterns affected, SHOULD be enumerated in the Trigger
    Status Resource.  For more details, see <xref target="sect-4.7"/>.</t>
 
@@ -437,9 +440,9 @@
 
 	</section>
 
-   <section anchor="trigger-spec" title="Trigger Spec">
+   <section anchor="trigger-spec" title="Trigger Spec Object">
    <t>
-      The CDNI Control Interface / Triggers <xref target="RFC8007"/> defines a set of properties
+      The CDNI Control Interface / Triggers  1st edition <xref target="RFC8007"/> defines a set of properties
       and objects used by the trigger commands in order to specify the targets the trigger is applied on.
       This document modifies the trigger interface so it has a list of trigger specs. 
       Such structure improves the interface's extensibility and flexibility. 
@@ -451,28 +454,28 @@
    <t>This document also defines an initial set of trigger spec objects, and registers the 
    defined trigger specs' types as CDNI Payload Types <xref target="RFC7736"/> under the namespace CIT:
    <list style="symbols">
-      <t>CIT.UrlsSpec (for specifying targets via URLs)</t>
-      <t>CIT.CcidsSpec (for specifying targets via CCIDs, as defined at <xref target="RFC8006"/>)</t>
-      <t>CIT.UriPatternMatchSpec (for specifying targets via URI patterns)</t>
-      <t>CIT.UrlRegexMatchSpec (for specifying targets via URI regexes)</t>
-      <t>CIT.ContentPlaylistSpec (for specifying content targets via playlists)</t>
+      <t>CIT.UrlsSpec (for specifying trigger targets via URLs)</t>
+      <t>CIT.CcidsSpec (for specifying trigger targets via CCIDs content grouping, as defined in section 4.2.8 <xref target="RFC8006"/>)</t>
+      <t>CIT.UriPatternMatchSpec (for specifying trigger targets via <xref target="RFC3986"/> URI patterns)</t>
+      <t>CIT.UrlRegexMatchSpec (for specifying trigger targets via regexes  matching their URI)</t>
+      <t>CIT.ContentPlaylistSpec (for specifying content trigger targets via a playlist URI and a media protocol identifier)</t>
    </list>
    </t>
 
    <t>Furthermore, as the scope of the trigger may relate to either uCDN metadata as well as uCDN content, 
    the "trigger spec object" also specify the trigger's target subject (i.e. metadata or content) 
-   to be matched with. The document registers additional as CDNI Payload Types <xref target="RFC7736"/> 
+   to be matched with. The document registers as additional CDNI Payload Types <xref target="RFC7736"/> 
    under the namespace CIT, the initial set of available trigger subjects:
    <list style="symbols">
-      <t>CIT.MetadataSubject (for indicating targets are of metadata, as defined at <xref target="RFC8006"/>)</t>
-      <t>CIT.ContentSubject (for indicating targets are of client facing content)</t>
+      <t>CIT.MetadataSubject (for indicating the trigger target specification refers to Metadata object, as defined at <xref target="RFC8006"/>)</t>
+      <t>CIT.ContentSubject (for indicating the trigger target specification refers to a client facing content)</t>
    </list>
    </t>
 
    <section title="Content URLs" anchor="sect-4.8">
    <t>
-   Each CI/T Command usually refers the target content by the content URLs 
-   (e.g. using a CIT.UrlSpec trigger spec object).
+   Each CI/T Command usually refers the targets by the target URLs,
+   using a CIT.UrlSpec trigger spec object or some aggregating spec such as the CIT.UrlRegexMatchSpec.
 
    If content URLs are transformed by an intermediate CDN in a cascade,
    that intermediate CDN MUST similarly transform URLs in CI/T Commands
@@ -491,13 +494,17 @@
 
 <section anchor="trigger-extensibility" title="Trigger Extensibility">
    <t>
-      The CDNI Control Interface / Triggers <xref target="RFC8007"/> defines a set of properties
-      and objects used by the trigger commands. In this document we define an extension mechanism
+      The CDNI Control Interface / Triggers 1st edition <xref target="RFC8007"/> defines a set of properties
+      and objects used by the trigger commands. In this 2nd edition we define an extension mechanism
       to the triggers interface that enables applications to add instructions for 
       finer control over the trigger execution, for example indicating a time window for the trigger to be executed. 
       This document specifies a generic trigger extension
       object wrapper for managing individual CDNI trigger extensions in an opaque manner.
    </t>
+   </t>
+   All trigger extensions are optional, and it is thus the responsibility of the extension specification to define a consistent default behavior
+   for the case the extension is not present.
+	</t>
 
    <t>This document also registers CDNI Payload Types <xref target="RFC7736"/> under the namespace CIT
       for the initial set of trigger extension types:
@@ -936,14 +943,15 @@
              to a downstream CDN C (dCDN-C). Triggers sent from uCDN-A to dCDN-B may be redistributed 
              from dCDN-B to dCDN-C and errors can occur anywhere along the path. Therefore, it might be essential for 
              uCDN-A that sets the trigger, to be able to trace back an error to the downstream CDN where it occurred. 
-             This document adds a mechanism to propagate the CDN Provider ID (PID) of the dCDN where the fault occurred, back to the 
+             This document adds a mechanism to propagate the 
+			 PID of the dCDN where the fault occurred, back to the 
              uCDN by adding the PID
              to the error.v2 description. When dCDN-B propagates a trigger to the further downstream dCDN-C, 
              it MUST also propagate back the errors received in the trigger status resource from dCDN-C by adding
              them to the errors array in its own status resource to be sent back to the originating uCDN-A.
              While propagating back the errors, and depending on the implementation, dCDN-B MAY also 
-             specify the dCDN-C PID, indicating to which CDN the error relates spefically.
-             The trigger originating upstream CDN will receive an array of errors that occurred 
+             specify the dCDN-C PID, indicating to which CDN the error relates specificall.
+             The trigger originating upstream CDN then receives an array built of the errors that occurred 
              in all the CDNs along the execution path, where each error MAY be carrying its own CDN identifier.
           </t>
           <t>
@@ -1040,10 +1048,10 @@ uCDN-A                         dCDN-B                         dCDN-C
 							</t>
 							<t>
 								The dCDN-C acts upon the CI/T Command. However, the command fails at dCDN-C as,
-								for example, the Trigger Specification contains a "action type" that is not supported by dCDN-C.
+								for example, the Trigger Specification contains an "action type" that is not supported by dCDN-C.
 							</t>
 							<t>
-								The dCDN-B can poll, possibly repeatedly, the Trigger Status Resource in dCDN-C.
+								The dCDN-B queries, possibly repeatedly, the Trigger Status Resource in dCDN-C.
 							</t>
 							<t>
 								The dCDN-C responds with the Trigger Status Resource, describing the progress or results
@@ -1051,7 +1059,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 								with an Error.v2 Description Object holding an "eunsupported" Error Code reflecting the status response.
 							</t>
 							<t>
-								The uCDN-A can poll, possibly repeatedly, the Trigger Status Resource in dCDN-B.
+								The uCDN-A queries, possibly repeatedly, the Trigger Status Resource in dCDN-B.
 							</t>
 							<t>
 								The dCDN-B responds with the Trigger Status Resource, describing the progress or results of
@@ -1107,7 +1115,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 	<t><list style="hanging" hangIndent="3"><t hangText="Name: trigger">
 	<vspace blankLines="1"/>
 	Description: A specification of the trigger action and a set of
-         data to act upon.
+         targets to act upon.
 	<vspace blankLines="1"/>
 	Value: A Trigger.v2 Specification, as defined in <xref target="sect-5.2.1"/>.
 	<vspace blankLines="1"/>
@@ -1363,17 +1371,17 @@ uCDN-A                         dCDN-B                         dCDN-C
 
 	<t hangText="Name: specs">
 	<vspace blankLines="1"/>
-	Description: Array of trigger spec data.
+	Description: Array of trigger specs representing trigger's targets.
 	<vspace blankLines="1"/>
 	Value: Array of GenericTriggerSpec objects (see <xref target="generic-spec-object"/>).
 	<vspace blankLines="1"/>
-	Mandatory: Yes. Futhermore, the list MUST NOT be empty.
+	Mandatory: Yes. Furthermore, the list MUST NOT be empty.
 	</t>
 
 	
 	<t hangText="Name: extensions">
 	<vspace blankLines="1"/>
-	Description: Array of trigger extension data.
+	Description: Array of trigger extensions.
 	<vspace blankLines="1"/>
 	Value:Array of GenericTriggerExtension objects (see <xref target="generic-extension-object"/>).
 	<vspace blankLines="1"/>
@@ -1438,13 +1446,14 @@ uCDN-A                         dCDN-B                         dCDN-C
    <section anchor="trigger-specs" title="CI/T Trigger Specs">
    <t>
    A "trigger.v2" object, as defined in <xref target="sect-5.2.1"/> includes an
-   array of trigger spec objects. The trigger spec object contains properties
+   array of trigger spec objects. Each trigger spec object contains properties
    that are used as trigger target selection directives for dCDN when executing 
-   the trigger command -- for example content urls or metadata uri patterns. Each such CDNI Trigger 
+   the trigger command -- for example content URLs or metadata URI patterns. Each such CDNI Trigger 
    Spec is a specialization
    of a CDNI GenericTriggerSpec object. The GenericTriggerSpec object abstracts the basic
    information required for trigger distribution from the specifics of any given property
-   (i.e., property semantics, enforcement options, etc.). The semantics of the Trigger Specs list 
+   (i.e., property semantics, enforcement options, etc.). </t>
+   <t> The semantics of the Trigger Specs list 
    is additive, i.e. the trigger applies to any object matching one of the listed specs.
    </t>
 
@@ -1454,6 +1463,17 @@ uCDN-A                         dCDN-B                         dCDN-C
             Trigger spec in an opaque manner.</t>
 
          <t><list style="empty">
+
+            <t>Property: trigger-subject<list style="empty">
+
+               <t>Description: Case-insensitive CDNI Trigger subject.</t>
+
+               <t>Type: String containing the type of the subject matching the 
+                  generic-trigger-spec-value property, such as "content" or "metadata" 
+                  as define in <xref target="trigger-spec"/>.</t>  
+
+               <t>Mandatory: Yes.</t>
+            </list></t>
 
             <t>Property: generic-trigger-spec-type<list style="empty">
 
@@ -1470,7 +1490,7 @@ uCDN-A                         dCDN-B                         dCDN-C
                <t>Description:A CDNI Trigger spec object.</t>
 
                <t>Type: Format/Type is defined by the value of the
-                  generic-trigger-spec-type property above.</t>
+                  generic-trigger-spec-type property.</t>
 
                <t>Mandatory: Yes.</t>
             </list></t>
@@ -1487,7 +1507,7 @@ uCDN-A                         dCDN-B                         dCDN-C
             </list></t>
 
          </list></t>
-         <t>Example of a JSON serialized GenericTriggerExtension object containing a specific trigger extension object:</t>
+         <t>The structure of a JSON serialized GenericTriggerExtension object containing a specific trigger extension object is illustrated below:</t>
 
       <figure>
          <artwork><![CDATA[
@@ -1556,8 +1576,8 @@ uCDN-A                         dCDN-B                         dCDN-C
            </t>
            <t>
              Redistribution safety MUST be specified for each GenericTriggerExtension
-             property. If a CDN does not understand or support a given
-             GenericTriggerExtension property that is not safe-to-redistribute, the CDN
+             listed. If a CDN does not understand or support a given
+             GenericTriggerExtension object that is not safe-to-redistribute, the CDN
              MUST set the "incomprehensible" flag to true for that GenericTriggerExtension
              object before redistributing it.  The "incomprehensible"
              flag signals to a dCDN that trigger metadata was not properly transformed
@@ -1747,7 +1767,7 @@ uCDN-A                         dCDN-B                         dCDN-C
               </list></t>
 
             </list></t>
-            <t>Example of a JSON serialized GenericTriggerExtension object containing a specific trigger extension object:</t>
+            <t>The structure of a JSON serialized GenericTriggerExtension object containing a specific trigger extension object is illustrated below:</t>
 
         <figure>
           <artwork><![CDATA[
@@ -1759,9 +1779,9 @@ uCDN-A                         dCDN-B                         dCDN-C
       {
         <properties of this trigger extension object>
       },
-  "mandatory-to-enforce": true,
-  "safe-to-redistribute": true,
-  "incomprehensible": false
+  "mandatory-to-enforce": <bool>,
+  "safe-to-redistribute": <bool>,
+  "incomprehensible": <bool>
 }
 
        ]]></artwork>
@@ -1824,8 +1844,8 @@ uCDN-A                         dCDN-B                         dCDN-C
                 at the Trigger Specification.
                 Only those spec to which the error applies are listed. 
 	<vspace blankLines="1"/>
-	Value: A Trigger Specification, as defined in <xref target="sect-5.2.1"/>, where each spec object is based
-                on the "specs" in the Trigger Specification. 
+	Value: A Trigger Specification, as defined in <xref target="sect-5.2.1"/>,   where each spec object MUST be exactly as
+         they appear in the request.
 	<vspace blankLines="1"/>
 	Mandatory: Yes. 
 	</t>
@@ -1884,14 +1904,18 @@ uCDN-A                         dCDN-B                         dCDN-C
             <artwork><![CDATA[
 
 {
-   "content.playlists": [
-      {
-        "playlist": "https://www.example.com/hls/title/index.m3u8",
-        "media-protocol": "hls"
-      }
-    ],
-   "description": "Failed to parse HLS playlist",
    "error": "econtent",
+   "description": "Failed to parse HLS playlist",
+   "specs": [
+   {
+        "trigger-subject": "CIT.Content",
+        "generic-trigger-spec-type": "CIT.ContentPlaylist",
+        "generic-trigger-spec-value": {
+            "playlist": "https://www.example.com/hls/title/index.m3u8",
+            "media-protocol": "hls"
+         }
+      }
+   ],
    "cdn": "AS64500:0"
 },
          ]]></artwork>
@@ -1905,6 +1929,20 @@ uCDN-A                         dCDN-B                         dCDN-C
 {
   "errors": [
    {
+     "error": "eextension",
+     "description": "unrecognized extension <type>",
+     "specs": [
+        {
+            "trigger-subject": "CIT.Content",
+            "generic-trigger-spec-type": "CIT.UrlsSpec",
+            "generic-trigger-spec-value": {
+               "urls": [
+                  "https://www.example.com/a/b/c/1",
+                  "https://www.example.com/a/b/c/2"
+               ]
+            }
+         }
+     ],
      "extensions": [
        {
         "generic-trigger-extension-type":
@@ -1915,8 +1953,6 @@ uCDN-A                         dCDN-B                         dCDN-C
           },
        }
      ],
-     "description": "unrecognized extension <type>",
-     "error": "eextension",
      "cdn": "AS64500:0"
    },
   ]
@@ -1972,7 +2008,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 
 	<t>
    The following Error Codes are defined by this document and MUST be
-   supported by an implementation of the CI/T interface.</t>
+   supported by an implementation of the CI/T interface, utilizing the ci-trigger-command.v2 and the ci-trigger-status.v2 objects.</t>
 
 	<texttable style="full"><ttcol> Error Code</ttcol>
 	<ttcol> Description</ttcol>
@@ -2041,7 +2077,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 
               <t>Property: urls<list style="empty">
 
-                 <t>Description: An array of URLs to on which the trigger MUST be executed.</t>
+                 <t>Description: An array of URLs over which the trigger MUST be executed.</t>
 
                  <t>Value: A JSON array of URLs represented as JSON strings.</t>
 
@@ -2056,13 +2092,13 @@ uCDN-A                         dCDN-B                         dCDN-C
         <figure> 
           <artwork><![CDATA[
 {
+   "trigger-subject": "CIT.Metadata",
    "generic-trigger-spec-type": "CIT.UrlsSpec",
    "generic-trigger-spec-value": {
       "urls": [
          "https://metadata.example.com/a/b/c"
       ]
-   },
-   "trigger-subject": "CIT.Metadata"
+   }
 }
 
        ]]></artwork>
@@ -2083,7 +2119,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 
               <t>Property: ccids<list style="empty">
 
-                 <t>Description: An array of Content Collection IDentifier to on which the trigger MUST be executed.</t>
+                 <t>Description: An array of Content Collection IDentifiers over which the trigger MUST be executed.</t>
 
                  <t>Value: A JSON array of strings, where each string is a Content Collection IDentifier.</t>
 
@@ -2094,7 +2130,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 
      <section anchor="uri-pattern-match-spec" title="URI Pattern Match Spec">
         <t>The uri-pattern match spec type allows the uCDN to manage uCDN content or metadata objects
-           held by the dCDN based on the objects' URI pattern. The value is a UriPatternMatch objects, 
+           held by the dCDN based on the objects' URI pattern. The value is a UriPatternMatch object, 
 		as defined in <xref target="sect-5.2.4"/>.</t>
 
 	<section title="UriPatternMatch" anchor="sect-5.2.4"><t>
@@ -2124,7 +2160,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 	Value: One of the JSON values "true" (the matching is case
          sensitive) or "false" (the matching is case insensitive).
 	<vspace blankLines="1"/>
-	Mandatory: No; default is case-insensitive match.
+	Mandatory: No; default is "false", i.e. a case-insensitive match.
 	</t>
 
 	<t hangText="Name: match-query-string">
@@ -2196,7 +2232,7 @@ uCDN-A                         dCDN-B                         dCDN-C
               <t>Type: JSON boolean. Either "true" (the matching is case sensitive) or "false"
                  (the matching is case insensitive).</t>
 
-              <t>Mandatory: No; default is case-insensitive match (i.e., a value of "false").</t>
+              <t>Mandatory: No; default is “false”, i.e. a case-insensitive match.</t>
             </list></t>
             <t>Property: match-query-string<list style="empty">
 
@@ -2250,7 +2286,7 @@ https://video.example.com/k/movie1/4/013.ts
      <section anchor="content-playlist-spec" title="Content Playlist Spec">
         <t>The content-playlist spec type allows the uCDN to manage content held by the dCDN
            based on the content's playlist. 
-           The content-playlist spec type is valid only for CIT.Content spec subject.
+           The content-playlist spec type is valid only for the CIT.Content spec subject.
         </t>
 
         <section anchor="playlist" title="Playlist">
@@ -2366,7 +2402,7 @@ https://video.example.com/k/movie1/4/013.ts
         </t>
 
 
-        <t>The following is an example of a JSON serialized generic trigger extension object containing a location policy
+        <t>Following is an example of a JSON serialized generic trigger extension object containing a location policy
            object that allows the trigger execution in the US but blocks its execution in Canada:
         </t>
 
@@ -2834,8 +2870,8 @@ Month Number  Month/Year           Maximum value of date-mday
           <t>
              The following shows an example of a JSON serialized CI/T Trigger Scope Capability object serialization for
              a dCDN that supports the preposition and invalidation of content, using "CIT.UrlsSpec" and "CIT.CcidSpec" 
-             Generic Spec types, with "CIT.TimePolicy" but only for the preposition. Note that in this example purge 
-             is not supported neigher the operations on metadata.
+             Generic Spec types, with "CIT.TimePolicy" but only for the "preposition" action. Note that in this example, purge 
+             is not supported neigher any operation on metadata.
           </t>
 
           <figure>
@@ -2876,7 +2912,7 @@ Month Number  Month/Year           Maximum value of date-mday
 
             <section title="CI/T Playlist Protocol Capability Object">
         <t>
-           The CI/T Playlist Protocol capability object is used to indicate support for one or more
+           Given a CIT.ContentPlaylistSpec being supported by the dCDN, the CI/T Playlist Protocol capability object is used to indicate support for one or more
            MediaProtocol types listed in <xref target="IANA.CDNI.MediaProtocolReg"/> by the playlists
            property of the "trigger.v2" object.
         </t>
@@ -2947,8 +2983,8 @@ Month Number  Month/Year           Maximum value of date-mday
    collection of all Trigger Status Resources.</t>
 
 	<t>
-   Note that "metadata.patterns" and "content.patterns" are not allowed
-   in a pre-position Trigger Specification.</t>
+    Note that pattern based specs like “UriPatternMatch” and “UrisRegexMatch”,  are not allowed
+   in a pre-position Trigger Specification, where the dCDN has to have a clear list of objects to obtain.</t>
 
 	<figure><artwork><![CDATA[
 REQUEST:
@@ -2965,15 +3001,16 @@ REQUEST:
          "action": "CIT.Preposition",
          "specs": [
             {
+               "trigger-subject": "CIT.Metadata",
                "generic-trigger-spec-type": "CIT.UrlsSpec",
                "generic-trigger-spec-value": {
                   "urls": [
                      "https://metadata.example.com/a/b/c"
                   ]
-               },
-               "trigger-subject": "CIT.Metadata"
+               }
             },
             {
+               "trigger-subject": "CIT.Content",
                "generic-trigger-spec-type": "CIT.UrlsSpec",
                "generic-trigger-spec-value": {
                   "urls": [
@@ -2982,8 +3019,7 @@ REQUEST:
                      "https://www.example.com/a/b/c/3",
                      "https://www.example.com/a/b/c/4"
                   ]
-               },
-               "trigger-subject": "CIT.Content"
+               }
             }
          ],
       },
@@ -3008,15 +3044,16 @@ RESPONSE:
          "action": "CIT.Preposition"
          "specs": [
             {
+               "trigger-subject": "CIT.Metadata",
                "generic-trigger-spec-type": "CIT.UrlsSpec",
                "generic-trigger-spec-value": {
                   "urls": [
                      "https://metadata.example.com/a/b/c"
                   ]
-               },
-               "trigger-subject": "CIT.Metadata"
+               }
             },
             {
+               "trigger-subject": "CIT.Content",
                "generic-trigger-spec-type": "CIT.UrlsSpec",
                "generic-trigger-spec-value": {
                   "urls": [
@@ -3025,8 +3062,7 @@ RESPONSE:
                      "https://www.example.com/a/b/c/3",
                      "https://www.example.com/a/b/c/4"
                   ]
-               },
-               "trigger-subject": "CIT.Content"
+               }
             }
          ]
       }
@@ -3058,28 +3094,28 @@ REQUEST:
       "action": "CIT.Invalidate",
       "specs": [
          {
+            "trigger-subject": "CIT.Metadata",
             "generic-trigger-spec-type": "CIT.UriPatternMatch",
             "generic-trigger-spec-value": {
                "pattern": "https://metadata.example.com/a/b/*"
-            },
-            "trigger-subject": "CIT.Metadata"
+            }
          },
          {
+            "trigger-subject": "CIT.Content",
             "generic-trigger-spec-type": "CIT.UrlsSpec",
             "generic-trigger-spec-value": {
                "urls": [
                   "https://www.example.com/a/index.html"
                ]
-            },
-            "trigger-subject": "CIT.Content"
+            }
          },
          {
+            "trigger-subject": "CIT.Content",
             "generic-trigger-spec-type": "CIT.UriPatternMatch",
             "generic-trigger-spec-value": {
                "pattern": "https://www.example.com/a/b/*",
                "case-sensitive": true
-            },
-            "trigger-subject": "CIT.Content"
+            }
          }
       ]
     },
@@ -3104,28 +3140,28 @@ RESPONSE:
          "action": "CIT.Invalidate",
          "specs": [
             {
+               "trigger-subject": "CIT.Metadata",
                "generic-trigger-spec-type": "CIT.UriPatternMatch",
                "generic-trigger-spec-value": {
                   "pattern": "https://metadata.example.com/a/b/*"
-               },
-               "trigger-subject": "CIT.Metadata"
+               }
             },
             {
+               "trigger-subject": "CIT.Content",
                "generic-trigger-spec-type": "CIT.UrlsSpec",
                "generic-trigger-spec-value": {
                   "urls": [
                      "https://www.example.com/a/index.html"
                   ]
-               },
-               "trigger-subject": "CIT.Content"
+               }
             },
             {
+               "trigger-subject": "CIT.Content",
                "generic-trigger-spec-type": "CIT.UriPatternMatch",
                "generic-trigger-spec-value": {
                   "pattern": "https://www.example.com/a/b/*",
                   "case-sensitive": true
-               },
-               "trigger-subject": "CIT.Content"
+               }
             }
          ]
       }
@@ -3155,14 +3191,14 @@ REQUEST:
       "action": "CIT.Invalidate",
       "specs": [
          {
+            "trigger-subject": "CIT.Content",
             "generic-trigger-spec-type": "CIT.UriRegexMatch",
             "generic-trigger-spec-value": {
                  "regex": "^(https:\\/\\/video\\.example\\.com)\\/
                  ([a-z])\\/movie1\\/([1-7])\\/*(index.m3u8|\\d{3}.ts)$",
                  "case-sensitive": true,
                  "match-query-string": false
-            },
-            "trigger-subject": "CIT.Content"
+            }
          }
       ]
     },
@@ -3183,14 +3219,14 @@ RESPONSE:
       {
         "specs": [
             {
+               "trigger-subject": "CIT.Content",
                "generic-trigger-spec-type": "CIT.UriRegexMatch",
                "generic-trigger-spec-value": {
                    "regex": "^(https:\\/\\/video\\.example\\.com)\\/
                    ([a-z])\\/movie1\\/([1-7])\\/*(index.m3u8|\\d{3}.ts)$",
                    "case-sensitive": true,
                    "match-query-string": false
-               },
-               "trigger-subject": "CIT.Content"
+               }
             }
          ],
         "description": "The dCDN rejected a regex due to complexity",
@@ -3228,12 +3264,12 @@ REQUEST:
       "action": "CIT.Preposition",
       "specs": [
          {
+            "trigger-subject": "CIT.Content",
             "generic-trigger-spec-type": "CIT.ContentPlaylist",
             "generic-trigger-spec-value": {
                 "playlist": "https://www.example.com/hls/title/index.m3u8",
                 "media-protocol": "hls"
-            },
-            "trigger-subject": "CIT.Content"
+            }
          }
       ]
     },
@@ -3254,12 +3290,12 @@ RESPONSE:
       {
         "specs": [
           {
+            "trigger-subject": "CIT.Content",
             "generic-trigger-spec-type": "CIT.ContentPlaylist",
             "generic-trigger-spec-value": {
                 "playlist": "https://www.example.com/hls/title/index.m3u8",
                 "media-protocol": "hls"
-            },
-            "trigger-subject": "CIT.Content"
+            }
          }
        ],
        "description": "The dCDN was not able to parse the playlist",
@@ -3424,15 +3460,16 @@ RESPONSE:
           "action": "CIT.Preposition",
           "specs": [
             {
+               "trigger-subject": "CIT.Metadata",
                "generic-trigger-spec-type": "CIT.UrlsSpec",
                "generic-trigger-spec-value": {
                   "urls": [
                      "https://metadata.example.com/a/b/c"
                   ]
-               },
-               "trigger-subject": "CIT.Metadata"
+               }
             },
             {
+               "trigger-subject": "CIT.Content",
                "generic-trigger-spec-type": "CIT.UrlsSpec",
                "generic-trigger-spec-value": {
                   "urls": [
@@ -3441,8 +3478,7 @@ RESPONSE:
                      "https://www.example.com/a/b/c/3",
                      "https://www.example.com/a/b/c/4"
                   ]
-               },
-               "trigger-subject": "CIT.Content"
+               }
             }
          ]
       }
@@ -3474,28 +3510,28 @@ RESPONSE:
           "action": "CIT.Invalidate",
           "specs": [
             {
+               "trigger-subject": "CIT.Metadata",
                "generic-trigger-spec-type": "CIT.UriPatternMatch",
                "generic-trigger-spec-value": { 
                   "pattern": "https://metadata.example.com/a/b/*"
-               },
-               "trigger-subject": "CIT.Metadata"
+               }
             },
             {
+               "trigger-subject": "CIT.Content",
                "generic-trigger-spec-type": "CIT.UrlsSpec",
                "generic-trigger-spec-value": {
                   "urls": [
                      "https://www.example.com/a/index.html"
                   ]
-               },
-               "trigger-subject": "CIT.Content"
+               }
             },
             {
+               "trigger-subject": "CIT.Content",
                "generic-trigger-spec-type": "CIT.UriPatternMatch",
                "generic-trigger-spec-value": {
                    "pattern": "https://www.example.com/a/b/*",
                    "case-sensitive": true
-               },
-               "trigger-subject": "CIT.Content"
+               }
             }
          ]
       }
@@ -3666,7 +3702,7 @@ RESPONSE:
         <section anchor="trigger-with-extensions" title="Extensions with Error Propagation">
           <t>
             In the following example a CI/T "preposition" command is using two extensions to control the
-            way the trigger is executed. In this example the receiving dCDN identified as "AS64500:0"
+            way the trigger is executed. In this example the receiving dCDN, identified as "AS64500:0",
             does not support the first extension in the extensions array. dCDN "AS64500:0" further
             distributes this trigger to another downstream CDN that is identified as "AS64501:0", which
             does not support the second extension in the extensions array. The error is propagated from
@@ -3686,12 +3722,12 @@ REQUEST:
      "action": "CIT.Preposition",
      "specs": [
          {
+            "trigger-subject": "CIT.Content",
             "generic-trigger-spec-type": "CIT.ContentPlaylist",
             "generic-trigger-spec-value": {
                 "playlist": "https://www.example.com/hls/title/index.m3u8",
                 "media-protocol": "hls"
-            },
-            "trigger-subject": "CIT.Content"
+            }
          }
       ],
       "extensions": [
@@ -4023,26 +4059,27 @@ RESPONSE:
 	</section>
 
 	<section title="&quot;CDNI CI/T Trigger Types&quot; Registry" anchor="sect-7.2"><t>
-   The IANA is requested to create a new "CDNI CI/T Trigger Types"
+   In <xref target="RFC8007"/> the IANA was requested to create a new "CDNI CI/T Trigger Types"
    subregistry under the "Content Delivery Network Interconnection (CDNI) Parameters" registry.</t>
 
 	<t>
-   Additions to the "CDNI CI/T Trigger Types" registry will be made via
+   Additions to the "CDNI CI/T Trigger Types" registry are made via
    the RFC Required policy as defined in <xref target="RFC8126"/>.</t>
 
 	<t>
    The initial contents of the "CDNI CI/T Trigger Types" registry
-   comprise the names and descriptions listed in Section 5.2.2 of this
-   document, with this document acting as the specification.</t>
+   comprise the names and descriptions listed in Section 5.2.2 <xref target="RFC8007"/>, with this document acting as the specification.</t>
 
+	<t> In this second edition of the interface,, the following entries are added to the registry:
+TBD </t>
 	</section>
 
 	<section title="&quot;CDNI CI/T Error Codes&quot; Registry" anchor="sect-7.3"><t>
-   The IANA is requested to create a new "CDNI CI/T Error Codes"
+   In <xref target="RFC8007"/> the IANA was requested to create a new "CDNI CI/T Error Codes"
    subregistry under the "Content Delivery Network Interconnection (CDNI) Parameters" registry.</t>
 
 	<t>
-   Additions to the "CDNI CI/T Error Codes" registry will be made via
+   Additions to the "CDNI CI/T Error Codes" registry are made via
    the Specification Required policy as defined in <xref target="RFC8126"/>.  The
    Designated Expert will verify that new Error Code registrations do
    not duplicate existing Error Code definitions (in name or
@@ -4053,7 +4090,10 @@ RESPONSE:
 	<t>
    The initial contents of the "CDNI CI/T Error Codes" registry comprise
    the names and descriptions of the Error Codes listed in Section 5.2.7
-   of this document, with this document acting as the specification.</t>
+   of <xref target="RFC8007"/>, with this document acting as the specification.</t>
+   
+   <t> In this second edition of the interface,, the following entries are added to the registry:
+TBD </t>
 
 	</section>
 
@@ -4061,7 +4101,7 @@ RESPONSE:
         <t>The IANA is requested to create a new "CDNI MediaProtocol Types" subregistry
            in the "Content Delivery Networks Interconnection (CDNI) Parameters" registry.
            The "CDNI MediaProtocol Types" namespace defines the valid MediaProtocol object
-           values in Section <xref target="media-protocol"/>, used by the Playlist object.
+           values in <xref target="media-protocol"/>, used by the Playlist object.
            Additions to the MediaProtocol namespace conform to the "Specification Required"
            policy as defined in Section 4.6 of <xref target="RFC8126"/>,  where the specification
            defines the MediaProtocol Type and the protocol to which it is associated.
