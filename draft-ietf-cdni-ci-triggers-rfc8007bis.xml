@@ -458,12 +458,14 @@
 	<t>
    The following trigger actions are defined by this document:</t>
 
-	<texttable style="full"><ttcol> JSON String</ttcol>
-	<ttcol> Description</ttcol>
+	<texttable style="full"><ttcol align="left"> JSON String</ttcol>
+	<ttcol align="left"> Description</ttcol>
 	<c>preposition</c>
 	<c>A request for the dCDN to acquire metadata or content.</c>
+	
 	<c>invalidate</c>
 	<c>A request for the dCDN to invalidate metadata or content.  After servicing this request, the dCDN will not use the specified data without first revalidating it using, for example, an "If-None-Match" HTTP request.  The dCDN need not erase the associated data.</c>
+	
 	<c>purge</c>
 	<c>A request for the dCDN to erase metadata or content. After servicing the request, the specified data MUST NOT be held on the dCDN (the dCDN should reacquire the metadata or content from the uCDN if it needs it).</c>
 	</texttable>
@@ -494,8 +496,8 @@
 	<t>
    This document also defines an initial set of trigger spec objects and registers them in the IANA "CDNI CI/T Trigger Specs" registry:</t>
       
-	<texttable style="full"><ttcol> JSON String</ttcol>
-	<ttcol> Description</ttcol>
+	<texttable style="full"><ttcol align="left"> JSON String</ttcol>
+	<ttcol align="left"> Description</ttcol>
 	<c>urls</c>
 	<c>Allowing the specification of trigger targets via URLs.</c>
 	<c>ccids</c>
@@ -526,8 +528,8 @@
 	<t>
    This document also defines an initial set of trigger subject values and registers them in the IANA "CDNI CI/T Trigger Subjects" registry:</t>
       
-	<texttable style="full"><ttcol> JSON String</ttcol>
-	<ttcol> Description</ttcol>
+	<texttable style="full"><ttcol align="left"> JSON String</ttcol>
+	<ttcol align="left"> Description</ttcol>
 	<c>metadata</c>
 	<c>Indicating the trigger target specification refers to Metadata object, as defined at <xref target="RFC8006"/>.</c>
 	<c>content</c>
@@ -576,8 +578,8 @@
 
    <t>This document also defines an initial set of trigger extension objects and registers them in the IANA "CDNI CI/T Trigger Subjects" registry:</t>
       
-	<texttable style="full"><ttcol> JSON String</ttcol>
-	<ttcol> Description</ttcol>
+	<texttable style="full"><ttcol align="left"> JSON String</ttcol>
+	<ttcol align="left"> Description</ttcol>
 	<c>location-policy</c>
 	<c>Allowing the control over the locations in which the trigger is executed.</c>
 	<c>time-policy</c>
@@ -1990,8 +1992,8 @@ uCDN-A                         dCDN-B                         dCDN-C
    Trigger Status describes the current status of the triggered
    activity.  It MUST be one of the JSON strings in the following table:</t>
 
-	<texttable style="full"><ttcol> JSON String</ttcol>
-	<ttcol> Description </ttcol>
+	<texttable style="full"><ttcol align="left"> JSON String</ttcol>
+	<ttcol align="left"> Description </ttcol>
 	<c>pending</c>
 	<c>The CI/T Trigger Command has not yet been acted upon.</c>
 	<c>active</c>
@@ -2037,9 +2039,9 @@ uCDN-A                         dCDN-B                         dCDN-C
 	<texttable style="full">
 	<t>[RFC Editor: Please replace RFCthis with the published RFC
         number for this document.]</t>
-	<ttcol> Error Code</ttcol>
-	<ttcol> Description</ttcol>
-	<ttcol> Registration</ttcol>	
+	<ttcol align="left"> Error Code</ttcol>
+	<ttcol align="left"> Description</ttcol>
+	<ttcol align="left"> Registration</ttcol>	
 	<c>emeta</c>
 	<c>The dCDN was unable to acquire metadata required to fulfill the request.</c>
 	<c><xref target="RFC8007"/></c>
@@ -2354,15 +2356,14 @@ https://video.example.com/k/movie1/4/013.ts
 		  
 		          <t>The following table defines the initial MediaProtocol JSON string values corresponding
            to the HLS, MSS, and DASH protocols:</t>
-        <texttable>
-          <ttcol align="left">JSON string</ttcol>
-          <ttcol align="left">Description</ttcol>
-          <ttcol align="left">Specification</ttcol>
-          <ttcol align="left">Protocol Specification</ttcol>
+        <texttable style="full"><ttcol align="left"> JSON string</ttcol>
+          <ttcol align="left"> Description</ttcol>
+          <ttcol align="left"> Specification</ttcol>
+          <ttcol align="left"> Protocol Specification</ttcol>
             <c>hls</c>
             <c>HTTP Live Streaming</c>
             <c>RFCthis</c>
-            <c><xref target="RFC8216">RFC 8216</xref></c>
+            <c><xref target="RFC8216"/></c>
 
             <c>mss</c>
             <c>Microsoft Smooth Streaming</c>
@@ -3887,8 +3888,8 @@ RESPONSE:
    the "CDNI Payload Types" registry defined by <xref target="RFC7736"/>, for use with
    the "application/cdni" MIME media type.</t>
 
-	<texttable style="full"><ttcol> Payload Type</ttcol>
-	<ttcol> Specification</ttcol>
+	<texttable style="full"><ttcol align="left"> Payload Type</ttcol>
+	<ttcol align="left"> Specification</ttcol>
 	<c>ci-trigger-collection.v2</c>
    <c>RFCthis</c>
    <c>ci-trigger-command.v2</c>
