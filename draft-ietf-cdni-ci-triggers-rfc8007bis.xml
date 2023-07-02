@@ -2363,7 +2363,7 @@ https://video.example.com/k/movie1/4/013.ts
             <c>hls</c>
             <c>HTTP Live Streaming</c>
             <c>RFCthis</c>
-            <c><xref target="RFC8216"/></c>
+            <c><xref target="RFC8216">RFC 8216</xref></c>
 
             <c>mss</c>
             <c>Microsoft Smooth Streaming</c>
