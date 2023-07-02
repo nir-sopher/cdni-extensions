@@ -2753,6 +2753,7 @@ Month Number  Month/Year           Maximum value of date-mday
      <section title="CI/T Versions Capability Object">
         <t>
            The CI/T versions capability object is used to indicate support for one or more CI/T objects versions.
+		   Capability type is "FCI.CITVersion".
            Note that the default version as originally defined in <xref target="RFC8007"/> MUST be implicitly
            supported regardless of the versions listed in this capability object.
         </t>
@@ -2780,7 +2781,7 @@ Month Number  Month/Year           Maximum value of date-mday
 {
  "capabilities": [
    {
-     "capability-type": "FCI.TriggerVersion",
+     "capability-type": "FCI.CITVersion",
      "capability-value": {
        "versions": [ "1", "2", "2.1" ]
      },
@@ -2806,7 +2807,7 @@ Month Number  Month/Year           Maximum value of date-mday
            selecting the targets the triggers is applied on, along with the supported Trigger Generic Extension types.
         </t>
 
-        <t>The trigger-scope-capability object is defined as follows:</t>
+        <t>The trigger-scope-capability object matching the "FCI.TriggerScope" capability type, is defined as follows:</t>
 
         <t><list style="empty">
             <t>Property: trigger-action <list style="empty">
@@ -2894,7 +2895,7 @@ Month Number  Month/Year           Maximum value of date-mday
          {
             "trigger-action": "invalidate",
             "trigger-subject": "content",
-            "trigger-specs": ["urls", "CIT.ccids"]
+            "trigger-specs": ["urls", "ccids"]
          }
       ]
      },
@@ -2916,7 +2917,7 @@ Month Number  Month/Year           Maximum value of date-mday
         <t>
            Given a content-playlist being supported by the dCDN, the CI/T Playlist Protocol capability object is used to indicate support for one or more
            MediaProtocol types listed in <xref target="IANA.CDNI.MediaProtocolReg"/> by the playlists
-           property of the "trigger.v2" object.
+           property of the "trigger.v2" object. Capbility type is  "FCI.TriggerSpecPlaylistProtocol".
         </t>
 
         <t><list style="empty">
@@ -3870,23 +3871,13 @@ RESPONSE:
    <c>RFCthis</c>
    <c>ci-trigger-command.v2</c>
    <c>RFCthis</c>
-
    <c>ci-trigger-status.v2</c>
    <c>RFCthis</c>
 
-   <c>FCI.TriggerVersion</c>
+   <c>FCI.CITVersion</c>
    <c>RFCthis</c>
 
    <c>FCI.TriggerScope</c>
-   <c>RFCthis</c>
-
-   <c>FCI.TriggerType</c>
-   <c>RFCthis</c>
-
-   <c>FCI.TriggerGenericSpec</c>
-   <c>RFCthis</c>
-
-   <c>FCI.TriggerGenericExtension</c>
    <c>RFCthis</c>
 
    <c>FCI.TriggerSpecPlaylistProtocol</c>
@@ -3932,7 +3923,7 @@ RESPONSE:
                <t>Encoding: see <xref target="trigger-scope-capability-object"/></t>
             </section>
 
-             <section anchor="IANA.CDNI.payload.FCI.PlaylistProtocol" title="CDNI FCI CI/T Playlist Protocol Payload Type">
+             <section anchor="IANA.CDNI.payload.FCI.TriggerSpecPlaylistProtocol" title="CDNI FCI CI/T Playlist Protocol Payload Type">
                <t>Purpose: The purpose of this payload type is to distinguish FCI advertisement objects for
                   CI/T Playlist Protocol objects</t>
                <t>Interface: FCI</t>
