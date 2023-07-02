@@ -2351,9 +2351,31 @@ https://video.example.com/k/movie1/4/013.ts
           <t>Media Protocol objects are used to specify registered type of media protocol
              (see <xref target="IANA.CDNI.MediaProtocolReg"/>) used for protocol related
              operations like pre-position according to playlist.</t>
-          <t>Type: JSON string</t>
-          <t>Example:</t>
-          <t>"dash"</t>
+		  
+		          <t>The following table defines the initial MediaProtocol JSON string values corresponding
+           to the HLS, MSS, and DASH protocols:</t>
+        <texttable>
+          <ttcol align="left">JSON string</ttcol>
+          <ttcol align="left">Description</ttcol>
+          <ttcol align="left">Specification</ttcol>
+          <ttcol align="left">Protocol Specification</ttcol>
+            <c>hls</c>
+            <c>HTTP Live Streaming</c>
+            <c>RFCthis</c>
+            <c><xref target="RFC8216">RFC 8216</xref></c>
+
+            <c>mss</c>
+            <c>Microsoft Smooth Streaming</c>
+            <c>RFCthis</c>
+            <c><xref target="MSS">MSS</xref></c>
+
+            <c>dash</c>
+            <c>Dynamic Adaptive Streaming over HTTP (MPEG-DASH)</c>
+            <c>RFCthis</c>
+            <c><xref target="MPEG-DASH">MPEG-DASH</xref></c>
+        </texttable>
+       <t>[RFC Editor: Please replace RFCthis with the published RFC number for this document.]</t>
+
         </section>
 
 
@@ -3951,11 +3973,11 @@ RESPONSE:
 
 
       <section anchor="IANA.CDNI.TriggerSpecReg" title="&quot;CDNI CI/T Trigger Specs&quot; Registry">
-        <t>The IANA is requested to create a new "CDNI CI/T Trigger Specs Types" subregistry
+        <t>The IANA is requested to create a new "CDNI CI/T Trigger Specs" subregistry
            in the "Content Delivery Networks Interconnection (CDNI) Parameters" registry. 
 		   The "CDNI CI/T Trigger Specs" namespace defines the valid trigger targets' spec values
            in <xref target="trigger-spec"/>, used by the Trigger Spec object.</t>
-		   <t>Additions to the "CDNI Trigger Specs" registry are made via
+		   <t>Additions to the "CDNI CI/T Trigger Specs" registry are made via
 			the RFC Required policy as defined in <xref target="RFC8126"/>.</t>
 
 	<t>
@@ -3968,7 +3990,7 @@ RESPONSE:
            in the "Content Delivery Networks Interconnection (CDNI) Parameters" registry. 
 		   The "CDNI CI/T Trigger Subjects" namespace defines the valid trigger targets' subject values
            in <xref target="trigger-subject"/>, used by the Trigger Spec object.</t>
-		   <t>Additions to the "CDNI Trigger Subjects" registry are made via
+		   <t>Additions to the "CDNI CI/T Trigger Subjects" registry are made via
 			the RFC Required policy as defined in <xref target="RFC8126"/>.</t>
 
 	<t>
@@ -3977,40 +3999,18 @@ RESPONSE:
    </section>
 
 
-      <section anchor="IANA.CDNI.MediaProtocolReg" title="CDNI CI/T Playlist Spec MediaProtocol types">
-        <t>The IANA is requested to create a new "CDNI CI/T Playlist Spec MediaProtocol Types" subregistry
+      <section anchor="IANA.CDNI.MediaProtocolReg" title="CDNI CI/T Playlist Spec MediaProtocols">
+        <t>The IANA is requested to create a new "CDNI CI/T Playlist Spec MediaProtocols" subregistry
            in the "Content Delivery Networks Interconnection (CDNI) Parameters" registry.
-           The "CDNI CI/T Playlist Spec MediaProtocol Types" namespace defines the valid MediaProtocol object
-           values in <xref target="media-protocol"/>, used by the Content Playlist Spec object.
-           Additions to the MediaProtocol namespace conform to the "Specification Required"
-           policy as defined in Section 4.6 of <xref target="RFC8126"/>,  where the specification
-           defines the MediaProtocol Type and the protocol to which it is associated.
-           The designated expert will verify that new protocol definitions do not duplicate
-           existing protocol definitions and prevent gratuitous additions to the namespace.</t>
+		   The "CDNI CI/T Playlist Spec MediaProtocols" namespace defines the valid trigger targets' extension values
+           in <xref target="media-protocol"/>, used by the Trigger Spec object.</t>
+		   <t>Additions to the "CDNI Playlist Spec MediaProtocols" registry are made via
+			the RFC Required policy as defined in <xref target="RFC8126"/>.</t>
 
-        <t>The following table defines the initial MediaProtocol values corresponding
-           to the HLS, MSS, and DASH protocols:</t>
-        <texttable>
-          <ttcol align="left">Playlist Spec MediaProtocol Type</ttcol>
-          <ttcol align="left">Description</ttcol>
-          <ttcol align="left">Specification</ttcol>
-          <ttcol align="left">Protocol Specification</ttcol>
-            <c>hls</c>
-            <c>HTTP Live Streaming</c>
-            <c>RFCthis</c>
-            <c><xref target="RFC8216">RFC 8216</xref></c>
-
-            <c>mss</c>
-            <c>Microsoft Smooth Streaming</c>
-            <c>RFCthis</c>
-            <c><xref target="MSS">MSS</xref></c>
-
-            <c>dash</c>
-            <c>Dynamic Adaptive Streaming over HTTP (MPEG-DASH)</c>
-            <c>RFCthis</c>
-            <c><xref target="MPEG-DASH">MPEG-DASH</xref></c>
-        </texttable>
-       <t>[RFC Editor: Please replace RFCthis with the published RFC number for this document.]</t>
+	<t>
+   The initial contents of the "CDNI CI/T Trigger Extensions" registry
+   comprise the names and descriptions listed in <xref target="media-protocol"/>, with this document acting as the specification.</t>
+		   
       </section>
 	  
 	  <section anchor="IANA.CDNI.TriggerExtensionReg" title="&quot;CDNI CI/T Trigger Extensions&quot; Registry">
@@ -4018,7 +4018,7 @@ RESPONSE:
            in the "Content Delivery Networks Interconnection (CDNI) Parameters" registry. 
 		   The "CDNI CI/T Trigger Extensions" namespace defines the valid trigger targets' extension values
            in <xref target="trigger-extensibility"/>, used by the Trigger Spec object.</t>
-		   <t>Additions to the "CDNI Trigger Extensions" registry are made via
+		   <t>Additions to the "CDNI CI/T Trigger Extensions" registry are made via
 			the RFC Required policy as defined in <xref target="RFC8126"/>.</t>
 
 	<t>
