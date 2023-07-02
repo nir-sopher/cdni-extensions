@@ -2947,7 +2947,7 @@ Month Number  Month/Year           Maximum value of date-mday
 {
  "capabilities": [
    {
-     "capability-type": "FCI.TriggerPlaylistProtocol",
+     "capability-type": "FCI.TriggerSpecPlaylistProtocol",
      "capability-value": {
        "media-protocols": ["hls", "dash"]
      },
@@ -3929,7 +3929,7 @@ RESPONSE:
    <c>FCI.TriggerGenericExtension</c>
    <c>RFCthis</c>
 
-   <c>FCI.TriggerPlaylistProtocol</c>
+   <c>FCI.TriggerSpecPlaylistProtocol</c>
    <c>RFCthis</c>
 
 	</texttable>
