@@ -534,7 +534,6 @@
 	<c>Indicating the trigger target specification refers to Metadata object, as defined at <xref target="RFC8006"/>.</c>
 	<c>content</c>
 	<c>indicating the trigger target specification refers to client facing content.</c>
-	<c></c>
 	</texttable>
 	</section>
 
