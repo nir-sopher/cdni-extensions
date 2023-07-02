@@ -2046,6 +2046,12 @@ uCDN-A                         dCDN-B                         dCDN-C
 	<c>by the dCDN other than to create a Trigger Status</c>
 	<c></c>
 	<c>Resource in state "failed".</c>
+	<c>espec</c>
+	<c>An error occurred while parsing a generic trigger</c>
+	<c></c>
+	<c>spec, or that the specific trigger spec is not</c>
+	<c></c>
+	<c>supported by the CDN.</c>
 	<c>eextension</c>
 	<c>An error occurred while parsing a generic trigger</c>
 	<c></c>
@@ -4091,7 +4097,7 @@ RESPONSE:
    the names and descriptions of the Error Codes listed in Section 5.2.7
    of <xref target="RFC8007"/>, with <xref target="RFC8007"/> acting as the specification.</t>
    
-   <t> In this second edition of the interface, we repeat the definion of the defined errors, with no modification of the entities specification. Additionally, the IANA is requested to register an additional error code, "eextension" error code, with specification as defined at <xref target="sect-5.2.7"/>.
+   <t> In this second edition of the interface, we repeat the definion of the defined errors, with no modification of the entities specification. Additionally, the IANA is requested to register two additional error codes, "espec" and "eextension", with specification as defined at <xref target="sect-5.2.7"/>.
    </t>
 
 	</section>
