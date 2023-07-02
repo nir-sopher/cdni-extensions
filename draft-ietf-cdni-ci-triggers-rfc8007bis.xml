@@ -460,32 +460,12 @@
 
 	<texttable style="full"><ttcol> JSON String</ttcol>
 	<ttcol> Description</ttcol>
-	<c>CIT.Preposition</c>
-	<c>A request for the dCDN to acquire metadata or</c>
-	<c></c>
-	<c>content.</c>
-	<c>CIT.invalidate</c>
-	<c>A request for the dCDN to invalidate metadata or</c>
-	<c></c>
-	<c>content.  After servicing this request, the dCDN</c>
-	<c></c>
-	<c>will not use the specified data without first</c>
-	<c></c>
-	<c>revalidating it using, for example, an</c>
-	<c></c>
-	<c>"If-None-Match" HTTP request.  The dCDN need not</c>
-	<c></c>
-	<c>erase the associated data.</c>
-	<c>CIT.purge</c>
-	<c>A request for the dCDN to erase metadata or</c>
-	<c></c>
-	<c>content.  After servicing the request, the</c>
-	<c></c>
-	<c>specified data MUST NOT be held on the dCDN (the</c>
-	<c></c>
-	<c>dCDN should reacquire the metadata or content from</c>
-	<c></c>
-	<c>the uCDN if it needs it).</c>
+	<c>preposition</c>
+	<c>A request for the dCDN to acquire metadata or content.</c>
+	<c>invalidate</c>
+	<c>A request for the dCDN to invalidate metadata or content.  After servicing this request, the dCDN will not use the specified data without first revalidating it using, for example, an "If-None-Match" HTTP request.  The dCDN need not erase the associated data.</c>
+	<c>purge</c>
+	<c>A request for the dCDN to erase metadata or content. After servicing the request, the specified data MUST NOT be held on the dCDN (the dCDN should reacquire the metadata or content from the uCDN if it needs it).</c>
 	</texttable>
 	</section>
 
@@ -516,29 +496,16 @@
       
 	<texttable style="full"><ttcol> JSON String</ttcol>
 	<ttcol> Description</ttcol>
-	<c>CIT.UrlsSpec</c>
-	<c>Allowing the specification of trigger targets</c>
-	<c></c>
-	<c>via URLs.</c>
-	<c>CIT.CcidsSpec</c>
-	<c>Allowing the specification of trigger targets</c>
-	<c></c>
-	<c>via CCIDs content grouping, as defined </c>
-	<c></c>
-	<c>in section 4.2.8 <xref target="RFC8006"/>.</c>
-	<c>CIT.UriPatternMatchSpec</c>
-	<c>Allowing the specification of trigger targets</c>
-	<c></c>
-	<c>via <xref target="RFC3986"/> URI patterns.</c>
-	<c>CIT.UrlRegexMatchSpec</c>
-	<c>Allowing the specification of trigger targets</c>
-	<c></c>
-	<c>via regexes matching their URI.</c>
-	<c>CIT.ContentPlaylistSpec</c>
-	<c>Allowing the specification of trigger targets</c>
-	<c></c>
-	<c>via a playlist URI and a media protocol identifier.</c>
-
+	<c>urls</c>
+	<c>Allowing the specification of trigger targets via URLs.</c>
+	<c>ccids</c>
+	<c>Allowing the specification of trigger targets via CCIDs content grouping, as defined in section 4.2.8 <xref target="RFC8006"/>.</c>
+	<c>uri-pattern-match</c>
+	<c>Allowing the specification of trigger targets via <xref target="RFC3986"/> URI patterns.</c>
+	<c>url-regex-match</c>
+	<c>Allowing the specification of trigger targets via regexes matching their URI.</c>
+	<c>content-playlist</c>
+	<c>Allowing the specification of trigger targets via a playlist URI and a media protocol identifier.</c>
 	</texttable>
 
    <section anchor="trigger-subject" title="Trigger Subject">
@@ -561,14 +528,10 @@
       
 	<texttable style="full"><ttcol> JSON String</ttcol>
 	<ttcol> Description</ttcol>
-	<c>CIT.MetadataSubject</c>
-	<c>Indicating the trigger target specification refers to </c>
-	<c></c>
-	<c>Metadata object, as defined at <xref target="RFC8006"/>.</c>
-	<c>CIT.ContentSubject</c>
-	<c>indicating the trigger target specification refers to</c>
-	<c></c>
-	<c>client facing content.</c>
+	<c>metadata</c>
+	<c>Indicating the trigger target specification refers to Metadata object, as defined at <xref target="RFC8006"/>.</c>
+	<c>content</c>
+	<c>indicating the trigger target specification refers to client facing content.</c>
 	<c></c>
 	</texttable>
 	</section>
@@ -576,7 +539,7 @@
    <section title="Content URLs" anchor="sect-4.8">
    <t>
    Each CI/T Command usually refers the targets by the target URLs,
-   using a CIT.UrlSpec trigger spec object or some aggregating spec such as the CIT.UrlRegexMatchSpec.
+   using a "urls" trigger spec object or some aggregating spec such as the "url-regex-match".
 
    If content URLs are transformed by an intermediate CDN in a cascade,
    that intermediate CDN MUST similarly transform URLs in CI/T Commands
@@ -615,9 +578,9 @@
       
 	<texttable style="full"><ttcol> JSON String</ttcol>
 	<ttcol> Description</ttcol>
-	<c>CIT.LocationPolicy</c>
+	<c>location-policy</c>
 	<c>Allowing the control over the locations in which the trigger is executed.</c>
-	<c>CIT.TimePolicy</c>
+	<c>time-policy</c>
 	<c>Allowing the scheduling of a trigger to run in a specific time window.</c>
 	</texttable>
 
@@ -1969,8 +1932,8 @@ uCDN-A                         dCDN-B                         dCDN-C
    "description": "Failed to parse HLS playlist",
    "specs": [
    {
-        "trigger-subject": "CIT.Content",
-        "generic-trigger-spec-type": "CIT.ContentPlaylist",
+        "trigger-subject": "content",
+        "generic-trigger-spec-type": "content-playlist",
         "generic-trigger-spec-value": {
             "playlist": "https://www.example.com/hls/title/index.m3u8",
             "media-protocol": "hls"
@@ -1994,8 +1957,8 @@ uCDN-A                         dCDN-B                         dCDN-C
      "description": "unrecognized extension <type>",
      "specs": [
         {
-            "trigger-subject": "CIT.Content",
-            "generic-trigger-spec-type": "CIT.UrlsSpec",
+            "trigger-subject": "content",
+            "generic-trigger-spec-type": "urls",
             "generic-trigger-spec-value": {
                "urls": [
                   "https://www.example.com/a/b/c/1",
@@ -2147,8 +2110,8 @@ uCDN-A                         dCDN-B                         dCDN-C
         <figure> 
           <artwork><![CDATA[
 {
-   "trigger-subject": "CIT.Metadata",
-   "generic-trigger-spec-type": "CIT.UrlsSpec",
+   "trigger-subject": "metadata",
+   "generic-trigger-spec-type": "urls",
    "generic-trigger-spec-value": {
       "urls": [
          "https://metadata.example.com/a/b/c"
@@ -2166,7 +2129,7 @@ uCDN-A                         dCDN-B                         dCDN-C
         <t> The content-ccids spec type allows to specify the
         Content Collection IDentifier of content the trigger applies to.
         The "ccid" is a grouping of content, as defined at <xref target="RFC8006"/>.
-       The ccid spec type is valid only for CIT.Content spec subject.
+       The ccid spec type is valid only for content spec subject.
 
         </t>
 
@@ -2341,7 +2304,7 @@ https://video.example.com/k/movie1/4/013.ts
      <section anchor="content-playlist-spec" title="Content Playlist Spec">
         <t>The content-playlist spec type allows the uCDN to manage content held by the dCDN
            based on the content's playlist. 
-           The content-playlist spec type is valid only for the CIT.Content spec subject.
+           The content-playlist spec type is valid only for the content spec subject.
         </t>
 
         <section anchor="playlist" title="Playlist">
@@ -2464,7 +2427,7 @@ https://video.example.com/k/movie1/4/013.ts
         <figure>
           <artwork><![CDATA[
 {
-   "generic-trigger-extension-type": "CIT.LocationPolicy",
+   "generic-trigger-extension-type": "location-policy",
    "generic-trigger-extension-value":
     {
        "locations": [
@@ -2572,7 +2535,7 @@ https://video.example.com/k/movie1/4/013.ts
         <figure>
           <artwork><![CDATA[
 {
-   "generic-trigger-extension-type": "CIT.TimePolicy",
+   "generic-trigger-extension-type": "time-policy",
    "generic-trigger-extension-value":
     {
       "unix-time-window": {
@@ -2908,8 +2871,8 @@ Month Number  Month/Year           Maximum value of date-mday
         <section anchor="trigger-scope-capability-object" title="CI/T Trigger Scope Capability Object Serialization">
           <t>
              The following shows an example of a JSON serialized CI/T Trigger Scope Capability object serialization for
-             a dCDN that supports the preposition and invalidation of content, using "CIT.UrlsSpec" and "CIT.CcidSpec" 
-             Generic Spec types, with "CIT.TimePolicy" but only for the "preposition" action. Note that in this example, purge 
+             a dCDN that supports the preposition and invalidation of content, using "urls" and "ccids" 
+             Generic Spec types, with "time-policy" but only for the "preposition" action. Note that in this example, purge 
              is not supported neigher any operation on metadata.
           </t>
 
@@ -2923,15 +2886,15 @@ Month Number  Month/Year           Maximum value of date-mday
      "capability-value": {
        "trigger-scope-capabilities": [
          {
-            "trigger-action": "CIT.Preposition",
-            "trigger-subject": "CIT.Content",
-            "trigger-specs": ["CIT.UrlsSpec", "CIT.CcidSpec"],
-            "trigger-extensions": ["CIT.TimePolicy"]
+            "trigger-action": "preposition",
+            "trigger-subject": "content",
+            "trigger-specs": ["urls", "ccids"],
+            "trigger-extensions": ["time-policy"]
          },
          {
-            "trigger-action": "CIT.Invalidate",
-            "trigger-subject": "CIT.Content",
-            "trigger-specs": ["CIT.UrlsSpec", "CIT.CcidSpec"]
+            "trigger-action": "invalidate",
+            "trigger-subject": "content",
+            "trigger-specs": ["urls", "CIT.ccids"]
          }
       ]
      },
@@ -2951,7 +2914,7 @@ Month Number  Month/Year           Maximum value of date-mday
 
             <section title="CI/T Playlist Protocol Capability Object">
         <t>
-           Given a CIT.ContentPlaylistSpec being supported by the dCDN, the CI/T Playlist Protocol capability object is used to indicate support for one or more
+           Given a content-playlist being supported by the dCDN, the CI/T Playlist Protocol capability object is used to indicate support for one or more
            MediaProtocol types listed in <xref target="IANA.CDNI.MediaProtocolReg"/> by the playlists
            property of the "trigger.v2" object.
         </t>
@@ -3037,11 +3000,11 @@ REQUEST:
 
   {
       "trigger": {
-         "action": "CIT.Preposition",
+         "action": "preposition",
          "specs": [
             {
-               "trigger-subject": "CIT.Metadata",
-               "generic-trigger-spec-type": "CIT.UrlsSpec",
+               "trigger-subject": "metadata",
+               "generic-trigger-spec-type": "urls",
                "generic-trigger-spec-value": {
                   "urls": [
                      "https://metadata.example.com/a/b/c"
@@ -3049,8 +3012,8 @@ REQUEST:
                }
             },
             {
-               "trigger-subject": "CIT.Content",
-               "generic-trigger-spec-type": "CIT.UrlsSpec",
+               "trigger-subject": "content",
+               "generic-trigger-spec-type": "urls",
                "generic-trigger-spec-value": {
                   "urls": [
                      "https://www.example.com/a/b/c/1",
@@ -3080,11 +3043,11 @@ RESPONSE:
       "mtime": 1462351690,
       "status": "pending",
       "trigger": {
-         "action": "CIT.Preposition"
+         "action": "preposition"
          "specs": [
             {
-               "trigger-subject": "CIT.Metadata",
-               "generic-trigger-spec-type": "CIT.UrlsSpec",
+               "trigger-subject": "metadata",
+               "generic-trigger-spec-type": "urls",
                "generic-trigger-spec-value": {
                   "urls": [
                      "https://metadata.example.com/a/b/c"
@@ -3092,8 +3055,8 @@ RESPONSE:
                }
             },
             {
-               "trigger-subject": "CIT.Content",
-               "generic-trigger-spec-type": "CIT.UrlsSpec",
+               "trigger-subject": "content",
+               "generic-trigger-spec-type": "urls",
                "generic-trigger-spec-value": {
                   "urls": [
                      "https://www.example.com/a/b/c/1",
@@ -3130,18 +3093,18 @@ REQUEST:
 
   {
     "trigger": {
-      "action": "CIT.Invalidate",
+      "action": "invalidate",
       "specs": [
          {
-            "trigger-subject": "CIT.Metadata",
-            "generic-trigger-spec-type": "CIT.UriPatternMatch",
+            "trigger-subject": "metadata",
+            "generic-trigger-spec-type": "uri-pattern-match",
             "generic-trigger-spec-value": {
                "pattern": "https://metadata.example.com/a/b/*"
             }
          },
          {
-            "trigger-subject": "CIT.Content",
-            "generic-trigger-spec-type": "CIT.UrlsSpec",
+            "trigger-subject": "content",
+            "generic-trigger-spec-type": "urls",
             "generic-trigger-spec-value": {
                "urls": [
                   "https://www.example.com/a/index.html"
@@ -3149,8 +3112,8 @@ REQUEST:
             }
          },
          {
-            "trigger-subject": "CIT.Content",
-            "generic-trigger-spec-type": "CIT.UriPatternMatch",
+            "trigger-subject": "content",
+            "generic-trigger-spec-type": "uri-pattern-match",
             "generic-trigger-spec-value": {
                "pattern": "https://www.example.com/a/b/*",
                "case-sensitive": true
@@ -3176,18 +3139,18 @@ RESPONSE:
       "mtime": 1462351691,
       "status": "pending",
       "trigger": {
-         "action": "CIT.Invalidate",
+         "action": "invalidate",
          "specs": [
             {
-               "trigger-subject": "CIT.Metadata",
-               "generic-trigger-spec-type": "CIT.UriPatternMatch",
+               "trigger-subject": "metadata",
+               "generic-trigger-spec-type": "uri-pattern-match",
                "generic-trigger-spec-value": {
                   "pattern": "https://metadata.example.com/a/b/*"
                }
             },
             {
-               "trigger-subject": "CIT.Content",
-               "generic-trigger-spec-type": "CIT.UrlsSpec",
+               "trigger-subject": "content",
+               "generic-trigger-spec-type": "urls",
                "generic-trigger-spec-value": {
                   "urls": [
                      "https://www.example.com/a/index.html"
@@ -3195,8 +3158,8 @@ RESPONSE:
                }
             },
             {
-               "trigger-subject": "CIT.Content",
-               "generic-trigger-spec-type": "CIT.UriPatternMatch",
+               "trigger-subject": "content",
+               "generic-trigger-spec-type": "uri-pattern-match",
                "generic-trigger-spec-value": {
                   "pattern": "https://www.example.com/a/b/*",
                   "case-sensitive": true
@@ -3227,11 +3190,11 @@ REQUEST:
   Content-Type: application/cdni; ptype=ci-trigger-command.v2
   {
     "trigger": {
-      "action": "CIT.Invalidate",
+      "action": "invalidate",
       "specs": [
          {
-            "trigger-subject": "CIT.Content",
-            "generic-trigger-spec-type": "CIT.UriRegexMatch",
+            "trigger-subject": "content",
+            "generic-trigger-spec-type": "uri-regex-match",
             "generic-trigger-spec-value": {
                  "regex": "^(https:\\/\\/video\\.example\\.com)\\/
                  ([a-z])\\/movie1\\/([1-7])\\/*(index.m3u8|\\d{3}.ts)$",
@@ -3258,8 +3221,8 @@ RESPONSE:
       {
         "specs": [
             {
-               "trigger-subject": "CIT.Content",
-               "generic-trigger-spec-type": "CIT.UriRegexMatch",
+               "trigger-subject": "content",
+               "generic-trigger-spec-type": "uri-regex-match",
                "generic-trigger-spec-value": {
                    "regex": "^(https:\\/\\/video\\.example\\.com)\\/
                    ([a-z])\\/movie1\\/([1-7])\\/*(index.m3u8|\\d{3}.ts)$",
@@ -3300,11 +3263,11 @@ REQUEST:
   Content-Type: application/cdni; ptype=ci-trigger-command.v2
   {
     "trigger": {
-      "action": "CIT.Preposition",
+      "action": "preposition",
       "specs": [
          {
-            "trigger-subject": "CIT.Content",
-            "generic-trigger-spec-type": "CIT.ContentPlaylist",
+            "trigger-subject": "content",
+            "generic-trigger-spec-type": "contentPlaylist",
             "generic-trigger-spec-value": {
                 "playlist": "https://www.example.com/hls/title/index.m3u8",
                 "media-protocol": "hls"
@@ -3329,8 +3292,8 @@ RESPONSE:
       {
         "specs": [
           {
-            "trigger-subject": "CIT.Content",
-            "generic-trigger-spec-type": "CIT.ContentPlaylist",
+            "trigger-subject": "content",
+            "generic-trigger-spec-type": "contentPlaylist",
             "generic-trigger-spec-value": {
                 "playlist": "https://www.example.com/hls/title/index.m3u8",
                 "media-protocol": "hls"
@@ -3496,11 +3459,11 @@ RESPONSE:
       "mtime": 1462351690,
       "status": "pending",
       "trigger": {
-          "action": "CIT.Preposition",
+          "action": "preposition",
           "specs": [
             {
-               "trigger-subject": "CIT.Metadata",
-               "generic-trigger-spec-type": "CIT.UrlsSpec",
+               "trigger-subject": "metadata",
+               "generic-trigger-spec-type": "urls",
                "generic-trigger-spec-value": {
                   "urls": [
                      "https://metadata.example.com/a/b/c"
@@ -3508,8 +3471,8 @@ RESPONSE:
                }
             },
             {
-               "trigger-subject": "CIT.Content",
-               "generic-trigger-spec-type": "CIT.UrlsSpec",
+               "trigger-subject": "content",
+               "generic-trigger-spec-type": "urls",
                "generic-trigger-spec-value": {
                   "urls": [
                      "https://www.example.com/a/b/c/1",
@@ -3546,18 +3509,18 @@ RESPONSE:
       "mtime": 1462351691,
       "status": "pending",
       "trigger": {
-          "action": "CIT.Invalidate",
+          "action": "invalidate",
           "specs": [
             {
-               "trigger-subject": "CIT.Metadata",
-               "generic-trigger-spec-type": "CIT.UriPatternMatch",
+               "trigger-subject": "metadata",
+               "generic-trigger-spec-type": "uri-pattern-match",
                "generic-trigger-spec-value": { 
                   "pattern": "https://metadata.example.com/a/b/*"
                }
             },
             {
-               "trigger-subject": "CIT.Content",
-               "generic-trigger-spec-type": "CIT.UrlsSpec",
+               "trigger-subject": "content",
+               "generic-trigger-spec-type": "urls",
                "generic-trigger-spec-value": {
                   "urls": [
                      "https://www.example.com/a/index.html"
@@ -3565,8 +3528,8 @@ RESPONSE:
                }
             },
             {
-               "trigger-subject": "CIT.Content",
-               "generic-trigger-spec-type": "CIT.UriPatternMatch",
+               "trigger-subject": "content",
+               "generic-trigger-spec-type": "uri-pattern-match",
                "generic-trigger-spec-value": {
                    "pattern": "https://www.example.com/a/b/*",
                    "case-sensitive": true
@@ -3758,11 +3721,11 @@ REQUEST:
   Content-Type: application/cdni; ptype=ci-trigger-command.v2
   {
     "trigger": {
-     "action": "CIT.Preposition",
+     "action": "preposition",
      "specs": [
          {
-            "trigger-subject": "CIT.Content",
-            "generic-trigger-spec-type": "CIT.ContentPlaylist",
+            "trigger-subject": "content",
+            "generic-trigger-spec-type": "contentPlaylist",
             "generic-trigger-spec-value": {
                 "playlist": "https://www.example.com/hls/title/index.m3u8",
                 "media-protocol": "hls"
@@ -3771,7 +3734,7 @@ REQUEST:
       ],
       "extensions": [
          {
-            "generic-trigger-extension-type": "CIT.LocationPolicy",
+            "generic-trigger-extension-type": "location-policy",
             "generic-trigger-extension-value":
                {
                   "locations": [
@@ -3799,7 +3762,7 @@ REQUEST:
             "safe-to-redistribute": true
          },
          {
-            "generic-trigger-extension-type": "CIT.TimePolicy",
+            "generic-trigger-extension-type": "time-policy",
             "generic-trigger-extension-value":
                {
                   "unix-time-window": {
@@ -3829,7 +3792,7 @@ RESPONSE:
        {
          "extensions": [
              {
-                "generic-trigger-extension-type": "CIT.LocationPolicy",
+                "generic-trigger-extension-type": "location-policy",
                 "generic-trigger-extension-value":
                    {
                       "locations": [
@@ -3864,7 +3827,7 @@ RESPONSE:
        {
          "extensions": [
              {
-                "generic-trigger-extension-type": "CIT.TimePolicy",
+                "generic-trigger-extension-type": "time-policy",
                 "generic-trigger-extension-value":
                    {
                       "unix-time-window": {
