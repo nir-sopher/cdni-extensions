@@ -4058,7 +4058,7 @@ RESPONSE:
 
 	</section>
 
-	<section title="&quot;CDNI CI/T Trigger Types&quot; Registry" anchor="sect-7.2"><t>
+	<section title="&quot;CDNI CI/T Trigger Types&quot; Registry For Trigger Actions" anchor="sect-7.2"><t>
    In <xref target="RFC8007"/> the IANA was requested to create a new "CDNI CI/T Trigger Types"
    subregistry under the "Content Delivery Network Interconnection (CDNI) Parameters" registry.</t>
 
@@ -4068,10 +4068,9 @@ RESPONSE:
 
 	<t>
    The initial contents of the "CDNI CI/T Trigger Types" registry
-   comprise the names and descriptions listed in Section 5.2.2 <xref target="RFC8007"/>, with this document acting as the specification.</t>
+   comprise the names and descriptions listed in section 5.2.2 of <xref target="RFC8007"/>, with <xref target="RFC8007"/> acting as the specification.</t>
 
-	<t> In this second edition of the interface,, the following entries are added to the registry:
-TBD </t>
+	<t> In this second edition of the interface, trigger types are referred to as "trigger actions". The "Trigger Types" registery is used for further actions definitions. Furthermore, this document, and specifically <xref target="sect-5.2.2"/>, repeats the definitions of the trigger types from <xref target="RFC8007"/> as trigger actions, with no modification in the entities specification.</t>
 	</section>
 
 	<section title="&quot;CDNI CI/T Error Codes&quot; Registry" anchor="sect-7.3"><t>
@@ -4090,10 +4089,10 @@ TBD </t>
 	<t>
    The initial contents of the "CDNI CI/T Error Codes" registry comprise
    the names and descriptions of the Error Codes listed in Section 5.2.7
-   of <xref target="RFC8007"/>, with this document acting as the specification.</t>
+   of <xref target="RFC8007"/>, with <xref target="RFC8007"/> acting as the specification.</t>
    
-   <t> In this second edition of the interface,, the following entries are added to the registry:
-TBD </t>
+   <t> In this second edition of the interface, we repeat the definion of the defined errors, with no modification of the entities specification. Additionally, the IANA is requested to register an additional error code, "eextension" error code, with specification as defined at <xref target="sect-5.2.7"/>.
+   </t>
 
 	</section>
 
