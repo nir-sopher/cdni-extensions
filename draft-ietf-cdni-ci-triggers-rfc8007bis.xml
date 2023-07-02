@@ -439,10 +439,60 @@
 	</section>
 
 	</section>
+	
+	<section title="Trigger Scope" anchor="trigger-Scope">
+	<t>The following attributes are defining the trigger execution.</t>
+		<section title="Trigger Action" anchor="sect-5.2.2"><t>
+   Trigger Action Type is used in a Trigger Specification to describe trigger
+   action. It was initially referred to (at <xref target="RFC8007"/>) as "Trigger Type".</t>
 
-   <section anchor="trigger-spec" title="Trigger Spec Object">
+	<t>
+   All trigger actions MUST be registered in the IANA "CDNI CI/T Trigger Types" registry (see <xref target="IANA.CDNI.TriggerTypeReg"/>).</t>
+
+	<t>
+   A dCDN receiving a request containing a trigger action it does not
+   recognize or does not support MUST reject the request by creating a
+   Trigger Status Resource with a status of "failed" and the "errors"
+   array containing an Error.v2 Description with error "eunsupported".</t>
+
+	<t>
+   The following trigger actions are defined by this document:</t>
+
+	<texttable style="full"><ttcol> JSON String</ttcol>
+	<ttcol> Description</ttcol>
+	<c>CIT.Preposition</c>
+	<c>A request for the dCDN to acquire metadata or</c>
+	<c></c>
+	<c>content.</c>
+	<c>CIT.invalidate</c>
+	<c>A request for the dCDN to invalidate metadata or</c>
+	<c></c>
+	<c>content.  After servicing this request, the dCDN</c>
+	<c></c>
+	<c>will not use the specified data without first</c>
+	<c></c>
+	<c>revalidating it using, for example, an</c>
+	<c></c>
+	<c>"If-None-Match" HTTP request.  The dCDN need not</c>
+	<c></c>
+	<c>erase the associated data.</c>
+	<c>CIT.purge</c>
+	<c>A request for the dCDN to erase metadata or</c>
+	<c></c>
+	<c>content.  After servicing the request, the</c>
+	<c></c>
+	<c>specified data MUST NOT be held on the dCDN (the</c>
+	<c></c>
+	<c>dCDN should reacquire the metadata or content from</c>
+	<c></c>
+	<c>the uCDN if it needs it).</c>
+	</texttable>
+	</section>
+
+
+   <section anchor="trigger-spec" title="Trigger Spec">
    <t>
-      The CDNI Control Interface / Triggers  1st edition <xref target="RFC8007"/> defines a set of properties
+      The CDNI Control Interface / Triggers 1st edition <xref target="RFC8007"/> defines a set of properties
       and objects used by the trigger commands in order to specify the targets the trigger is applied on.
       This document modifies the trigger interface so it has a list of trigger specs. 
       Such structure improves the interface's extensibility and flexibility. 
@@ -451,26 +501,77 @@
       allowing future extension of the interface.
    </t>
 
-   <t>This document also defines an initial set of trigger spec objects, and registers the 
-   defined trigger specs' types as CDNI Payload Types <xref target="RFC7736"/> under the namespace CIT:
-   <list style="symbols">
-      <t>CIT.UrlsSpec (for specifying trigger targets via URLs)</t>
-      <t>CIT.CcidsSpec (for specifying trigger targets via CCIDs content grouping, as defined in section 4.2.8 <xref target="RFC8006"/>)</t>
-      <t>CIT.UriPatternMatchSpec (for specifying trigger targets via <xref target="RFC3986"/> URI patterns)</t>
-      <t>CIT.UrlRegexMatchSpec (for specifying trigger targets via regexes  matching their URI)</t>
-      <t>CIT.ContentPlaylistSpec (for specifying content trigger targets via a playlist URI and a media protocol identifier)</t>
-   </list>
-   </t>
+   
+	<t>
+   All trigger specs MUST be registered in the IANA "CDNI CI/T Trigger Specs" registry (see <xref target="IANA.CDNI.TriggerSpecReg"/>).</t>
 
-   <t>Furthermore, as the scope of the trigger may relate to either uCDN metadata as well as uCDN content, 
+	<t>
+   A dCDN receiving a request containing a trigger spec it does not
+   recognize or does not support MUST reject the request by creating a
+   Trigger Status Resource with a status of "failed" and the "errors"
+   array containing an Error.v2 Description with error "espec".</t>
+
+	<t>
+   This document also defines an initial set of trigger spec objects and registers them in the IANA "CDNI CI/T Trigger Specs" registry:</t>
+      
+	<texttable style="full"><ttcol> JSON String</ttcol>
+	<ttcol> Description</ttcol>
+	<c>CIT.UrlsSpec</c>
+	<c>Allowing the specification of trigger targets</c>
+	<c></c>
+	<c>via URLs.</c>
+	<c>CIT.CcidsSpec</c>
+	<c>Allowing the specification of trigger targets</c>
+	<c></c>
+	<c>via CCIDs content grouping, as defined </c>
+	<c></c>
+	<c>in section 4.2.8 <xref target="RFC8006"/>.</c>
+	<c>CIT.UriPatternMatchSpec</c>
+	<c>Allowing the specification of trigger targets</c>
+	<c></c>
+	<c>via <xref target="RFC3986"/> URI patterns.</c>
+	<c>CIT.UrlRegexMatchSpec</c>
+	<c>Allowing the specification of trigger targets</c>
+	<c></c>
+	<c>via regexes matching their URI.</c>
+	<c>CIT.ContentPlaylistSpec</c>
+	<c>Allowing the specification of trigger targets</c>
+	<c></c>
+	<c>via a playlist URI and a media protocol identifier.</c>
+
+	</texttable>
+
+   <section anchor="trigger-subject" title="Trigger Subject">
+
+   <t>As the scope of the trigger may relate to either metadata as well as content, 
    the "trigger spec object" also specify the trigger's target subject (i.e. metadata or content) 
-   to be matched with. The document registers as additional CDNI Payload Types <xref target="RFC7736"/> 
-   under the namespace CIT, the initial set of available trigger subjects:
-   <list style="symbols">
-      <t>CIT.MetadataSubject (for indicating the trigger target specification refers to Metadata object, as defined at <xref target="RFC8006"/>)</t>
-      <t>CIT.ContentSubject (for indicating the trigger target specification refers to a client facing content)</t>
-   </list>
-   </t>
+   to be matched with.</t>
+   
+   <t>
+   All trigger subjects MUST be registered in the IANA "CDNI CI/T Trigger Subjects" registry (see <xref target="IANA.CDNI.TriggerSubjectReg"/>).</t>
+
+	<t>
+   A dCDN receiving a request containing a trigger subject it does not
+   recognize or does not support MUST reject the request by creating a
+   Trigger Status Resource with a status of "failed" and the "errors"
+   array containing an Error.v2 Description with error "esubject".</t>
+
+	<t>
+   This document also defines an initial set of trigger subject values and registers them in the IANA "CDNI CI/T Trigger Subjects" registry:</t>
+      
+	<texttable style="full"><ttcol> JSON String</ttcol>
+	<ttcol> Description</ttcol>
+	<c>CIT.MetadataSubject</c>
+	<c>Indicating the trigger target specification refers to </c>
+	<c></c>
+	<c>Metadata object, as defined at <xref target="RFC8006"/>.</c>
+	<c>CIT.ContentSubject</c>
+	<c>indicating the trigger target specification refers to</c>
+	<c></c>
+	<c>client facing content.</c>
+	<c></c>
+	</texttable>
+	</section>
 
    <section title="Content URLs" anchor="sect-4.8">
    <t>
@@ -506,14 +607,19 @@
    for the case the extension is not present.
 	</t>
 
-   <t>This document also registers CDNI Payload Types <xref target="RFC7736"/> under the namespace CIT
-      for the initial set of trigger extension types:
-   <list style="symbols">
-      <t>CIT.LocationPolicy (for controlling the locations in which the trigger is executed)</t>
-      <t>CIT.TimePolicy (for scheduling a trigger to run in a specific time window)</t>
-   </list>
-   </t>
+  
+   <t>
+   All trigger extensions MUST be registered in the IANA "CDNI CI/T Trigger Extensions" registry (see <xref target="IANA.CDNI.TriggerExtensionReg"/>).</t>
 
+   <t>This document also defines an initial set of trigger extension objects and registers them in the IANA "CDNI CI/T Trigger Subjects" registry:</t>
+      
+	<texttable style="full"><ttcol> JSON String</ttcol>
+	<ttcol> Description</ttcol>
+	<c>CIT.LocationPolicy</c>
+	<c>Allowing the control over the locations in which the trigger is executed.</c>
+	<c>CIT.TimePolicy</c>
+	<c>Allowing the scheduling of a trigger to run in a specific time window.</c>
+	</texttable>
 
    <t>Example use cases<list style="symbols">
       <t>Pre-position with cache location policy</t>
@@ -523,6 +629,8 @@
    </list></t>
 </section>
 
+
+</section>
 
 	<section title="Collections of Trigger Status Resources" anchor="sect-3"><t>
    As described in <xref target="sect-2"/>, Trigger Status Resources exist in the dCDN
@@ -1396,54 +1504,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 
 	</section>
 
-	<section title="Trigger Action Type" anchor="sect-5.2.2"><t>
-   Trigger Action Type is used in a Trigger Specification to describe trigger
-   action.</t>
-
-	<t>
-   All trigger types MUST be registered in the IANA "CDNI CI/T Trigger Action Types" registry (see <xref target="sect-7.2"/>).</t>
-
-	<t>
-   A dCDN receiving a request containing a trigger action type it does not
-   recognize or does not support MUST reject the request by creating a
-   Trigger Status Resource with a status of "failed" and the "errors"
-   array containing an Error.v2 Description with error "eunsupported".</t>
-
-	<t>
-   The following trigger types are defined by this document:</t>
-
-	<texttable style="full"><ttcol> JSON String</ttcol>
-	<ttcol> Description</ttcol>
-	<c>CIT.Preposition</c>
-	<c>A request for the dCDN to acquire metadata or</c>
-	<c></c>
-	<c>content.</c>
-	<c>CIT.invalidate</c>
-	<c>A request for the dCDN to invalidate metadata or</c>
-	<c></c>
-	<c>content.  After servicing this request, the dCDN</c>
-	<c></c>
-	<c>will not use the specified data without first</c>
-	<c></c>
-	<c>revalidating it using, for example, an</c>
-	<c></c>
-	<c>"If-None-Match" HTTP request.  The dCDN need not</c>
-	<c></c>
-	<c>erase the associated data.</c>
-	<c>CIT.purge</c>
-	<c>A request for the dCDN to erase metadata or</c>
-	<c></c>
-	<c>content.  After servicing the request, the</c>
-	<c></c>
-	<c>specified data MUST NOT be held on the dCDN (the</c>
-	<c></c>
-	<c>dCDN should reacquire the metadata or content from</c>
-	<c></c>
-	<c>the uCDN if it needs it).</c>
-	</texttable>
-	</section>
-
-   <section anchor="trigger-specs" title="CI/T Trigger Specs">
+   <section anchor="trigger-specs" title="Generic Trigger Specs">
    <t>
    A "trigger.v2" object, as defined in <xref target="sect-5.2.1"/> includes an
    array of trigger spec objects. Each trigger spec object contains properties
@@ -1470,7 +1531,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 
                <t>Type: String containing the type of the subject matching the 
                   generic-trigger-spec-value property, such as "content" or "metadata" 
-                  as define in <xref target="trigger-spec"/>.</t>  
+                  as define in <xref target="trigger-subject"/>.</t>  
 
                <t>Mandatory: Yes.</t>
             </list></t>
@@ -1480,7 +1541,7 @@ uCDN-A                         dCDN-B                         dCDN-C
                <t>Description: Case-insensitive CDNI Trigger spec type.</t>
 
                <t>Type: String containing the spec type of the object contained
-                  in the generic-trigger-spec-value property (see table in <xref target="sect-7.1"/>).</t>
+                  in the generic-trigger-spec-value property (see table in <xref target="trigger-spec"/>).</t>
 
                <t>Mandatory: Yes.</t>
             </list></t>
@@ -1501,7 +1562,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 
                <t>Type: String containing the type of the subject matching the 
                   generic-trigger-spec-value property, such as "content" or "metadata" 
-                  as define in <xref target="trigger-spec"/>.</t>  
+                  as define in <xref target="trigger-subject"/>.</t>  
 
                <t>Mandatory: Yes.</t>
             </list></t>
@@ -1713,8 +1774,8 @@ uCDN-A                         dCDN-B                         dCDN-C
 
                  <t>Description: Case-insensitive CDNI Trigger extension object type.</t>
 
-                 <t>Type: String containing the CDNI Payload Type <xref target="RFC7736"/> of the object contained
-                    in the generic-trigger-extension-value property (see table in <xref target="sect-7.1"/>).</t>
+                 <t>Type: String containing the CDNI Extension Type <xref target="RFC7736"/> of the object contained
+                    in the generic-trigger-extension-value property (see table in <xref target="trigger-extensibility"/>).</t>
 
                  <t>Mandatory: Yes.</t>
               </list></t>
@@ -2010,54 +2071,42 @@ uCDN-A                         dCDN-B                         dCDN-C
    The following Error Codes are defined by this document and MUST be
    supported by an implementation of the CI/T interface, utilizing the ci-trigger-command.v2 and the ci-trigger-status.v2 objects.</t>
 
-	<texttable style="full"><ttcol> Error Code</ttcol>
+	<texttable style="full">
+	<t>[RFC Editor: Please replace RFCthis with the published RFC
+        number for this document.]</t>
+	<ttcol> Error Code</ttcol>
 	<ttcol> Description</ttcol>
+	<ttcol> Registration</ttcol>	
 	<c>emeta</c>
-	<c>The dCDN was unable to acquire metadata required</c>
-	<c></c>
-	<c>to fulfill the request.</c>
+	<c>The dCDN was unable to acquire metadata required to fulfill the request.</c>
+	<c><xref target="RFC8007"/></c>
 	<c>econtent</c>
-	<c>The dCDN was unable to acquire content (CI/T</c>
-	<c></c>
-	<c>"preposition" commands only).</c>
+	<c>The dCDN was unable to acquire content (CI/T "preposition" commands only).</c>
+	<c><xref target="RFC8007"/></c>
 	<c>eperm</c>
-	<c>The uCDN does not have permission to issue the</c>
-	<c></c>
-	<c>CI/T Command (for example, the data is owned by</c>
-	<c></c>
-	<c>another CDN).</c>
+	<c>The uCDN does not have permission to issue the CI/T Command (for example, the data is owned by another CDN).</c>
+	<c><xref target="RFC8007"/></c>
 	<c>ereject</c>
-	<c>The dCDN is not willing to fulfill the CI/T</c>
-	<c></c>
-	<c>Command (for example, a "preposition" request for</c>
-	<c></c>
-	<c>content at a time when the dCDN would not accept</c>
-	<c></c>
-	<c>Request Routing requests from the uCDN).</c>
+	<c>The dCDN is not willing to fulfill the CI/T Command (for example, a "preposition" request for content at a time when the dCDN would not accept Request Routing requests from the uCDN).</c>
+	<c><xref target="RFC8007"/></c>
 	<c>ecdn</c>
 	<c>An internal error in the dCDN or one of its dCDNs.</c>
+	<c><xref target="RFC8007"/></c> 
 	<c>ecancelled</c>
 	<c>The uCDN canceled the request.</c>
+	<c><xref target="RFC8007"/></c>
 	<c>eunsupported</c>
-	<c>The Trigger Specification contained an "action type" that</c>
-	<c></c>
-	<c>is not supported by the dCDN.  No action was taken</c>
-	<c></c>
-	<c>by the dCDN other than to create a Trigger Status</c>
-	<c></c>
-	<c>Resource in state "failed".</c>
+	<c>The Trigger Specification contained an "action type" that is not supported by the dCDN.  No action was taken by the dCDN other than to create a Trigger Status Resource in state "failed".</c>
+	<c><xref target="RFC8007"/></c>
 	<c>espec</c>
-	<c>An error occurred while parsing a generic trigger</c>
-	<c></c>
-	<c>spec, or that the specific trigger spec is not</c>
-	<c></c>
-	<c>supported by the CDN.</c>
+	<c>An error occurred while parsing a generic trigger spec, or that the specific trigger spec is not supported by the CDN.</c>
+	<c>RFCthis</c>
+	<c>esubject</c>
+	<c>An error occurred while specific trigger subject is not supported by the CDN.</c>
+	<c>RFCthis</c>
 	<c>eextension</c>
-	<c>An error occurred while parsing a generic trigger</c>
-	<c></c>
-	<c>extension, or that the specific extension is not</c>
-	<c></c>
-	<c>supported by the CDN.</c>
+	<c>An error occurred while parsing a generic trigger extension, or that the specific extension is not supported by the CDN.</c>
+	<c>RFCthis</c>
 	</texttable>
 	</section>
    </section>
@@ -2070,9 +2119,9 @@ uCDN-A                         dCDN-B                         dCDN-C
     <section anchor="trigger-spec-objects" title="Trigger Spec Objects">
       <t>The objects defined below are intended to be used in the GenericTriggerSpec
          object's generic-trigger-spec-value field as defined in Section
-         <xref target="generic-spec-object"/>, and their generic-trigger-spec-type
-         property MUST be set to the appropriate CDNI Payload Type as defined in <xref target="sect-7.1"/> .
+         <xref target="generic-spec-object"/>.
       </t>
+	  
 
       <section anchor="urls-spec" title="URLs Spec">
         <t>The urls spec type allows the uCDN to manage uCDN content or metadata objects
@@ -2355,7 +2404,7 @@ https://video.example.com/k/movie1/4/013.ts
       <t>The objects defined below are intended to be used in the GenericTriggerExtension
          object's generic-trigger-extension-value field as defined in Section
          <xref target="generic-extension-object"/>, and their generic-trigger-extension-type
-         property MUST be set to the appropriate CDNI Payload Type as defined in <xref target="sect-7.1"/> .
+         property MUST be set to the appropriate Extention Type as defined in <xref target="trigger-extensibility"/> .
       </t>
 
       <section anchor="location-policy" title="LocationPolicy extension">
@@ -2786,29 +2835,13 @@ Month Number  Month/Year           Maximum value of date-mday
 
       <section title="CI/T Trigger Scope Capability Object">
         <t>
-           The CI/T supports several trigger types for different trigger's subjects as defined at 
-           <xref target="sect-5.2.2"/> and <xref target="trigger-spec"/>. Additional types, as well as
+           The CI/T supports several trigger actions for different trigger's subjects as defined at 
+           <xref target="sect-5.2.2"/> and <xref target="trigger-subject"/>. Additional types, as well as
            subjects, may be defined 
            in the future. The Trigger Scope capability object is used to indicate support of a Trigger Action Type
            for a subject. It further specifies the Trigger Generic Spec types that may be used for 
            selecting the targets the triggers is applied on, along with the supported Trigger Generic Extension types.
         </t>
-
-        <t><list style="empty">
-           <t>Property: trigger-scope-capabilities<list style="empty">
-
-                 <t>Description: A list of supported CDNI CI/T Trigger types and subjects
-                 with the relevant Trigger Generic Spec and Trigger Generic Extension objects.</t>
-
-                 <t>Type: List trigger-scope-capability objects.
-                 </t>
-
-                 <t>Mandatory: No. The default, in case of a missing or an empty list, MUST be 
-                    interpreted as "no GenericSpecObject types are supported". A non-empty list MUST be 
-                    interpreted as containing "the only GenericSpecObject types that are supported".
-                 </t>
-           </list></t>
-        </list></t>
 
         <t>The trigger-scope-capability object is defined as follows:</t>
 
@@ -2817,8 +2850,8 @@ Month Number  Month/Year           Maximum value of date-mday
 
                  <t>Description: The supported CDNI CI/T Trigger Action Type.</t>
 
-                 <t>Type: A string corresponding to an entry from the "CDNI Payload Types" registry
-                    <xref target="RFC7736"/> that is under the CIT namespace, and that correspond to CDNI
+                 <t>Type: A string corresponding to an entry from the "CDNI CI/T Trigger Types" registry
+                    <xref target="IANA.CDNI.TriggerTypeReg"/>, that corresponds to a CDNI
                     CI/T Trigger Action Type.
                  </t>
 
@@ -2829,8 +2862,8 @@ Month Number  Month/Year           Maximum value of date-mday
 
                  <t>Description: The supported CDNI CI/T Trigger Subject type.</t>
 
-                 <t>Type: A string corresponding to an entry from the "CDNI Payload Types" registry
-                    <xref target="RFC7736"/> that is under the CIT namespace, and that correspond to CDNI
+                 <t>Type: A string corresponding to an entry from the "CDNI CI/T Trigger Subjects Types" registry
+                    <xref target="IANA.CDNI.TriggerSubjectReg"/> that is under the CIT namespace, and that correspond to CDNI
                     CI/T Trigger Subject type.
                  </t>
 
@@ -2841,10 +2874,10 @@ Month Number  Month/Year           Maximum value of date-mday
             <t>Property: trigger-specs<list style="empty">
 
                  <t>Description: A list of supported CDNI CI/T GenericSpecObject types for
-                 the Trigger Type and Subject.</t>
+                 the Trigger Action and Subject.</t>
 
-                 <t>Type: List of strings corresponding to entries from the "CDNI Payload Types" registry
-                    <xref target="RFC7736"/> that are under the CIT namespace, and that correspond to CDNI
+                 <t>Type: List of strings corresponding to entries from the "CDNI CI/T Trigger Specs" registry
+                    <xref target="IANA.CDNI.TriggerSpecReg"/>, that corresponds to a CDNI
                     CI/T GenericSpecObject objects.
                  </t>
 
@@ -2857,10 +2890,10 @@ Month Number  Month/Year           Maximum value of date-mday
             <t>Property: trigger-extensions<list style="empty">
 
                  <t>Description: A list of supported CDNI CI/T GenericExtensionObject types for
-                 the Trigger Type and Subject.</t>
+                 the Trigger Action and Subject.</t>
 
-                 <t>Type: List of strings corresponding to entries from the "CDNI Payload Types" registry
-                    <xref target="RFC7736"/> that are under the CIT namespace, and that correspond to CDNI
+                 <t>Type: List of strings corresponding to entries from the "CDNI CI/T Trigger Extension" registry
+                    <xref target="IANA.CDNI.TriggerExtensionReg"/>, that corresponds to a CDNI
                     CI/T GenericExtensionObject objects.
                  </t>
 
@@ -3878,42 +3911,6 @@ RESPONSE:
    <c>ci-trigger-status.v2</c>
    <c>RFCthis</c>
 
-   <c>CIT.Preposition</c>
-   <c>RFCthis</c>
-   
-    <c>CIT.Invalidate</c>
-   <c>RFCthis</c>
-   
-   <c>CIT.Purge</c>
-   <c>RFCthis</c>
-
-   <c>CIT.UrlsSpec</c>
-   <c>RFCthis</c>
-   
-    <c>CIT.CcidsSpec</c>
-   <c>RFCthis</c>
-   
-   <c>CIT.UriPatternMatchSpec</c>
-   <c>RFCthis</c>
-   
-   <c>CIT.UrisRegexMatchSpec</c>
-   <c>RFCthis</c>
-   
-   <c>CIT.ContentPlaylistSpec</c>
-   <c>RFCthis</c>
-
-   <c>CIT.MetadataSubject</c>
-   <c>RFCthis</c>
-
-   <c>CIT.ContentSubject</c>
-   <c>RFCthis</c>
-
-   <c>CIT.LocationPolicy</c>
-   <c>RFCthis</c>
-
-   <c>CIT.TimePolicy</c>
-   <c>RFCthis</c>
-
    <c>FCI.TriggerVersion</c>
    <c>RFCthis</c>
 
@@ -3956,87 +3953,6 @@ RESPONSE:
           <t>Encoding: see <xref target="sect-5.1.3"/></t>
         </section>
 
-        <section anchor="IANA.CDNI.payload.CIT.TriggerActionTypes" title="CDNI CI/T Trigger Action Payload Types">
-            <section anchor="IANA.CDNI.payload.CIT.Preposition" title="CDNI CI/T Preposition Trigger Action Payload Type">
-               <t>Purpose: The purpose of this Trigger action type is to distinguish Preposition CIT Trigger Types Triggers.</t>
-               <t>Interface: CI/T</t>
-               <t>Encoding: see <xref target="sect-5.2.2"/></t>
-            </section>
-            
-            <section anchor="IANA.CDNI.payload.CIT.Invalidate" title="CDNI CI/T Invalidate Trigger Action Payload Type">
-               <t>Purpose: The purpose of this Trigger action type is to distinguish Invalidate CIT Trigger Types Triggers.</t>
-               <t>Interface: CI/T</t>
-               <t>Encoding: see <xref target="sect-5.2.2"/></t>
-            </section>
-
-            <section anchor="IANA.CDNI.payload.CIT.Purge" title="CDNI CI/T Purge Trigger Action Payload Type">
-               <t>Purpose: The purpose of this Trigger action type is to distinguish Purge CIT Trigger Types Triggers.</t>
-               <t>Interface: CI/T</t>
-               <t>Encoding: see <xref target="sect-5.2.2"/></t>
-            </section>
-            
-         </section>
-
-        <section anchor="IANA.CDNI.payload.CIT.Specs" title="CDNI CI/T Trigger Spec Payload Types">
-            <section anchor="IANA.CDNI.payload.CIT.UrlsSpec" title="CDNI CI/T Urls Trigger Spec Payload Type">
-               <t>Purpose: The purpose of this Trigger Spec type is to distinguish Urls CIT Trigger Spec objects.</t>
-               <t>Interface: CI/T</t>
-               <t>Encoding: see <xref target="urls-spec"/></t>
-            </section>
-
-            <section anchor="IANA.CDNI.payload.CIT.CcidsSpec" title="CDNI CI/T Ccids Trigger Spec Payload Type">
-               <t>Purpose: The purpose of this Trigger Spec type is to distinguish Ccids CIT Trigger Spec objects.</t>
-               <t>Interface: CI/T</t>
-               <t>Encoding: see <xref target="ccids-spec"/></t>
-            </section>
-
-            <section anchor="IANA.CDNI.payload.CIT.UriPatternMatchSpec" title="CDNI CI/T UriPatternMatch Trigger Spec Payload Type">
-               <t>Purpose: The purpose of this Trigger Spec type is to distinguish UriPatternMatch CIT Trigger Spec objects.</t>
-               <t>Interface: CI/T</t>
-               <t>Encoding: see <xref target="uri-pattern-match-spec"/></t>
-            </section>
-
-            <section anchor="IANA.CDNI.payload.CIT.UriRegexMatchSpec" title="CDNI CI/T UriRegexMatch Trigger Spec Payload Type">
-               <t>Purpose: The purpose of this Trigger Spec type is to distinguish UriRegexMatch CIT Trigger Spec objects.</t>
-               <t>Interface: CI/T</t>
-               <t>Encoding: see <xref target="uri-regex-match-spec"/></t>
-            </section>
-
-            <section anchor="IANA.CDNI.payload.CIT.ContentPlaylistSpec" title="CDNI CI/T ContentPlaylist Trigger Spec Payload Type">
-               <t>Purpose: The purpose of this Trigger Spec type is to distinguish ContentPlaylist CIT Trigger Spec objects.</t>
-               <t>Interface: CI/T</t>
-               <t>Encoding: see <xref target="content-playlist-spec"/></t>
-            </section>
-         </section>
-
-         <section anchor="IANA.CDNI.payload.CIT.Subjects" title="CDNI CI/T Trigger Subject types">
-            <section anchor="IANA.CDNI.payload.CIT.MetadataSubject" title="CDNI CI/T Metadata Trigger Subject Type">
-               <t>Purpose: The purpose of this Trigger Spec subject type is to distinguish Metadata CIT Trigger Spec objects.</t>
-               <t>Interface: CI/T</t>
-               <t>Encoding: see  <xref target="trigger-spec"/> - string "metatdata"</t>
-            </section>
-
-            <section anchor="IANA.CDNI.payload.CIT.ContentSubject" title="CDNI CI/T Content Trigger Subject Type">
-               <t>Purpose: The purpose of this Trigger Spec subject type is to distinguish Content CIT Trigger Spec objects.</t>
-               <t>Interface: CI/T</t>
-               <t>Encoding: see  <xref target="trigger-spec"/> - string "content"</t>
-            </section>
-         </section>
-
-        <section anchor="IANA.CDNI.payload.CIT.Extensions" title="CDNI CI/T Trigger Extension Payload Types">
-            <section anchor="IANA.CDNI.payload.CIT.LocationPolicy" title="CDNI CI/T LocationPolicy Trigger Extension Type">
-               <t>Purpose: The purpose of this Trigger Extension type is to distinguish LocationPolicy CIT Trigger Extension objects.</t>
-               <t>Interface: CI/T</t>
-               <t>Encoding: see <xref target="location-policy"/></t>
-            </section>
-
-            <section anchor="IANA.CDNI.payload.CIT.TimePolicy" title="CDNI CI/T TimePolicy Trigger Extension Type">
-               <t>Purpose: The purpose of this Trigger Extension type is to distinguish TimePolicy CI/T Trigger Extension objects.</t>
-               <t>Interface: CI/T</t>
-               <t>Encoding: see <xref target="time-policy"/></t>
-            </section>
-        </section>
-
         <section anchor="IANA.CDNI.payload.CIT.Footprint" title="CDNI FCI CI/T Payload Types">
 
             <section anchor="IANA.CDNI.payload.FCI.TriggersVersions" title="CDNI FCI CI/T Versions Payload Type">
@@ -4064,7 +3980,7 @@ RESPONSE:
 
 	</section>
 
-	<section title="&quot;CDNI CI/T Trigger Types&quot; Registry For Trigger Actions" anchor="sect-7.2"><t>
+	<section title="&quot;CDNI CI/T Trigger Types&quot; Registry For Trigger Actions" anchor="IANA.CDNI.TriggerTypeReg"><t>
    In <xref target="RFC8007"/> the IANA was requested to create a new "CDNI CI/T Trigger Types"
    subregistry under the "Content Delivery Network Interconnection (CDNI) Parameters" registry.</t>
 
@@ -4079,34 +3995,39 @@ RESPONSE:
 	<t> In this second edition of the interface, trigger types are referred to as "trigger actions". The "Trigger Types" registery is used for further actions definitions. Furthermore, this document, and specifically <xref target="sect-5.2.2"/>, repeats the definitions of the trigger types from <xref target="RFC8007"/> as trigger actions, with no modification in the entities specification.</t>
 	</section>
 
-	<section title="&quot;CDNI CI/T Error Codes&quot; Registry" anchor="sect-7.3"><t>
-   In <xref target="RFC8007"/> the IANA was requested to create a new "CDNI CI/T Error Codes"
-   subregistry under the "Content Delivery Network Interconnection (CDNI) Parameters" registry.</t>
+
+      <section anchor="IANA.CDNI.TriggerSpecReg" title="&quot;CDNI CI/T Trigger Specs&quot; Registry">
+        <t>The IANA is requested to create a new "CDNI CI/T Trigger Specs Types" subregistry
+           in the "Content Delivery Networks Interconnection (CDNI) Parameters" registry. 
+		   The "CDNI CI/T Trigger Specs" namespace defines the valid trigger targets' spec values
+           in <xref target="trigger-spec"/>, used by the Trigger Spec object.</t>
+		   <t>Additions to the "CDNI Trigger Specs" registry are made via
+			the RFC Required policy as defined in <xref target="RFC8126"/>.</t>
 
 	<t>
-   Additions to the "CDNI CI/T Error Codes" registry are made via
-   the Specification Required policy as defined in <xref target="RFC8126"/>.  The
-   Designated Expert will verify that new Error Code registrations do
-   not duplicate existing Error Code definitions (in name or
-   functionality), prevent gratuitous additions to the namespace, and
-   prevent any additions to the namespace that would impair the
-   interoperability of CDNI implementations.</t>
+   The initial contents of the "CDNI CI/T Trigger Specs" registry
+   comprise the names and descriptions listed in <xref target="trigger-spec"/>, with this document acting as the specification.</t>
+   </section>
+
+     <section anchor="IANA.CDNI.TriggerSubjectReg" title="&quot;CDNI CI/T Trigger Subjects&quot; Registry">
+        <t>The IANA is requested to create a new "CDNI CI/T Trigger Subjects" subregistry
+           in the "Content Delivery Networks Interconnection (CDNI) Parameters" registry. 
+		   The "CDNI CI/T Trigger Subjects" namespace defines the valid trigger targets' subject values
+           in <xref target="trigger-subject"/>, used by the Trigger Spec object.</t>
+		   <t>Additions to the "CDNI Trigger Subjects" registry are made via
+			the RFC Required policy as defined in <xref target="RFC8126"/>.</t>
 
 	<t>
-   The initial contents of the "CDNI CI/T Error Codes" registry comprise
-   the names and descriptions of the Error Codes listed in Section 5.2.7
-   of <xref target="RFC8007"/>, with <xref target="RFC8007"/> acting as the specification.</t>
-   
-   <t> In this second edition of the interface, we repeat the definion of the defined errors, with no modification of the entities specification. Additionally, the IANA is requested to register two additional error codes, "espec" and "eextension", with specification as defined at <xref target="sect-5.2.7"/>.
-   </t>
+   The initial contents of the "CDNI CI/T Trigger Subjects" registry
+   comprise the names and descriptions listed in <xref target="trigger-subject"/>, with this document acting as the specification.</t>
+   </section>
 
-	</section>
 
-      <section anchor="IANA.CDNI.MediaProtocolReg" title="CDNI Media protocol types">
-        <t>The IANA is requested to create a new "CDNI MediaProtocol Types" subregistry
+      <section anchor="IANA.CDNI.MediaProtocolReg" title="CDNI CI/T Playlist Spec MediaProtocol types">
+        <t>The IANA is requested to create a new "CDNI CI/T Playlist Spec MediaProtocol Types" subregistry
            in the "Content Delivery Networks Interconnection (CDNI) Parameters" registry.
-           The "CDNI MediaProtocol Types" namespace defines the valid MediaProtocol object
-           values in <xref target="media-protocol"/>, used by the Playlist object.
+           The "CDNI CI/T Playlist Spec MediaProtocol Types" namespace defines the valid MediaProtocol object
+           values in <xref target="media-protocol"/>, used by the Content Playlist Spec object.
            Additions to the MediaProtocol namespace conform to the "Specification Required"
            policy as defined in Section 4.6 of <xref target="RFC8126"/>,  where the specification
            defines the MediaProtocol Type and the protocol to which it is associated.
@@ -4116,7 +4037,7 @@ RESPONSE:
         <t>The following table defines the initial MediaProtocol values corresponding
            to the HLS, MSS, and DASH protocols:</t>
         <texttable>
-          <ttcol align="left">MediaProtocol Type</ttcol>
+          <ttcol align="left">Playlist Spec MediaProtocol Type</ttcol>
           <ttcol align="left">Description</ttcol>
           <ttcol align="left">Specification</ttcol>
           <ttcol align="left">Protocol Specification</ttcol>
@@ -4137,8 +4058,46 @@ RESPONSE:
         </texttable>
        <t>[RFC Editor: Please replace RFCthis with the published RFC number for this document.]</t>
       </section>
+	  
+	  <section anchor="IANA.CDNI.TriggerExtensionReg" title="&quot;CDNI CI/T Trigger Extensions&quot; Registry">
+        <t>The IANA is requested to create a new "CDNI CI/T Trigger Extensions" subregistry
+           in the "Content Delivery Networks Interconnection (CDNI) Parameters" registry. 
+		   The "CDNI CI/T Trigger Extensions" namespace defines the valid trigger targets' extension values
+           in <xref target="trigger-extensibility"/>, used by the Trigger Spec object.</t>
+		   <t>Additions to the "CDNI Trigger Extensions" registry are made via
+			the RFC Required policy as defined in <xref target="RFC8126"/>.</t>
+
+	<t>
+   The initial contents of the "CDNI CI/T Trigger Extensions" registry
+   comprise the names and descriptions listed in <xref target="trigger-extensibility"/>, with this document acting as the specification.</t>
+   </section>
+   
+   
+
+	<section title="&quot;CDNI CI/T Error Codes&quot; Registry" anchor="sect-7.3"><t>
+   In <xref target="RFC8007"/> the IANA was requested to create a new "CDNI CI/T Error Codes"
+   subregistry under the "Content Delivery Network Interconnection (CDNI) Parameters" registry.</t>
+
+	<t>
+   Additions to the "CDNI CI/T Error Codes" registry are made via
+   the Specification Required policy as defined in <xref target="RFC8126"/>.  The
+   Designated Expert will verify that new Error Code registrations do
+   not duplicate existing Error Code definitions (in name or
+   functionality), prevent gratuitous additions to the namespace, and
+   prevent any additions to the namespace that would impair the
+   interoperability of CDNI implementations.</t>
+
+	<t>
+   The initial contents of the "CDNI CI/T Error Codes" registry comprise
+   the names and descriptions of the Error Codes listed in Section 5.2.7
+   of <xref target="RFC8007"/>, with <xref target="RFC8007"/> acting as the specification.</t>
+   
+   <t> In this second edition of the interface, we repeat the definion of the defined errors, with no modification of the entities specification. Additionally, the IANA is requested to register three additional error codes, "espec", "esubject" and "eextension", with specification as defined at <xref target="sect-5.2.7"/>.
+   </t>
 
 	</section>
+
+</section>
 
 	<section title="Security Considerations" anchor="sect-8"><t>
    The CI/T interface provides a mechanism to allow a uCDN to generate
