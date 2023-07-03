@@ -136,9 +136,7 @@
 	<t><list style="symbols"><t><xref target="sect-2"/> outlines the model for the CI/T interface at a high
       level.</t>
 		
-	<t><xref target="trigger-spec"/> describes the trigger spec object, specifying the trigger's targets.</t>
-
-	<t><xref target="trigger-extensibility"/> describes the trigger's extensibility mechanism.</t>
+	<t><xref target="trigger-specification"/> describes the trigger attributes used for specifying the trigger's targets and controling the trigger's execution.</t>
 
 	<t><xref target="sect-3"/> describes collections of Trigger Status Resources.</t>
 
@@ -440,7 +438,7 @@
 
 	</section>
 	
-	<section title="Trigger Scope" anchor="trigger-Scope">
+	<section title="Trigger Specification" anchor="trigger-specification">
 	<t>The following attributes are defining the trigger execution.</t>
 		<section title="Trigger Action" anchor="sect-5.2.2"><t>
    Trigger Action Type is used in a Trigger Specification to describe trigger
@@ -4386,4 +4384,3 @@ URI = tstr
 	</back>
 
 	</rfc>
-	
