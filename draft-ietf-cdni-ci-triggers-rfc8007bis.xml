@@ -13,7 +13,6 @@
 <!ENTITY RFC7525 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7525.xml">
 <!ENTITY RFC8006 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8006.xml">
 <!ENTITY RFC8007 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8007.xml">
-<!ENTITY I-D.greevenbosch-appsawg-cbor-cddl SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.greevenbosch-appsawg-cbor-cddl.xml">
 <!ENTITY RFC7336 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7336.xml">
 <!ENTITY RFC7337 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7337.xml">
 <!ENTITY RFC7736 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7736.xml">
@@ -4226,7 +4225,6 @@ RESPONSE:
 
 	</references>
 	<references title="Informative References">
-	&I-D.greevenbosch-appsawg-cbor-cddl;
 	&RFC2818;
 	&RFC6707;
 	&RFC7336;
@@ -4291,89 +4289,6 @@ RESPONSE:
 
 
 	</references>
-	<section title="Formalization of the JSON Data" anchor="sect-a"><t>
-   This appendix is non-normative.</t>
-   <t>TBD should we remove it or compile a CDDL on our own</t>
-	<t>
-   The JSON data described in this document has been formalized using
-   the CBOR Data Definition Language (CDDL) <xref target="I-D.greevenbosch-appsawg-cbor-cddl"/> (where "CBOR"
-   means "Concise Binary Object Representation"), as follows:</t>
-
-	<figure><artwork><![CDATA[
-CIT-object = CIT-command / Trigger-Status-Resource / Trigger-Collection
-
-CIT-command ; use media type application/cdni; ptype=ci-trigger-command.v2
-= {
-  ? trigger: Triggerspec
-  ? cancel: [* URI]
-  cdn-path: [* Cdn-PID]
-}
-
-Trigger-Status-Resource ; application/cdni; ptype=ci-trigger-status.v2
-= {
-  trigger: Triggerspec
-  ctime: Absolute-Time
-  mtime: Absolute-Time
-  ? etime: Absolute-Time
-  status: Trigger-Status
-  ? errors: [* Error-Description]
-}
-
-Trigger-Collection ; application/cdni; ptype=ci-trigger-collection.v2
-= {
-  triggers: [* URI]
-  ? staleresourcetime: int ; time in seconds
-  ? coll-all: URI
-  ? coll-pending: URI
-  ? coll-active: URI
-  ? coll-complete: URI
-  ? coll-failed: URI
-  ? cdn-id: Cdn-PID
-}
-
-Triggerspec = { ; see Section 5.2.1
-  type: Trigger-Type
-  ? metadata.urls: [* URI]
-  ? content.urls: [* URI]
-  ? content.ccid: [* Ccid]
-  ? metadata.patterns: [* Pattern-Match]
-  ? content.patterns: [* Pattern-Match]
-}
-
-Trigger-Type = "preposition" / "invalidate"
-   / "purge" ; see Section 5.2.2
-
-Trigger-Status = "pending" / "active" / "complete" / "processed"
-   / "failed" / "cancelling" / "cancelled" ; see Section 5.2.3
-
-Pattern-Match = { ; see Section 5.2.4
-  pattern: tstr
-  ? case-sensitive: bool
-  ? match-query-string: bool
-}
-
-Absolute-Time = number ; seconds since UNIX epoch (Section 5.2.5)
-
-Error.v2-Description = { ; see Section 5.2.6
-  error: Error-Code
-  ? metadata.urls: [* URI]
-  ? content.urls: [* URI]
-  ? metadata.patterns: [* Pattern-Match]
-  ? content.patterns: [* Pattern-Match]
-  ? description: tstr
-}
-
-Error-Code = "emeta" / "econtent" / "eperm" / "ereject"
-   / "ecdn" / "ecancelled"  ; see Section 5.2.7
-
-Ccid = tstr ; see RFC 8006
-
-Cdn-PID = tstr .regexp "AS[0-9]+:[0-9]+"
-
-URI = tstr
-]]></artwork>
-	</figure>
-	</section>
 
 	<section title="Acknowledgments" numbered="no" anchor="acknowledgments"><t>
    The authors thank Kevin Ma for his input, and Carsten Bormann for his
