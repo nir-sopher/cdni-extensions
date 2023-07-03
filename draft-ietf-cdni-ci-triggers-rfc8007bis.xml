@@ -135,7 +135,7 @@
 	<t><list style="symbols"><t><xref target="sect-2"/> outlines the model for the CI/T interface at a high
       level.</t>
 		
-	<t><xref target="trigger-specification"/> describes the trigger attributes used for specifying the trigger's targets and controling the trigger's execution.</t>
+	<t><xref target="trigger-specification"/> describes the trigger attributes used for specifying the trigger's targets and for controling the trigger's execution.</t>
 
 	<t><xref target="sect-3"/> describes collections of Trigger Status Resources.</t>
 
