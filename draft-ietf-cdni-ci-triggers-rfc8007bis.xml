@@ -123,7 +123,7 @@
    in more detail.</t>
 
 	<t>
-   The CDNI Control Interface / Triggers 1st edition <xref target="RFC8007"/> 1st edition, deprecated by this document describes the "CI/T" interface -- "CDNI Control interface / Triggers".  It does not consider those parts of the
+   The CDNI Control Interface / Triggers 1st edition <xref target="RFC8007"/>, deprecated by this document describes the "CI/T" interface -- "CDNI Control interface / Triggers".  It does not consider those parts of the
    Control interface that relate to configuration, bootstrapping, or
    authentication of CDN Interconnect interfaces.  Section 4 of
    <xref target="RFC7337"/> identifies the requirements specific to the CI/T interface;
@@ -188,7 +188,7 @@
    There are two types of CI/T Commands: CI/T Trigger Commands and CI/T
    Cancel Commands.  The CI/T Cancel Command can be used to request
    cancellation of an earlier CI/T Trigger Command. </t>
-   <t>A CI/T Trigger Action is of one of the following types:</t>
+   <t>A CI/T Trigger Action is of one of the following:</t>
 
 	<t><list style="symbols"><t>preposition - used to instruct the dCDN to fetch metadata from the
       uCDN, or content from any origin including the uCDN.</t>
@@ -203,7 +203,7 @@
 	</t>
 
    <t>
-   Note that additional CI/T Trigger Action Types can be defined and registered in the future. 
+   Note that additional CI/T Trigger Actions can be defined and registered in the future. 
    </t>
 	<t>
    The CI/T interface is a web service offered by the dCDN.  It allows
@@ -444,8 +444,8 @@
 	<section title="Trigger Specification" anchor="trigger-specification">
 	<t>The following attributes are defining the trigger execution.</t>
 		<section title="Trigger Action" anchor="sect-5.2.2"><t>
-   Trigger Action Type is used in a Trigger Specification to describe trigger
-   action. It was initially referred to (at <xref target="RFC8007"/>) as "Trigger Type".</t>
+   Trigger Action is used in a Trigger Specification to describe trigger
+   action. It was initially referred to in <xref target="RFC8007"/> as "Trigger Type".</t>
 
 	<t>
    All trigger actions MUST be registered in the IANA "CDNI CI/T Trigger Types" registry (see <xref target="IANA.CDNI.TriggerTypeReg"/>).</t>
@@ -477,10 +477,10 @@
    <t>
       The CDNI Control Interface / Triggers 1st edition <xref target="RFC8007"/> defines a set of properties
       and objects used by the trigger commands in order to specify the targets the trigger is applied on.
-      This document modifies the trigger interface so it has a list of trigger specs. 
+      This document modifies the trigger interface objects so it has a list of trigger specs. 
       Such structure improves the interface's extensibility and flexibility. 
       Furthermore, the document defines a generic trigger spec
-      object that act as a wrapper for managing individual CDNI trigger spec in an opaque manner,
+      object that acts as a wrapper for managing individual CDNI trigger spec in an opaque manner,
       allowing future extension of the interface.
    </t>
 
@@ -534,13 +534,13 @@
 	<c>metadata</c>
 	<c>Indicating the trigger target specification refers to Metadata object, as defined at <xref target="RFC8006"/>.</c>
 	<c>content</c>
-	<c>indicating the trigger target specification refers to client facing content.</c>
+	<c>Indicating the trigger target specification refers to client facing content.</c>
 	</texttable>
 	</section>
 
    <section title="Content URLs" anchor="sect-4.8">
    <t>
-   Each CI/T Command usually refers the targets by the target URLs,
+   Each CI/T Command usually refers to the targets by the target URLs,
    using a "urls" trigger spec object or some aggregating spec such as the "url-regex-match".
 
    If content URLs are transformed by an intermediate CDN in a cascade,
@@ -576,7 +576,7 @@
    <t>
    All trigger extensions MUST be registered in the IANA "CDNI CI/T Trigger Extensions" registry (see <xref target="IANA.CDNI.TriggerExtensionReg"/>).</t>
 
-   <t>This document also defines an initial set of trigger extension objects and registers them in the IANA "CDNI CI/T Trigger Subjects" registry:</t>
+   <t>This document also defines an initial set of trigger extension objects and registers them in the IANA "CDNI CI/T Trigger Extensions" registry:</t>
       
 	<texttable style="full"><ttcol align="left"> JSON String</ttcol>
 	<ttcol align="left"> Description</ttcol>
@@ -1019,11 +1019,11 @@
              This document adds a mechanism to propagate the 
 			 PID of the dCDN where the fault occurred, back to the 
              uCDN by adding the PID
-             to the error.v2 description. When dCDN-B propagates a trigger to the further downstream dCDN-C, 
+             to the error.v2 description. When dCDN-B propagates a trigger further to the downstream dCDN-C, 
              it MUST also propagate back the errors received in the trigger status resource from dCDN-C by adding
              them to the errors array in its own status resource to be sent back to the originating uCDN-A.
              While propagating back the errors, and depending on the implementation, dCDN-B MAY also 
-             specify the dCDN-C PID, indicating to which CDN the error relates specificall.
+             specify the dCDN-C PID, indicating to which CDN the error specifically relates to.
              The trigger originating upstream CDN then receives an array built of the errors that occurred 
              in all the CDNs along the execution path, where each error MAY be carrying its own CDN identifier.
           </t>
@@ -1427,7 +1427,7 @@ uCDN-A                         dCDN-B                         dCDN-C
    An unrecognized name/value pair in the Trigger Specification object
    contained in a CI/T Command SHOULD be preserved in the Trigger
    Specification of any Trigger Status Resource it creates. 
-   Note that the preferable method for extending the CI/T capabilities, is by defining new related trigger extensions, 
+   Note that the preferable method for extending the CI/T capabilities, is by defining new related trigger specs and/or trigger extensions, 
    rather than adding new properties to the Trigger.v2 object.</t>
 
 	<t><list style="empty" hangIndent="3">
@@ -1521,19 +1521,9 @@ uCDN-A                         dCDN-B                         dCDN-C
                <t>Mandatory: Yes.</t>
             </list></t>
 
-            <t>Property: trigger-subject<list style="empty">
-
-               <t>Description: Case-insensitive CDNI Trigger subject.</t>
-
-               <t>Type: String containing the type of the subject matching the 
-                  generic-trigger-spec-value property, such as "content" or "metadata" 
-                  as define in <xref target="trigger-subject"/>.</t>  
-
-               <t>Mandatory: Yes.</t>
-            </list></t>
 
          </list></t>
-         <t>The structure of a JSON serialized GenericTriggerExtension object containing a specific trigger extension object is illustrated below:</t>
+         <t>The structure of a JSON serialized GenericTriggerSpec object, containing a specific trigger spec is illustrated below:</t>
 
       <figure>
          <artwork><![CDATA[
@@ -2084,7 +2074,7 @@ uCDN-A                         dCDN-B                         dCDN-C
     <section anchor="trigger-spec-objects" title="Trigger Spec Objects">
       <t>The objects defined below are intended to be used in the GenericTriggerSpec
          object's generic-trigger-spec-value field as defined in Section
-         <xref target="generic-spec-object"/>.
+         <xref target="generic-spec-object"/>. As such all these trigger specs are registered in the IANA "CDNI CI/T Trigger Specs" registry (see <xref target="IANA.CDNI.TriggerSpecReg"/>).
       </t>
 	  
 
@@ -2823,9 +2813,9 @@ Month Number  Month/Year           Maximum value of date-mday
       <section title="CI/T Trigger Scope Capability Object">
         <t>
            The CI/T supports several trigger actions for different trigger's subjects as defined at 
-           <xref target="sect-5.2.2"/> and <xref target="trigger-subject"/>. Additional types, as well as
+           <xref target="sect-5.2.2"/> and <xref target="trigger-subject"/>. Additional actions, as well as
            subjects, may be defined 
-           in the future. The Trigger Scope capability object is used to indicate support of a Trigger Action Type
+           in the future. The Trigger Scope capability object is used to indicate support of a Trigger Action
            for a subject. It further specifies the Trigger Generic Spec types that may be used for 
            selecting the targets the triggers is applied on, along with the supported Trigger Generic Extension types.
         </t>
@@ -2835,11 +2825,11 @@ Month Number  Month/Year           Maximum value of date-mday
         <t><list style="empty">
             <t>Property: trigger-action <list style="empty">
 
-                 <t>Description: The supported CDNI CI/T Trigger Action Type.</t>
+                 <t>Description: The supported CDNI CI/T Trigger Action.</t>
 
                  <t>Type: A string corresponding to an entry from the "CDNI CI/T Trigger Types" registry
                     <xref target="IANA.CDNI.TriggerTypeReg"/>, that corresponds to a CDNI
-                    CI/T Trigger Action Type.
+                    CI/T Trigger Action.
                  </t>
 
                  <t>Mandatory: Yes.
@@ -2847,11 +2837,11 @@ Month Number  Month/Year           Maximum value of date-mday
            </list></t>
             <t>Property: trigger-subject <list style="empty">
 
-                 <t>Description: The supported CDNI CI/T Trigger Subject type.</t>
+                 <t>Description: The supported CDNI CI/T Trigger Subject.</t>
 
-                 <t>Type: A string corresponding to an entry from the "CDNI CI/T Trigger Subjects Types" registry
-                    <xref target="IANA.CDNI.TriggerSubjectReg"/> that is under the CIT namespace, and that correspond to CDNI
-                    CI/T Trigger Subject type.
+                 <t>Type: A string corresponding to an entry from the "CDNI CI/T Trigger Subjects" registry
+                    <xref target="IANA.CDNI.TriggerSubjectReg"/> that corresponds to a CDNI
+                    CI/T Trigger Subject.
                  </t>
 
                  <t>Mandatory: Yes.
