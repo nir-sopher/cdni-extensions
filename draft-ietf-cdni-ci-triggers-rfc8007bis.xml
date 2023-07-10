@@ -820,8 +820,8 @@
 
 	<section title="Canceling Triggers" anchor="sect-4.3"><t>
    The uCDN can request cancellation of a CI/T Trigger Command by
-   POSTing a CI/T Cancel Command (see <xref target="sect-5.1.1-cancel"/>) to the collection of all Trigger Status
-   Resources.</t>
+   POSTing a CI/T Cancel Command (see <xref target="sect-5.1.1-cancel"/>) to the
+   	specific trigger's to cancel Trigger Status Resource.</t>
 
 	<t>
    The dCDN is required to accept and respond to the CI/T Cancel
@@ -832,7 +832,8 @@
    The dCDN MUST respond to the CI/T Cancel Command appropriately -- for
    example, with HTTP status code 200 ("OK") if the cancellation has
    been processed and the CI/T Command is inactive, 202 ("Accepted") if
-   the command has been accepted but the CI/T Command remains active, or
+   the command has been accepted but the CI/T Command remains active, 404 ("Not Found") 
+   when the Trigger Status Resouce does not exists, or
    501 ("Not Implemented") if cancellation is not supported by the dCDN.</t>
 
 	<t>
@@ -1219,28 +1220,7 @@ uCDN-A                         dCDN-B                         dCDN-C
    CI/T Cancel Command, which is used to cancel an existing trigger, to MUST use a MIME media type of "application/cdni; ptype=ci-trigger-command.cancel".</t>
 
 	<t>
-   A CI/T Cancel Command is encoded as a JSON object containing the following
-   name/value pairs.</t>
-
-	<t><list style="empty" hangIndent="3">
-	<t><list style="hanging" hangIndent="3">
-	<t hangText="Name: cancel">
-	<vspace blankLines="1"/>
-	Description: The URLs of Trigger Status Resources for CI/T
-         Trigger Commands that the uCDN wants to cancel.
-	<vspace blankLines="1"/>
-	Value: A non-empty JSON array of URLs represented as JSON
-         strings.
-	<vspace blankLines="1"/>
-	Mandatory: Yes.
-	</t>
-
-	</list>
-	</t>
-
-	</list>
-	</t>
-
+    A CI/T Cancel Command is encoded as an empty JSON object.</t>
 	</section>
 
 
