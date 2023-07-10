@@ -19,7 +19,7 @@
 <!ENTITY RFC7975 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7975.xml">
 <!ENTITY RFC8174 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml">
 ]>
-<rfc category="std" docName="draft-ietf-cdni-ci-triggers-rfc8007bis-06" obsoletes='8007' ipr="trust200902">
+<rfc category="std" docName="draft-ietf-cdni-ci-triggers-rfc8007bis-07" obsoletes='8007' ipr="trust200902">
 	<?rfc strict="yes"?>
 	<?rfc compact="yes"?>
 	<?rfc subcompact="no"?>
@@ -235,7 +235,7 @@
    
    <t> Note that the CI/T Command objects POSTed by the uCDN, and CI/T Status Resource objects generated and reported by the dCDN, are matched by their version.  
     I.e., sending a <xref target="RFC8007"/> "ci-trigger-command" object as the command generates a 
-   "ci-trigger-status" structured resource to be repored, while sending a "ci-trigger-command.v2" object generates a "ci-trigger-status.v2" object.</t>
+   "ci-trigger-status" structured resource to be repored, while sending a "ci-trigger-command.trigger.v2" object generates a "ci-trigger-status.v2" object.</t>
 
 	<t>
    In addition to the collection of all Trigger Status Resources for the
@@ -820,7 +820,7 @@
 
 	<section title="Canceling Triggers" anchor="sect-4.3"><t>
    The uCDN can request cancellation of a CI/T Trigger Command by
-   POSTing a CI/T Cancel Command to the collection of all Trigger Status
+   POSTing a CI/T Cancel Command (see <xref target="sect-5.1.1-cancel"/>) to the collection of all Trigger Status
    Resources.</t>
 
 	<t>
@@ -1149,9 +1149,9 @@ uCDN-A                         dCDN-B                         dCDN-C
 	</section>
 
 	<section title="CI/T Object Properties and Encoding" anchor="sect-5"><t>
-   The CI/T Commands, Trigger Status Resources, and Trigger Collections,
+   The CI/T Trigger Command, CI/T Cancel Command, Trigger Status Resources, and Trigger Collections,
    as well as their properties, are encoded using JSON, as defined in
-   Sections <xref target="sect-5.1.1"/>, <xref target="sect-5.1.2"/>, and <xref target="sect-5.1.3"/>.  They MUST use the MIME media type
+   Sections <xref target="sect-5.1.1"/>, <xref target="sect-5.1.1-cancel"/>, <xref target="sect-5.1.2"/>, and <xref target="sect-5.1.3"/>.  They MUST use the MIME media type
    "application/cdni", with parameter "ptype" values as defined below
    and in <xref target="sect-7.1"/>.</t>
 
@@ -1177,11 +1177,11 @@ uCDN-A                         dCDN-B                         dCDN-C
    The encoding of values used by these objects is described in
    <xref target="sect-5.2"/>.</t>
 
-	<section title="CI/T Commands" anchor="sect-5.1.1"><t>
-   CI/T Commands MUST use a MIME media type of "application/cdni; ptype=ci-trigger-command.v2".</t>
+	<section title="CI/T Trigger Command" anchor="sect-5.1.1"><t>
+   CI/T Trigger Command, which is used to create a new trigger, MUST use a MIME media type of "application/cdni; ptype=ci-trigger-command.trigger.v2".</t>
 
 	<t>
-   A CI/T Command is encoded as a JSON object containing the following
+   A CI/T Trigger Command is encoded as a JSON object containing the following
    name/value pairs.</t>
 
 	<t><list style="empty" hangIndent="3">
@@ -1192,20 +1192,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 	<vspace blankLines="1"/>
 	Value: A Trigger.v2 Specification, as defined in <xref target="sect-5.2.1"/>.
 	<vspace blankLines="1"/>
-	Mandatory: No, but exactly one of "trigger" or "cancel" MUST be
-         present in a CI/T Command.
-	</t>
-
-	<t hangText="Name: cancel">
-	<vspace blankLines="1"/>
-	Description: The URLs of Trigger Status Resources for CI/T
-         Trigger Commands that the uCDN wants to cancel.
-	<vspace blankLines="1"/>
-	Value: A non-empty JSON array of URLs represented as JSON
-         strings.
-	<vspace blankLines="1"/>
-	Mandatory: No, but exactly one of "trigger" or "cancel" MUST be
-         present in a CI/T Command.
+	Mandatory: Yes.
 	</t>
 
 	<t hangText="Name: cdn-path">
@@ -1226,6 +1213,36 @@ uCDN-A                         dCDN-B                         dCDN-C
 	</t>
 
 	</section>
+
+
+	<section title="CI/T Cancel Command" anchor="sect-5.1.1-cancel"><t>
+   CI/T Cancel Command, which is used to cancel an existing trigger, to MUST use a MIME media type of "application/cdni; ptype=ci-trigger-command.cancel".</t>
+
+	<t>
+   A CI/T Cancel Command is encoded as a JSON object containing the following
+   name/value pairs.</t>
+
+	<t><list style="empty" hangIndent="3">
+	<t><list style="hanging" hangIndent="3">
+	<t hangText="Name: cancel">
+	<vspace blankLines="1"/>
+	Description: The URLs of Trigger Status Resources for CI/T
+         Trigger Commands that the uCDN wants to cancel.
+	<vspace blankLines="1"/>
+	Value: A non-empty JSON array of URLs represented as JSON
+         strings.
+	<vspace blankLines="1"/>
+	Mandatory: Yes.
+	</t>
+
+	</list>
+	</t>
+
+	</list>
+	</t>
+
+	</section>
+
 
 	<section title="Trigger Status Resources" anchor="sect-5.1.2"><t>
    Trigger Status Resources MUST use a MIME media type of
@@ -2024,7 +2041,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 
 	<t>
    The following Error Codes are defined by this document and MUST be
-   supported by an implementation of the CI/T interface, utilizing the ci-trigger-command.v2 and the ci-trigger-status.v2 objects.</t>
+   supported by an implementation of the CI/T interface, utilizing the ci-trigger-command.trigger.v2 and the ci-trigger-status.v2 objects.</t>
 
 	<texttable style="full">
 	<t>[RFC Editor: Please replace RFCthis with the published RFC
@@ -3009,7 +3026,7 @@ REQUEST:
   User-Agent: example-user-agent/0.1
   Host: dcdn.example.com
   Accept: */*
-  Content-Type: application/cdni; ptype=ci-trigger-command.v2
+  Content-Type: application/cdni; ptype=ci-trigger-command.trigger.v2
   Content-Length: 352
 
   {
@@ -3102,7 +3119,7 @@ REQUEST:
   User-Agent: example-user-agent/0.1
   Host: dcdn.example.com
   Accept: */*
-  Content-Type: application/cdni; ptype=ci-trigger-command.v2
+  Content-Type: application/cdni; ptype=ci-trigger-command.trigger.v2
   Content-Length: 387
 
   {
@@ -3201,7 +3218,7 @@ REQUEST:
   User-Agent: example-user-agent/0.1
   Host: triggers.dcdn.example.com
   Accept: */*
-  Content-Type: application/cdni; ptype=ci-trigger-command.v2
+  Content-Type: application/cdni; ptype=ci-trigger-command.trigger.v2
   {
     "trigger": {
       "action": "invalidate",
@@ -3274,7 +3291,7 @@ REQUEST:
   User-Agent: example-user-agent/0.1
   Host: triggers.dcdn.example.com
   Accept: */*
-  Content-Type: application/cdni; ptype=ci-trigger-command.v2
+  Content-Type: application/cdni; ptype=ci-trigger-command.trigger.v2
   {
     "trigger": {
       "action": "preposition",
@@ -3732,7 +3749,7 @@ REQUEST:
   User-Agent: example-user-agent/0.1
   Host: triggers.dcdn.example.com
   Accept: */*
-  Content-Type: application/cdni; ptype=ci-trigger-command.v2
+  Content-Type: application/cdni; ptype=ci-trigger-command.trigger.v2
   {
     "trigger": {
      "action": "preposition",
@@ -3880,7 +3897,9 @@ RESPONSE:
 
 	<texttable style="full"><ttcol align="left"> Payload Type</ttcol>
 	<ttcol align="left"> Specification</ttcol>
-   <c>ci-trigger-command.v2</c>
+   <c>ci-trigger-command.trigger.v2</c>
+   <c>RFCthis</c>
+   <c>ci-trigger-command.cancel</c>
    <c>RFCthis</c>
    <c>ci-trigger-status.v2</c>
    <c>RFCthis</c>
@@ -3898,11 +3917,18 @@ RESPONSE:
       <t>[RFC Editor: Please replace RFCthis with the published RFC
         number for this document.]</t>
 
-         <section anchor="IANA.CDNI.payload.ci-trigger-command.v2" title="CDNI ci-trigger-command.v2 Payload Type">
-          <t>Purpose: The purpose of this payload type is to distinguish version 2 of the CI/T command object
+         <section anchor="IANA.CDNI.payload.ci-trigger-command.trigger.v2" title="CDNI ci-trigger-command.trigger.v2 Payload Type">
+          <t>Purpose: The purpose of this payload type is to distinguish version 2 of the CI/T trigger command object
             (and any associated capability advertisement)</t>
           <t>Interface: CI/T</t>
           <t>Encoding: see <xref target="sect-5.1.1"/></t>
+        </section>
+		
+		<section anchor="IANA.CDNI.payload.ci-trigger-command.cancel" title="CDNI ci-trigger-command.cancel Payload Type">
+          <t>Purpose: The purpose of this payload type is to distinguish the CI/T cancel command object
+            (and any associated capability advertisement)</t>
+          <t>Interface: CI/T</t>
+          <t>Encoding: see <xref target="sect-5.1.1-cancel"/></t>
         </section>
 
         <section anchor="IANA.CDNI.payload.ci-trigger-status.v2" title="CDNI ci-trigger-status.v2 Payload Type">
