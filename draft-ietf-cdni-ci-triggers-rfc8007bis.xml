@@ -821,7 +821,7 @@
 	<section title="Canceling Triggers" anchor="sect-4.3"><t>
    The uCDN can request cancellation of a CI/T Trigger Command by
    POSTing a CI/T Cancel Command (see <xref target="sect-5.1.1-cancel"/>) to the
-   	specific trigger's to cancel Trigger Status Resource.</t>
+   	specific trigger's to cancel Trigger Status Resource URL.</t>
 
 	<t>
    The dCDN is required to accept and respond to the CI/T Cancel
