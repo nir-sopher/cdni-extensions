@@ -129,7 +129,7 @@
    <xref target="RFC7337"/> identifies the requirements specific to the CI/T interface;
    requirements applicable to the CI/T interface are CI-1 to CI-6.</t>
    
-   <t>This document is a 2nd edition for the CDNI Control Interface / Triggers, which only modifies the trigger interface’s object structure. This change is intended to improve the interface’s flexibility and extensibility. It also provides a Trigger Extension mechanism that MAY be used to provide further instruction on  the trigger execution. The trigger interface mechanism itself is not changed by this new edition.
+   <t>This document is a second edition for the CDNI Control Interface / Triggers, which define a new version, "v2", of the interface objects. The new objects comes to replace the trigger interface’s main objects, the "ci-trigger-command" object and its matching "ci-trigger-status" object, and improve the interface’s flexibility and extensibility. The document also provides a Trigger Extension mechanism that MAY be used to provide further instruction on the trigger execution. Additionally, this second edition allows the better monitoring of triggers execution via the functionality of error propagation on cascaded CDNs. Note that the trigger interface mechanism itself is not changed by this new edition.
    </t>
 
 	<t><list style="symbols"><t><xref target="sect-2"/> outlines the model for the CI/T interface at a high
@@ -218,7 +218,7 @@
    Resource.  The uCDN can poll Trigger Status Resources to monitor
    progress.</t>
 
-	<t>
+   <t>
    The dCDN maintains at least one collection of Trigger Status
    Resources for each uCDN.  Each uCDN only has access to its own
    collections, the locations of which are shared when CDNI is
@@ -232,6 +232,10 @@
    Trigger Status Resource.  To request cancellation of a CI/T Trigger
    Command, the uCDN can POST to the collection of Trigger Status
    Resources or simply delete the Trigger Status Resource.</t>
+   
+   <t> Note that the CI/T Command objects POSTed by the uCDN, and CI/T Status Resource objects generated and reported by the dCDN, are matched by their version.  
+    I.e., sending a <xref target="RFC8007"/> "ci-trigger-command" object as the command generates a 
+   "ci-trigger-status" structured resource to be repored, while sending a "ci-trigger-command.v2" object generates a "ci-trigger-status.v2" object.</t>
 
 	<t>
    In addition to the collection of all Trigger Status Resources for the
@@ -600,10 +604,10 @@
 	<t>
    A collection of Trigger Status Resources is a resource that contains
    a reference to each Trigger Status Resource in that collection.
-   Note that the collection may possibly refer to Trigger Status Resources of triggers from several CI/T versions.
+   Note that the collection may possibly refer to Trigger Status Resources of triggers from several CI/T objects versions.
    I.e. a subsequent call for the retrieval of the relevant trigger status may provide 
    objects of various MIME media types: ci-trigger-status as defined in <xref target="RFC8007"/>, ci-trigger-status.v2 
-   defined in this document, or objects from future CI/T versions, based on the CI/T version used for the creation of the trigger. </t>
+   defined in this document, or objects of future CI/T objects versions, based on the CI/T version used for the creation of the trigger. </t>
 
 	<t>
    The dCDN MUST make a collection of a uCDN's Trigger Status Resources
@@ -1317,7 +1321,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 	</section>
 
 	<section title="Trigger Collections" anchor="sect-5.1.3"><t>
-   Trigger Collections MUST use a MIME media type of "application/cdni; ptype=ci-trigger-collection.v2".</t>
+   Trigger Collections MUST use a MIME media type of "application/cdni; ptype=ci-trigger-collection".</t>
 
 	<t>
    A Trigger Collection is encoded as a JSON object containing the
@@ -2769,10 +2773,10 @@ Month Number  Month/Year           Maximum value of date-mday
       </t>
 
 
-     <section title="CI/T Versions Capability Object">
+     <section title="CI/T Objects Versions Capability Object">
         <t>
-           The CI/T versions capability object is used to indicate support for one or more CI/T objects versions.
-		   Capability type is "FCI.CITVersion".
+           The CI/T objects versions capability object is used to indicate support for one or more CI/T objects versions.
+		   Capability type is "FCI.CITObjectsVersion".
            Note that the default version as originally defined in <xref target="RFC8007"/> MUST be implicitly
            supported regardless of the versions listed in this capability object.
         </t>
@@ -2785,12 +2789,12 @@ Month Number  Month/Year           Maximum value of date-mday
                  <t>Type: An array of JSON strings</t>
 
                  <t>Mandatory: No. The default is version 1. A missing or an empty versions list
-                    means that  only version 1 of the interface and objects is supported.</t>
+                    means that only version 1 of the interface and objects is supported.</t>
            </list></t>
         </list></t>
-        <section anchor="versions-capability-object" title="CI/T Versions Capability Object Serialization">
+        <section anchor="versions-capability-object" title="CI/T Objects Versions Capability Object Serialization">
           <t>
-             The following shows an example of CI/T Versions Capability object serialization for a dCDN that supports
+             The following shows an example of CI/T Objects Versions Capability object serialization for a dCDN that supports
              versions 2 and 2.1 of the CI/T interface.
           </t>
 
@@ -3366,7 +3370,7 @@ RESPONSE:
   ETag: "-936094426920308378"
   Cache-Control: max-age=60
   Date: Wed, 04 May 2016 08:48:11 GMT
-  Content-Type: application/cdni; ptype=ci-trigger-collection.v2
+  Content-Type: application/cdni; ptype=ci-trigger-collection
 
   {
       "cdn-id": "AS64496:0",
@@ -3406,7 +3410,7 @@ RESPONSE:
   ETag: "4331492443626270781"
   Cache-Control: max-age=60
   Date: Wed, 04 May 2016 08:48:11 GMT
-  Content-Type: application/cdni; ptype=ci-trigger-collection.v2
+  Content-Type: application/cdni; ptype=ci-trigger-collection
 
   {
       "staleresourcetime": 86400,
@@ -3438,7 +3442,7 @@ RESPONSE:
   ETag: "7958041393922269003"
   Cache-Control: max-age=60
   Date: Wed, 04 May 2016 08:48:11 GMT
-  Content-Type: application/cdni; ptype=ci-trigger-collection.v2
+  Content-Type: application/cdni; ptype=ci-trigger-collection
 
   {
       "staleresourcetime": 86400,
@@ -3584,7 +3588,7 @@ RESPONSE:
    ETag: "4331492443626270781"
    Cache-Control: max-age=60
    Date: Wed, 04 May 2016 08:48:11 GMT
-   Content-Type: application/cdni; ptype=ci-trigger-collection.v2
+   Content-Type: application/cdni; ptype=ci-trigger-collection
 
 REQUEST:
 
@@ -3630,7 +3634,7 @@ RESPONSE:
   ETag: "1337503181677633762"
   Cache-Control: max-age=60
   Date: Wed, 04 May 2016 08:48:15 GMT
-  Content-Type: application/cdni; ptype=ci-trigger-collection.v2
+  Content-Type: application/cdni; ptype=ci-trigger-collection
 
   {
       "staleresourcetime": 86400,
@@ -3653,7 +3657,7 @@ RESPONSE:
   ETag: "4481489539378529796"
   Cache-Control: max-age=60
   Date: Wed, 04 May 2016 08:48:22 GMT
-  Content-Type: application/cdni; ptype=ci-trigger-collection.v2
+  Content-Type: application/cdni; ptype=ci-trigger-collection
 
   {
       "staleresourcetime": 86400,
@@ -3709,7 +3713,7 @@ RESPONSE:
   ETag: "-6938620031669085677"
   Cache-Control: max-age=60
   Date: Wed, 04 May 2016 08:48:22 GMT
-  Content-Type: application/cdni; ptype=ci-trigger-collection.v2
+  Content-Type: application/cdni; ptype=ci-trigger-collection
 
   {
       "staleresourcetime": 86400,
@@ -3886,14 +3890,12 @@ RESPONSE:
 
 	<texttable style="full"><ttcol align="left"> Payload Type</ttcol>
 	<ttcol align="left"> Specification</ttcol>
-	<c>ci-trigger-collection.v2</c>
-   <c>RFCthis</c>
    <c>ci-trigger-command.v2</c>
    <c>RFCthis</c>
    <c>ci-trigger-status.v2</c>
    <c>RFCthis</c>
 
-   <c>FCI.CITVersion</c>
+   <c>FCI.CITObjectsVersion</c>
    <c>RFCthis</c>
 
    <c>FCI.TriggerScope</c>
@@ -3907,30 +3909,24 @@ RESPONSE:
         number for this document.]</t>
 
          <section anchor="IANA.CDNI.payload.ci-trigger-command.v2" title="CDNI ci-trigger-command.v2 Payload Type">
-          <t>Purpose: The purpose of this payload type is to distinguish version 2 of the CI/T command
+          <t>Purpose: The purpose of this payload type is to distinguish version 2 of the CI/T command object
             (and any associated capability advertisement)</t>
           <t>Interface: CI/T</t>
           <t>Encoding: see <xref target="sect-5.1.1"/></t>
         </section>
 
         <section anchor="IANA.CDNI.payload.ci-trigger-status.v2" title="CDNI ci-trigger-status.v2 Payload Type">
-          <t>Purpose: The purpose of this payload type is to distinguish version 2 of the CI/T status resource response
+          <t>Purpose: The purpose of this payload type is to distinguish version 2 of the CI/T status resource response object
             (and any associated capability advertisement)</t>
           <t>Interface: CI/T</t>
           <t>Encoding: see <xref target="sect-5.1.2"/></t>
         </section>
 
-         <section anchor="IANA.CDNI.payload.ci-trigger-collection.v2" title="CDNI ci-trigger-collection.v2 Payload Type">
-          <t>Purpose: The purpose of this payload type is to distinguish version 2 of the CI/T collections response</t>
-          <t>Interface: CI/T</t>
-          <t>Encoding: see <xref target="sect-5.1.3"/></t>
-        </section>
-
         <section anchor="IANA.CDNI.payload.CIT.Footprint" title="CDNI FCI CI/T Payload Types">
 
-            <section anchor="IANA.CDNI.payload.FCI.TriggersVersions" title="CDNI FCI CI/T Versions Payload Type">
+            <section anchor="IANA.CDNI.payload.FCI.TriggersVersions" title="CDNI FCI CI/T Objects Versions Payload Type">
                <t>Purpose: The purpose of this payload type is to distinguish FCI advertisement objects for
-                  CI/T Triggers Versions objects</t>
+                  CI/T Objets Versions objects</t>
                <t>Interface: FCI</t>
                <t>Encoding: see <xref target="versions-capability-object"/></t>
             </section>
