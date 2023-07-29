@@ -2031,25 +2031,25 @@ uCDN-A                         dCDN-B                         dCDN-C
 	<ttcol align="left"> Registration</ttcol>	
 	<c>emeta</c>
 	<c>The dCDN was unable to acquire metadata required to fulfill the request.</c>
-	<c><xref target="RFC8007"/></c>
+	<c>RFCthis</c>
 	<c>econtent</c>
 	<c>The dCDN was unable to acquire content (CI/T "preposition" commands only).</c>
-	<c><xref target="RFC8007"/></c>
+	<c>RFCthis</c>
 	<c>eperm</c>
 	<c>The uCDN does not have permission to issue the CI/T Command (for example, the data is owned by another CDN).</c>
-	<c><xref target="RFC8007"/></c>
+	<c>RFCthis</c>
 	<c>ereject</c>
 	<c>The dCDN is not willing to fulfill the CI/T Command (for example, a "preposition" request for content at a time when the dCDN would not accept Request Routing requests from the uCDN).</c>
-	<c><xref target="RFC8007"/></c>
+	<c>RFCthis</c>
 	<c>ecdn</c>
 	<c>An internal error in the dCDN or one of its dCDNs.</c>
-	<c><xref target="RFC8007"/></c> 
+	<c>RFCthis</c> 
 	<c>ecancelled</c>
 	<c>The uCDN canceled the request.</c>
-	<c><xref target="RFC8007"/></c>
+	<c>RFCthis</c>
 	<c>eunsupported</c>
 	<c>The Trigger Specification contained an "action type" that is not supported by the dCDN.  No action was taken by the dCDN other than to create a Trigger Status Resource in state "failed".</c>
-	<c><xref target="RFC8007"/></c>
+	<c>RFCthis</c>
 	<c>espec</c>
 	<c>An error occurred while parsing a generic trigger spec, or that the specific trigger spec is not supported by the CDN.</c>
 	<c>RFCthis</c>
@@ -3953,17 +3953,14 @@ RESPONSE:
    Additions to the "CDNI CI/T Trigger Types" registry are made via
    the RFC Required policy as defined in <xref target="RFC8126"/>.</t>
 
-	<t>
-   The initial contents of the "CDNI CI/T Trigger Types" registry
-   comprise the names and descriptions listed in section 5.2.2 of <xref target="RFC8007"/>, with <xref target="RFC8007"/> acting as the specification.</t>
-
-	<t> In this second edition of the interface, trigger types are referred to as "trigger actions". The "Trigger Types" registery is used for further actions definitions. Furthermore, this document, and specifically <xref target="sect-5.2.2"/>, repeats the definitions of the trigger types from <xref target="RFC8007"/> as trigger actions, with no modification in the entities specification.</t>
+	<t> In this second edition of the interface, trigger types are referred to as "trigger actions". The "Trigger Types" registery is used for actions definitions. Furthermore, this document, and specifically <xref target="sect-5.2.2"/>, repeats the definitions of the trigger types from <xref target="RFC8007"/> as trigger actions, 
+	and provide their specifications, with no modification comparing to <xref target="RFC8007"/>.</t>
 	</section>
 
 
       <section anchor="IANA.CDNI.TriggerSpecReg" title="&quot;CDNI CI/T Trigger Specs&quot; Registry">
-        <t>The IANA is requested to create a new "CDNI CI/T Trigger Specs" subregistry
-           in the "Content Delivery Networks Interconnection (CDNI) Parameters" registry. 
+        <t>The IANA is requested to create a new "CDNI CI/T Trigger Specs" registry 
+           in the "Content Delivery Networks Interconnection (CDNI) Parameters" registry group. 
 		   The "CDNI CI/T Trigger Specs" namespace defines the valid trigger targets' spec values
            in <xref target="trigger-spec"/>, used by the Trigger Spec object.</t>
 		   <t>Additions to the "CDNI CI/T Trigger Specs" registry are made via
@@ -3975,8 +3972,8 @@ RESPONSE:
    </section>
 
      <section anchor="IANA.CDNI.TriggerSubjectReg" title="&quot;CDNI CI/T Trigger Subjects&quot; Registry">
-        <t>The IANA is requested to create a new "CDNI CI/T Trigger Subjects" subregistry
-           in the "Content Delivery Networks Interconnection (CDNI) Parameters" registry. 
+        <t>The IANA is requested to create a new "CDNI CI/T Trigger Subjects" registry 
+           in the "Content Delivery Networks Interconnection (CDNI) Parameters" registry group. 
 		   The "CDNI CI/T Trigger Subjects" namespace defines the valid trigger targets' subject values
            in <xref target="trigger-subject"/>, used by the Trigger Spec object.</t>
 		   <t>Additions to the "CDNI CI/T Trigger Subjects" registry are made via
@@ -3989,8 +3986,8 @@ RESPONSE:
 
 
       <section anchor="IANA.CDNI.MediaProtocolReg" title="CDNI CI/T Playlist Spec MediaProtocols">
-        <t>The IANA is requested to create a new "CDNI CI/T Playlist Spec MediaProtocols" subregistry
-           in the "Content Delivery Networks Interconnection (CDNI) Parameters" registry.
+        <t>The IANA is requested to create a new "CDNI CI/T Playlist Spec MediaProtocols" registry 
+           in the "Content Delivery Networks Interconnection (CDNI) Parameters" registry group.
 		   The "CDNI CI/T Playlist Spec MediaProtocols" namespace defines the valid trigger targets' extension values
            in <xref target="media-protocol"/>, used by the Trigger Spec object.</t>
 		   <t>Additions to the "CDNI Playlist Spec MediaProtocols" registry are made via
@@ -4003,8 +4000,8 @@ RESPONSE:
       </section>
 	  
 	  <section anchor="IANA.CDNI.TriggerExtensionReg" title="&quot;CDNI CI/T Trigger Extensions&quot; Registry">
-        <t>The IANA is requested to create a new "CDNI CI/T Trigger Extensions" subregistry
-           in the "Content Delivery Networks Interconnection (CDNI) Parameters" registry. 
+        <t>The IANA is requested to create a new "CDNI CI/T Trigger Extensions" registy
+           in the "Content Delivery Networks Interconnection (CDNI) Parameters" registry group. 
 		   The "CDNI CI/T Trigger Extensions" namespace defines the valid trigger targets' extension values
            in <xref target="trigger-extensibility"/>, used by the Trigger Spec object.</t>
 		   <t>Additions to the "CDNI CI/T Trigger Extensions" registry are made via
@@ -4030,12 +4027,8 @@ RESPONSE:
    prevent any additions to the namespace that would impair the
    interoperability of CDNI implementations.</t>
 
-	<t>
-   The initial contents of the "CDNI CI/T Error Codes" registry comprise
-   the names and descriptions of the Error Codes listed in Section 5.2.7
-   of <xref target="RFC8007"/>, with <xref target="RFC8007"/> acting as the specification.</t>
-   
-   <t> In this second edition of the interface, we repeat the definion of the defined errors, with no modification of the entities specification. Additionally, the IANA is requested to register three additional error codes, "espec", "esubject" and "eextension", with specification as defined at <xref target="sect-5.2.7"/>.
+  
+   <t> In this second edition of the interface, we list and repeat the definion of the Errors Codes from <xref target="RFC8007"/> - acting as the entities specification with no modification comparing to <xref target="RFC8007"/>. Additionally, the IANA is requested to register three additional error codes, "espec", "esubject" and "eextension", with specification as defined at <xref target="sect-5.2.7"/>.
    </t>
 
 	</section>
