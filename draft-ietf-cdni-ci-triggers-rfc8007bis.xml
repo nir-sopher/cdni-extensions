@@ -607,7 +607,7 @@
    Note that the collection may possibly refer to Trigger Status Resources of triggers from several CI/T objects versions.
    I.e. a subsequent call for the retrieval of the relevant trigger status may provide 
    objects of various MIME media types: ci-trigger-status as defined in <xref target="RFC8007"/>, ci-trigger-status.v2 
-   defined in this document, or objects of future CI/T objects versions, based on the CI/T version used for the creation of the trigger. </t>
+   defined in this document, or objects of future CI/T objects versions, based on the CI/T command version used for the creation of the trigger. </t>
 
 	<t>
    The dCDN MUST make a collection of a uCDN's Trigger Status Resources
@@ -2764,8 +2764,9 @@ Month Number  Month/Year           Maximum value of date-mday
         <t>
            The CI/T objects versions capability object is used to indicate support for one or more CI/T objects versions.
 		   Capability type is "FCI.CITObjectsVersion".
-           Note that the default version as originally defined in <xref target="RFC8007"/> MUST be implicitly
-           supported regardless of the versions listed in this capability object.
+		   For simplicity, it is recommended to minimize the set of supported versions declared by the dCDN. For example support only objct of version v2.
+           Note that the default version as originally defined in <xref target="RFC8007"/> is the one to implicitly
+           supported in cases this capability is not declared.
         </t>
 
         <t><list style="empty">
