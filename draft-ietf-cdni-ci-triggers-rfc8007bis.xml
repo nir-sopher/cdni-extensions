@@ -870,8 +870,14 @@
 
 	<section title="Deleting Triggers" anchor="sect-4.4"><t>
    The uCDN can delete Trigger Status Resources at any time, using the
-   HTTP DELETE method.  The effect is similar to cancellation, but no
-   Trigger Status Resource remains afterwards.</t>
+   HTTP DELETE method. As defined the CDNI Control Interface / Triggers 1st edition <xref target="RFC8007"/>,
+   the effect is similar to cancellation, but no
+   Trigger Status Resource remains afterwards. Note that in cases where the 
+   trigger's status prior to the deletion is not a terminal status (i.e. "completed", "failed"
+   or "cancelled"), the uCDN would not have the ability to further monitor the 
+   cancellation process and the final status of the trigger. 
+   It is therefore recommended to delete a trigger only in a terminal status, 
+   and use the designated cancellation command prior to the deletion.</t>
 
 	<t>
    Once deleted, the references to a Trigger Status Resource MUST be
