@@ -19,7 +19,7 @@
 <!ENTITY RFC7975 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7975.xml">
 <!ENTITY RFC8174 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml">
 ]>
-<rfc category="std" docName="draft-ietf-cdni-ci-triggers-rfc8007bis-09" obsoletes='8007' ipr="trust200902">
+<rfc category="std" docName="draft-ietf-cdni-ci-triggers-rfc8007bis-10" obsoletes='8007' ipr="trust200902">
 	<?rfc strict="yes"?>
 	<?rfc compact="yes"?>
 	<?rfc subcompact="no"?>
