@@ -129,7 +129,7 @@
    <xref target="RFC7337"/> identifies the requirements specific to the CI/T interface;
    requirements applicable to the CI/T interface are CI-1 to CI-6.</t>
    
-   <t>This document is a second edition for the CDNI Control Interface / Triggers, which define a new version, "v2", of the interface objects. The new objects replace the trigger interface’s main objects, the "ci-trigger-command" object and its matching "ci-trigger-status" object, and improve the interface’s flexibility and extensibility. The document also provides a Trigger Extension mechanism that MAY be used to provide further instruction on the trigger execution. Additionally, this second edition allows the better monitoring of trigger execution via the functionality of error propagation on cascaded CDNs. Note that the trigger interface mechanism itself is not changed by this new edition.
+   <t>This document is a second edition for the CDNI Control Interface / Triggers, which define a new version, "v2", of the interface objects. The new objects replace the trigger interface’s main objects, the "ci-trigger-command" object and its matching "ci-trigger-status" object, and improve the interface’s flexibility and extensibility. The document also provides a Trigger Extension mechanism that MAY be used to provide further instruction on the trigger execution. Additionally, this second edition includes cascaded CDN error propagation for improved trigger execution monitoring. Note that the trigger interface mechanism itself is not changed by this new edition.
    </t>
 
 	<t><list style="symbols"><t><xref target="sect-2"/> outlines the model for the CI/T interface at a high
@@ -191,7 +191,7 @@
    <t>A CI/T Trigger Action is of one of the following:</t>
 
 	<t><list style="symbols"><t>preposition - used to instruct the dCDN to fetch metadata from the
-      uCDN, or content from any origin including the uCDN.</t>
+      uCDN or content from any origin including the uCDN.</t>
 
 	<t>invalidate - used to instruct the dCDN to revalidate specific
       metadata or content before reusing it.</t>
@@ -335,8 +335,8 @@
 	<section title="Scope of Triggered Activity" anchor="sect-2.2"><t>
    Each CI/T Command can operate on multiple metadata and content elements, 
    usually referred to by their URLs. These elements are targeted by specifying
-   both their subject (i.e. "metadata" or "content") as well as specification 
-   method (e.g. URL Regexes) and value.
+   both their subject (i.e., "metadata" or "content") as well as specification 
+   method (e.g., URL Regexes) and value.
    </t>
 
 	<t>
@@ -363,15 +363,15 @@
 	<t>
    CI/T Commands originating in the single source uCDN affect metadata
    and content in all dCDNs; however, in a diamond configuration, it may
-   not be possible for the dCDN to determine which uCDN it acquired
-   content from.  In this case, a dCDN MUST allow each uCDN from which
+   not be possible for the dCDN to determine from which uCDN it acquired
+   content.  In this case, a dCDN MUST allow each uCDN from which
    it may have acquired the content to act upon that content using CI/T
    Commands.</t>
 
 	<t>
    In all other cases, a dCDN MUST reject CI/T Commands from a uCDN that
    attempts to act on another uCDN's content by using, for example,
-   HTTP 403 ("Forbidden").</t>
+   responding with an HTTP 403 ("Forbidden").</t>
 
 	<t>
    Security considerations are discussed further in <xref target="sect-8"/>.</t>
@@ -445,7 +445,7 @@
 	<t>The following attributes are defining the trigger execution.</t>
 		<section title="Trigger Action" anchor="sect-5.2.2"><t>
    Trigger Action is used in a Trigger Specification to describe trigger
-   action. It was initially referred to in <xref target="RFC8007"/> as "Trigger Type".</t>
+   actions. It was initially referred to in <xref target="RFC8007"/> as "Trigger Type".</t>
 
 	<t>
    All trigger actions MUST be registered in the IANA "CDNI CI/T Trigger Types" registry (see <xref target="IANA.CDNI.TriggerTypeReg"/>).</t>
@@ -454,7 +454,7 @@
    A dCDN receiving a request containing a trigger action it does not
    recognize or does not support MUST reject the request by creating a
    Trigger Status Resource with a status of "failed" and the "errors"
-   array containing an Error.v2 Description with error "eunsupported".</t>
+   array containing an Error.v2 Description with error "eunsupported" (see <xref target="sect-5.2.7"/>).</t>
 
 	<t>
    The following trigger actions are defined by this document:</t>
@@ -476,11 +476,11 @@
    <section anchor="trigger-spec" title="Trigger Spec">
    <t>
       The CDNI Control Interface / Triggers 1st edition <xref target="RFC8007"/> defines a set of properties
-      and objects used by the trigger commands in order to specify the targets the trigger is applied on.
+      and objects used by the trigger commands in order to specify the targets upon which the trigger is applied.
       This document modifies the trigger interface objects so it has a list of trigger specs. 
       Such structure improves the interface's extensibility and flexibility. 
       Furthermore, the document defines a generic trigger spec
-      object that acts as a wrapper for managing individual CDNI trigger spec in an opaque manner,
+      object that acts as a wrapper for managing individual CDNI trigger specs in an opaque manner,
       allowing future extension of the interface.
    </t>
 
@@ -492,7 +492,7 @@
    A dCDN receiving a request containing a trigger spec it does not
    recognize or does not support MUST reject the request by creating a
    Trigger Status Resource with a status of "failed" and the "errors"
-   array containing an Error.v2 Description with error "espec".</t>
+   array containing an Error.v2 Description with error "espec" (see <xref target="sect-5.2.7"/>).</t>
 
 	<t>
    This document also defines an initial set of trigger spec objects and registers them in the IANA "CDNI CI/T Trigger Specs" registry:</t>
@@ -505,8 +505,8 @@
 	<c>Allowing the specification of trigger targets via CCIDs content grouping, as defined in section 4.2.8 <xref target="RFC8006"/>.</c>
 	<c>uri-pattern-match</c>
 	<c>Allowing the specification of trigger targets via <xref target="RFC3986"/> URI patterns.</c>
-	<c>url-regex-match</c>
-	<c>Allowing the specification of trigger targets via regexes matching their URI.</c>
+	<c>uri-regex-match</c>
+    <c>Allowing the specification of trigger targets via regexes matching their URI, as defined in <xfer target="uri-regex-match-spec"/>.</c>
 	<c>content-playlist</c>
 	<c>Allowing the specification of trigger targets via a playlist URI and a media protocol identifier.</c>
 	</texttable>
@@ -514,8 +514,8 @@
    <section anchor="trigger-subject" title="Trigger Subject">
 
    <t>As the scope of the trigger may relate to either metadata as well as content, 
-   the "trigger spec object" also specify the trigger's target subject (i.e. metadata or content) 
-   to be matched with.</t>
+   the "trigger spec object" also specifies the trigger's target subject (i.e., metadata or content) 
+   against which to match.</t>
    
    <t>
    All trigger subjects MUST be registered in the IANA "CDNI CI/T Trigger Subjects" registry (see <xref target="IANA.CDNI.TriggerSubjectReg"/>).</t>
@@ -524,7 +524,7 @@
    A dCDN receiving a request containing a trigger subject it does not
    recognize or does not support MUST reject the request by creating a
    Trigger Status Resource with a status of "failed" and the "errors"
-   array containing an Error.v2 Description with error "esubject".</t>
+   array containing an Error.v2 Description with error "esubject" (see <xref target="sect-5.2.7"/>).</t>
 
 	<t>
    This document also defines an initial set of trigger subject values and registers them in the IANA "CDNI CI/T Trigger Subjects" registry:</t>
@@ -561,9 +561,9 @@
 <section anchor="trigger-extensibility" title="Trigger Extensibility">
    <t>
       The CDNI Control Interface / Triggers 1st edition <xref target="RFC8007"/> defines a set of properties
-      and objects used by the trigger commands. In this 2nd edition we define an extension mechanism
+      and objects used by the trigger commands. This 2nd edition defines an extension mechanism
       to the triggers interface that enables applications to add instructions for 
-      finer control over the trigger execution, for example indicating a time window for the trigger to be executed. 
+      finer control over the trigger execution, for example indicating a time window in which to execute the trigger. 
       This document specifies a generic trigger extension
       object wrapper for managing individual CDNI trigger extensions in an opaque manner.
    </t>
@@ -590,7 +590,7 @@
       <t>Pre-position with cache location policy</t>
       <t>Purge content with cache location policy</t>
       <t>Pre-position at a specific time</t>
-      <t>Purge by content acquisition time (e.g. purge all content acquired in the past X hours)</t>
+      <t>Purge by content acquisition time (e.g., purge all content acquired in the past X hours)</t>
    </list></t>
 </section>
 
@@ -605,7 +605,7 @@
    A collection of Trigger Status Resources is a resource that contains
    a reference to each Trigger Status Resource in that collection.
    Note that the collection may possibly refer to Trigger Status Resources of triggers from several CI/T objects versions,
-   i.e. a subsequent call for the retrieval of the relevant trigger status may provide 
+   i.e., a subsequent call for the retrieval of the relevant trigger status may provide 
    objects of various MIME media types: ci-trigger-status as defined in <xref target="RFC8007"/>, ci-trigger-status.v2 
    defined in this document, or objects of future CI/T objects versions, based on the CI/T command version used for the creation of the trigger. </t>
 
@@ -613,7 +613,7 @@
    The dCDN MUST make a collection of a uCDN's Trigger Status Resources
    available to that uCDN.  This collection includes all of the Trigger
    Status Resources created for CI/T Commands from the uCDN that have
-   been accepted by the dCDN, and have not yet been deleted by the uCDN,
+   been accepted by the dCDN and have not yet been deleted by the uCDN
    or expired and removed by the dCDN (as described in <xref target="sect-4.4"/>).
    Trigger Status Resources belonging to a uCDN MUST NOT be visible to
    any other CDN.  The dCDN could, for example, achieve this by offering
@@ -621,7 +621,7 @@
    based on the uCDN with which the HTTP client is associated.</t>
 
 	<t>
-   To trigger activity in a dCDN or to cancel triggered activity, the
+   To trigger an activity in a dCDN or to cancel a triggered activity, the
    uCDN POSTs a CI/T Command to the dCDN's collection of the uCDN's
    Trigger Status Resources.</t>
 
@@ -869,14 +869,14 @@
 	</section>
 
 	<section title="Deleting Triggers" anchor="sect-4.4"><t>
-   The uCDN can delete Trigger Status Resources at any time, using the
+   The uCDN can delete Trigger Status Resources at any time using the
    HTTP DELETE method. As defined in the CDNI Control Interface / Triggers 1st edition <xref target="RFC8007"/>,
    the effect is similar to cancellation, but no
    Trigger Status Resource remains afterwards. Note that in cases where the 
-   trigger's status prior to the deletion is not a terminal status (i.e. "completed", "failed"
+   trigger's status prior to the deletion is not a terminal status (i.e., "completed", "failed"
    or "cancelled"), the uCDN would not have the ability to further monitor the 
    cancellation process and the final status of the trigger. 
-   It is therefore recommended to delete a trigger only in a terminal status, 
+   It is therefore recommended to only delete terminal triggers 
    and use the designated cancellation command (see <xref target="sect-5.1.1-cancel"/>) prior to the deletion.</t>
 
 	<t>
@@ -1015,20 +1015,20 @@
 
         <section anchor="error-propagation" title="Error propagation">
           <t>
-             This subsection explains the mechanism for enabling the uCDN to traceback an error to the dCDN in which it occurred.
+             This subsection explains the mechanism for enabling the uCDN to trace an error back to the dCDN in which it occurred.
              CDNI triggers may be propagated over a chain of downstream CDNs. For example, an 
              upstream CDN A (uCDN-A) that is delegating to a downstream CDN B (dCDN-B) and dCDN-B is delegating 
              to a downstream CDN C (dCDN-C). Triggers sent from uCDN-A to dCDN-B may be redistributed 
-             from dCDN-B to dCDN-C and errors can occur anywhere along the path. Therefore, it might be essential for 
-             uCDN-A that sets the trigger, to be able to trace back an error to the downstream CDN where it occurred. 
+             from dCDN-B to dCDN-C, and errors can occur anywhere along the path. Therefore, it might be essential for 
+             uCDN-A that sets the trigger, be able to trace back an error to the downstream CDN where it occurred. 
              This document adds a mechanism to propagate the 
 			 PID of the dCDN where the fault occurred, back to the 
              uCDN by adding the PID
              to the error.v2 description. When dCDN-B propagates a trigger further to the downstream dCDN-C, 
              it MUST also propagate back the errors received in the trigger status resource from dCDN-C by adding
              them to the errors array in its own status resource to be sent back to the originating uCDN-A.
-             While propagating back the errors, and depending on the implementation, dCDN-B MAY also 
-             specify the dCDN-C PID, indicating to which CDN the error specifically relates to.
+             While propagating back the errors dCDN-B MAY also 
+             specify the dCDN-C PID, indicating to which CDN the error specifically relates.
              The trigger originating upstream CDN then receives an array built of the errors that occurred 
              in all the CDNs along the execution path, where each error MAY be carrying its own CDN identifier.
           </t>
@@ -1127,6 +1127,8 @@ uCDN-A                         dCDN-B                         dCDN-C
 							<t>
 								The dCDN-C acts upon the CI/T Command. However, the command fails at dCDN-C as,
 								for example, the Trigger Specification contains an "action type" that is not supported by dCDN-C.
+								dCDN-C's action is depicted by 7.2 in the diagram, while 7.1 shows dCDN-B acting on its own
+								command.
 							</t>
 							<t>
 								The dCDN-B queries, possibly repeatedly, the Trigger Status Resource in dCDN-C.
@@ -1156,7 +1158,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 	<section title="CI/T Object Properties and Encoding" anchor="sect-5"><t>
    The CI/T Trigger Command, CI/T Cancel Command, Trigger Status Resources, and Trigger Collections,
    as well as their properties, are encoded using JSON, as defined in
-   Sections <xref target="sect-5.1.1"/>, <xref target="sect-5.1.1-cancel"/>, <xref target="sect-5.1.2"/>, and <xref target="sect-5.1.3"/>.  They MUST use the MIME media type
+   Sections <xref target="sect-5.1.1"/>, <xref target="sect-5.1.1-cancel"/>, <xref target="sect-5.1.2"/>, and <xref target="sect-5.1.3"/>, respectively.  They MUST use the MIME media type
    "application/cdni", with parameter "ptype" values as defined below
    and in <xref target="sect-7.1"/>.</t>
 
@@ -1193,7 +1195,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 	<t><list style="hanging" hangIndent="3"><t hangText="Name: trigger">
 	<vspace blankLines="1"/>
 	Description: A specification of the trigger action and a set of
-         targets to act upon.
+         targets upon which to act.
 	<vspace blankLines="1"/>
 	Value: A Trigger.v2 Specification, as defined in <xref target="sect-5.2.1"/>.
 	<vspace blankLines="1"/>
@@ -1310,7 +1312,7 @@ uCDN-A                         dCDN-B                         dCDN-C
          <xref target="sect-5.2.6"/>.  An empty array is allowed and is equivalent to
          omitting "errors" from the object.
 	<vspace blankLines="1"/>
-	Mandatory: No.
+	Mandatory: Yes for "eunsupported", "espec", or "esubject" errors. Otherwise, optional.
 	</t>
 
 	</list>
@@ -1329,7 +1331,8 @@ uCDN-A                         dCDN-B                         dCDN-C
    following name/value pairs.</t>
 
 	<t><list style="empty" hangIndent="3">
-	<t><list style="hanging" hangIndent="3"><t hangText="Name: triggers">
+	<t><list style="hanging" hangIndent="3">
+	<t hangText="Name: triggers">
 	<vspace blankLines="1"/>
 	Description: Links to Trigger Status Resources in the
          collection.
@@ -1356,42 +1359,66 @@ uCDN-A                         dCDN-B                         dCDN-C
          value as in the collection of all Trigger Status Resources.
 	</t>
 
-	</list>
+	<t hangText="Name: coll-all">
+	<vspace blankLines="1"/>
+	Description: Link to a Trigger Collection representing all Trigger Status Resources.
+	<vspace blankLines="1"/>
+	Value: A URL represented as a JSON string.</t>
+	<vspace blankLines="1"/>
+	Mandatory: Links to all of the filtered collections are mandatory
+         in the collection of all Trigger Status Resources, if the dCDN
+         implements the filtered collections.  Otherwise, optional.</t>
 	</t>
 
-	</list>
+	<t hangText="Name: coll-pending">
+	<vspace blankLines="1"/>
+	Description: Link to a Trigger Collection representing Trigger Status Resources
+         that have been accepted but not yet acted upon.
+	<vspace blankLines="1"/>
+	Value: A URL represented as a JSON string.</t>
+	<vspace blankLines="1"/>
+	Mandatory: Links to all of the filtered collections are mandatory
+         in the collection of all Trigger Status Resources, if the dCDN
+         implements the filtered collections.  Otherwise, optional.</t>
 	</t>
 
-	<t><list style="hanging" hangIndent="3"><t>
-      Names: coll-all, coll-pending, coll-active, coll-complete,
-      coll-failed</t>
-
-	</list>
+	<t hangText="Name: coll-active">
+	<vspace blankLines="1"/>
+	Description: Link to a Trigger Collection representing Trigger Status Resources
+         that are currently being processed in the dCDN.
+	<vspace blankLines="1"/>
+	Value: A URL represented as a JSON string.</t>
+	<vspace blankLines="1"/>
+	Mandatory: Links to all of the filtered collections are mandatory
+         in the collection of all Trigger Status Resources, if the dCDN
+         implements the filtered collections.  Otherwise, optional.</t>
 	</t>
 
-	<t><list style="hanging" hangIndent="6"><t>
-         Description: Link to a Trigger Collection.</t>
-
-	</list>
+	<t hangText="Name: coll-complete">
+	<vspace blankLines="1"/>
+	Description: Link to a Trigger Collection representing Trigger Status Resources
+         that completed successfully.
+	<vspace blankLines="1"/>
+	Value: A URL represented as a JSON string.</t>
+	<vspace blankLines="1"/>
+	Mandatory: Links to all of the filtered collections are mandatory
+         in the collection of all Trigger Status Resources, if the dCDN
+         implements the filtered collections.  Otherwise, optional.</t>
 	</t>
 
-	<t><list style="hanging" hangIndent="6"><t>
-         Value: A URL represented as a JSON string.</t>
-
-	</list>
+	<t hangText="Name: coll-failed">
+	<vspace blankLines="1"/>
+	Description: Link to a Trigger Collection representing Trigger Status Resources
+         that failed or were cancelled by the uCDN.
+	<vspace blankLines="1"/>
+	Value: A URL represented as a JSON string.</t>
+	<vspace blankLines="1"/>
+	Mandatory: Links to all of the filtered collections are mandatory
+         in the collection of all Trigger Status Resources, if the dCDN
+         implements the filtered collections.  Otherwise, optional.</t>
 	</t>
 
-	<t><list style="hanging" hangIndent="6"><t>
-         Mandatory: Links to all of the filtered collections are
-         mandatory in the collection of all Trigger Status Resources, if
-         the dCDN implements the filtered collections.  Otherwise,
-         optional.</t>
-
-	</list>
-	</t>
-
-	<t><list style="empty" hangIndent="3">
-	<t><list style="hanging" hangIndent="3"><t hangText="Name: cdn-id">
+	<t hangText="Name: cdn-id">
 	<vspace blankLines="1"/>
 	Description: The CDN PID of the dCDN.
 	<vspace blankLines="1"/>
@@ -1418,7 +1445,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 
 	<section title="Properties of CI/T Objects" anchor="sect-5.2"><t>
    This section defines the values that can appear in the top-level
-   objects described in <xref target="sect-5.1"/>, and their encodings.</t>
+   objects described in <xref target="sect-5.1"/> and their encodings.</t>
 
 	<section title="Trigger.v2 Specification" anchor="sect-5.2.1"><t>
    A Trigger.v2 Specification is encoded as a JSON object containing the
@@ -1428,7 +1455,7 @@ uCDN-A                         dCDN-B                         dCDN-C
    An unrecognized name/value pair in the Trigger Specification object
    contained in a CI/T Command SHOULD be preserved in the Trigger
    Specification of any Trigger Status Resource it creates. 
-   Note that the preferable method for extending the CI/T capabilities, is by defining new related trigger specs and/or trigger extensions, 
+   Note that the preferred method for extending the CI/T capabilities is by defining new related trigger specs and/or trigger extensions, 
    rather than adding new properties to the Trigger.v2 object.</t>
 
 	<t><list style="empty" hangIndent="3">
@@ -1472,22 +1499,22 @@ uCDN-A                         dCDN-B                         dCDN-C
 
    <section anchor="trigger-specs" title="Generic Trigger Specs">
    <t>
-   A "trigger.v2" object, as defined in <xref target="sect-5.2.1"/> includes an
+   A "trigger.v2" object, as defined in <xref target="sect-5.2.1"/>, includes an
    array of trigger spec objects. Each trigger spec object contains properties
-   that are used as trigger target selection directives for dCDN when executing 
-   the trigger command -- for example content URLs or metadata URI patterns. Each such CDNI Trigger 
+   that are used as trigger target selection directives for the dCDN when executing 
+   the trigger command, e.g., content URLs or metadata URI patterns. Each such CDNI Trigger 
    Spec is a specialization
    of a CDNI GenericTriggerSpec object. The GenericTriggerSpec object abstracts the basic
    information required for trigger distribution from the specifics of any given property
-   (i.e. property semantics, enforcement options, etc.). </t>
+   (i.e., property semantics, enforcement options, etc.). </t>
    <t> The semantics of the Trigger Specs list 
-   is additive, i.e. the trigger applies to any object matching one of the listed specs.
+   is additive, i.e., the trigger applies to any object matching one of the listed specs.
    </t>
 
 
          <section anchor="generic-spec-object" title="Generic Spec Object">
          <t>A GenericSpecObject object is a wrapper for managing individual CDNI
-            Trigger spec in an opaque manner.</t>
+            Trigger specs in an opaque manner.</t>
 
          <t><list style="empty">
 
@@ -1551,13 +1578,13 @@ uCDN-A                         dCDN-B                         dCDN-C
           <t>
             A "trigger.v2" object, as defined in <xref target="sect-5.2.1"/> includes an
             optional array of trigger extension objects. A trigger extension contains properties
-            that are used as directives for dCDN when executing the trigger command -- for example,
-            location policies, time policies and so on. Each such CDNI Trigger extension is a specialization
+            that are used as directives for the dCDN when executing the trigger command, e.g., 
+            location policies, time policies, and so on. Each such CDNI Trigger extension is a specialization
             of a CDNI GenericTriggerExtension object. The GenericTriggerExtension object abstracts the basic
             information required for trigger distribution from the specifics of any given property
             (i.e., property semantics, enforcement options, etc.). All trigger extensions are optional,
             and it is thus the responsibility of the extension specification to define a consistent default
-            behavior for the case the extension is not present.
+            behavior for extensions supported by a dCDN when not specified by the uCDN.
           </t>
 
           <section anchor="enforcement-options" title="Enforcement Options">
@@ -1857,11 +1884,11 @@ uCDN-A                         dCDN-B                         dCDN-C
 <t><list style="empty" hangIndent="3">
 	<t><list style="hanging" hangIndent="3"><t hangText="Name: specs">
 	<vspace blankLines="1"/>
-	Description: Array of trigger spec objects based on from the corresponding "specs" array
+	Description: Array of trigger spec objects from the corresponding "specs" array
                 at the Trigger Specification.
                 Only those spec to which the error applies are listed. 
 	<vspace blankLines="1"/>
-	Value: A Trigger Specification, as defined in <xref target="sect-5.2.1"/>,   where each spec object MUST be exactly as
+	Value: Array Trigger Specifications, as defined in <xref target="sect-5.2.1"/>, where each spec object MUST be exactly as
          they appear in the request.
 	<vspace blankLines="1"/>
 	Mandatory: Yes. 
@@ -1883,7 +1910,7 @@ uCDN-A                         dCDN-B                         dCDN-C
                 from the "extensions" array values in the Trigger Specification.
 	<vspace blankLines="1"/>
 	Mandatory: No. The "extensions" array SHOULD be used only if the error relates to
-                extension objects. Missing property should be interpreted as 
+                extension objects. Property omission should be interpreted as 
                 "the error is not related to any extension".
 	</t>
 
@@ -1894,17 +1921,16 @@ uCDN-A                         dCDN-B                         dCDN-C
 	</t>
 
 	<t><list style="empty" hangIndent="3">
-	<t><list style="hanging" hangIndent="3"><t hangText="Name: cdn">
+	<t><list style="hanging" hangIndent="3"><t hangText="Name: cdn-id">
 	<vspace blankLines="1"/>
-	Description: The CDN PID of the CDN where the error occurred. The "cdn" property is used
+	Description: The CDN PID of the CDN where the error occurred. The "cdn-id" property is used
                 by the originating uCDN or by the propagating dCDN in order to distinguish in which CDN the 
                 error occurred.
 	<vspace blankLines="1"/>
 	Value:  A non-empty JSON string, where the string is a CDN PID as defined in Section 
                  <xref target="sect-4.6"/>
 	<vspace blankLines="1"/>
-	Mandatory: Yes. In the case the dCDN does not like to expose this information, 
-                 it should provide its own CDN PID.
+	Mandatory: Yes. The dCDN may use its own CDN PID if it does not want to expose the CDN PIDs of dCDNs.
 	</t>
 
 	</list>
@@ -2014,9 +2040,11 @@ uCDN-A                         dCDN-B                         dCDN-C
 	<t>
    Along with the Trigger Status, the Trigger Status Resource object includes a Status Reason property,
    allowing the dCDN to provide additional information for the trigger status.
-   For example, an indication that trigger status is "pending" as one of the execution prerequisites is not fulfilled. 
-   Such a prerequisite may possibly be specified via one of the extensions.</t>
-	
+   For example, the dCDN may indicate that the trigger status is "pending" due to one of the execution prerequisites not
+   being fulfilled. Such a prerequisite may possibly be specified via one of the extensions.</t>
+
+	</section>
+
 	<section title="Error Code" anchor="sect-5.2.7"><t>
    This type is used by the dCDN to report failures in trigger
    processing.  All Error Codes MUST be registered in the IANA "CDNI CI/T Error Codes" registry (see <xref target="sect-7.3"/>).  Unknown Error Codes
@@ -2025,7 +2053,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 
 	<t>
    The following Error Codes are defined by this document and MUST be
-   supported by an implementation of the CI/T interface, utilizing the ci-trigger-command.trigger.v2 and the ci-trigger-status.v2 objects.</t>
+   supported by an implementation of the CI/T interface utilizing the ci-trigger-command.trigger.v2 and the ci-trigger-status.v2 objects.</t>
 
 	<texttable style="full">
 	<t>[RFC Editor: Please replace RFCthis with the published RFC
@@ -2065,7 +2093,6 @@ uCDN-A                         dCDN-B                         dCDN-C
 	<c>RFCthis</c>
 	</texttable>
 	</section>
-   </section>
 	
 	</section>
 
@@ -2120,9 +2147,9 @@ uCDN-A                         dCDN-B                         dCDN-C
 
       <section anchor="ccids-spec" title="CCIDs Spec">
         <t> The content-ccids spec type allows the uCDN to specify the
-        Content Collection IDentifier of content the trigger applies to.
+        Content Collection IDentifier of content to which the trigger applies.
         The "ccid" is a grouping of content as defined by <xref target="RFC8006"/>.
-       The ccid spec type is valid only for the content spec subject.
+        The ccid spec type is valid only for the content spec subject (see <xref target="trigger-subject"/>).
 
         </t>
 
@@ -2171,7 +2198,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 	Value: One of the JSON values "true" (the matching is case
          sensitive) or "false" (the matching is case insensitive).
 	<vspace blankLines="1"/>
-	Mandatory: No; default is "false", i.e. a case-insensitive match.
+	Mandatory: No; default is "false", i.e., a case-insensitive match.
 	</t>
 
 	<t hangText="Name: match-query-string">
@@ -2227,7 +2254,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 
               <t>Description: A regular expression for URI matching. </t>
 
-              <t>Type: A regular expression to match against the URI, i.e against the path-absolute
+              <t>Type: A regular expression to match against the URI, i.e., against the path-absolute
                  and the query string parameters <xref target="RFC3986"/>. The regular expression
                  string MUST be compatible with <xref target="PCRE841">PCRE</xref>.</t>
 
@@ -2243,7 +2270,7 @@ uCDN-A                         dCDN-B                         dCDN-C
               <t>Type: JSON boolean. Either "true" (the matching is case sensitive) or "false"
                  (the matching is case insensitive).</t>
 
-              <t>Mandatory: No; default is “false”, i.e. a case-insensitive match.</t>
+              <t>Mandatory: No; default is “false”, i.e., a case-insensitive match.</t>
             </list></t>
             <t>Property: match-query-string<list style="empty">
 
@@ -2297,7 +2324,7 @@ https://video.example.com/k/movie1/4/013.ts
      <section anchor="content-playlist-spec" title="Content Playlist Spec">
         <t>The content-playlist spec type allows the uCDN to manage content held by the dCDN
            based on the content's playlist. 
-           The content-playlist spec type is valid only for the content spec subject.
+           The content-playlist spec type is valid only for the content spec subject (see <xref target="trigger-subject"/>).
         </t>
 
         <section anchor="playlist" title="Playlist">
@@ -2319,7 +2346,7 @@ https://video.example.com/k/movie1/4/013.ts
              </list></t>
              <t>Property: media-protocol<list style="empty">
 
-                <t>Description: Media protocol to be when parsing and interpreting this playlist. </t>
+                <t>Description: Media protocol to be used when parsing and interpreting this playlist. </t>
 
                 <t>Type: MediaProtocol (see <xref target="media-protocol"/>).</t>
 
@@ -2474,7 +2501,7 @@ https://video.example.com/k/movie1/4/013.ts
       </section>
 
       <section anchor="time-policy" title="TimePolicy Extension">
-        <t>A uCDN may wish to perform content management operations on the dCDN in a specific schedule.
+        <t>A uCDN may wish to perform content management operations on the dCDN on a specific schedule.
            The TimePolicy extensions allows the uCDN to instruct the dCDN to execute the trigger command
            in a desired time window. For example, a content provider that wishes to pre-populate a new
            episode at off-peak time so that it would be ready on caches at prime time when the episode
@@ -2599,8 +2626,8 @@ https://video.example.com/k/movie1/4/013.ts
          <figure>
             <artwork><![CDATA[
 {
-  "start": 2000-01-01T02:30:00.00Z,
-  "end": 2000-01-01T04:30:00.00Z,
+  "start": "2000-01-01T02:30:00.00Z",
+  "end": "2000-01-01T04:30:00.00Z"
 }
          ]]></artwork>
           </figure>
@@ -2613,8 +2640,8 @@ https://video.example.com/k/movie1/4/013.ts
          <figure>
             <artwork><![CDATA[
 {
-  "start": 2000-01-01T02:30:00.00-05:00,
-  "end": 2000-01-01T04:30:00.00-05:00,
+  "start": "2000-01-01T02:30:00.00-05:00",
+  "end": "2000-01-01T04:30:00.00-05:00"
 }
          ]]></artwork>
           </figure>
@@ -2661,8 +2688,8 @@ https://video.example.com/k/movie1/4/013.ts
          <figure>
             <artwork><![CDATA[
 {
-  "start": 2000-01-01T02:30:00.00,
-  "end": 2000-01-01T04:30:00.00,
+  "start": "2000-01-01T02:30:00.00",
+  "end": "2000-01-01T04:30:00.00"
 }
          ]]></artwork>
           </figure>
@@ -2759,7 +2786,7 @@ Month Number  Month/Year           Maximum value of date-mday
 
     <section anchor="footprint-and-capabilities" title="Footprint and Capabilities">
       <t>
-        This section covers the FCI objects required for advertisement of the specs, extensions and properties
+        This section covers the FCI objects required for advertisement of the specs, extensions, and properties
         introduced in this document.
       </t>
 
