@@ -3902,6 +3902,25 @@ RESPONSE:
 
 	<section title="IANA Considerations" anchor="sect-7">
    <section title="CDNI Payload Type Parameter Registrations" anchor="sect-7.1"><t>
+
+   All references to RFC 8007 in the IANA registries should be replaced with
+   references to this document, apart from references associated with the
+   the following registrations:
+
+	<texttable style="full"><ttcol align="left"> Payload Type</ttcol>
+	<ttcol align="left"> Specification</ttcol>
+
+   <c>ci-trigger-command</c>
+   <c>RFC 8007</c>
+
+   <c>ci-trigger-status</c>
+   <c>RFC 8007</c>
+
+   <c>ci-trigger-collection</c>
+   <c>RFC 8007</c>
+
+	</texttable>
+
    The IANA is requested to register the following new Payload Types in
    the "CDNI Payload Types" registry defined by <xref target="RFC7736"/>, for use with
    the "application/cdni" MIME media type.</t>
@@ -3978,15 +3997,15 @@ RESPONSE:
 
 	<section title="&quot;CDNI CI/T Trigger Types&quot; Registry For Trigger Actions" anchor="IANA.CDNI.TriggerTypeReg"><t>
    In <xref target="RFC8007"/> the IANA was requested to create a new "CDNI CI/T Trigger Types"
-   subregistry under the "Content Delivery Network Interconnection (CDNI) Parameters" registry.</t>
+   registry under the "Content Delivery Network Interconnection (CDNI) Parameters" registry group.</t>
 
 	<t>
    Additions to the "CDNI CI/T Trigger Types" registry are made via
    the RFC Required policy as defined in <xref target="RFC8126"/>.</t>
 
-	<t> In this second edition of the interface, trigger types are referred to as "trigger actions". The "Trigger Types" registry is used for actions definitions. Furthermore, this document, and specifically <xref target="sect-5.2.2"/>, repeats the definitions of the trigger types from <xref target="RFC8007"/> as trigger actions, 
-	and provide their specifications, with no modification comparing to <xref target="RFC8007"/>.</t>
-	</section>
+	<t> In this second edition of the interface, trigger types are referred to as "trigger actions". The "Trigger Types" registry is used for actions definitions. Furthermore, this document, and specifically <xref target="sect-5.2.2"/>, reuses the definition of “trigger types” as defined in <xref target="RFC8007"/> as trigger actions,
+    and provide their specifications, with no modification comparing to <xref target="RFC8007"/>.</t>
+    </section>
 
 
       <section anchor="IANA.CDNI.TriggerSpecReg" title="&quot;CDNI CI/T Trigger Specs&quot; Registry">
@@ -4047,7 +4066,7 @@ RESPONSE:
 
 	<section title="&quot;CDNI CI/T Error Codes&quot; Registry" anchor="sect-7.3"><t>
    In <xref target="RFC8007"/> the IANA was requested to create a new "CDNI CI/T Error Codes"
-   subregistry under the "Content Delivery Network Interconnection (CDNI) Parameters" registry.</t>
+   registry under the "Content Delivery Network Interconnection (CDNI) Parameters" registry group.</t>
 
 	<t>
    Additions to the "CDNI CI/T Error Codes" registry are made via
