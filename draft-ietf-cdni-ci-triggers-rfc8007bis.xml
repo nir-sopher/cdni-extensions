@@ -96,6 +96,28 @@
       </address>
     </author>
 
+    <author fullname="Jay K. Robertson" initials="J.K." surname="Robertson">
+      <organization>Qwilt</organization>
+
+      <address>
+        <postal>
+          <street>275 Shoreline Dr Ste 510</street>
+
+          <city>Redwood City</city>
+
+          <region>CA</region>
+
+          <code>94065</code>
+
+          <country>USA</country>
+        </postal>
+
+        <phone></phone>
+
+        <email>jayrobertson@acm.org</email>
+      </address>
+    </author>
+
 	<date/>
 	<abstract><t>
    This document obsoletes RFC8007. The document describes the part of Content Delivery Network
@@ -876,8 +898,9 @@
    trigger's status prior to the deletion is not a terminal status (i.e., "completed", "failed"
    or "cancelled"), the uCDN would not have the ability to further monitor the 
    cancellation process and the final status of the trigger. 
-   It is therefore recommended to only delete terminal triggers 
-   and use the designated cancellation command (see <xref target="sect-5.1.1-cancel"/>) prior to the deletion.</t>
+   For this reason, it is recommended that the cancellation command (see
+   <xref target="sect-5.1.1-  cancel"/>) is used prior to trigger deletion, and deletion is only used
+   on triggers with a terminal status.</t>
 
 	<t>
    Once deleted, the references to a Trigger Status Resource MUST be
@@ -1312,7 +1335,7 @@ uCDN-A                         dCDN-B                         dCDN-C
          <xref target="sect-5.2.6"/>.  An empty array is allowed and is equivalent to
          omitting "errors" from the object.
 	<vspace blankLines="1"/>
-	Mandatory: Yes for "eunsupported", "espec", or "esubject" errors. Otherwise, optional.
+	Mandatory: No.
 	</t>
 
 	</list>
