@@ -29,7 +29,30 @@
 	<?rfc toc="yes"?>
 	<front>
 	<title abbrev="CDN Interconnect Triggers">Content Delivery Network Interconnection (CDNI) Control Interface / Triggers 2nd Edition</title>
-    <author fullname="Ori Finkelman" initials="O." surname="Finkelman">
+
+    <author fullname="Nir B. Sopher" initials="N.B." surname="Sopher">
+      <organization>Qwilt</organization>
+
+      <address>
+        <postal>
+          <street>6, Ha'harash</street>
+
+          <city>Hod HaSharon</city>
+
+          <region></region>
+
+          <code>4524079</code>
+
+          <country>Israel</country>
+        </postal>
+
+        <phone></phone>
+
+        <email>nir@apache.org</email>
+      </address>
+    </author>
+
+   <author fullname="Ori Finkelman" initials="O." surname="Finkelman">
       <organization>Qwilt</organization>
 
 
@@ -71,28 +94,6 @@
         <phone></phone>
 
         <email>sanjay.mishra@verizon.com</email>
-      </address>
-    </author>
-
-    <author fullname="Nir B. Sopher" initials="N.B." surname="Sopher">
-      <organization>Qwilt</organization>
-
-      <address>
-        <postal>
-          <street>6, Ha'harash</street>
-
-          <city>Hod HaSharon</city>
-
-          <region></region>
-
-          <code>4524079</code>
-
-          <country>Israel</country>
-        </postal>
-
-        <phone></phone>
-
-        <email>nir@apache.org</email>
       </address>
     </author>
 
