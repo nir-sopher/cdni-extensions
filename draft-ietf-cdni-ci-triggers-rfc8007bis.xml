@@ -529,7 +529,7 @@
 	<c>uri-pattern-match</c>
 	<c>Allowing the specification of trigger targets via <xref target="RFC3986"/> URI patterns.</c>
 	<c>uri-regex-match</c>
-    <c>Allowing the specification of trigger targets via regexes matching their URI, as defined in <xfer target="uri-regex-match-spec"/>.</c>
+    <c>Allowing the specification of trigger targets via regexes matching their URI, as defined in <xref target="uri-regex-match-spec"/>.</c>
 	<c>content-playlist</c>
 	<c>Allowing the specification of trigger targets via a playlist URI and a media protocol identifier.</c>
 	</texttable>
@@ -900,7 +900,7 @@
    or "cancelled"), the uCDN would not have the ability to further monitor the 
    cancellation process and the final status of the trigger. 
    For this reason, it is recommended that the cancellation command (see
-   <xref target="sect-5.1.1-  cancel"/>) is used prior to trigger deletion, and deletion is only used
+   <xref target="sect-5.1.1-cancel"/>) is used prior to trigger deletion, and deletion is only used
    on triggers with a terminal status.</t>
 
 	<t>
@@ -3929,23 +3929,6 @@ RESPONSE:
 	<section title="IANA Considerations" anchor="sect-7">
    <section title="CDNI Payload Type Parameter Registrations" anchor="sect-7.1"><t>
 
-   All references to RFC 8007 in the IANA registries should be replaced with
-   references to this document, apart from references associated with the
-   the following registrations:
-
-	<texttable style="full"><ttcol align="left"> Payload Type</ttcol>
-	<ttcol align="left"> Specification</ttcol>
-
-   <c>ci-trigger-command</c>
-   <c>RFC 8007</c>
-
-   <c>ci-trigger-status</c>
-   <c>RFC 8007</c>
-
-   <c>ci-trigger-collection</c>
-   <c>RFC 8007</c>
-
-	</texttable>
 
    The IANA is requested to register the following new Payload Types in
    the "CDNI Payload Types" registry defined by <xref target="RFC7736"/>, for use with
