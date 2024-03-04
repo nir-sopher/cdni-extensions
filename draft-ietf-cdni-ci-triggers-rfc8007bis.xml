@@ -3929,6 +3929,24 @@ RESPONSE:
 	<section title="IANA Considerations" anchor="sect-7">
    <section title="CDNI Payload Type Parameter Registrations" anchor="sect-7.1"><t>
 
+   All references to RFC 8007 in the IANA registries should be replaced with
+   references to this document, apart from references associated with the
+   the following registrations:</t>
+
+	<texttable style="full"><ttcol align="left"> Payload Type</ttcol>
+	<ttcol align="left"> Specification</ttcol>
+
+   <c>ci-trigger-command</c>
+   <c>RFC 8007</c>
+
+   <c>ci-trigger-status</c>
+   <c>RFC 8007</c>
+
+   <c>ci-trigger-collection</c>
+   <c>RFC 8007</c>
+
+	</texttable><t>
+	
 
    The IANA is requested to register the following new Payload Types in
    the "CDNI Payload Types" registry defined by <xref target="RFC7736"/>, for use with
