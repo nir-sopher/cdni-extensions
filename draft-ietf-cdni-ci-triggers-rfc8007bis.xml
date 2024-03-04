@@ -1387,11 +1387,11 @@ uCDN-A                         dCDN-B                         dCDN-C
 	<vspace blankLines="1"/>
 	Description: Link to a Trigger Collection representing all Trigger Status Resources.
 	<vspace blankLines="1"/>
-	Value: A URL represented as a JSON string.</t>
+	Value: A URL represented as a JSON string.
 	<vspace blankLines="1"/>
 	Mandatory: Links to all of the filtered collections are mandatory
          in the collection of all Trigger Status Resources, if the dCDN
-         implements the filtered collections.  Otherwise, optional.</t>
+         implements the filtered collections.  Otherwise, optional.
 	</t>
 
 	<t hangText="Name: coll-pending">
@@ -1399,11 +1399,11 @@ uCDN-A                         dCDN-B                         dCDN-C
 	Description: Link to a Trigger Collection representing Trigger Status Resources
          that have been accepted but not yet acted upon.
 	<vspace blankLines="1"/>
-	Value: A URL represented as a JSON string.</t>
+	Value: A URL represented as a JSON string.
 	<vspace blankLines="1"/>
 	Mandatory: Links to all of the filtered collections are mandatory
          in the collection of all Trigger Status Resources, if the dCDN
-         implements the filtered collections.  Otherwise, optional.</t>
+         implements the filtered collections.  Otherwise, optional.
 	</t>
 
 	<t hangText="Name: coll-active">
@@ -1411,11 +1411,11 @@ uCDN-A                         dCDN-B                         dCDN-C
 	Description: Link to a Trigger Collection representing Trigger Status Resources
          that are currently being processed in the dCDN.
 	<vspace blankLines="1"/>
-	Value: A URL represented as a JSON string.</t>
+	Value: A URL represented as a JSON string.
 	<vspace blankLines="1"/>
 	Mandatory: Links to all of the filtered collections are mandatory
          in the collection of all Trigger Status Resources, if the dCDN
-         implements the filtered collections.  Otherwise, optional.</t>
+         implements the filtered collections.  Otherwise, optional.
 	</t>
 
 	<t hangText="Name: coll-complete">
@@ -1423,11 +1423,11 @@ uCDN-A                         dCDN-B                         dCDN-C
 	Description: Link to a Trigger Collection representing Trigger Status Resources
          that completed successfully.
 	<vspace blankLines="1"/>
-	Value: A URL represented as a JSON string.</t>
+	Value: A URL represented as a JSON string.
 	<vspace blankLines="1"/>
 	Mandatory: Links to all of the filtered collections are mandatory
          in the collection of all Trigger Status Resources, if the dCDN
-         implements the filtered collections.  Otherwise, optional.</t>
+         implements the filtered collections.  Otherwise, optional.
 	</t>
 
 	<t hangText="Name: coll-failed">
@@ -1435,11 +1435,11 @@ uCDN-A                         dCDN-B                         dCDN-C
 	Description: Link to a Trigger Collection representing Trigger Status Resources
          that failed or were cancelled by the uCDN.
 	<vspace blankLines="1"/>
-	Value: A URL represented as a JSON string.</t>
+	Value: A URL represented as a JSON string.
 	<vspace blankLines="1"/>
 	Mandatory: Links to all of the filtered collections are mandatory
          in the collection of all Trigger Status Resources, if the dCDN
-         implements the filtered collections.  Otherwise, optional.</t>
+         implements the filtered collections.  Otherwise, optional.
 	</t>
 
 	<t hangText="Name: cdn-id">
