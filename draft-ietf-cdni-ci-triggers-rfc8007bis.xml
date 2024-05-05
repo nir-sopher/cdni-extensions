@@ -152,7 +152,7 @@
    <xref target="RFC7337"/> identifies the requirements specific to the CI/T interface;
    requirements applicable to the CI/T interface are CI-1 to CI-6.</t>
    
-   <t>This document is a second edition for the CDNI Control Interface / Triggers, which define a new version, "v2", of the interface objects. The new objects replace the trigger interface’s main objects, the "ci-trigger-command" object and its matching "ci-trigger-status" object, and improve the interface’s flexibility and extensibility. The document also provides a Trigger Extension mechanism that MAY be used to provide further instruction on the trigger execution. Additionally, this second edition includes cascaded CDN error propagation for improved trigger execution monitoring. Note that the trigger interface mechanism itself is not changed by this new edition.
+   <t>This document is a second edition for the CDNI Control Interface / Triggers, which define a new version, "v2", of the interface objects. The new objects replace the trigger interface's main objects, the "ci-trigger-command" object and its matching "ci-trigger-status" object, and improve the interface's flexibility and extensibility. The document also provides a Trigger Extension mechanism that MAY be used to provide further instruction on the trigger execution. Additionally, this second edition includes cascaded CDN error propagation for improved trigger execution monitoring. Note that the trigger interface mechanism itself is not changed by this new edition.
    </t>
 
 	<t><list style="symbols"><t><xref target="sect-2"/> outlines the model for the CI/T interface at a high
@@ -844,7 +844,7 @@
 	<section title="Cancelling Triggers" anchor="sect-4.3"><t>
    The uCDN can request cancellation of a CI/T Trigger Command by
    POSTing a CI/T Cancel Command (see <xref target="sect-5.1.1-cancel"/>) to the
-   	specific trigger's Trigger Status Resource URL.</t>
+   specific trigger's Trigger Status Resource URL.</t>
 
 	<t>
    The dCDN is required to accept and respond to the CI/T Cancel
@@ -1169,7 +1169,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 								The dCDN-B responds with the Trigger Status Resource, describing the progress or results of
 								the CI/T Trigger Command. In the flow described above, the returned Status is "failed",
 								and the "eunsupported" error received in the trigger status resource from dCDN-C is propagated along with dCDN-C PID
-                by	adding it to the errors array in dCDN-B's own status resource to be sent back to the originating uCDN-A.
+                by adding it to the errors array in dCDN-B's own status resource to be sent back to the originating uCDN-A.
 							</t>
 						</list>
 					</t>
@@ -2084,7 +2084,7 @@ uCDN-A                         dCDN-B                         dCDN-C
         number for this document.]</t>
 	<ttcol align="left"> Error Code</ttcol>
 	<ttcol align="left"> Description</ttcol>
-	<ttcol align="left"> Registration</ttcol>	
+	<ttcol align="left"> Registration</ttcol>
 	<c>emeta</c>
 	<c>The dCDN was unable to acquire metadata required to fulfill the request.</c>
 	<c>RFCthis</c>
@@ -2296,7 +2296,7 @@ uCDN-A                         dCDN-B                         dCDN-C
               <t>Type: JSON boolean. Either "true" (the matching is case sensitive) or "false"
                  (the matching is case insensitive).</t>
 
-              <t>Mandatory: No; default is “false”, i.e., a case-insensitive match.</t>
+              <t>Mandatory: No; default is "false", i.e., a case-insensitive match.</t>
             </list></t>
             <t>Property: match-query-string<list style="empty">
 
@@ -2910,7 +2910,7 @@ https://video.example.com/k/movie1/4/013.ts
    collection of all Trigger Status Resources.</t>
 
 	<t>
-    Note that pattern based specs like “UriPatternMatch” and “UrisRegexMatch”,  are not allowed
+    Note that pattern based specs like "UriPatternMatch" and "UrisRegexMatch",  are not allowed
    in a pre-position Trigger Specification, where the dCDN has to have a clear list of objects to obtain.</t>
 
 	<figure><artwork><![CDATA[
@@ -3887,7 +3887,7 @@ RESPONSE:
    Additions to the "CDNI CI/T Trigger Types" registry are made via
    the RFC Required policy as defined in <xref target="RFC8126"/>.</t>
 
-	<t> In this second edition of the interface, trigger types are referred to as "trigger actions". The "Trigger Types" registry is used for actions definitions. Furthermore, this document, and specifically <xref target="sect-5.2.2"/>, reuses the definition of “trigger types” as defined in <xref target="RFC8007"/> as trigger actions,
+	<t> In this second edition of the interface, trigger types are referred to as "trigger actions". The "Trigger Types" registry is used for actions definitions. Furthermore, this document, and specifically <xref target="sect-5.2.2"/>, reuses the definition of "trigger types" as defined in <xref target="RFC8007"/> as trigger actions,
     and provide their specifications, with no modification comparing to <xref target="RFC8007"/>.</t>
     </section>
 
