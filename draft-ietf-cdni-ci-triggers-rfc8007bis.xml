@@ -2575,17 +2575,6 @@ https://video.example.com/k/movie1/4/013.ts
                  <t>Mandatory: No, but exactly one of "unixEpochWindow", "utcWindow"
                     or "localTimeWindow" MUST be present.</t>
               </list></t>
-              <t>Property: local-time-window<list style="empty">
-
-                 <t>Description: A local time window. The dCDN SHOULD execute the trigger at the
-                    defined time frame, interpreted as the the local time per location.
-                 </t>
-
-                 <t>Type: LocalTimeWindow object as defined in <xref target="local-time-window"/>.</t>
-
-                 <t>Mandatory: No, but exactly one of "unixEpochWindow", "utcWindow"
-                    or "localTimeWindow" MUST be present.</t>
-              </list></t>             
           </list></t>
 
           <t>
@@ -2671,138 +2660,6 @@ https://video.example.com/k/movie1/4/013.ts
 }
          ]]></artwork>
           </figure>
-        </section>
-
-        <section anchor="local-time-window" title="LocalTimeWindow">
-          <t>
-             A LocalTimeWindow object describes a time range in local time. The reader of this
-             object MUST interpret it as "the local time at the location of execution". For example,
-             if the time window states 2AM to 4AM local time then a dCDN that has presence in
-             both London (UTC) and New York (UTC-05:00) will execute the trigger at 2AM-4AM UTC
-             in London and at 2AM-4AM UTC-05:00 in New York.
-          </t>
-          <t><list style="empty">
-            <t>Property: start<list style="empty">
-
-              <t>Description: The start time of the window.</t>
-
-              <t>Type: JSON string formatted as DateLocalTime as defined in
-                 <xref target="date-local-time"/>.
-              </t>
-
-              <t>Mandatory: No, but at least one of "start" or "end"
-                 MUST be present and non-empty.</t>
-            </list></t>
-            <t>Property: end<list style="empty">
-
-              <t>Description: The end time of the window.</t>
-
-              <t>Type: JSON string formatted as DateLocalTime as defined in
-                 <xref target="date-local-time"/>.
-              </t>
-
-              <t>Mandatory: No, but at least one of "start" or "end"
-                 MUST be present and non-empty.</t>
-            </list></t>   
-         </list></t>      
-         
-         <t>
-           Example JSON serialized LocalTimeWindow object that describes a local time window from 02:30
-           01/01/2000 to 04:30 01/01/2000.
-         </t>
-
-         <figure>
-            <artwork><![CDATA[
-{
-  "start": "2000-01-01T02:30:00.00",
-  "end": "2000-01-01T04:30:00.00"
-}
-         ]]></artwork>
-          </figure>
-        </section>
-
-        <section anchor="date-local-time" title="DateLocalTime">
-          <t>
-            DateLocalTime is a timestamp that follows the date and local time notation in Section 4.3.2
-            of <xref target="ISO8601"/> as a complete date and time extended representation,
-            where the time zone designator is omitted. In addition, for simplicity and as exact accuracy
-            is not an objective in this case, this specification does not support the decimal fractions of
-            seconds, and does not take leap second into consideration.
-          </t>
-          <t>
-             Type: JSON string using the format "date-local-time" as defined in <xref target="date-local-time-format"/>.
-          </t>
-          <section anchor="date-local-time-format" title="Date and Local Time Format">
-            <t>
-              The Date and Local Time format is specified here using the syntax description
-              notation defined in <xref target="ABNF"/>.
-            </t>
-<figure>
-  <artwork>
-date-fullyear   = 4DIGIT
-date-month      = 2DIGIT  ; 01-12
-date-mday       = 2DIGIT  ; 01-28, 01-29, 01-30, 01-31 based on
-                          ; month/year
-time-hour       = 2DIGIT  ; 00-23
-time-minute     = 2DIGIT  ; 00-59
-time-second     = 2DIGIT  ; 00-59 leap seconds are not supported
-
-local-time      = time-hour ":" time-minute ":" time-second
-full-date       = date-fullyear "-" date-month "-" date-mday
-date-local-time = full-date "T" local-time
-  </artwork>
-</figure>
-
-            <t>Example time representing 09:00AM on 01/01/2000 local time:</t>
-            <t>2000-01-01T09:00:00.00</t>
-
-            <t><list style="empty">
-              <t>
-                NOTE: Per <xref target="ABNF"/> and <xref target="ISO8601"/>, the "T" character
-                in this syntax may alternatively be lower case "t". For simplicity,
-                Applications that generate the "date-local-time" format defined here,
-                SHOULD only use the upper case letter "T".
-              </t>
-            </list></t>
-          </section>
-          <section anchor="date-local-time-restrictions" title="Restrictions">
-            <t>
-               The grammar element date-mday represents the day number within the
-               current month.  The maximum value varies based on the month and year
-               as follows:
-            </t>
-<figure>
-  <artwork>
-Month Number  Month/Year           Maximum value of date-mday
-------------  ----------           --------------------------
-01            January              31
-02            February, normal     28
-02            February, leap year  29
-03            March                31
-04            April                30
-05            May                  31
-06            June                 30
-07            July                 31
-08            August               31
-09            September            30
-10            October              31
-11            November             30
-12            December             31
-  </artwork>
-</figure>
-            <t>
-               See Appendix C of <xref target="RFC3339"/> for a sample C code that determines if a year is
-               a leap year.
-            </t>
-            <t>
-               The grammar element time-second may have the values 0-59. The value of 60 that is used in
-               <xref target="ISO8601"/> to represent a leap second MUST NOT be used.
-            </t>
-            <t>
-               Although <xref target="ISO8601"/> permits the hour to be "24", this profile of <xref target="ISO8601"/>
-               only allows values between "00" and "23" for the hour in order to reduce confusion.
-            </t>
-          </section>
         </section>
       </section>
     </section>
@@ -4263,27 +4120,6 @@ RESPONSE:
 
 
       <?rfc include="reference.RFC.3339" ?>
-
-      <reference anchor="ABNF" target="https://www.rfc-editor.org/info/rfc5234">
-        <front>
-          <title>Augmented BNF for Syntax Specifications: ABNF</title>
-          <author initials="D." surname="Crocker" fullname="D. Crocker" role="editor">
-            <organization/>
-          </author>
-          <author initials="P." surname="Overell" fullname="P. Overell">
-            <organization/>
-          </author>
-          <date year="2008" month="January"/>
-          <abstract>
-            <t>Internet technical specifications often need to define a formal syntax.  Over the years, a modified version of Backus-Naur Form (BNF), called Augmented BNF (ABNF), has been popular among many Internet specifications.  The current specification documents ABNF. It balances compactness and simplicity with reasonable representational power.  The differences between standard BNF and ABNF involve naming rules, repetition, alternatives, order-independence, and value ranges.  This specification also supplies additional rule definitions and encoding for a core lexical analyzer of the type common to several Internet specifications.  [STANDARDS-TRACK]</t>
-          </abstract>
-        </front>
-        <seriesInfo name="STD" value="68"/>
-        <seriesInfo name="RFC" value="5234"/>
-        <seriesInfo name="DOI" value="10.17487/RFC5234"/>
-      </reference>
-
-
 
 	</references>
 	<references title="Informative References">
