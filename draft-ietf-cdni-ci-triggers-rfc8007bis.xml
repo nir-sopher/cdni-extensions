@@ -2282,7 +2282,7 @@ uCDN-A                         dCDN-B                         dCDN-C
                  and the query string parameters <xref target="RFC3986"/>. The regular expression
                  string MUST be compatible with <xref target="POSIX.1">POSIX</xref> Section 9
                  Extended Regular Expressions.  This regular expression MUST be evaluated in
-                 the POSIX locate (<xref target="POSIX.1">POSIX</xref> Section 7.2).</t>
+                 the POSIX locale (<xref target="POSIX.1">POSIX</xref> Section 7.2).</t>
 
               <t>Note: Because '\' has a special meaning in JSON <xref target="RFC8259"/> as the escape
                  character within JSON strings, the regular expression character '\' MUST be escaped as '\\'.</t>
