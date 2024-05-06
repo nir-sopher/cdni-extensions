@@ -1969,22 +1969,21 @@ uCDN-A                         dCDN-B                         dCDN-C
 
           <figure>
             <artwork><![CDATA[
-
 {
-   "error": "econtent",
-   "description": "Failed to parse HLS playlist",
-   "specs": [
-   {
-        "trigger-subject": "content",
-        "generic-trigger-spec-type": "content-playlist",
-        "generic-trigger-spec-value": {
-            "playlist": "https://www.example.com/hls/title/index.m3u8",
-            "media-protocol": "hls"
-         }
+  "error": "econtent",
+  "description": "Failed to parse HLS playlist",
+  "specs": [
+    {
+      "trigger-subject": "content",
+      "generic-trigger-spec-type": "content-playlist",
+      "generic-trigger-spec-value": {
+        "playlist": "https://www.example.com/hls/title/index.m3u8",
+        "media-protocol": "hls"
       }
-   ],
-   "cdn": "AS64500:0"
-},
+    }
+  ],
+  "cdn": "AS64500:0"
+}
          ]]></artwork>
           </figure>
 
@@ -1995,33 +1994,32 @@ uCDN-A                         dCDN-B                         dCDN-C
             <artwork><![CDATA[
 {
   "errors": [
-   {
-     "error": "eextension",
-     "description": "unrecognized extension <type>",
-     "specs": [
+    {
+      "error": "eextension",
+      "description": "unrecognized extension <type>",
+      "specs": [
         {
-            "trigger-subject": "content",
-            "generic-trigger-spec-type": "urls",
-            "generic-trigger-spec-value": {
-               "urls": [
-                  "https://www.example.com/a/b/c/1",
-                  "https://www.example.com/a/b/c/2"
-               ]
-            }
-         }
-     ],
-     "extensions": [
-       {
-        "generic-trigger-extension-type":
-          <Type of this erroneous trigger extension object>,
-        "generic-trigger-extension-value":
-          {
-           <properties of this erroneous trigger extension object>
-          },
-       }
-     ],
-     "cdn": "AS64500:0"
-   },
+          "trigger-subject": "content",
+          "generic-trigger-spec-type": "urls",
+          "generic-trigger-spec-value": {
+            "urls": [
+              "https://www.example.com/a/b/c/1",
+              "https://www.example.com/a/b/c/2"
+            ]
+          }
+        }
+      ],
+      "extensions": [
+        {
+          "generic-trigger-extension-type":
+            <type of this erroneous trigger extension object>,
+          "generic-trigger-extension-value": {
+            <properties of this erroneous trigger extension object>
+          }
+        }
+      ],
+      "cdn": "AS64500:0"
+    }
   ]
 }
          ]]></artwork>
@@ -3150,7 +3148,8 @@ RESPONSE:
             "generic-trigger-spec-type": "uri-regex-match",
             "generic-trigger-spec-value": {
               "regex": "^(https:\\/\\/video\\.example\\.com)\\/
-                ([a-z])\\/movie1\\/([1-7])\\/*(index.m3u8|\\d{3}.ts)$",
+                ([a-z])\\/movie1\\/
+                ([1-7])\\/*(index.m3u8|\\d{3}.ts)$",
               "case-sensitive": true,
               "match-query-string": false
             }
@@ -3194,7 +3193,8 @@ REQUEST:
           "trigger-subject": "content",
           "generic-trigger-spec-type": "contentPlaylist",
           "generic-trigger-spec-value": {
-            "playlist": "https://www.example.com/hls/title/index.m3u8",
+            "playlist":
+              "https://www.example.com/hls/title/index.m3u8",
             "media-protocol": "hls"
           }
         }
@@ -3653,7 +3653,8 @@ REQUEST:
           "trigger-subject": "content",
           "generic-trigger-spec-type": "contentPlaylist",
           "generic-trigger-spec-value": {
-            "playlist": "https://www.example.com/hls/title/index.m3u8",
+            "playlist":
+              "https://www.example.com/hls/title/index.m3u8",
             "media-protocol": "hls"
           }
         }
