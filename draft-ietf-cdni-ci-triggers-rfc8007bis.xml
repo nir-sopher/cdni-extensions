@@ -3117,16 +3117,16 @@ REQUEST:
     "trigger": {
       "action": "invalidate",
       "specs": [
-         {
-            "trigger-subject": "content",
-            "generic-trigger-spec-type": "uri-regex-match",
-            "generic-trigger-spec-value": {
-                 "regex": "^(https:\\/\\/video\\.example\\.com)\\/
-                 ([a-z])\\/movie1\\/([1-7])\\/*(index.m3u8|\\d{3}.ts)$",
-                 "case-sensitive": true,
-                 "match-query-string": false
-            }
-         }
+        {
+          "trigger-subject": "content",
+          "generic-trigger-spec-type": "uri-regex-match",
+          "generic-trigger-spec-value": {
+            "regex": "^(https:\\/\\/video\\.example\\.com)\\/
+              ([a-z])\\/movie1\\/([1-7])\\/*(index.m3u8|\\d{3}.ts)$",
+            "case-sensitive": true,
+            "match-query-string": false
+          }
+        }
       ]
     },
     "cdn-path": [ "AS64496:0" ]
@@ -3145,21 +3145,21 @@ RESPONSE:
     "errors": [
       {
         "specs": [
-            {
-               "trigger-subject": "content",
-               "generic-trigger-spec-type": "uri-regex-match",
-               "generic-trigger-spec-value": {
-                   "regex": "^(https:\\/\\/video\\.example\\.com)\\/
-                   ([a-z])\\/movie1\\/([1-7])\\/*(index.m3u8|\\d{3}.ts)$",
-                   "case-sensitive": true,
-                   "match-query-string": false
-               }
+          {
+            "trigger-subject": "content",
+            "generic-trigger-spec-type": "uri-regex-match",
+            "generic-trigger-spec-value": {
+              "regex": "^(https:\\/\\/video\\.example\\.com)\\/
+                ([a-z])\\/movie1\\/([1-7])\\/*(index.m3u8|\\d{3}.ts)$",
+              "case-sensitive": true,
+              "match-query-string": false
             }
-         ],
+          }
+        ],
         "description": "The dCDN rejected a regex due to complexity",
         "error": "ereject",
         "cdn": "AS64500:0"
-      },
+      }
     ],
     "ctime": 1462351690,
     "etime": 1462351698,
@@ -3190,14 +3190,14 @@ REQUEST:
     "trigger": {
       "action": "preposition",
       "specs": [
-         {
-            "trigger-subject": "content",
-            "generic-trigger-spec-type": "contentPlaylist",
-            "generic-trigger-spec-value": {
-                "playlist": "https://www.example.com/hls/title/index.m3u8",
-                "media-protocol": "hls"
-            }
-         }
+        {
+          "trigger-subject": "content",
+          "generic-trigger-spec-type": "contentPlaylist",
+          "generic-trigger-spec-value": {
+            "playlist": "https://www.example.com/hls/title/index.m3u8",
+            "media-protocol": "hls"
+          }
+        }
       ]
     },
     "cdn-path": [ "AS64496:0" ]
@@ -3213,27 +3213,28 @@ RESPONSE:
   Server: example-server/0.1
 
   {
-    "errors": [ 
+    "errors": [
       {
         "specs": [
           {
             "trigger-subject": "content",
             "generic-trigger-spec-type": "contentPlaylist",
             "generic-trigger-spec-value": {
-                "playlist": "https://www.example.com/hls/title/index.m3u8",
-                "media-protocol": "hls"
+              "playlist":
+                "https://www.example.com/hls/title/index.m3u8",
+              "media-protocol": "hls"
             }
-         }
-       ],
-       "description": "The dCDN was not able to parse the playlist",
-       "error": "econtent",
-       "cdn": "AS64500:0"
-      },
+          }
+        ],
+        "description": "The dCDN was not able to parse the playlist",
+        "error": "econtent",
+        "cdn": "AS64500:0"
+      }
     ],
     "ctime": 1462351690,
     "etime": 1462351698,
     "mtime": 1462351690,
-    "status": "failed",       
+    "status": "failed",
     "trigger": { <content of trigger.v2 object from the command> }
   }
          ]]></artwork>
@@ -3646,62 +3647,64 @@ REQUEST:
   Content-Type: application/cdni; ptype=ci-trigger-command.trigger.v2
   {
     "trigger": {
-     "action": "preposition",
-     "specs": [
-         {
-            "trigger-subject": "content",
-            "generic-trigger-spec-type": "contentPlaylist",
-            "generic-trigger-spec-value": {
-                "playlist": "https://www.example.com/hls/title/index.m3u8",
-                "media-protocol": "hls"
-            }
-         }
+      "action": "preposition",
+      "specs": [
+        {
+          "trigger-subject": "content",
+          "generic-trigger-spec-type": "contentPlaylist",
+          "generic-trigger-spec-value": {
+            "playlist": "https://www.example.com/hls/title/index.m3u8",
+            "media-protocol": "hls"
+          }
+        }
       ],
       "extensions": [
-         {
-            "generic-trigger-extension-type": "location-policy",
-            "generic-trigger-extension-value":
-               {
-                  "locations": [
-                     {
-                        "action": "allow",
-                        "footprints": [
-                           {
-                              "footprint-type": "countrycode",
-                              "footprint-value": ["us"]
-                           }
-                        ]
-                     },
-                     {
-                        "action": "deny",
-                        "footprints": [
-                           {
-                              "footprint-type": "countrycode",
-                              "footprint-value": ["ca"]
-                           }
-                        ]
-                     }
-                  ]
-               },
-            "mandatory-to-enforce": true,
-            "safe-to-redistribute": true
-         },
-         {
-            "generic-trigger-extension-type": "time-policy",
-            "generic-trigger-extension-value":
-               {
-                  "unix-time-window": {
-                     "start": 946717200,
-                     "end": 946746000
+        {
+          "generic-trigger-extension-type": "location-policy",
+          "generic-trigger-extension-value": {
+            "locations": [
+              {
+                "action": "allow",
+                "footprints": [
+                  {
+                    "footprint-type": "countrycode",
+                    "footprint-value": [
+                      "us"
+                    ]
                   }
-               },
-            "mandatory-to-enforce": true,
-            "safe-to-redistribute": true
-         }
-      ],
-   },
-   "cdn-path": [ "AS64496:0" ]
- }
+                ]
+              },
+              {
+                "action": "deny",
+                "footprints": [
+                  {
+                    "footprint-type": "countrycode",
+                    "footprint-value": [
+                      "ca"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "mandatory-to-enforce": true,
+          "safe-to-redistribute": true
+        },
+        {
+          "generic-trigger-extension-type": "time-policy",
+          "generic-trigger-extension-value": {
+            "unix-time-window": {
+              "start": 946717200,
+              "end": 946746000
+            }
+          },
+          "mandatory-to-enforce": true,
+          "safe-to-redistribute": true
+        }
+      ]
+    },
+    "cdn-path": [ "AS64496:0" ]
+  }
 
 RESPONSE:
 
@@ -3713,67 +3716,69 @@ RESPONSE:
   Server: example-server/0.1
 
   {
-     "errors": [
-       {
-         "extensions": [
-             {
-                "generic-trigger-extension-type": "location-policy",
-                "generic-trigger-extension-value":
-                   {
-                      "locations": [
-                        {
-                           "action": "allow",
-                           "footprints": [
-                              {
-                                 "footprint-type": "countrycode",
-                                 "footprint-value": ["us"]
-                              }
-                           ]
-                        },
-                        {
-                           "action": "deny",
-                           "footprints": [
-                              {
-                                 "footprint-type": "countrycode",
-                                 "footprint-value": ["ca"]
-                              }
-                           ]
-                        }
-                     ]
-                  },
-               "mandatory-to-enforce": true,
-               "safe-to-redistribute": true
+    "errors": [
+      {
+        "extensions": [
+          {
+            "generic-trigger-extension-type": "location-policy",
+            "generic-trigger-extension-value": {
+              "locations": [
+                {
+                  "action": "allow",
+                  "footprints": [
+                    {
+                      "footprint-type": "countrycode",
+                      "footprint-value": [
+                        "us"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "action": "deny",
+                  "footprints": [
+                    {
+                      "footprint-type": "countrycode",
+                      "footprint-value": [
+                        "ca"
+                      ]
+                    }
+                  ]
+                }
+              ]
             },
-         ],
-         "description": "unrecognized extension <type>",
-         "error": "eextension",
-         "cdn": "AS64500:0"
-       },
-       {
-         "extensions": [
-             {
-                "generic-trigger-extension-type": "time-policy",
-                "generic-trigger-extension-value":
-                   {
-                      "unix-time-window": {
-                         "start": 946717200,
-                         "end": 946746000
-                      }
-                   },
-                "mandatory-to-enforce": true,
-                "safe-to-redistribute": true
-             }
-         ],
-         "description": "unrecognized extension <type>",
-         "error": "eextension",
-         "cdn": "AS64501:0"
-       }        
-     ],
-     "ctime": 1462351690,
-     "etime": 1462351698,
-     "mtime": 1462351690,
-     "status": "failed",
-     "trigger": { <content of trigger.v2 object from the command> }
+            "mandatory-to-enforce": true,
+            "safe-to-redistribute": true
+          }
+        ],
+        "description": "unrecognized extension <type>",
+        "error": "eextension",
+        "cdn": "AS64500:0"
+      },
+      {
+        "extensions": [
+          {
+            "generic-trigger-extension-type": "time-policy",
+            "generic-trigger-extension-value": {
+              "unix-time-window": {
+                "start": 946717200,
+                "end": 946746000
+              }
+            },
+            "mandatory-to-enforce": true,
+            "safe-to-redistribute": true
+          }
+        ],
+        "description": "unrecognized extension <type>",
+        "error": "eextension",
+        "cdn": "AS64501:0"
+      }
+    ],
+    "ctime": 1462351690,
+    "etime": 1462351698,
+    "mtime": 1462351690,
+    "status": "failed",
+    "trigger": { <content of trigger.v2 object from the command> }
   }
          ]]></artwork>
           </figure>
