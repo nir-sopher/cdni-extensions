@@ -2,15 +2,11 @@
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
 <!ENTITY RFC1930 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.1930.xml">
 <!ENTITY RFC2119 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml">
-<!ENTITY RFC2818 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2818.xml">
+<!ENTITY RFC3339 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.3339.xml">
 <!ENTITY RFC3986 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.3986.xml">
 <!ENTITY RFC8126 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8126.xml">
 <!ENTITY RFC6707 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6707.xml">
 <!ENTITY RFC8259 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8259.xml">
-<!ENTITY RFC7230 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7230.xml">
-<!ENTITY RFC7231 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7231.xml">
-<!ENTITY RFC7232 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7232.xml">
-<!ENTITY RFC7525 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7525.xml">
 <!ENTITY RFC8006 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8006.xml">
 <!ENTITY RFC8007 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8007.xml">
 <!ENTITY RFC7336 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7336.xml">
@@ -18,6 +14,10 @@
 <!ENTITY RFC7736 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7736.xml">
 <!ENTITY RFC7975 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7975.xml">
 <!ENTITY RFC8174 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml">
+<!ENTITY RFC8216 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8216.xml">
+<!ENTITY RFC9110 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9110.xml">
+<!ENTITY RFC9112 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9112.xml">
+<!ENTITY RFC9325 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9325.xml">
 ]>
 <rfc category="std" docName="draft-ietf-cdni-ci-triggers-rfc8007bis-11" obsoletes='8007' ipr="trust200902">
 	<?rfc strict="yes"?>
@@ -231,9 +231,9 @@
 	<t>
    The CI/T interface is a web service offered by the dCDN.  It allows
    CI/T Commands to be issued and allows triggered activity to be
-   tracked.  The CI/T interface builds on top of HTTP/1.1 <xref target="RFC7230"/>.
+   tracked.  The CI/T interface builds on top of HTTP/1.1 <xref target="RFC9112"/>.
    References to URL in this document relate to HTTP/HTTPS URIs, as
-   defined in Section 2.7 of <xref target="RFC7230"/>.</t>
+   defined in Section 4.2 of <xref target="RFC9110"/>.</t>
 
 	<t>
    When the dCDN accepts a CI/T Command, it creates a resource
@@ -689,7 +689,7 @@
 
 	<t>
    All dCDNs implementing CI/T MUST support the HTTP GET, HEAD, POST,
-   and DELETE methods as defined in <xref target="RFC7231"/>.</t>
+   and DELETE methods as defined in <xref target="RFC9110"/>.</t>
 
 	<t>
    The only representation specified in this document is JSON <xref target="RFC8259"/>.
@@ -739,7 +739,7 @@
    Trigger Status Resource that will convey a specification of the CI/T
    Command and its current status.  The HTTP response to the uCDN MUST
    have status code 201 and MUST convey the URI of the Trigger Status
-   Resource in the Location header field <xref target="RFC7231"/>.  The HTTP response
+   Resource in the Location header field <xref target="RFC9110"/>.  The HTTP response
    SHOULD include the content of the newly created Trigger Status
    Resource.  This is particularly important in cases where the CI/T
    Trigger Command has completed immediately.</t>
@@ -798,7 +798,7 @@
    Status Resource or collection of Trigger Status Resources without
    refetching the whole resource or collection, the dCDN SHOULD include
    entity-tags (ETags) for the uCDN to use as cache validators, as
-   defined in <xref target="RFC7232"/>.</t>
+   defined in <xref target="RFC9110"/>.</t>
 
 	<t>
    The dCDN SHOULD use the cache control headers for responses to GETs
@@ -4016,7 +4016,7 @@ RESPONSE:
 
 	<section title="Authentication, Authorization, Confidentiality, Integrity Protection" anchor="sect-8.1"><t>
    A CI/T implementation MUST support Transport Layer Security (TLS)
-   transport for HTTP (HTTPS) as per <xref target="RFC2818"/> and <xref target="RFC7230"/>.</t>
+   transport for HTTP (HTTPS) as per <xref target="RFC9110"/>.</t>
 
 	<t>
    TLS MUST be used by the server side (dCDN) and the client side (uCDN)
@@ -4049,7 +4049,7 @@ RESPONSE:
 	</t>
 
 	<t>
-   When TLS is used, the general TLS usage guidance in <xref target="RFC7525"/> MUST be
+   When TLS is used, the general TLS usage guidance in <xref target="RFC9325"/> MUST be
    followed.</t>
 
 	<t>
@@ -4113,30 +4113,25 @@ RESPONSE:
 	<references title="Normative References">
 	&RFC1930;
 	&RFC2119;
+	&RFC3339;
 	&RFC3986;
 	&RFC8126;
 	&RFC8259;
-	&RFC7230;
-	&RFC7231;
-	&RFC7232;
-	&RFC7525;
 	&RFC8006;
 	&RFC8007;
-        &RFC8174;
-
-
-      <?rfc include="reference.RFC.3339" ?>
+	&RFC8174;
+	&RFC9110;
+	&RFC9112;
+	&RFC9325;
 
 	</references>
 	<references title="Informative References">
-	&RFC2818;
 	&RFC6707;
 	&RFC7336;
 	&RFC7337;
 	&RFC7736;
 	&RFC7975;
-
-      <?rfc include="reference.RFC.8216" ?>
+	&RFC8216;
 
       <reference anchor="POSIX.1" target="http://pubs.opengroup.org/onlinepubs/9699919799/">
         <front>
