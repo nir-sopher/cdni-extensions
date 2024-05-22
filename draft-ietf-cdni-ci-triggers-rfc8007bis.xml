@@ -147,7 +147,7 @@
    in more detail.</t>
 
 	<t>
-   The CDNI Control Interface / Triggers 1st edition <xref target="RFC8007"/>, deprecated by this document describes the "CI/T" interface -- "CDNI Control interface / Triggers".  It does not consider those parts of the
+   The CDNI Control Interface / Triggers 1st edition <xref target="RFC8007"/>, deprecated by this document, describes the "CI/T" interface -- "CDNI Control interface / Triggers".  It does not consider those parts of the
    Control interface that relate to configuration, bootstrapping, or
    authentication of CDN Interconnect interfaces.  Section 4 of
    <xref target="RFC7337"/> identifies the requirements specific to the CI/T interface;
