@@ -1,16 +1,13 @@
 <?xml version='1.0' encoding='utf-8'?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
+<?xml-model href="rfc7991bis.rnc"?>
+<!DOCTYPE rfc [
 <!ENTITY RFC1930 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.1930.xml">
 <!ENTITY RFC2119 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml">
-<!ENTITY RFC2818 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2818.xml">
+<!ENTITY RFC3339 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.3339.xml">
 <!ENTITY RFC3986 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.3986.xml">
 <!ENTITY RFC8126 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8126.xml">
 <!ENTITY RFC6707 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6707.xml">
 <!ENTITY RFC8259 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8259.xml">
-<!ENTITY RFC7230 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7230.xml">
-<!ENTITY RFC7231 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7231.xml">
-<!ENTITY RFC7232 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7232.xml">
-<!ENTITY RFC7525 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7525.xml">
 <!ENTITY RFC8006 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8006.xml">
 <!ENTITY RFC8007 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8007.xml">
 <!ENTITY RFC7336 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7336.xml">
@@ -18,6 +15,10 @@
 <!ENTITY RFC7736 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7736.xml">
 <!ENTITY RFC7975 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7975.xml">
 <!ENTITY RFC8174 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml">
+<!ENTITY RFC8216 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8216.xml">
+<!ENTITY RFC9110 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9110.xml">
+<!ENTITY RFC9112 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9112.xml">
+<!ENTITY RFC9325 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9325.xml">
 ]>
 <rfc category="std" docName="draft-ietf-cdni-ci-triggers-rfc8007bis-11" obsoletes='8007' ipr="trust200902">
 	<?rfc strict="yes"?>
@@ -146,13 +147,13 @@
    in more detail.</t>
 
 	<t>
-   The CDNI Control Interface / Triggers 1st edition <xref target="RFC8007"/>, deprecated by this document describes the "CI/T" interface -- "CDNI Control interface / Triggers".  It does not consider those parts of the
+   The CDNI Control Interface / Triggers 1st edition <xref target="RFC8007"/>, deprecated by this document, describes the "CI/T" interface -- "CDNI Control interface / Triggers".  It does not consider those parts of the
    Control interface that relate to configuration, bootstrapping, or
    authentication of CDN Interconnect interfaces.  Section 4 of
    <xref target="RFC7337"/> identifies the requirements specific to the CI/T interface;
    requirements applicable to the CI/T interface are CI-1 to CI-6.</t>
    
-   <t>This document is a second edition for the CDNI Control Interface / Triggers, which define a new version, "v2", of the interface objects. The new objects replace the trigger interface’s main objects, the "ci-trigger-command" object and its matching "ci-trigger-status" object, and improve the interface’s flexibility and extensibility. The document also provides a Trigger Extension mechanism that MAY be used to provide further instruction on the trigger execution. Additionally, this second edition includes cascaded CDN error propagation for improved trigger execution monitoring. Note that the trigger interface mechanism itself is not changed by this new edition.
+   <t>This document is a second edition for the CDNI Control Interface / Triggers, which define a new version, "v2", of the interface objects. The new objects replace the trigger interface's main objects, the "ci-trigger-command" object and its matching "ci-trigger-status" object, and improve the interface's flexibility and extensibility. The document also provides a Trigger Extension mechanism that MAY be used to provide further instruction on the trigger execution. Additionally, this second edition includes cascaded CDN error propagation for improved trigger execution monitoring. Note that the trigger interface mechanism itself is not changed by this new edition.
    </t>
 
 	<t><list style="symbols"><t><xref target="sect-2"/> outlines the model for the CI/T interface at a high
@@ -231,9 +232,9 @@
 	<t>
    The CI/T interface is a web service offered by the dCDN.  It allows
    CI/T Commands to be issued and allows triggered activity to be
-   tracked.  The CI/T interface builds on top of HTTP/1.1 <xref target="RFC7230"/>.
+   tracked.  The CI/T interface builds on top of HTTP/1.1 <xref target="RFC9112"/>.
    References to URL in this document relate to HTTP/HTTPS URIs, as
-   defined in Section 2.7 of <xref target="RFC7230"/>.</t>
+   defined in Section 4.2 of <xref target="RFC9110"/>.</t>
 
 	<t>
    When the dCDN accepts a CI/T Command, it creates a resource
@@ -689,7 +690,7 @@
 
 	<t>
    All dCDNs implementing CI/T MUST support the HTTP GET, HEAD, POST,
-   and DELETE methods as defined in <xref target="RFC7231"/>.</t>
+   and DELETE methods as defined in <xref target="RFC9110"/>.</t>
 
 	<t>
    The only representation specified in this document is JSON <xref target="RFC8259"/>.
@@ -739,7 +740,7 @@
    Trigger Status Resource that will convey a specification of the CI/T
    Command and its current status.  The HTTP response to the uCDN MUST
    have status code 201 and MUST convey the URI of the Trigger Status
-   Resource in the Location header field <xref target="RFC7231"/>.  The HTTP response
+   Resource in the Location header field <xref target="RFC9110"/>.  The HTTP response
    SHOULD include the content of the newly created Trigger Status
    Resource.  This is particularly important in cases where the CI/T
    Trigger Command has completed immediately.</t>
@@ -798,7 +799,7 @@
    Status Resource or collection of Trigger Status Resources without
    refetching the whole resource or collection, the dCDN SHOULD include
    entity-tags (ETags) for the uCDN to use as cache validators, as
-   defined in <xref target="RFC7232"/>.</t>
+   defined in <xref target="RFC9110"/>.</t>
 
 	<t>
    The dCDN SHOULD use the cache control headers for responses to GETs
@@ -844,7 +845,7 @@
 	<section title="Cancelling Triggers" anchor="sect-4.3"><t>
    The uCDN can request cancellation of a CI/T Trigger Command by
    POSTing a CI/T Cancel Command (see <xref target="sect-5.1.1-cancel"/>) to the
-   	specific trigger's Trigger Status Resource URL.</t>
+   specific trigger's Trigger Status Resource URL.</t>
 
 	<t>
    The dCDN is required to accept and respond to the CI/T Cancel
@@ -1169,7 +1170,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 								The dCDN-B responds with the Trigger Status Resource, describing the progress or results of
 								the CI/T Trigger Command. In the flow described above, the returned Status is "failed",
 								and the "eunsupported" error received in the trigger status resource from dCDN-C is propagated along with dCDN-C PID
-                by	adding it to the errors array in dCDN-B's own status resource to be sent back to the originating uCDN-A.
+                by adding it to the errors array in dCDN-B's own status resource to be sent back to the originating uCDN-A.
 							</t>
 						</list>
 					</t>
@@ -1969,22 +1970,21 @@ uCDN-A                         dCDN-B                         dCDN-C
 
           <figure>
             <artwork><![CDATA[
-
 {
-   "error": "econtent",
-   "description": "Failed to parse HLS playlist",
-   "specs": [
-   {
-        "trigger-subject": "content",
-        "generic-trigger-spec-type": "content-playlist",
-        "generic-trigger-spec-value": {
-            "playlist": "https://www.example.com/hls/title/index.m3u8",
-            "media-protocol": "hls"
-         }
+  "error": "econtent",
+  "description": "Failed to parse HLS playlist",
+  "specs": [
+    {
+      "trigger-subject": "content",
+      "generic-trigger-spec-type": "content-playlist",
+      "generic-trigger-spec-value": {
+        "playlist": "https://www.example.com/hls/title/index.m3u8",
+        "media-protocol": "hls"
       }
-   ],
-   "cdn": "AS64500:0"
-},
+    }
+  ],
+  "cdn": "AS64500:0"
+}
          ]]></artwork>
           </figure>
 
@@ -1995,33 +1995,32 @@ uCDN-A                         dCDN-B                         dCDN-C
             <artwork><![CDATA[
 {
   "errors": [
-   {
-     "error": "eextension",
-     "description": "unrecognized extension <type>",
-     "specs": [
+    {
+      "error": "eextension",
+      "description": "unrecognized extension <type>",
+      "specs": [
         {
-            "trigger-subject": "content",
-            "generic-trigger-spec-type": "urls",
-            "generic-trigger-spec-value": {
-               "urls": [
-                  "https://www.example.com/a/b/c/1",
-                  "https://www.example.com/a/b/c/2"
-               ]
-            }
-         }
-     ],
-     "extensions": [
-       {
-        "generic-trigger-extension-type":
-          <Type of this erroneous trigger extension object>,
-        "generic-trigger-extension-value":
-          {
-           <properties of this erroneous trigger extension object>
-          },
-       }
-     ],
-     "cdn": "AS64500:0"
-   },
+          "trigger-subject": "content",
+          "generic-trigger-spec-type": "urls",
+          "generic-trigger-spec-value": {
+            "urls": [
+              "https://www.example.com/a/b/c/1",
+              "https://www.example.com/a/b/c/2"
+            ]
+          }
+        }
+      ],
+      "extensions": [
+        {
+          "generic-trigger-extension-type":
+            <type of this erroneous trigger extension object>,
+          "generic-trigger-extension-value": {
+            <properties of this erroneous trigger extension object>
+          }
+        }
+      ],
+      "cdn": "AS64500:0"
+    }
   ]
 }
          ]]></artwork>
@@ -2084,7 +2083,7 @@ uCDN-A                         dCDN-B                         dCDN-C
         number for this document.]</t>
 	<ttcol align="left"> Error Code</ttcol>
 	<ttcol align="left"> Description</ttcol>
-	<ttcol align="left"> Registration</ttcol>	
+	<ttcol align="left"> Registration</ttcol>
 	<c>emeta</c>
 	<c>The dCDN was unable to acquire metadata required to fulfill the request.</c>
 	<c>RFCthis</c>
@@ -2282,7 +2281,7 @@ uCDN-A                         dCDN-B                         dCDN-C
                  and the query string parameters <xref target="RFC3986"/>. The regular expression
                  string MUST be compatible with <xref target="POSIX.1">POSIX</xref> Section 9
                  Extended Regular Expressions.  This regular expression MUST be evaluated in
-                 the POSIX locate (<xref target="POSIX.1">POSIX</xref> Section 7.2).</t>
+                 the POSIX locale (<xref target="POSIX.1">POSIX</xref> Section 7.2).</t>
 
               <t>Note: Because '\' has a special meaning in JSON <xref target="RFC8259"/> as the escape
                  character within JSON strings, the regular expression character '\' MUST be escaped as '\\'.</t>
@@ -2296,7 +2295,7 @@ uCDN-A                         dCDN-B                         dCDN-C
               <t>Type: JSON boolean. Either "true" (the matching is case sensitive) or "false"
                  (the matching is case insensitive).</t>
 
-              <t>Mandatory: No; default is “false”, i.e., a case-insensitive match.</t>
+              <t>Mandatory: No; default is "false", i.e., a case-insensitive match.</t>
             </list></t>
             <t>Property: match-query-string<list style="empty">
 
@@ -2575,17 +2574,6 @@ https://video.example.com/k/movie1/4/013.ts
                  <t>Mandatory: No, but exactly one of "unixEpochWindow", "utcWindow"
                     or "localTimeWindow" MUST be present.</t>
               </list></t>
-              <t>Property: local-time-window<list style="empty">
-
-                 <t>Description: A local time window. The dCDN SHOULD execute the trigger at the
-                    defined time frame, interpreted as the the local time per location.
-                 </t>
-
-                 <t>Type: LocalTimeWindow object as defined in <xref target="local-time-window"/>.</t>
-
-                 <t>Mandatory: No, but exactly one of "unixEpochWindow", "utcWindow"
-                    or "localTimeWindow" MUST be present.</t>
-              </list></t>             
           </list></t>
 
           <t>
@@ -2671,138 +2659,6 @@ https://video.example.com/k/movie1/4/013.ts
 }
          ]]></artwork>
           </figure>
-        </section>
-
-        <section anchor="local-time-window" title="LocalTimeWindow">
-          <t>
-             A LocalTimeWindow object describes a time range in local time. The reader of this
-             object MUST interpret it as "the local time at the location of execution". For example,
-             if the time window states 2AM to 4AM local time then a dCDN that has presence in
-             both London (UTC) and New York (UTC-05:00) will execute the trigger at 2AM-4AM UTC
-             in London and at 2AM-4AM UTC-05:00 in New York.
-          </t>
-          <t><list style="empty">
-            <t>Property: start<list style="empty">
-
-              <t>Description: The start time of the window.</t>
-
-              <t>Type: JSON string formatted as DateLocalTime as defined in
-                 <xref target="date-local-time"/>.
-              </t>
-
-              <t>Mandatory: No, but at least one of "start" or "end"
-                 MUST be present and non-empty.</t>
-            </list></t>
-            <t>Property: end<list style="empty">
-
-              <t>Description: The end time of the window.</t>
-
-              <t>Type: JSON string formatted as DateLocalTime as defined in
-                 <xref target="date-local-time"/>.
-              </t>
-
-              <t>Mandatory: No, but at least one of "start" or "end"
-                 MUST be present and non-empty.</t>
-            </list></t>   
-         </list></t>      
-         
-         <t>
-           Example JSON serialized LocalTimeWindow object that describes a local time window from 02:30
-           01/01/2000 to 04:30 01/01/2000.
-         </t>
-
-         <figure>
-            <artwork><![CDATA[
-{
-  "start": "2000-01-01T02:30:00.00",
-  "end": "2000-01-01T04:30:00.00"
-}
-         ]]></artwork>
-          </figure>
-        </section>
-
-        <section anchor="date-local-time" title="DateLocalTime">
-          <t>
-            DateLocalTime is a timestamp that follows the date and local time notation in Section 4.3.2
-            of <xref target="ISO8601"/> as a complete date and time extended representation,
-            where the time zone designator is omitted. In addition, for simplicity and as exact accuracy
-            is not an objective in this case, this specification does not support the decimal fractions of
-            seconds, and does not take leap second into consideration.
-          </t>
-          <t>
-             Type: JSON string using the format "date-local-time" as defined in <xref target="date-local-time-format"/>.
-          </t>
-          <section anchor="date-local-time-format" title="Date and Local Time Format">
-            <t>
-              The Date and Local Time format is specified here using the syntax description
-              notation defined in <xref target="ABNF"/>.
-            </t>
-<figure>
-  <artwork>
-date-fullyear   = 4DIGIT
-date-month      = 2DIGIT  ; 01-12
-date-mday       = 2DIGIT  ; 01-28, 01-29, 01-30, 01-31 based on
-                          ; month/year
-time-hour       = 2DIGIT  ; 00-23
-time-minute     = 2DIGIT  ; 00-59
-time-second     = 2DIGIT  ; 00-59 leap seconds are not supported
-
-local-time      = time-hour ":" time-minute ":" time-second
-full-date       = date-fullyear "-" date-month "-" date-mday
-date-local-time = full-date "T" local-time
-  </artwork>
-</figure>
-
-            <t>Example time representing 09:00AM on 01/01/2000 local time:</t>
-            <t>2000-01-01T09:00:00.00</t>
-
-            <t><list style="empty">
-              <t>
-                NOTE: Per <xref target="ABNF"/> and <xref target="ISO8601"/>, the "T" character
-                in this syntax may alternatively be lower case "t". For simplicity,
-                Applications that generate the "date-local-time" format defined here,
-                SHOULD only use the upper case letter "T".
-              </t>
-            </list></t>
-          </section>
-          <section anchor="date-local-time-restrictions" title="Restrictions">
-            <t>
-               The grammar element date-mday represents the day number within the
-               current month.  The maximum value varies based on the month and year
-               as follows:
-            </t>
-<figure>
-  <artwork>
-Month Number  Month/Year           Maximum value of date-mday
-------------  ----------           --------------------------
-01            January              31
-02            February, normal     28
-02            February, leap year  29
-03            March                31
-04            April                30
-05            May                  31
-06            June                 30
-07            July                 31
-08            August               31
-09            September            30
-10            October              31
-11            November             30
-12            December             31
-  </artwork>
-</figure>
-            <t>
-               See Appendix C of <xref target="RFC3339"/> for a sample C code that determines if a year is
-               a leap year.
-            </t>
-            <t>
-               The grammar element time-second may have the values 0-59. The value of 60 that is used in
-               <xref target="ISO8601"/> to represent a leap second MUST NOT be used.
-            </t>
-            <t>
-               Although <xref target="ISO8601"/> permits the hour to be "24", this profile of <xref target="ISO8601"/>
-               only allows values between "00" and "23" for the hour in order to reduce confusion.
-            </t>
-          </section>
         </section>
       </section>
     </section>
@@ -3053,7 +2909,7 @@ Month Number  Month/Year           Maximum value of date-mday
    collection of all Trigger Status Resources.</t>
 
 	<t>
-    Note that pattern based specs like “UriPatternMatch” and “UrisRegexMatch”,  are not allowed
+    Note that pattern based specs like "UriPatternMatch" and "UrisRegexMatch",  are not allowed
    in a pre-position Trigger Specification, where the dCDN has to have a clear list of objects to obtain.</t>
 
 	<figure><artwork><![CDATA[
@@ -3260,16 +3116,16 @@ REQUEST:
     "trigger": {
       "action": "invalidate",
       "specs": [
-         {
-            "trigger-subject": "content",
-            "generic-trigger-spec-type": "uri-regex-match",
-            "generic-trigger-spec-value": {
-                 "regex": "^(https:\\/\\/video\\.example\\.com)\\/
-                 ([a-z])\\/movie1\\/([1-7])\\/*(index.m3u8|\\d{3}.ts)$",
-                 "case-sensitive": true,
-                 "match-query-string": false
-            }
-         }
+        {
+          "trigger-subject": "content",
+          "generic-trigger-spec-type": "uri-regex-match",
+          "generic-trigger-spec-value": {
+            "regex": "^(https:\\/\\/video\\.example\\.com)\\/
+              ([a-z])\\/movie1\\/([1-7])\\/*(index.m3u8|\\d{3}.ts)$",
+            "case-sensitive": true,
+            "match-query-string": false
+          }
+        }
       ]
     },
     "cdn-path": [ "AS64496:0" ]
@@ -3288,21 +3144,22 @@ RESPONSE:
     "errors": [
       {
         "specs": [
-            {
-               "trigger-subject": "content",
-               "generic-trigger-spec-type": "uri-regex-match",
-               "generic-trigger-spec-value": {
-                   "regex": "^(https:\\/\\/video\\.example\\.com)\\/
-                   ([a-z])\\/movie1\\/([1-7])\\/*(index.m3u8|\\d{3}.ts)$",
-                   "case-sensitive": true,
-                   "match-query-string": false
-               }
+          {
+            "trigger-subject": "content",
+            "generic-trigger-spec-type": "uri-regex-match",
+            "generic-trigger-spec-value": {
+              "regex": "^(https:\\/\\/video\\.example\\.com)\\/
+                ([a-z])\\/movie1\\/
+                ([1-7])\\/*(index.m3u8|\\d{3}.ts)$",
+              "case-sensitive": true,
+              "match-query-string": false
             }
-         ],
+          }
+        ],
         "description": "The dCDN rejected a regex due to complexity",
         "error": "ereject",
         "cdn": "AS64500:0"
-      },
+      }
     ],
     "ctime": 1462351690,
     "etime": 1462351698,
@@ -3333,14 +3190,15 @@ REQUEST:
     "trigger": {
       "action": "preposition",
       "specs": [
-         {
-            "trigger-subject": "content",
-            "generic-trigger-spec-type": "contentPlaylist",
-            "generic-trigger-spec-value": {
-                "playlist": "https://www.example.com/hls/title/index.m3u8",
-                "media-protocol": "hls"
-            }
-         }
+        {
+          "trigger-subject": "content",
+          "generic-trigger-spec-type": "contentPlaylist",
+          "generic-trigger-spec-value": {
+            "playlist":
+              "https://www.example.com/hls/title/index.m3u8",
+            "media-protocol": "hls"
+          }
+        }
       ]
     },
     "cdn-path": [ "AS64496:0" ]
@@ -3356,27 +3214,28 @@ RESPONSE:
   Server: example-server/0.1
 
   {
-    "errors": [ 
+    "errors": [
       {
         "specs": [
           {
             "trigger-subject": "content",
             "generic-trigger-spec-type": "contentPlaylist",
             "generic-trigger-spec-value": {
-                "playlist": "https://www.example.com/hls/title/index.m3u8",
-                "media-protocol": "hls"
+              "playlist":
+                "https://www.example.com/hls/title/index.m3u8",
+              "media-protocol": "hls"
             }
-         }
-       ],
-       "description": "The dCDN was not able to parse the playlist",
-       "error": "econtent",
-       "cdn": "AS64500:0"
-      },
+          }
+        ],
+        "description": "The dCDN was not able to parse the playlist",
+        "error": "econtent",
+        "cdn": "AS64500:0"
+      }
     ],
     "ctime": 1462351690,
     "etime": 1462351698,
     "mtime": 1462351690,
-    "status": "failed",       
+    "status": "failed",
     "trigger": { <content of trigger.v2 object from the command> }
   }
          ]]></artwork>
@@ -3789,62 +3648,65 @@ REQUEST:
   Content-Type: application/cdni; ptype=ci-trigger-command.trigger.v2
   {
     "trigger": {
-     "action": "preposition",
-     "specs": [
-         {
-            "trigger-subject": "content",
-            "generic-trigger-spec-type": "contentPlaylist",
-            "generic-trigger-spec-value": {
-                "playlist": "https://www.example.com/hls/title/index.m3u8",
-                "media-protocol": "hls"
-            }
-         }
+      "action": "preposition",
+      "specs": [
+        {
+          "trigger-subject": "content",
+          "generic-trigger-spec-type": "contentPlaylist",
+          "generic-trigger-spec-value": {
+            "playlist":
+              "https://www.example.com/hls/title/index.m3u8",
+            "media-protocol": "hls"
+          }
+        }
       ],
       "extensions": [
-         {
-            "generic-trigger-extension-type": "location-policy",
-            "generic-trigger-extension-value":
-               {
-                  "locations": [
-                     {
-                        "action": "allow",
-                        "footprints": [
-                           {
-                              "footprint-type": "countrycode",
-                              "footprint-value": ["us"]
-                           }
-                        ]
-                     },
-                     {
-                        "action": "deny",
-                        "footprints": [
-                           {
-                              "footprint-type": "countrycode",
-                              "footprint-value": ["ca"]
-                           }
-                        ]
-                     }
-                  ]
-               },
-            "mandatory-to-enforce": true,
-            "safe-to-redistribute": true
-         },
-         {
-            "generic-trigger-extension-type": "time-policy",
-            "generic-trigger-extension-value":
-               {
-                  "unix-time-window": {
-                     "start": 946717200,
-                     "end": 946746000
+        {
+          "generic-trigger-extension-type": "location-policy",
+          "generic-trigger-extension-value": {
+            "locations": [
+              {
+                "action": "allow",
+                "footprints": [
+                  {
+                    "footprint-type": "countrycode",
+                    "footprint-value": [
+                      "us"
+                    ]
                   }
-               },
-            "mandatory-to-enforce": true,
-            "safe-to-redistribute": true
-         }
-      ],
-   },
-   "cdn-path": [ "AS64496:0" ]
- }
+                ]
+              },
+              {
+                "action": "deny",
+                "footprints": [
+                  {
+                    "footprint-type": "countrycode",
+                    "footprint-value": [
+                      "ca"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "mandatory-to-enforce": true,
+          "safe-to-redistribute": true
+        },
+        {
+          "generic-trigger-extension-type": "time-policy",
+          "generic-trigger-extension-value": {
+            "unix-time-window": {
+              "start": 946717200,
+              "end": 946746000
+            }
+          },
+          "mandatory-to-enforce": true,
+          "safe-to-redistribute": true
+        }
+      ]
+    },
+    "cdn-path": [ "AS64496:0" ]
+  }
 
 RESPONSE:
 
@@ -3856,67 +3718,69 @@ RESPONSE:
   Server: example-server/0.1
 
   {
-     "errors": [
-       {
-         "extensions": [
-             {
-                "generic-trigger-extension-type": "location-policy",
-                "generic-trigger-extension-value":
-                   {
-                      "locations": [
-                        {
-                           "action": "allow",
-                           "footprints": [
-                              {
-                                 "footprint-type": "countrycode",
-                                 "footprint-value": ["us"]
-                              }
-                           ]
-                        },
-                        {
-                           "action": "deny",
-                           "footprints": [
-                              {
-                                 "footprint-type": "countrycode",
-                                 "footprint-value": ["ca"]
-                              }
-                           ]
-                        }
-                     ]
-                  },
-               "mandatory-to-enforce": true,
-               "safe-to-redistribute": true
+    "errors": [
+      {
+        "extensions": [
+          {
+            "generic-trigger-extension-type": "location-policy",
+            "generic-trigger-extension-value": {
+              "locations": [
+                {
+                  "action": "allow",
+                  "footprints": [
+                    {
+                      "footprint-type": "countrycode",
+                      "footprint-value": [
+                        "us"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "action": "deny",
+                  "footprints": [
+                    {
+                      "footprint-type": "countrycode",
+                      "footprint-value": [
+                        "ca"
+                      ]
+                    }
+                  ]
+                }
+              ]
             },
-         ],
-         "description": "unrecognized extension <type>",
-         "error": "eextension",
-         "cdn": "AS64500:0"
-       },
-       {
-         "extensions": [
-             {
-                "generic-trigger-extension-type": "time-policy",
-                "generic-trigger-extension-value":
-                   {
-                      "unix-time-window": {
-                         "start": 946717200,
-                         "end": 946746000
-                      }
-                   },
-                "mandatory-to-enforce": true,
-                "safe-to-redistribute": true
-             }
-         ],
-         "description": "unrecognized extension <type>",
-         "error": "eextension",
-         "cdn": "AS64501:0"
-       }        
-     ],
-     "ctime": 1462351690,
-     "etime": 1462351698,
-     "mtime": 1462351690,
-     "status": "failed",
-     "trigger": { <content of trigger.v2 object from the command> }
+            "mandatory-to-enforce": true,
+            "safe-to-redistribute": true
+          }
+        ],
+        "description": "unrecognized extension <type>",
+        "error": "eextension",
+        "cdn": "AS64500:0"
+      },
+      {
+        "extensions": [
+          {
+            "generic-trigger-extension-type": "time-policy",
+            "generic-trigger-extension-value": {
+              "unix-time-window": {
+                "start": 946717200,
+                "end": 946746000
+              }
+            },
+            "mandatory-to-enforce": true,
+            "safe-to-redistribute": true
+          }
+        ],
+        "description": "unrecognized extension <type>",
+        "error": "eextension",
+        "cdn": "AS64501:0"
+      }
+    ],
+    "ctime": 1462351690,
+    "etime": 1462351698,
+    "mtime": 1462351690,
+    "status": "failed",
+    "trigger": { <content of trigger.v2 object from the command> }
   }
          ]]></artwork>
           </figure>
@@ -4030,7 +3894,7 @@ RESPONSE:
    Additions to the "CDNI CI/T Trigger Types" registry are made via
    the RFC Required policy as defined in <xref target="RFC8126"/>.</t>
 
-	<t> In this second edition of the interface, trigger types are referred to as "trigger actions". The "Trigger Types" registry is used for actions definitions. Furthermore, this document, and specifically <xref target="sect-5.2.2"/>, reuses the definition of “trigger types” as defined in <xref target="RFC8007"/> as trigger actions,
+	<t> In this second edition of the interface, trigger types are referred to as "trigger actions". The "Trigger Types" registry is used for actions definitions. Furthermore, this document, and specifically <xref target="sect-5.2.2"/>, reuses the definition of "trigger types" as defined in <xref target="RFC8007"/> as trigger actions,
     and provide their specifications, with no modification comparing to <xref target="RFC8007"/>.</t>
     </section>
 
@@ -4153,7 +4017,7 @@ RESPONSE:
 
 	<section title="Authentication, Authorization, Confidentiality, Integrity Protection" anchor="sect-8.1"><t>
    A CI/T implementation MUST support Transport Layer Security (TLS)
-   transport for HTTP (HTTPS) as per <xref target="RFC2818"/> and <xref target="RFC7230"/>.</t>
+   transport for HTTP (HTTPS) as per <xref target="RFC9110"/>.</t>
 
 	<t>
    TLS MUST be used by the server side (dCDN) and the client side (uCDN)
@@ -4186,7 +4050,7 @@ RESPONSE:
 	</t>
 
 	<t>
-   When TLS is used, the general TLS usage guidance in <xref target="RFC7525"/> MUST be
+   When TLS is used, the general TLS usage guidance in <xref target="RFC9325"/> MUST be
    followed.</t>
 
 	<t>
@@ -4250,51 +4114,25 @@ RESPONSE:
 	<references title="Normative References">
 	&RFC1930;
 	&RFC2119;
+	&RFC3339;
 	&RFC3986;
 	&RFC8126;
 	&RFC8259;
-	&RFC7230;
-	&RFC7231;
-	&RFC7232;
-	&RFC7525;
 	&RFC8006;
 	&RFC8007;
-        &RFC8174;
-
-
-      <?rfc include="reference.RFC.3339" ?>
-
-      <reference anchor="ABNF" target="https://www.rfc-editor.org/info/rfc5234">
-        <front>
-          <title>Augmented BNF for Syntax Specifications: ABNF</title>
-          <author initials="D." surname="Crocker" fullname="D. Crocker" role="editor">
-            <organization/>
-          </author>
-          <author initials="P." surname="Overell" fullname="P. Overell">
-            <organization/>
-          </author>
-          <date year="2008" month="January"/>
-          <abstract>
-            <t>Internet technical specifications often need to define a formal syntax.  Over the years, a modified version of Backus-Naur Form (BNF), called Augmented BNF (ABNF), has been popular among many Internet specifications.  The current specification documents ABNF. It balances compactness and simplicity with reasonable representational power.  The differences between standard BNF and ABNF involve naming rules, repetition, alternatives, order-independence, and value ranges.  This specification also supplies additional rule definitions and encoding for a core lexical analyzer of the type common to several Internet specifications.  [STANDARDS-TRACK]</t>
-          </abstract>
-        </front>
-        <seriesInfo name="STD" value="68"/>
-        <seriesInfo name="RFC" value="5234"/>
-        <seriesInfo name="DOI" value="10.17487/RFC5234"/>
-      </reference>
-
-
+	&RFC8174;
+	&RFC9110;
+	&RFC9112;
+	&RFC9325;
 
 	</references>
 	<references title="Informative References">
-	&RFC2818;
 	&RFC6707;
 	&RFC7336;
 	&RFC7337;
 	&RFC7736;
 	&RFC7975;
-
-      <?rfc include="reference.RFC.8216" ?>
+	&RFC8216;
 
       <reference anchor="POSIX.1" target="http://pubs.opengroup.org/onlinepubs/9699919799/">
         <front>
