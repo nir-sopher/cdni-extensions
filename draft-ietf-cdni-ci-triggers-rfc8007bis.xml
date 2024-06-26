@@ -20,7 +20,7 @@
 <!ENTITY RFC9112 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9112.xml">
 <!ENTITY RFC9325 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9325.xml">
 ]>
-<rfc category="std" docName="draft-ietf-cdni-ci-triggers-rfc8007bis-12" obsoletes='8007' ipr="trust200902">
+<rfc category="std" submissionType="IETF" docName="draft-ietf-cdni-ci-triggers-rfc8007bis-12" obsoletes='8007' ipr="trust200902">
 	<?rfc strict="yes"?>
 	<?rfc compact="yes"?>
 	<?rfc subcompact="no"?>
@@ -531,8 +531,8 @@
 	<c>Allowing the specification of trigger targets via <xref target="RFC3986"/> URI patterns.</c>
 	<c>uri-regex-match</c>
     <c>Allowing the specification of trigger targets via regexes matching their URI, as defined in <xref target="uri-regex-match-spec"/>.</c>
-	<c>content-playlist</c>
-	<c>Allowing the specification of trigger targets via a playlist URI and a media protocol identifier.</c>
+	<c>content-objectlist</c>
+	<c>Allowing the specification of trigger targets via an object list and an object list type.</c>
 	</texttable>
 
    <section anchor="trigger-subject" title="Trigger Subject">
@@ -1965,21 +1965,21 @@ uCDN-A                         dCDN-B                         dCDN-C
 	</t>
 
 
-          <t>Example of a JSON serialized Error.v2 Description object reporting a malformed Playlist:
+          <t>Example of a JSON serialized Error.v2 Description object reporting a malformed object list :
           </t>
 
           <figure>
             <artwork><![CDATA[
 {
   "error": "econtent",
-  "description": "Failed to parse HLS playlist",
+  "description": "Failed to parse HLS object list",
   "specs": [
     {
       "trigger-subject": "content",
-      "generic-trigger-spec-type": "content-playlist",
+      "generic-trigger-spec-type": "content-objectlist",
       "generic-trigger-spec-value": {
-        "playlist": "https://www.example.com/hls/title/index.m3u8",
-        "media-protocol": "hls"
+        "href": "https://www.example.com/hls/title/index.m3u8",
+        "type": "hls"
       }
     }
   ],
@@ -2116,7 +2116,281 @@ uCDN-A                         dCDN-B                         dCDN-C
 	<c>RFCthis</c>
 	</texttable>
 	</section>
-	
+
+	<section title="ObjectList" anchor="object-list"><t>
+		ObjectList is a metadata object describing lists of objects that can be used in the context of CI/T v2 trigger spec, trigger status resources and other contexts as required. The ObjectList object can either embed the lists of objects or point to external URL(s) that hold such lists.  ObjectList allows specification of an object list type, providing instructions on the interpretation of the object list format.</t>  
+
+	<t>
+		ObjectLists MAY be recursive, i.e. including references to secondary manifests, including references to HLS, MPEG-DASH or HSS manifests as well as additional JSON-encoded ObjectLists , etc. The party consuming the object list MUST parse all recursions based on the object list type property. When doing so, the consuming party should also detect potential loops when descendant  ObjectList points back to parent  ObjectList.
+	</t>
+	<t>
+ObjectLists MAY combine regular objects and secondary ObjectLists in the same object.
+		Please note that when embedding non-JSON object lists directly in ObjectList, absolute URLs MUST be provided at all times and the text SHOULD be encoded in accordance with the JSON grammar specification [ECMA404], including explicit newline encoding. When the uCDN accesses ObjectList metadata resources published by the uCDN, the same interface authentication and authorization requirements would apply, as when accessing the interface itself.
+	</t>
+
+	<t>ObjectList is encoded as an array of per-object records in JSON format as follows</t>
+	<t> External HLS manifest:</t>
+<figure><artwork><![CDATA[ 
+[
+  { 
+    “href”:"https://example.com/hls/a36f764e/index.m3u8",
+    "type":"hls" 
+  }
+]
+]]></artwork></figure>
+
+	<t>External object list in text format:</t>
+<figure><artwork><![CDATA[ 
+[
+  { 
+    “href”:“https://example.com/hls/35cdc008/assets”,
+    "type":“text" 
+  }
+]
+]]></artwork></figure>
+
+
+	<t>List of external manifests and objects: of mixed types</t>
+<figure><artwork><![CDATA[ 
+[
+  { 
+    “href”: “https://example.com/hls/35cdc008/index.m3u8”, 
+    “type":“hls" 
+  },
+  { 
+    “href”:“https://example.com/dash/35cdc008/main.mpd”, 
+    “type":“dash"
+  },
+  { 
+    “href”:“https://example.com/dash/35cdc008/files.json”, 
+    “type":“json" 
+  }
+]
+]]></artwork></figure>
+
+	<t>Embedded JSON-encoded object list</t>
+<figure><artwork><![CDATA[ 
+[
+  { 
+    “data”: [
+      { 
+	“href”: “https://example.com/hls/35cdc008/index.m3u8”, 
+	“type": “hls" 
+      },
+      { 
+	“href”:“https://example.com/dash/35cdc008/main.mpd”,
+	“type": “dash"
+      },
+      { 
+	“href”:“https://example.com/img/35cdc008/thumb-l.jpg”, 
+	“size”: 10260
+      },
+      { 
+	“href”:“https://example.com/img/35cdc008/thumb-s.jpg”,
+	“size”: 1453
+      }
+    ],
+    “type”: “json”
+  }
+]
+]]></artwork></figure>
+
+	<t>Embedded HLS manifest</t>
+<figure><artwork><![CDATA[ 
+[
+  {  
+    "data”: “#EXTM3U\n
+    #EXT-X-STREAM-INF:BANDWIDTH=150000,RESOLUTION=416x234\n
+    http://example.com/hls/35cdc008/low/index.m3u8\n
+    #EXT-X-STREAM-INF:BANDWIDTH=240000,RESOLUTION=416x234\n
+    http://example.com/hls/35cdc008/lo_mid/index.m3u8\n
+    #EXT-X-STREAM-INF:BANDWIDTH=440000,RESOLUTION=416x234\n
+    http://example.com/hls/35cdc008/hi_mid/index.m3u8\n
+    #EXT-X-STREAM-INF:BANDWIDTH=640000,RESOLUTION=640x360\n
+    http://example.com/hls/35cdc008/high/index.m3u8\n
+    #EXT-X-STREAM-INF:BANDWIDTH=64000\n
+    http://example.com/hls/35cdc008/audio/index.m3u8\n”,
+    "type": "hls"
+  }
+}
+
+]]></artwork></figure>
+
+	<t>The ObjectList properties are as follows:</t>  
+	<t>
+		<list style="empty" hangIndent="3">
+		<t>
+			<list style="hanging" hangIndent="3">
+				<t hangText="Name: data">
+        			<vspace blankLines="1"/>
+				Description: List of objects in one of recognized formats
+				<vspace blankLines="1"/>
+				Value: String
+        			<vspace blankLines="1"/>
+        			Mandatory: No. Either "data" or "href" MUST be set.
+				</t>
+			</list>
+		</t>
+		</list>
+	</t>
+
+
+	<t>
+		<list style="empty" hangIndent="3">
+			<t>
+				<list style="hanging" hangIndent="3"><t hangText="Name: href">
+				<vspace blankLines="1"/>
+				Description: URL pointing to an external object list or object in one of recognized formats.
+				<vspace blankLines="1"/>
+				Value: String in valid URL format
+        			<vspace blankLines="1"/>
+        			Mandatory: No. Either "data" or "href" MUST be set.
+				</t>
+				</list>
+			</t>
+		</list>
+	</t>
+	<t>
+		<list style="empty" hangIndent="3">
+			<t>
+				<list style="hanging" hangIndent="3"><t hangText="Name: type">
+				<vspace blankLines="1"/>
+				Description: Object list type to be used when parsing and interpreting this object list. By default each record in the list is assumed to represent an object that does not require additional processing.
+				<vspace blankLines="1"/>
+				Value: ObjectListType (see <xref target="object-list"/>)   
+        			<vspace blankLines="1"/>
+        			Mandatory: Yes.
+				</t>
+				</list>
+			</t>
+		</list>
+	</t>
+
+	</section>
+	<section title="ObjectList Type" anchor="object-list-type">
+	<t>
+		ObjectListType objects are used to specify registered type of ObjectList 
+		(see <xref target="IANA.CDNI.ObjectListTypeReg"/>) used for specifying list of objects in Trigger Spec, 
+		Trigger Status and Error.v2 Description objects.
+	</t>
+	<t>
+		The following table defines the initial ObjectListType JSON string values
+	</t>
+
+	<texttable style="full">
+		<ttcol align="left"> JSON string</ttcol>
+		<ttcol align="left"> Description</ttcol>
+		<ttcol align="left"> Specification</ttcol>
+		<ttcol align="left"> Protocol Specification</ttcol>
+
+		<c>hls</c>
+		<c>HTTP Live Streaming</c>
+		<c>RFCthis</c>
+		<c><xref target="RFC8216">RFC 8216</xref></c>
+
+		<c>mss</c>
+		<c>Microsoft Smooth Streaming</c>
+		<c>RFCthis</c>
+		<c><xref target="MSS">MSS</xref></c>
+
+		<c>dash</c>
+		<c>Dynamic Adaptive Streaming over HTTP (MPEG-DASH)</c>
+		<c>RFCthis</c>
+		<c><xref target="MPEG-DASH">MPEG-DASH</xref></c>
+
+		<c>json</c>
+		<c>JSON serialized object list</c>
+		<c>RFCthis</c>
+		<c><xref target="object-list-type-json">JSON</xref></c>
+
+		<c>text</c>
+		<c>Object list in text format</c>
+		<c>RFCthis</c>
+		<c><xref target="object-list-type-text">Text</xref></c>
+        </texttable>
+	<t>[RFC Editor: Please replace RFCthis with the published RFC number for this document.]</t>
+
+	<section title="JSON Serialized Object List" anchor="object-list-type-json">
+	<t>
+		This ObjectList type specifies a collection of objects encoded in JSON format, each entry being encoded as an <xref target="object-entry"> ObjectEntry</xref> object.  The entries in the JSON object list MAY have object list type specified, allowing for a recursive object list structure.
+	</t>
+	</section>
+
+	<section title="Text Object List" anchor="object-list-type-text">
+		<t>
+			The text object list type specifies a collection of files in text encoding, each line specifying object URI. Unlike the <xref target="object-list-type-json">JSON</xref> object list, the text-based object list will not support a recursive object list structure, and every object specified in it SHOULD be downloaded without additional processing.
+		</t>
+		</section>
+	</section>
+
+	<section title="ObjectEntry" anchor="object-entry">
+	<t>
+		ObjectEntry is a metadata object describing an object and associated metadata, to be used in JSON-encoded <xref target="object-list">ObjectList</xref> objects.
+	</t>
+	<t>
+		Following is an example of JSON serialized ObjectEntry objects
+		<artwork><![CDATA[
+[
+  {“href”:“https://example.com/hls/35cdc008/index.m3u8”,“type":“hls"},
+  {“href”:“https://example.com/dash/35cdc008/main.mpd”,“type":“dash"},
+  {“href”:“https://example.com/img/35cdc008/thumb-l.jpg”,“size”:10260},
+  {“href”:“https://example.com/img/35cdc008/thumb-s.jpg”,“size”:1453}
+]
+
+		]]></artwork>
+	</t>
+
+	<t>The ObjectEntry properties are as follows:</t>
+	<t>
+		<list style="empty" hangIndent="3">
+		<t>
+			<list style="hanging" hangIndent="3">
+				<t hangText="Name: href">
+        			<vspace blankLines="1"/>
+				Description: Object URL
+				<vspace blankLines="1"/>
+				Value: String in URL format
+        			<vspace blankLines="1"/>
+        			Mandatory: Yes.
+				</t>
+			</list>
+		</t>
+		</list>
+	</t>
+
+
+	<t>
+		<list style="empty" hangIndent="3">
+			<t>
+				<list style="hanging" hangIndent="3"><t hangText="Name: type">
+				<vspace blankLines="1"/>
+				Description: ObjectList type to be used when processing this object. By default ObjectEntry object is assumed to represent an object and does not require additional processing.
+				<vspace blankLines="1"/>
+				Value: ObjectListType (see <xref target="object-list-type"/>
+        			<vspace blankLines="1"/>
+        			Mandatory: No.
+				</t>
+				</list>
+			</t>
+		</list>
+	</t>
+	<t>
+		<list style="empty" hangIndent="3">
+			<t>
+				<list style="hanging" hangIndent="3"><t hangText="Name: size">
+				<vspace blankLines="1"/>
+				Description: Object size, in bytes. Can be used to make a decision to download the object based on size. For example, dCDN may ignore objects that are too small or too large.
+				<vspace blankLines="1"/>
+				Value: Integer.
+        			<vspace blankLines="1"/>
+        			Mandatory: No.
+				</t>
+				</list>
+			</t>
+		</list>
+	</t>
+
+	</section>
 	</section>
 
 	</section>
@@ -2346,87 +2620,16 @@ https://video.example.com/k/movie1/4/013.ts
    </section>
 
 
-     <section anchor="content-playlist-spec" title="Content Playlist Spec">
-        <t>The content-playlist spec type allows the uCDN to manage content held by the dCDN
-           based on the content's playlist. 
-           The content-playlist spec type is valid only for the content spec subject (see <xref target="trigger-subject"/>).
+   	<section anchor="objectlist-spec" title="Object List Spec">
+	<t>
+		The objectlist spec type allows the uCDN to manage content held by the dCDN based on structured object lists. 
+           	The objectlist spec type is valid only for the content spec subject (see <xref target="trigger-subject"/>).
         </t>
+	<t>An object list is encoded as <xref target="object-list">ObjectList</xref> object.</t> 
 
-        <section anchor="playlist" title="Playlist">
-          <t>A Playlist consists of a full URL and a media protocol identifier.
-             An implementation that supports a specific playlist media protocol MUST be able to parse playlist
-             files of that protocol type and extract, possibly recursively, the URLs to all media objects
-             and/or sub playlist files, and apply the trigger to each one of them separately.</t>
+	</section>
 
-          <t>Playlist is encoded as a JSON object with following properties:</t>
-
-          <t><list style="empty">
-             <t>Property: playlist<list style="empty">
-
-               <t>Description: A URL to the playlist file.</t>
-
-               <t>Type: A URL represented as a JSON string.</t>
-
-               <t>Mandatory: Yes.</t>
-             </list></t>
-             <t>Property: media-protocol<list style="empty">
-
-                <t>Description: Media protocol to be used when parsing and interpreting this playlist. </t>
-
-                <t>Type: MediaProtocol (see <xref target="media-protocol"/>).</t>
-
-                <t>Mandatory: Yes.</t>
-             </list></t>
-          </list></t>
-          <t>Example of a JSON serialized HLS playlist object:</t>
-
-           <figure>
-            <artwork><![CDATA[
-{
-  "playlist": "https://www.example.com/hls/title/index.m3u8",
-  "media-protocol": "hls"
-}
-
-         ]]></artwork>
-           </figure>
-
-        </section>
-
-        <section anchor="media-protocol" title="MediaProtocol">
-          <t>Media Protocol objects are used to specify registered type of media protocol
-             (see <xref target="IANA.CDNI.MediaProtocolReg"/>) used for protocol related
-             operations like pre-position according to playlist.</t>
-		  
-		          <t>The following table defines the initial MediaProtocol JSON string values corresponding
-           to the HLS, MSS, and DASH protocols:</t>
-        <texttable style="full"><ttcol align="left"> JSON string</ttcol>
-          <ttcol align="left"> Description</ttcol>
-          <ttcol align="left"> Specification</ttcol>
-          <ttcol align="left"> Protocol Specification</ttcol>
-            <c>hls</c>
-            <c>HTTP Live Streaming</c>
-            <c>RFCthis</c>
-            <c><xref target="RFC8216">RFC 8216</xref></c>
-
-            <c>mss</c>
-            <c>Microsoft Smooth Streaming</c>
-            <c>RFCthis</c>
-            <c><xref target="MSS">MSS</xref></c>
-
-            <c>dash</c>
-            <c>Dynamic Adaptive Streaming over HTTP (MPEG-DASH)</c>
-            <c>RFCthis</c>
-            <c><xref target="MPEG-DASH">MPEG-DASH</xref></c>
-        </texttable>
-       <t>[RFC Editor: Please replace RFCthis with the published RFC number for this document.]</t>
-
-        </section>
-
-
-   </section>
-
- </section>
-
+    </section>
 
 
     <section anchor="trigger-extension-objects" title="Trigger Extension Objects">
@@ -2836,28 +3039,27 @@ https://video.example.com/k/movie1/4/013.ts
 
        
 
-            <section title="CI/T Playlist Protocol Capability Object">
+            <section title="CI/T Object List Type Capability Object">
         <t>
-           Given a content-playlist being supported by the dCDN, the CI/T Playlist Protocol capability object is used to indicate support for one or more
-           MediaProtocol types listed in <xref target="IANA.CDNI.MediaProtocolReg"/> by the playlists
-           property of the "trigger.v2" object. Capability type is  "FCI.TriggerSpecPlaylistProtocol".
+           Given an object list being supported by the dCDN, the CI/T Object List Type capability object is used to indicate support for one or more
+           Object List types listed in <xref target="IANA.CDNI.ObjectListTypeReg"/> by the type property of the "ObjectList" object. Capability type is  "FCI.TriggerObjectListType".
         </t>
 
         <t><list style="empty">
-           <t>Property: media-protocols<list style="empty">
+           <t>Property: object-list-types<list style="empty">
 
-                 <t>Description: A list of media protocols.</t>
+                 <t>Description: A list of object list types.</t>
 
-                 <t>Type: A list of MediaProtocol (from the CDNI Triggers media protocol types
-                    <xref target="IANA.CDNI.MediaProtocolReg"/>)</t>
+		 <t>Type: A list of Object List Type (from the CDNI CI/T Object List types
+                    <xref target="IANA.CDNI.ObjectListTypeReg"/>)</t>
 
                  <t>Mandatory: No. The default, in case of a missing or an empty list, 
                     is none supported.</t>
            </list></t>
         </list></t>
-        <section anchor="playlist-protocol-capability-object" title="CI/T Playlist Protocol Capability Object Serialization">
+        <section anchor="object-list-type-capability-object" title="CI/T Object List Type Capability Object Serialization">
           <t>
-             The following shows an example of a JSON serialized CI/T Playlist Protocol Capability object serialization
+             The following shows an example of a JSON serialized CI/T Object List Type Capability object serialization
              for a dCDN that supports "hls" and "dash".
           </t>
 
@@ -2867,9 +3069,9 @@ https://video.example.com/k/movie1/4/013.ts
 {
  "capabilities": [
    {
-     "capability-type": "FCI.TriggerSpecPlaylistProtocol",
+     "capability-type": "FCI.TriggerObjectListType",
      "capability-value": {
-       "media-protocols": ["hls", "dash"]
+       "object-list-types": ["hls", "dash"]
      },
      "footprints": [
        <Footprint objects>
@@ -3171,10 +3373,10 @@ RESPONSE:
           </figure>
         </section>
 
-        <section anchor="preposition-with-playlists" title="Preposition with Playlists">
+        <section anchor="preposition-with-objectlists" title="Preposition with ObjectLists">
           <t>
-            In the following example a CI/T "preposition" command uses the Playlist property to specify the full
-            media library of a specific content. The command fails due to playlist parse error and an appropriate
+            In the following example a CI/T "preposition" command uses the ObjectList property to specify the full
+            media library of a specific content. The command fails due to object list parse error and an appropriate
             error is reflected in the status response.
           </t>
           <figure>
@@ -3192,11 +3394,11 @@ REQUEST:
       "specs": [
         {
           "trigger-subject": "content",
-          "generic-trigger-spec-type": "contentPlaylist",
+          "generic-trigger-spec-type": "content-objectlist",
           "generic-trigger-spec-value": {
-            "playlist":
+            "href":
               "https://www.example.com/hls/title/index.m3u8",
-            "media-protocol": "hls"
+            "type": "hls"
           }
         }
       ]
@@ -3219,15 +3421,16 @@ RESPONSE:
         "specs": [
           {
             "trigger-subject": "content",
-            "generic-trigger-spec-type": "contentPlaylist",
+            "generic-trigger-spec-type": "content-objectlist",
             "generic-trigger-spec-value": {
-              "playlist":
+              "href":
                 "https://www.example.com/hls/title/index.m3u8",
-              "media-protocol": "hls"
+              "type": "hls"
             }
           }
         ],
-        "description": "The dCDN was not able to parse the playlist",
+	"description": 
+	    "The dCDN was not able to parse the object list",
         "error": "econtent",
         "cdn": "AS64500:0"
       }
@@ -3652,11 +3855,11 @@ REQUEST:
       "specs": [
         {
           "trigger-subject": "content",
-          "generic-trigger-spec-type": "contentPlaylist",
+          "generic-trigger-spec-type": "content-objectlist",
           "generic-trigger-spec-value": {
-            "playlist":
+            "href":
               "https://www.example.com/hls/title/index.m3u8",
-            "media-protocol": "hls"
+            "type": "hls"
           }
         }
       ],
@@ -3831,7 +4034,7 @@ RESPONSE:
    <c>FCI.TriggerScope</c>
    <c>RFCthis</c>
 
-   <c>FCI.TriggerSpecPlaylistProtocol</c>
+   <c>FCI.TriggerObjectListType</c>
    <c>RFCthis</c>
 
 	</texttable>
@@ -3875,11 +4078,11 @@ RESPONSE:
                <t>Encoding: see <xref target="trigger-scope-capability-object"/></t>
             </section>
 
-             <section anchor="IANA.CDNI.payload.FCI.TriggerSpecPlaylistProtocol" title="CDNI FCI CI/T Playlist Protocol Payload Type">
+             <section anchor="IANA.CDNI.payload.FCI.TriggerObjectListType" title="CDNI FCI CI/T Object List Type Payload Type">
                <t>Purpose: The purpose of this payload type is to distinguish FCI advertisement objects for
-                  CI/T Playlist Protocol objects</t>
+                  CI/T Object List Type objects</t>
                <t>Interface: FCI</t>
-               <t>Encoding: see <xref target="playlist-protocol-capability-object"/></t>
+               <t>Encoding: see <xref target="object-list-type-capability-object"/></t>
             </section>
 
         </section>
@@ -3926,18 +4129,13 @@ RESPONSE:
    </section>
 
 
-      <section anchor="IANA.CDNI.MediaProtocolReg" title="CDNI CI/T Playlist Spec MediaProtocols">
-        <t>The IANA is requested to create a new "CDNI CI/T Playlist Spec MediaProtocols" registry 
-           in the "Content Delivery Networks Interconnection (CDNI) Parameters" registry group.
-		   The "CDNI CI/T Playlist Spec MediaProtocols" namespace defines the valid trigger targets' extension values
-           in <xref target="media-protocol"/>, used by the Trigger Spec object.</t>
-		   <t>Additions to the "CDNI Playlist Spec MediaProtocols" registry are made via
-			the RFC Required policy as defined in <xref target="RFC8126"/>.</t>
-
+      <section anchor="IANA.CDNI.ObjectListTypeReg" title="CDNI CI/T Object List Types">
 	<t>
-   The initial contents of the "CDNI CI/T Trigger Extensions" registry
-   comprise the names and descriptions listed in <xref target="media-protocol"/>, with this document acting as the specification.</t>
-		   
+	      The IANA is requested to create a new "CDNI CI/T Object List Types" registry in the "Content Delivery Networks Interconnection (CDNI) Parameters" registry group. The "CDNI CI/T Object List Types" namespace defines the valid object list type values in <xref target="object-list-type"/>, used by the Object List object.</t>
+      	<t>
+	Additions to the "CDNI CI/T Object List Types" registry are made via the RFC Required policy as defined in <xref target="RFC8126"/>.</t>
+	<t>
+	The initial contents of the "CDNI CI/T Object List Types" registry comprise the names and descriptions listed in <xref target="object-list-type"/>, with this document acting as the specification.</t>
       </section>
 	  
 	  <section anchor="IANA.CDNI.TriggerExtensionReg" title="&quot;CDNI CI/T Trigger Extensions&quot; Registry">
