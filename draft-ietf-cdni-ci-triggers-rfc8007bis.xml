@@ -2118,10 +2118,10 @@ uCDN-A                         dCDN-B                         dCDN-C
 	</section>
 
 	<section title="ObjectList" anchor="object-list"><t>
-		ObjectList is a metadata object describing lists of objects that can be used in the context of CI/T v2 trigger spec, trigger status resources and other contexts as required. The ObjectList object can either embed the lists of objects or point to external URL(s) that hold such lists.  ObjectList allows specification of an object list type, providing instructions on the interpretation of the object list format.</t>  
+		ObjectList is a metadata object describing lists of objects that can be used in the context of CI/T v2 trigger spec, trigger status resources and other contexts as required. The ObjectList object can either embed the lists of objects or point to external URL(s) that hold such lists. ObjectList allows specification of an object list type, providing instructions on the interpretation of the object list format.</t>
 
 	<t>
-		ObjectLists MAY be recursive, i.e. including references to secondary manifests, including references to HLS, MPEG-DASH or HSS manifests as well as additional JSON-encoded ObjectLists , etc. The party consuming the object list MUST parse all recursions based on the object list type property. When doing so, the consuming party should also detect potential loops when descendant  ObjectList points back to parent  ObjectList.
+		ObjectLists MAY be recursive, i.e. including references to secondary manifests, including references to HLS, MPEG-DASH or MSS manifests as well as additional JSON-encoded ObjectLists , etc. The party consuming the object list MUST parse all recursions based on the object list type property. When doing so, the consuming party should also detect potential loops when descendant ObjectList points back to parent ObjectList.
 	</t>
 	<t>
 ObjectLists MAY combine regular objects and secondary ObjectLists in the same object.
@@ -2312,7 +2312,7 @@ ObjectLists MAY combine regular objects and secondary ObjectLists in the same ob
 
 	<section title="JSON Serialized Object List" anchor="object-list-type-json">
 	<t>
-		This ObjectList type specifies a collection of objects encoded in JSON format, each entry being encoded as an <xref target="object-entry"> ObjectEntry</xref> object.  The entries in the JSON object list MAY have object list type specified, allowing for a recursive object list structure.
+		This ObjectList type specifies a collection of objects encoded in JSON format, each entry being encoded as an <xref target="object-entry"> ObjectEntry</xref> object. The entries in the JSON object list MAY have object list type specified, allowing for a recursive object list structure.
 	</t>
 	</section>
 
