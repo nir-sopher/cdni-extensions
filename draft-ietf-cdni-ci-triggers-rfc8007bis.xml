@@ -2132,7 +2132,7 @@ ObjectLists MAY combine regular objects and secondary ObjectLists in the same ob
 		Please note that when embedding non-JSON object lists directly in ObjectList, absolute URLs MUST be provided at all times and the text SHOULD be encoded in accordance with the JSON grammar specification <xref target="ECMA404"/>, including explicit newline encoding. When the uCDN accesses ObjectList metadata resources published by the uCDN, the same interface authentication and authorization requirements would apply, as when accessing the interface itself.
 	</t>
 
-	<t>ObjectList is encoded as an array of per-object records in JSON format as follows</t>
+	<t>ObjectList is encoded as an array of per-object records in JSON format as follows:</t>
 	<t> External HLS manifest:</t>
 <figure><artwork><![CDATA[ 
 [
