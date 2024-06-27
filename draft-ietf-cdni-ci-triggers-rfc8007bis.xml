@@ -602,7 +602,7 @@
 
    <t>This document also defines an initial set of trigger extension objects and registers them in the IANA "CDNI CI/T Trigger Extensions" registry:</t>
       
-	<texttable style="full"><ttcol align="left"> JSON String</ttcol>
+	<texttable style="full"><ttcol align="left">JSON String</ttcol>
 	<ttcol align="left"> Description</ttcol>
 	<c>location-policy</c>
 	<c>Allowing the control over the locations in which the trigger is executed.</c>
@@ -2032,7 +2032,7 @@ uCDN-A                         dCDN-B                         dCDN-C
    Trigger Status describes the current status of the triggered
    activity.  It MUST be one of the JSON strings in the following table:</t>
 
-	<texttable style="full"><ttcol align="left"> JSON String</ttcol>
+	<texttable style="full"><ttcol align="left">JSON String</ttcol>
 	<ttcol align="left"> Description </ttcol>
 	<c>pending</c>
 	<c>The CI/T Trigger Command has not yet been acted upon.</c>
@@ -2228,9 +2228,9 @@ ObjectLists MAY combine regular objects and secondary ObjectLists in the same ob
 			<list style="hanging" hangIndent="3">
 				<t hangText="Name: data">
         			<vspace blankLines="1"/>
-				Description: List of objects in one of recognized formats
+				Description: List of objects in one of the recognized formats.
 				<vspace blankLines="1"/>
-				Value: String
+				Value: JSON String.
         			<vspace blankLines="1"/>
         			Mandatory: No. Either "data" or "href" MUST be set.
 				</t>
@@ -2245,9 +2245,9 @@ ObjectLists MAY combine regular objects and secondary ObjectLists in the same ob
 			<t>
 				<list style="hanging" hangIndent="3"><t hangText="Name: href">
 				<vspace blankLines="1"/>
-				Description: URL pointing to an external object list or object in one of recognized formats.
+				Description: URL pointing to an external object list or object in one of the recognized formats.
 				<vspace blankLines="1"/>
-				Value: String in valid URL format
+				Value: A URL represented as a JSON String
         			<vspace blankLines="1"/>
         			Mandatory: No. Either "data" or "href" MUST be set.
 				</t>
@@ -2354,7 +2354,7 @@ ObjectLists MAY combine regular objects and secondary ObjectLists in the same ob
         			<vspace blankLines="1"/>
 				Description: Object URL
 				<vspace blankLines="1"/>
-				Value: String in URL format
+				Value: A URL represented as a JSON string.
         			<vspace blankLines="1"/>
         			Mandatory: Yes.
 				</t>
