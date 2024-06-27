@@ -2317,13 +2317,13 @@ ObjectLists MAY combine regular objects and secondary ObjectLists in the same ob
 
 	<section title="JSON Serialized Object List" anchor="object-list-type-json">
 	<t>
-		This ObjectList type specifies a collection of objects encoded in JSON format, each entry being encoded as an <xref target="object-entry"> ObjectEntry</xref> object. The entries in the JSON object list MAY have object list type specified, allowing for a recursive object list structure.
+		This ObjectList type specifies a collection of objects encoded in JSON format, each entry being encoded as an <xref target="object-entry"> ObjectEntry</xref> object. The entries in the JSON object list MAY have an object list type specified, allowing for a recursive object list structure.
 	</t>
 	</section>
 
 	<section title="Text Object List" anchor="object-list-type-text">
 		<t>
-			The text object list type specifies a collection of files in text encoding, each line specifying object URI. Unlike the <xref target="object-list-type-json">JSON</xref> object list, the text-based object list will not support a recursive object list structure, and every object specified in it SHOULD be downloaded without additional processing.
+			The text object list type specifies a collection of files in text encoding, each line specifying an object URI. Unlike the <xref target="object-list-type-json">JSON</xref> object list, the text-based object list will not support a recursive object list structure, and every object specified in it SHOULD be downloaded without additional processing.
 		</t>
 		</section>
 	</section>
@@ -2333,7 +2333,7 @@ ObjectLists MAY combine regular objects and secondary ObjectLists in the same ob
 		ObjectEntry is a metadata object describing an object and associated metadata, to be used in JSON-encoded <xref target="object-list">ObjectList</xref> objects.
 	</t>
 	<t>
-		Following is an example of JSON serialized ObjectEntry objects
+		The following is an example of JSON serialized ObjectEntry objects
 		<artwork><![CDATA[
 [
   {“href”:“https://example.com/hls/35cdc008/index.m3u8”,“type":“hls"},
@@ -2694,7 +2694,7 @@ https://video.example.com/k/movie1/4/013.ts
         </t>
 
 
-        <t>Following is an example of a JSON serialized generic trigger extension object containing a location policy
+        <t>The following is an example of a JSON serialized generic trigger extension object containing a location policy
            object that allows the trigger execution in the US but blocks its execution in Canada:
         </t>
 
