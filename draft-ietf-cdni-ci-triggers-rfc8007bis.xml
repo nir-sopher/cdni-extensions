@@ -2133,7 +2133,7 @@ ObjectLists MAY combine regular objects and secondary ObjectLists in the same ob
 	</t>
 
 	<t>ObjectList is encoded as an array of per-object records in JSON format as follows:</t>
-	<t> External HLS manifest:</t>
+	<t>External HLS manifest:</t>
 <figure><artwork><![CDATA[ 
 [
   { 
