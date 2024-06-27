@@ -2124,8 +2124,12 @@ uCDN-A                         dCDN-B                         dCDN-C
 		ObjectLists MAY be recursive, i.e. including references to secondary manifests, including references to HLS, MPEG-DASH or MSS manifests as well as additional JSON-encoded ObjectLists , etc. The party consuming the object list MUST parse all recursions based on the object list type property. When doing so, the consuming party should also detect potential loops when descendant ObjectList points back to parent ObjectList.
 	</t>
 	<t>
+		In case of uCDN accessing ObjectList objects referencing external URLs published by dCDN, both parties should comply with the CI/T interface security requirements (see <xref target="sect-8.1"/> for details). 
+		When dCDN accesses external URLs referenced by ObjectLists used by uCDN, for example as part of Trigger Spec, the dCDN MUST use source access control metadata objects, published by uCDN, if available.  
+	</t>
+	<t>
 ObjectLists MAY combine regular objects and secondary ObjectLists in the same object.
-		Please note that when embedding non-JSON object lists directly in ObjectList, absolute URLs MUST be provided at all times and the text SHOULD be encoded in accordance with the JSON grammar specification [ECMA404], including explicit newline encoding. When the uCDN accesses ObjectList metadata resources published by the uCDN, the same interface authentication and authorization requirements would apply, as when accessing the interface itself.
+		Please note that when embedding non-JSON object lists directly in ObjectList, absolute URLs MUST be provided at all times and the text SHOULD be encoded in accordance with the JSON grammar specification <xref target="ECMA404"/>, including explicit newline encoding. When the uCDN accesses ObjectList metadata resources published by the uCDN, the same interface authentication and authorization requirements would apply, as when accessing the interface itself.
 	</t>
 
 	<t>ObjectList is encoded as an array of per-object records in JSON format as follows</t>
@@ -4385,6 +4389,16 @@ RESPONSE:
       </reference>
 
 
+      <reference anchor="ECMA404" target="https://ecma-international.org/publications-and-standards/standards/ecma-404/">
+        <front>
+          <title>ECMA-404 - The JSON data interchange syntax</title>
+          <author>
+             <organization>ECMA International</organization>
+          </author>
+          <date month="12" year="2017"/>
+        </front>
+        <seriesInfo name="Edition" value="2"/>
+      </reference>
 
 	</references>
 
