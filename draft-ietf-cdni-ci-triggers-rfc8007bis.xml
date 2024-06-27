@@ -2154,25 +2154,25 @@ ObjectLists MAY combine regular objects and secondary ObjectLists in the same ob
 ]]></artwork></figure>
 
 
-	<t>List of external manifests and objects of mixed types</t>
+	<t>List of external manifests and objects of mixed types:</t>
 <figure><artwork><![CDATA[ 
 [
   { 
     “href”: “https://example.com/hls/35cdc008/index.m3u8”, 
-    “type":“hls" 
+    “type": “hls" 
   },
   { 
-    “href”:“https://example.com/dash/35cdc008/main.mpd”, 
-    “type":“dash"
+    “href”: “https://example.com/dash/35cdc008/main.mpd”, 
+    “type": “dash"
   },
   { 
-    “href”:“https://example.com/dash/35cdc008/files.json”, 
-    “type":“json" 
+    “href”: “https://example.com/dash/35cdc008/files.json”, 
+    “type": “json" 
   }
 ]
 ]]></artwork></figure>
 
-	<t>Embedded JSON-encoded object list</t>
+	<t>Embedded JSON-encoded object list:</t>
 <figure><artwork><![CDATA[ 
 [
   { 
@@ -2199,21 +2199,22 @@ ObjectLists MAY combine regular objects and secondary ObjectLists in the same ob
 ]
 ]]></artwork></figure>
 
-	<t>Embedded HLS manifest</t>
+	<t>Embedded HLS manifest:</t>
 <figure><artwork><![CDATA[ 
 [
   {  
-    "data”: “#EXTM3U\n
-    #EXT-X-STREAM-INF:BANDWIDTH=150000,RESOLUTION=416x234\n
-    http://example.com/hls/35cdc008/low/index.m3u8\n
-    #EXT-X-STREAM-INF:BANDWIDTH=240000,RESOLUTION=416x234\n
-    http://example.com/hls/35cdc008/lo_mid/index.m3u8\n
-    #EXT-X-STREAM-INF:BANDWIDTH=440000,RESOLUTION=416x234\n
-    http://example.com/hls/35cdc008/hi_mid/index.m3u8\n
-    #EXT-X-STREAM-INF:BANDWIDTH=640000,RESOLUTION=640x360\n
-    http://example.com/hls/35cdc008/high/index.m3u8\n
-    #EXT-X-STREAM-INF:BANDWIDTH=64000\n
-    http://example.com/hls/35cdc008/audio/index.m3u8\n”,
+    "data”: 
+      "#EXTM3U\n
+       #EXT-X-STREAM-INF:BANDWIDTH=150000,RESOLUTION=416x234\n
+       http://example.com/hls/35cdc008/low/index.m3u8\n
+       #EXT-X-STREAM-INF:BANDWIDTH=240000,RESOLUTION=416x234\n
+       http://example.com/hls/35cdc008/lo_mid/index.m3u8\n
+       #EXT-X-STREAM-INF:BANDWIDTH=440000,RESOLUTION=416x234\n
+       http://example.com/hls/35cdc008/hi_mid/index.m3u8\n
+       #EXT-X-STREAM-INF:BANDWIDTH=640000,RESOLUTION=640x360\n
+       http://example.com/hls/35cdc008/high/index.m3u8\n
+       #EXT-X-STREAM-INF:BANDWIDTH=64000\n
+       http://example.com/hls/35cdc008/audio/index.m3u8\n”,
     "type": "hls"
   }
 }
