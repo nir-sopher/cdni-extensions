@@ -2125,7 +2125,7 @@ uCDN-A                         dCDN-B                         dCDN-C
 	</t>
 	<t>
 		In case of uCDN accessing ObjectList objects referencing external URLs published by dCDN, both parties should comply with the CI/T interface security requirements (see <xref target="sect-8.1"/> for details). 
-		When dCDN accesses external URLs referenced by ObjectLists used by uCDN, for example as part of Trigger Spec, the dCDN MUST use source access control metadata objects, published by uCDN, if available.  
+		When dCDN accesses external URLs referenced by ObjectLists supplied by uCDN, for example as part of Trigger Spec, the dCDN MUST match these URLs with source metadata objects, published by uCDN, such as SourceMetadata objects specified in Section 4.2.1 of <xref target="RFC8006"/>, and use these metadata objects for content acquisition if a match was found.
 	</t>
 	<t>
 ObjectLists MAY combine regular objects and secondary ObjectLists in the same object.
