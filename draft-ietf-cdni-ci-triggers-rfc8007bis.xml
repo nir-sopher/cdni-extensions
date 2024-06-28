@@ -2205,16 +2205,16 @@ ObjectLists MAY combine regular objects and secondary ObjectLists in the same ob
   {  
     "data”: 
       "#EXTM3U\n
-       #EXT-X-STREAM-INF:BANDWIDTH=150000,RESOLUTION=416x234\n
-       http://example.com/hls/35cdc008/low/index.m3u8\n
-       #EXT-X-STREAM-INF:BANDWIDTH=240000,RESOLUTION=416x234\n
-       http://example.com/hls/35cdc008/lo_mid/index.m3u8\n
-       #EXT-X-STREAM-INF:BANDWIDTH=440000,RESOLUTION=416x234\n
-       http://example.com/hls/35cdc008/hi_mid/index.m3u8\n
-       #EXT-X-STREAM-INF:BANDWIDTH=640000,RESOLUTION=640x360\n
-       http://example.com/hls/35cdc008/high/index.m3u8\n
-       #EXT-X-STREAM-INF:BANDWIDTH=64000\n
-       http://example.com/hls/35cdc008/audio/index.m3u8\n”,
+#EXT-X-STREAM-INF:BANDWIDTH=150000,RESOLUTION=416x234\n
+http://example.com/hls/35cdc008/low/index.m3u8\n
+#EXT-X-STREAM-INF:BANDWIDTH=240000,RESOLUTION=416x234\n
+http://example.com/hls/35cdc008/lo_mid/index.m3u8\n
+#EXT-X-STREAM-INF:BANDWIDTH=440000,RESOLUTION=416x234\n
+http://example.com/hls/35cdc008/hi_mid/index.m3u8\n
+#EXT-X-STREAM-INF:BANDWIDTH=640000,RESOLUTION=640x360\n
+http://example.com/hls/35cdc008/high/index.m3u8\n
+#EXT-X-STREAM-INF:BANDWIDTH=64000\n
+http://example.com/hls/35cdc008/audio/index.m3u8\n”,
     "type": "hls"
   }
 }
