@@ -2333,7 +2333,7 @@ ObjectLists MAY combine regular objects and secondary ObjectLists in the same ob
 		ObjectEntry is a metadata object describing an object and associated metadata, to be used in JSON-encoded <xref target="object-list">ObjectList</xref> objects.
 	</t>
 	<t>
-		The following is an example of JSON serialized ObjectEntry objects
+		The following is an example of JSON serialized ObjectEntry objects:
 		<artwork><![CDATA[
 [
   {“href”:“https://example.com/hls/35cdc008/index.m3u8”,“type":“hls"},
