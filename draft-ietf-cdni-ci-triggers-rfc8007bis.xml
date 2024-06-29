@@ -1344,8 +1344,12 @@ uCDN-A                         dCDN-B                         dCDN-C
 	<vspace blankLines="1"/>
 	Description: List of objects derived by dCDN when processing a Trigger Command.
 	<vspace blankLines="1"/>
-		Value: An array of <xref target="object-list">ObjectList</xref> objects. dCDN SHOULD provide the list of objects it processed in response to Trigger Command with <xref target="objectlist-spec"/>, provided that dCDN advertised <xref target="object-list-type-capability-object">support for ObjectList objects</xref>.
-        An empty array is allowed and is equivalent to omitting "objects" from the Trigger Status.
+		Value: An array of <xref target="object-list">ObjectList</xref> objects. dCDN SHOULD provide the list of objects it used as input for processing of Trigger Command with <xref target="objectlist-spec"/>, provided that dCDN advertised <xref target="object-list-type-capability-object">support for ObjectList</xref>.
+
+		An empty array is allowed and is equivalent to omitting "objects" from the Trigger Status.
+		This field is intended to provide the list of all objects used in processing. 
+		The objects that failed to process SHOULD be specified using the Error.v2 Description resource.
+
 	<vspace blankLines="1"/>
 	Mandatory: No.
 	</t>
@@ -1890,11 +1894,8 @@ uCDN-A                         dCDN-B                         dCDN-C
 	Mandatory: Yes.
 	</t>
 
-	</list>
-	</t>
-
-	</list>
-	</t>
+	</list></t>
+	</list></t>
 
 	
 	<t><list style="empty" hangIndent="3">
@@ -1907,16 +1908,10 @@ uCDN-A                         dCDN-B                         dCDN-C
 	Mandatory: No.
 	</t>
 
-	</list>
-	</t>
+	</list></t>
+	</list></t>
 
-	</list>
-	</t>
-
-	
-
-
-<t><list style="empty" hangIndent="3">
+	<t><list style="empty" hangIndent="3">
 	<t><list style="hanging" hangIndent="3"><t hangText="Name: specs">
 	<vspace blankLines="1"/>
 	Description: Array of trigger spec objects from the corresponding "specs" array
@@ -1929,12 +1924,10 @@ uCDN-A                         dCDN-B                         dCDN-C
 	Mandatory: Yes. 
 	</t>
 
-	</list>
-   </t>
+	</list></t>
+	</list></t>
 
-	</list>
-	</t>
-   <t><list style="empty" hangIndent="3">
+   	<t><list style="empty" hangIndent="3">
 	<t><list style="hanging" hangIndent="3"><t hangText="Name: extensions">
 	<vspace blankLines="1"/>
 	Description: Array of trigger extension objects copied from the corresponding "extensions" array
@@ -1949,11 +1942,8 @@ uCDN-A                         dCDN-B                         dCDN-C
                 "the error is not related to any extension".
 	</t>
 
-	</list>
-   </t>
-
-	</list>
-	</t>
+	</list></t>
+	</list></t>
 
 	<t><list style="empty" hangIndent="3">
 	<t><list style="hanging" hangIndent="3"><t hangText="Name: cdn-id">
@@ -1968,11 +1958,21 @@ uCDN-A                         dCDN-B                         dCDN-C
 	Mandatory: Yes. The dCDN may use its own CDN PID if it does not want to expose the CDN PIDs of dCDNs.
 	</t>
 
-	</list>
-	</t>
+	</list></t>
+	</list></t>
 
-	</list>
+	<t><list style="empty" hangIndent="3">
+	<t><list style="hanging" hangIndent="3"><t hangText="Name: objects">
+	<vspace blankLines="1"/>
+	Description: List of objects that failed to be processed during execution of a Trigger Command.
+	<vspace blankLines="1"/>
+	Value:   An array of <xref target="object-list">ObjectList</xref> objects. dCDN SHOULD provide the list of objects that it failed to process during execution of a Trigger Command with <xref target="objectlist-spec"/>, provided that dCDN advertised <xref target="object-list-type-capability-object">support for ObjectList</xref>.
+	<vspace blankLines="1"/>
+	Mandatory: No. TAn empty array is allowed and is equivalent to omitting "objects" from the Error.v2 Description.
 	</t>
+	</list></t>
+	</list></t>
+
 
 
           <t>Example of a JSON serialized Error.v2 Description object reporting a malformed object list :
@@ -1992,7 +1992,12 @@ uCDN-A                         dCDN-B                         dCDN-C
         "type": "hls"
       }
     }
-  ],
+   ],
+
+  "objects": {
+     "href": "https://dcdn.com/triggers/2a544cd9/objects",
+     "type": "json"
+  }
   "cdn": "AS64500:0"
 }
          ]]></artwork>
