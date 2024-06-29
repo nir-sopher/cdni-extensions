@@ -1340,6 +1340,16 @@ uCDN-A                         dCDN-B                         dCDN-C
 	Mandatory: No.
 	</t>
 
+	<t hangText="Name: objects">
+	<vspace blankLines="1"/>
+	Description: List of objects derived by dCDN when processing a Trigger Command.
+	<vspace blankLines="1"/>
+		Value: An array of <xref target="object-list">ObjectList</xref> objects. dCDN SHOULD provide the list of objects it processed in response to Trigger Command with <xref target="objectlist-spec"/>, provided that dCDN advertised <xref target="object-list-type-capability-object">support for ObjectList objects</xref>.
+        An empty array is allowed and is equivalent to omitting "objects" from the Trigger Status.
+	<vspace blankLines="1"/>
+	Mandatory: No.
+	</t>
+
 	</list>
 	</t>
 
@@ -3044,7 +3054,7 @@ https://video.example.com/k/movie1/4/013.ts
 
        
 
-            <section title="CI/T Object List Type Capability Object">
+            <section anchor="object-list-type-capability-object" title="CI/T Object List Type Capability Object">
         <t>
            Given an object list being supported by the dCDN, the CI/T Object List Type capability object is used to indicate support for one or more
            Object List types listed in <xref target="IANA.CDNI.ObjectListTypeReg"/> by the type property of the "ObjectList" object. Capability type is  "FCI.TriggerObjectListType".
@@ -3062,7 +3072,7 @@ https://video.example.com/k/movie1/4/013.ts
                     is none supported.</t>
            </list></t>
         </list></t>
-        <section anchor="object-list-type-capability-object" title="CI/T Object List Type Capability Object Serialization">
+        <section title="CI/T Object List Type Capability Object Serialization">
           <t>
              The following shows an example of a JSON serialized CI/T Object List Type Capability object serialization
              for a dCDN that supports "hls" and "dash".
