@@ -2659,7 +2659,7 @@ https://video.example.com/k/movie1/4/013.ts
          property MUST be set to the appropriate Extension Type as defined in <xref target="trigger-extensibility"/> .
       </t>
 
-      <section anchor="location-policy" title="LocationPolicy extension">
+      <section anchor="location-policy" title="LocationPolicy Extension">
         <t>A content operation may be relevant for a specific geographical region, or need to
            be excluded from a specific region. In this case, the trigger should be applied
            only to parts of the network that are either "included" or "not excluded" by the location policy.
@@ -2682,18 +2682,19 @@ https://video.example.com/k/movie1/4/013.ts
 
         </list></t>
 
-        <t>Object specification<list style="empty">
+	<t>Object specification:</t>
+        <t><list style="empty" hangIndent="3">
+        <t><list style="hanging" hangIndent="3"><t hangText="Name: locations">
+        <vspace blankLines="1"/>
+	Description: An Access List that allows or denies (blocks) the trigger execution per cache location.
+        <vspace blankLines="1"/>
+        Value: Array of LocationRule objects (see Section 4.2.2.1 of <xref target="RFC8006"/>).
+        <vspace blankLines="1"/>
+        Mandatory: Yes. 
+	</t>
+	</list></t>
+	</list></t>
 
-              <t>Property: locations<list style="empty">
-
-                 <t>Description: An Access List that allows or denies (blocks) the trigger execution
-                    per cache location.</t>
-
-                 <t>Type: Array of LocationRule objects (see Section 4.2.2.1 of <xref target="RFC8006"/>)</t>
-
-                 <t>Mandatory: Yes.</t>
-              </list></t>
-        </list></t>
 
         <t>
            If a location policy object is not listed within the trigger command, the default behavior is to
@@ -2775,29 +2776,34 @@ https://video.example.com/k/movie1/4/013.ts
            </t>
         </list></t>
 
-         <t>Object specification<list style="empty">
+	<t>Object specification:</t>
 
-              <t>Property: unix-time-window<list style="empty">
+	<t><list style="empty" hangIndent="3">
+        <t><list style="hanging" hangIndent="3"><t hangText="Name: unix-time-window">
+        <vspace blankLines="1"/>
+	Description: A UNIX epoch time window in which the trigger SHOULD be executed.
+        <vspace blankLines="1"/>
+        Value: TimeWindow object using UNIX epoch timestamps (see Section 4.2.3.2 of <xref target="RFC8006"/>).
+        <vspace blankLines="1"/>
+        Mandatory: No, but exactly one of "unixEpochWindow", "utcWindow"
+                    or "localTimeWindow" MUST be present.
+        </t>
+        </list></t>
+        </list></t>
 
-                 <t>Description: A UNIX epoch time window in which the trigger SHOULD be executed.</t>
 
-                 <t>Type: TimeWindow object using UNIX epoch timestamps (see Section 4.2.3.2 of
-                    <xref target="RFC8006"/>)
-                 </t>
-
-                 <t>Mandatory: No, but exactly one of "unixEpochWindow", "utcWindow"
-                    or "localTimeWindow" MUST be present.</t>
-              </list></t>
-              <t>Property: utc-window<list style="empty">
-
-                 <t>Description: A UTC time window in which the trigger SHOULD be executed.</t>
-
-                 <t>Type: UTCWindow object as defined in <xref target="utc-window"/>.</t>
-
-                 <t>Mandatory: No, but exactly one of "unixEpochWindow", "utcWindow"
-                    or "localTimeWindow" MUST be present.</t>
-              </list></t>
-          </list></t>
+	<t><list style="empty" hangIndent="3">
+        <t><list style="hanging" hangIndent="3"><t hangText="Name: utc-window">
+        <vspace blankLines="1"/>
+	Description: A A UTC time window in which the trigger SHOULD be executed.
+        <vspace blankLines="1"/>
+        Value: UTCWindow object as defined in <xref target="utc-window"/>.
+        <vspace blankLines="1"/>
+        Mandatory: No, but exactly one of "unixEpochWindow", "utcWindow"
+                    or "localTimeWindow" MUST be present.
+        </t>
+        </list></t>
+        </list></t>
 
           <t>
              If a time policy object is not listed within the trigger command, the default behavior
@@ -2883,7 +2889,125 @@ https://video.example.com/k/movie1/4/013.ts
          ]]></artwork>
           </figure>
         </section>
-      </section>
+	</section>
+	<section anchor="execution-policy" title="Execution Extension">
+	<t>
+		Unless specified otherwise, dCDN is at liberty to decide how to choose trigger commands for execution from all pending commands, whether to process trigger commands sequentially or in parallel, immediately upon acceptance, or with a delay in batches. A uCDN may wish to control trigger processing in more detail, including order of execution, dependencies, and concurrency.
+	</t>
+	<t>
+	Example use cases:
+		<list style="symbols">
+		<t>
+		Priority:  uCDN may have multiple trigger commands in “pending” and/or “active” mode. The trigger commands may potentially take a long time to execute, for example due to policy constraints, large number of content objects affected by it or other dCDN business logic.
+		uCDN may wish to prescribe the order in which dCDN picks up its trigger commands for execution from the “pending” queue, by indicating a relative priority of each trigger. The priority would affect selection of trigger commands specific to the requesting uCDN. dCDN may separately prioritize triggers from multiple uCDNs subject to its business logic. 
+
+		Multiple priority-related sub use cases exist: 
+		<list style="symbols">
+		<t> (i) uCDN needs to introduce urgent “purge” or “invalidate” trigger into an existing queue of trigger commands to correct wrong versions of content objects published by it</t>
+		<t> (ii) uCDN needs to indicate which content objects should be prepositioned, purged or invalidated first, for example prepositioning newer released content before prepositioning updates to existing catalog</t>
+		</list>
+		</t>
+
+		<t>
+		Pre-requisite:  In some cases uCDN may wish to indicate what trigger commands should be processed and completed before another trigger command is processed. 
+			For example, uCDN may want to rectify incorrectly published content by purging content objects and then prepositioning them again. In this case, uCDN may want the preposition trigger command to be processed only after the purge trigger command has been processed because concurrent processing of these triggers may cause the new version of these content objects to be purged. Alternatively, uCDN may wish to avoid processing of purge and invalidation triggers in parallel to long-running preposition triggers that could lead to race conditions, and condition execution of such purge or revalidation triggers upon completion or cancellation of the pre-positioning triggers. 
+		The prerequisite requirement implies that a previius trigger reaches one of the following states:   
+		<list style="symbols">
+			<t>(i) “complete” or “processed” for successful completion</t>
+			<t>(ii) “failed” for failed processing</t>
+			<t>(iii) “cancelled” for completion of cancellation</t>
+		</list>
+
+
+		</t>
+		<t>
+		Urgency: Separately from priority, uCDN may wish to indicate that dCDN should process a trigger command without delay. This requirement applies to CI/T Trigger commands only,. dCDN MUST process all CI/T Cancel Commands immediately at all times.  Urgency is separate and additional to priority, which indicates order in which trigger commands should be processed yet doesn’t prescribe how soon each command needs to be executed. 
+dCDN MAY reject such requests for urgent processing using “ereject” error code. This can happen due to dCDN internal business logic (e.g. batch-driven purge and invalidation), or due to dependency on other triggers that could not be completed by dCDN immediately. In such a case uCDN should either modify the request removing prerequisites or cancel such pending triggers before re-trying the request.
+		</t>
+
+
+		</list>
+
+	</t>
+	<t>
+	uCDN may combine multiple options in the same trigger command. dCDN should consider the following when processing such commands:
+	<list style="symbols">
+	<t>(i) dCDN MUST reject triggers that are dependent on other pending triggers with lower priority to prevent deadlocks.</t>
+	<t>(ii) When introducing an urgent trigger uCDN SHOULD indicate priority that is equal to or higher than the highest priority among the pending triggers that belong to the same uCDN. dCDN MUST reject urgent triggers that have lower priority than other pending triggers of the same uCDN.</t>
+	<t>(iii) dCDN MUST reject an urgent trigger that has pending triggers as its prerequisite. dCDN MAY reject an urgent trigger that has triggers in “active” or “cancelling” state as its prerequisite, for example when such triggers are deemed to take a long time to complete or to cancel.</t>
+	</list>
+	
+	</t>
+	<t>
+	Object specification:
+
+        <t><list style="empty" hangIndent="3">
+        <t><list style="hanging" hangIndent="3"><t hangText="Name: priority">
+        <vspace blankLines="1"/>
+	Description: Relative weight of the trigger. 
+	When picking a trigger for execution from all pending triggers posted by each uCDN, 
+	the dCDN MUST choose the trigger with the highest priority first. 
+        <vspace blankLines="1"/>
+	Value: Integer from 0 to 100.
+        <vspace blankLines="1"/>
+	Mandatory: No. The value defaults to zero if omitted.
+        </t>
+        </list></t>
+        </list></t>
+
+
+        <t><list style="empty" hangIndent="3">
+        <t><list style="hanging" hangIndent="3"><t hangText="Name: depends">
+        <vspace blankLines="1"/>
+	Description: Links to Trigger Status Resources that the current Trigger Command depends on.
+	Indicates which triggers should fully finish processing before starting execution of the current trigger. 
+	The triggers need to be in one of the following states to be considered finished: 
+	“complete”, “processed”, “failed” or “cancelled”.
+        <vspace blankLines="1"/>
+	Value: A JSON array of zero or more URLs, represented as JSON strings.
+        <vspace blankLines="1"/>
+	Mandatory: No.
+        </t>
+        </list></t>
+	</list></t>
+
+        <t><list style="empty" hangIndent="3">
+        <t><list style="hanging" hangIndent="3"><t hangText="Name: urgent">
+        <vspace blankLines="1"/>
+	Description: Indicates whether the trigger should be immediately moved to the “active” state upon acceptance. In absence of this flag, the dCDN is at liberty to choose the time for trigger execution, e.g., batch processing.
+        <vspace blankLines="1"/>
+	Value: Boolean.
+        <vspace blankLines="1"/>
+	Mandatory: No. Default is to handle the Trigger Command as not urgent.
+        </t>
+        </list></t>
+	</list></t>
+
+	</t>
+
+	<t>
+		The following is an example of a JSON serialized generic extension trigger object containing an execution policy object that specifies trigger priority of 100, marks Trigger Command as urgent and makes the Trigger Command execution dependent on completion of previous Trigger Commands:
+        <figure>
+		<artwork><![CDATA[
+{
+  “generic-trigger-extension-type”: “execution-policy”,
+  “generic-trigger-extension-value”:
+  {
+    “priority”: 100,
+    “depends”:  { 
+      “https://dcdn.com/triggers/100”,
+      “https://dcdn.com/triggers/101”
+    }, 
+    “urgent”: true
+  }
+}
+       ]]></artwork>
+        </figure>
+	</t>
+
+
+
+	</section>
     </section>
 
 
